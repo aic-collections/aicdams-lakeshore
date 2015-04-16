@@ -603,7 +603,7 @@ PLATFORMS
 
 DEPENDENCIES
   byebug
-  capybara
+  capybara (~> 2.0)
   coffee-rails (~> 4.1.0)
   devise
   devise-guests (~> 0.3)
