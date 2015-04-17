@@ -19,6 +19,7 @@ gem 'uglifier', '>= 1.3.0'
 group :development, :test do
   gem 'byebug'
   gem 'capybara', '~> 2.0'
+  gem 'database_cleaner'
   gem 'jettywrapper'
   gem 'rspec-rails', '~> 3.0'
   gem 'sqlite3'
