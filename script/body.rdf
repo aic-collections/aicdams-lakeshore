@@ -1,0 +1,17 @@
+PREFIX aictype: <http://definitions.artic.edu/ontology/1.0/type/>
+PREFIX dcterms: <http://purl.org/dc/terms/>
+PREFIX rel: <http://id.loc.gov/vocabulary/relators/>
+PREFIX fedorasystem: <info:fedora/fedora-system:def/model#>
+PREFIX aic: <http://definitions.artic.edu/ontology/1.0/>
+PREFIX webacl: <http://www.w3.org/ns/auth/acl#>
+
+INSERT {   
+  <> fedorasystem:foo "sample data" .
+  <> aictype:foo "sample data" .
+  <> dcterms:foo "sample data" .
+  <> rel:foo "sample data" .
+  <> aic:foo "sample data" .
+  <> webacl:foo "sample data" .
+}
+
+WHERE { }
