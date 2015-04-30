@@ -11,7 +11,7 @@ module NestedAttributes
     end
 
     def permitted_annotation_params
-      [ :id, :_destroy, { content: [], category: [] } ]
+      [ :id, :_destroy, :content, { category: [] } ]
     end
 
   end

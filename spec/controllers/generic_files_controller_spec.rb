@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe GenericFilesController do
   routes { Sufia::Engine.routes }
-  let(:user) { FactoryGirl.create(:jill) }
+  let(:user) { FactoryGirl.find_or_create(:jill) }
   before do
     allow(controller).to receive(:has_access?).and_return(true)
     sign_in user
@@ -17,12 +17,12 @@ describe GenericFilesController do
       end
     end
 
-    context "with nested attributes" do
+    describe "nested attributes" do
       let(:attributes) do
         { 
           title: ['new_title'], 
-          comments_attributes: [{content: ["foo comment"], category: ["bar category"]}],
-          tags_attributes: [{content: ["foo tag"], category: ["bar category"]}],
+          comments_attributes: [{content: "foo comment", category: ["bar category"]}],
+          tags_attributes: [{content: "foo tag", category: ["bar category"]}],
           permissions_attributes: [{ type: 'person', name: 'archivist1', access: 'edit'}]
         }
       end
@@ -31,9 +31,9 @@ describe GenericFilesController do
       subject { generic_file.reload }
 
       it "should set the values using the parameters hash" do
-        expect(subject.comments.first.content).to eql ["foo comment"]
+        expect(subject.comments.first.content).to eql "foo comment"
         expect(subject.comments.first.category).to eql ["bar category"]
-        expect(subject.tags.first.content).to eql ["foo tag"]
+        expect(subject.tags.first.content).to eql "foo tag"
         expect(subject.tags.first.category).to eql ["bar category"]
       end
     end

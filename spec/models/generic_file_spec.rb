@@ -49,15 +49,48 @@ describe GenericFile do
       GenericFile.create.tap do |file|
         file.title = ["Commented thing"]
         file.apply_depositor_metadata "user"
-        file.comments_attributes = [{content: ["foo comment"], category: ["bar category"]}]
+        file.comments_attributes = [{content: "foo comment", category: ["bar category"]}]
       end
     end
 
     subject { commented_resource.comments.first }
     it { is_expected.to be_kind_of Comment }
     specify "has content and a category" do
-      expect(subject.category.first).to eql "bar category"
-      expect(subject.content.first).to eql "foo comment"
+      expect(subject.category).to eql ["bar category"]
+      expect(subject.content).to eql "foo comment"
+    end
+
+    context "without a category" do
+      let(:commented_resource) do
+        GenericFile.create.tap do |file|
+          file.title = ["Commented thing without a category"]
+          file.apply_depositor_metadata "user"
+          file.comments_attributes = [{content: "foo comment"}]
+        end
+      end
+
+      subject { commented_resource.comments.first }
+      specify "has content and a category" do
+        expect(subject.category).to be_empty
+        expect(subject.content).to eql "foo comment"
+      end
+    end
+
+    context "without content" do
+      let(:commented_resource) do
+        GenericFile.create.tap do |file|
+          file.title = ["Commented thing without a category"]
+          file.apply_depositor_metadata "user"
+          file.comments_attributes = [{content: nil}]
+        end
+      end
+
+      subject { commented_resource.comments.first }
+      specify "should raise an error" do
+        pending "Need to validate presence of content"
+        expect(subject.category).to be_empty
+        expect(subject.content).to eql "foo comment"
+      end
     end
 
   end
@@ -68,15 +101,15 @@ describe GenericFile do
       GenericFile.create.tap do |file|
         file.title = ["Tagged thing"]
         file.apply_depositor_metadata "user"
-        file.tags_attributes = [{content: ["foo tag"], category: ["bar category"]}]
+        file.tags_attributes = [{content: "foo tag", category: ["bar category"]}]
       end
     end
 
     subject { tagged_resource.tags.first }
     it { is_expected.to be_kind_of Tag }
     specify "has content and a category" do
-      expect(subject.category.first).to eql "bar category"
-      expect(subject.content.first).to eql "foo tag"
+      expect(subject.category).to eql ["bar category"]
+      expect(subject.content).to eql "foo tag"
     end
 
   end
