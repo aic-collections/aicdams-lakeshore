@@ -1,12 +1,72 @@
 class GenericFile < ActiveFedora::Base
 
   include Sufia::GenericFile
+  include ActiveFedora::Validations
 
+  # Write-once validation
+  # TODO: move this someplace nice
+  validates_each :batch_uid, :created, :department, :legacy_uid do |record, property, value|
+    unless record.send(property.to_s+"_was").nil?
+      record.errors.add property, 'is write-once only' unless value.nil?
+    end
+  end
+  
   type AICType.Resource
+  
+  # AIC terms
 
-  property :aic_type, predicate: ::RDF::DC.type do |index|
+  # Same as Sufia batch id?
+  property :batch_uid, predicate: AIC.batchUid, multiple: false do |index|
+    index.as :stored_searchable
+  end 
+
+  property :created, predicate: AIC.created, multiple: false do |index|
+    index.type :date
+    index.as :stored_sortable
+  end
+
+  property :department, predicate: AIC.deptCreated, multiple: false do |index|
     index.as :stored_searchable
   end
+
+  has_and_belongs_to_many :comments, predicate: AIC.hasComment, class_name: "Comment", inverse_of: :generic_files
+
+  # TODO: Phase 2, this is an aictype:Location
+  property :location, predicate: AIC.hasLocation do |index|
+    index.as :stored_searchable
+  end
+
+  # TODO: Phase 2, this is an aictype:MetadataSet
+  property :metadata, predicate: AIC.hasMetadata do |index|
+    index.as :stored_searchable
+  end 
+
+  # TODO: Phase 2, this is an aictype:PublishingContext
+  property :publishing_context, predicate: AIC.hasPublishingContext do |index|
+    index.as :stored_searchable
+  end
+
+  has_and_belongs_to_many :tags, predicate: AIC.hasTag, class_name: "Tag", inverse_of: :generic_files
+
+  property :legacy_uid, predicate: AIC.legacyUid, multiple: false do |index|
+    index.as :stored_searchable
+  end
+
+  property :status, predicate: AIC.status, multiple: false do |index|
+    index.as :stored_searchable
+  end
+
+  # TODO: override #new to create this once
+  # Same as fedora:uuid
+  property :uid, predicate: AIC.uid
+
+  property :updated, predicate: AIC.updated, multiple: false do |index|
+    index.type :date
+    index.as :stored_sortable
+  end
+
+  # Additional DC terms not in Sufia::GenericFile::Metadata
+
   property :coverage, predicate: ::RDF::DC.coverage do |index|
     index.as :stored_searchable
   end
@@ -19,30 +79,22 @@ class GenericFile < ActiveFedora::Base
   property :relation, predicate: ::RDF::DC.relation do |index|
     index.as :stored_searchable
   end
-  property :pref_label, predicate: ::RDF::SKOS.prefLabel do |index|
+  property :resource_type, predicate: ::RDF::DC.type do |index|
     index.as :stored_searchable
-  end  
-  property :batch_uid, predicate: AIC.batchUid do |index|
+  end
+
+  # Addtional terms in other schema
+
+  property :described_by, predicate: ::RDF::Vocab::IANA.describedby do |index|
     index.as :stored_searchable
-  end 
-  property :dept_created, predicate: AIC.deptCreated do |index|
+  end
+  property :same_as, predicate: ::RDF::OWL.sameAs do |index|
     index.as :stored_searchable
-  end 
-  property :has_location, predicate: AIC.hasLocation do |index|
+  end
+  property :pref_label, predicate: ::RDF::SKOS.prefLabel, multiple: false do |index|
     index.as :stored_searchable
-  end 
-  property :has_metadata, predicate: AIC.hasMetadata do |index|
-    index.as :stored_searchable
-  end 
-  property :has_publishing_context, predicate: AIC.hasPublishingContext do |index|
-    index.as :stored_searchable
-  end 
-  property :uid, predicate: AIC.uid do |index|
-    index.as :stored_searchable
-  end 
-  
-  has_and_belongs_to_many :comments, predicate: AIC.hasComment, class_name: "Comment", inverse_of: :generic_files
-  has_and_belongs_to_many :tags, predicate: AIC.hasTag, class_name: "Tag", inverse_of: :generic_files
+  end
+
   accepts_nested_attributes_for :comments, :tags
 
 end

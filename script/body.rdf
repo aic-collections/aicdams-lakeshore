@@ -4,6 +4,7 @@ PREFIX rel: <http://id.loc.gov/vocabulary/relators/>
 PREFIX fedorasystem: <info:fedora/fedora-system:def/model#>
 PREFIX aic: <http://definitions.artic.edu/ontology/1.0/>
 PREFIX webacl: <http://www.w3.org/ns/auth/acl#>
+PREFIX iana: <http://www.iana.org/assignments/relation/>
 
 INSERT {   
   <> fedorasystem:foo "sample data" .

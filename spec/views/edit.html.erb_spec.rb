@@ -34,29 +34,9 @@ describe "generic_files/edit.html.erb" do
     assign(:version_list, version_list)
   end
 
+  # TODO: Flesh this out when we get to the view stage
   it "shows aictype:Resource fields" do
-    expect(page).to have_selector("input#generic_file_aic_type", count: 1)
-    expect(page).to have_selector("input#generic_file_batch_uid", count: 1)
-    expect(page).to have_selector("input#generic_file_contributor", count: 1)
-    expect(page).to have_selector("input#generic_file_coverage", count: 1)
-    expect(page).to have_selector("input#generic_file_creator", count: 1)
-    expect(page).to have_selector("input#generic_file_date", count: 1)
-    expect(page).to have_selector("input#generic_file_dept_created", count: 1)
-    expect(page).to have_selector("textarea#generic_file_description", count: 1)
-    expect(page).to have_selector("input#generic_file_format", count: 1)
-    expect(page).to have_selector("input#generic_file_has_location", count: 1)
-    expect(page).to have_selector("input#generic_file_has_metadata", count: 1)
-    expect(page).to have_selector("input#generic_file_has_publishing_context", count: 1)
-    expect(page).to have_selector("input#generic_file_identifier", count: 1)
-    expect(page).to have_selector("input#generic_file_language", count: 1)
-    expect(page).to have_selector("input#generic_file_pref_label", count: 1)
-    expect(page).to have_selector("input#generic_file_publisher", count: 1)
-    expect(page).to have_selector("input#generic_file_relation", count: 1)
-    expect(page).to have_selector("select#generic_file_rights", count: 1)
-    expect(page).to have_selector("input#generic_file_source", count: 1)
-    expect(page).to have_selector("input#generic_file_subject", count: 1)
     expect(page).to have_selector("input#generic_file_title", count: 1)
-    expect(page).to have_selector("input#generic_file_uid", count: 1)
   end
 
 end
