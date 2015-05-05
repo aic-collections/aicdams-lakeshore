@@ -1,16 +1,11 @@
 class GenericFile < ActiveFedora::Base
 
   include Sufia::GenericFile
-  include ActiveFedora::Validations
-
-  # Write-once validation
-  # TODO: move this someplace nice
-  validates_each :batch_uid, :created, :department, :legacy_uid do |record, property, value|
-    unless record.send(property.to_s+"_was").nil?
-      record.errors.add property, 'is write-once only' unless value.nil?
-    end
-  end
+  include Validations
   
+  validate :write_once_only_fields, on: :update
+  after_save :uid_matches_id, on: :create
+
   type AICType.Resource
   
   # AIC terms
@@ -48,7 +43,7 @@ class GenericFile < ActiveFedora::Base
 
   has_and_belongs_to_many :tags, predicate: AIC.hasTag, class_name: "Tag", inverse_of: :generic_files
 
-  property :legacy_uid, predicate: AIC.legacyUid, multiple: false do |index|
+  property :legacy_uid, predicate: AIC.legacyUid do |index|
     index.as :stored_searchable
   end
 
@@ -58,7 +53,7 @@ class GenericFile < ActiveFedora::Base
 
   # TODO: override #new to create this once
   # Same as fedora:uuid
-  property :uid, predicate: AIC.uid
+  property :uid, predicate: AIC.uid, multiple: false
 
   property :updated, predicate: AIC.updated, multiple: false do |index|
     index.type :date

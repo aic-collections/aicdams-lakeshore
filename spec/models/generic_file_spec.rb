@@ -108,28 +108,31 @@ describe GenericFile do
     end
   end
 
-  describe "write-once" do
-    context "single terms" do
-      let(:wro_single_terms) { [:batch_uid, :created, :department, :legacy_uid] }
-      let(:first_value) { "write-once value" }
-      subject do
-        GenericFile.create.tap do |file|
-          file.batch_uid  = first_value
-          file.created    = first_value
-          file.department = first_value
-          file.legacy_uid = first_value 
-          file.apply_depositor_metadata "user"
-          file.save!
-        end
+  describe "terms writable during creation only" do
+    let(:wro_single_terms) { [:batch_uid, :created, :department] }
+    let(:error_message) { "is writable only on create"}
+    let(:first_value) { "write-once value" }
+    subject do
+      GenericFile.create.tap do |file|
+        file.batch_uid  = first_value
+        file.created    = first_value
+        file.department = first_value
+        file.legacy_uid = [first_value] 
+        file.apply_depositor_metadata "user"
+        file.save!
       end
-      specify "limits terms to write-once, read-only afterwards" do
-        wro_single_terms.each do |term|
-          expect(subject.send(term)).to eql first_value
-          subject.send(term.to_s+"=", "a changed value")
-          expect(subject.save).to be false
-          expect(subject.errors[term]).to eql(["is write-once only"])
-        end
+    end
+    specify "are not updateable" do
+      wro_single_terms.each do |term|
+        expect(subject.send(term)).to eql first_value
+        subject.send(term.to_s+"=", "a changed value")
+        expect(subject.save).to be false
+        expect(subject.errors[term]).to eql([error_message])
       end
+      expect(subject.legacy_uid).to eql [first_value]
+      subject.legacy_uid = ["more","values"]
+      expect(subject.save).to be false
+      expect(subject.errors[:legacy_uid]).to eql([error_message])  
     end
   end
 
@@ -141,6 +144,10 @@ describe GenericFile do
       end
     end
     it { is_expected.to be_kind_of GenericFile }
+    specify "uid matches the id" do
+      expect(subject.uid).to eql subject.id
+    end
   end
+
 
 end
