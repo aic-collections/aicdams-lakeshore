@@ -34,9 +34,33 @@ describe "generic_files/edit.html.erb" do
     assign(:version_list, version_list)
   end
 
-  # TODO: Flesh this out when we get to the view stage
   it "shows aictype:Resource fields" do
     expect(page).to have_selector("input#generic_file_title", count: 1)
+    expect(page).to have_selector("input#generic_file_department", count: 1)
+    expect(page).to have_selector("input#generic_file_comments", count: 1)
+    expect(page).to have_selector("input#generic_file_location", count: 1)
+    expect(page).to have_selector("input#generic_file_metadata", count: 1)
+    expect(page).to have_selector("input#generic_file_publishing_context", count: 1)
+    expect(page).to have_selector("input#generic_file_tags", count: 1)
+    expect(page).to have_selector("input#generic_file_status", count: 1)
+    expect(page).to have_selector("input#generic_file_contributor", count: 1)
+    expect(page).to have_selector("input#generic_file_coverage", count: 1)
+    expect(page).to have_selector("input#generic_file_creator", count: 1)
+    expect(page).to have_selector("input#generic_file_date", count: 1)
+    expect(page).to have_selector("textarea#generic_file_description", count: 1)
+    expect(page).to have_selector("input#generic_file_format", count: 1)
+    expect(page).to have_selector("input#generic_file_identifier", count: 1)
+    expect(page).to have_selector("input#generic_file_language", count: 1)
+    expect(page).to have_selector("input#generic_file_publisher", count: 1)
+    expect(page).to have_selector("input#generic_file_relation", count: 1)
+    expect(page).to have_selector("select#generic_file_rights", count: 1)
+    expect(page).to have_selector("input#generic_file_source", count: 1)
+    expect(page).to have_selector("input#generic_file_subject", count: 1)
+    expect(page).to have_selector("input#generic_file_title", count: 1)
+    expect(page).to have_selector("select#generic_file_resource_type", count: 1)
+    expect(page).to have_selector("input#generic_file_described_by", count: 1)
+    expect(page).to have_selector("input#generic_file_same_as", count: 1)
+    expect(page).to have_selector("input#generic_file_pref_label", count: 1)
   end
 
 end
