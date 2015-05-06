@@ -149,5 +149,20 @@ describe GenericFile do
     end
   end
 
+  describe "loading from solr" do
+    let(:example_file) do
+      GenericFile.create.tap do |file|
+        file.apply_depositor_metadata "user"
+        file.save!
+      end
+    end
+    it "should load the resource form solr" do
+      pending "ActiveFedora bug?"
+      ActiveFedora::Base.load_instance_from_solr(example_file.id)
+    end
+
+
+  end
+
 
 end
