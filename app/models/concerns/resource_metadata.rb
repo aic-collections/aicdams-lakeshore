@@ -8,7 +8,7 @@ module ResourceMetadata
       index.as :stored_searchable
     end 
 
-    property :created, predicate: AIC.created, multiple: false do |index|
+    property :aiccreated, predicate: AIC.created, multiple: false do |index|
       index.type :date
       index.as :stored_sortable
     end

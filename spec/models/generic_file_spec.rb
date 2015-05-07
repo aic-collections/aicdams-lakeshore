@@ -6,7 +6,7 @@ describe GenericFile do
 
   describe "terms" do
     it { is_expected.to respond_to(:batch_uid) }
-    it { is_expected.to respond_to(:created) }
+    it { is_expected.to respond_to(:aiccreated) }
     it { is_expected.to respond_to(:department) }
     it { is_expected.to respond_to(:comments) }
     it { is_expected.to respond_to(:location) }
@@ -99,7 +99,7 @@ describe GenericFile do
   end
 
   describe "cardinality" do
-    let(:single_terms) { [:batch_uid, :created, :department, :status, :updated, :pref_label] }
+    let(:single_terms) { [:batch_uid, :aiccreated, :department, :status, :updated, :pref_label] }
     specify "limits terms to single values" do
       single_terms.each do |term|
         subject.send(term.to_s+"=","foo")
@@ -109,13 +109,13 @@ describe GenericFile do
   end
 
   describe "terms writable during creation only" do
-    let(:wro_single_terms) { [:batch_uid, :created, :department] }
+    let(:wro_single_terms) { [:batch_uid, :aiccreated, :department] }
     let(:error_message) { "is writable only on create"}
     let(:first_value) { "write-once value" }
     subject do
       GenericFile.create.tap do |file|
         file.batch_uid  = first_value
-        file.created    = first_value
+        file.aiccreated = first_value
         file.department = first_value
         file.legacy_uid = [first_value] 
         file.apply_depositor_metadata "user"
