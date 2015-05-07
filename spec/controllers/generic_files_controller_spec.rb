@@ -22,7 +22,7 @@ describe GenericFilesController do
         { 
           title: ['new_title'], 
           comments_attributes: [{content: "foo comment", category: ["bar category"]}],
-          tags_attributes: [{content: "foo tag", category: ["bar category"]}],
+          aictags_attributes: [{content: "foo tag", category: ["bar category"]}],
           permissions_attributes: [{ type: 'person', name: 'archivist1', access: 'edit'}]
         }
       end
@@ -33,8 +33,8 @@ describe GenericFilesController do
       it "should set the values using the parameters hash" do
         expect(subject.comments.first.content).to eql "foo comment"
         expect(subject.comments.first.category).to eql ["bar category"]
-        expect(subject.tags.first.content).to eql "foo tag"
-        expect(subject.tags.first.category).to eql ["bar category"]
+        expect(subject.aictags.first.content).to eql "foo tag"
+        expect(subject.aictags.first.category).to eql ["bar category"]
       end
     end
 

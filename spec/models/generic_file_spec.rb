@@ -12,7 +12,7 @@ describe GenericFile do
     it { is_expected.to respond_to(:location) }
     it { is_expected.to respond_to(:metadata) }
     it { is_expected.to respond_to(:publishing_context) }
-    it { is_expected.to respond_to(:tags) }
+    it { is_expected.to respond_to(:aictags) }
     it { is_expected.to respond_to(:legacy_uid) }
     it { is_expected.to respond_to(:status) }
     it { is_expected.to respond_to(:uid) }
@@ -79,17 +79,17 @@ describe GenericFile do
 
   end
 
-  describe "tags" do
+  describe "aictags" do
 
     let(:tagged_resource) do
       GenericFile.create.tap do |file|
         file.title = ["Tagged thing"]
         file.apply_depositor_metadata "user"
-        file.tags_attributes = [{content: "foo tag", category: ["bar category"]}]
+        file.aictags_attributes = [{content: "foo tag", category: ["bar category"]}]
       end
     end
 
-    subject { tagged_resource.tags.first }
+    subject { tagged_resource.aictags.first }
     it { is_expected.to be_kind_of Tag }
     specify "has content and a category" do
       expect(subject.category).to eql ["bar category"]
@@ -156,12 +156,8 @@ describe GenericFile do
         file.save!
       end
     end
-    it "should load the resource form solr" do
-      pending "ActiveFedora bug?"
-      ActiveFedora::Base.load_instance_from_solr(example_file.id)
-    end
-
-
+    subject { ActiveFedora::Base.load_instance_from_solr(example_file.id) }
+    it { is_expected.to be_kind_of GenericFile }
   end
 
 

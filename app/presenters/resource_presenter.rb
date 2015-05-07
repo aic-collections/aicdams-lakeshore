@@ -5,7 +5,7 @@ class ResourcePresenter < Sufia::GenericFilePresenter
     :location,
     :metadata,
     :publishing_context,
-    :tags,
+    :aictags,
     :status,
     :contributor,
     :coverage,
