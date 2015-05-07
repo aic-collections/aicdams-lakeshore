@@ -6,4 +6,12 @@ Rails.application.routes.draw do
   mount Sufia::Engine => '/'
   root to: 'homepage#index'
 
+  # Administrative URLs
+  namespace :admin do
+    # Job monitoring
+    constraints ResqueAdmin do
+      mount Resque::Server, at: 'queues'
+    end
+  end
+
 end
