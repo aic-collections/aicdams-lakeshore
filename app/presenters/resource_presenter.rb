@@ -1,6 +1,5 @@
 class ResourcePresenter < Sufia::GenericFilePresenter
   self.terms = [
-    :department,
     :comments,
     :location,
     :metadata,

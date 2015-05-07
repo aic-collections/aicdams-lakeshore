@@ -36,7 +36,6 @@ describe "generic_files/edit.html.erb" do
 
   it "shows aictype:Resource fields" do
     expect(page).to have_selector("input#generic_file_title", count: 1)
-    expect(page).to have_selector("input#generic_file_department", count: 1)
     expect(page).to have_selector("input#generic_file_comments", count: 1)
     expect(page).to have_selector("input#generic_file_location", count: 1)
     expect(page).to have_selector("input#generic_file_metadata", count: 1)
@@ -56,11 +55,14 @@ describe "generic_files/edit.html.erb" do
     expect(page).to have_selector("select#generic_file_rights", count: 1)
     expect(page).to have_selector("input#generic_file_source", count: 1)
     expect(page).to have_selector("input#generic_file_subject", count: 1)
-    expect(page).to have_selector("input#generic_file_title", count: 1)
     expect(page).to have_selector("select#generic_file_resource_type", count: 1)
     expect(page).to have_selector("input#generic_file_described_by", count: 1)
     expect(page).to have_selector("input#generic_file_same_as", count: 1)
     expect(page).to have_selector("input#generic_file_pref_label", count: 1)
+  end
+
+  it "does not show wro on create fields" do
+    expect(page).not_to have_selector("input#generic_file_department", count: 1)
   end
 
 end
