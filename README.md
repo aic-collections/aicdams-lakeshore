@@ -1,6 +1,6 @@
 # Art Institute of Chicago
 
-## Hydra DAMS
+## Lakeshore
 
 ## Local Testing
 

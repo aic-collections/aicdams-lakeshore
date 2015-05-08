@@ -6,7 +6,7 @@ require 'rails/all'
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
-module AicDams
+module Lakeshore
   class Application < Rails::Application
     
     config.generators do |g|
