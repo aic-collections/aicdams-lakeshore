@@ -21,7 +21,7 @@ module NestedMetadata
       index.as :stored_searchable
     end
 
-    accepts_nested_attributes_for :comments, :aictags
+    accepts_nested_attributes_for :comments, :aictags, allow_destroy: true
 
   end
 end

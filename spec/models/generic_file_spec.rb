@@ -36,7 +36,7 @@ describe GenericFile do
     it { is_expected.to respond_to(:pref_label) }
   end
 
-  describe "comments" do
+  describe "#comments_attributes" do
 
     let(:commented_resource) do
       GenericFile.create.tap do |file|
@@ -75,6 +75,36 @@ describe GenericFile do
       end
       subject { commented_resource.save }
       it { is_expected.to be false }
+    end
+
+    context "with existing comments" do
+      let(:resource) do
+        GenericFile.create.tap do |file|
+          file.apply_depositor_metadata "user"
+        end
+      end
+      let(:c1) { Comment.create(content: "First comment") }
+      let(:c2) { Comment.create(content: "Second comment") }
+      before do
+        resource.comments = [c1, c2]
+        resource.save
+      end
+
+      describe "#comments" do
+        subject { resource.comments }
+        it { is_expected.to include(c1, c2) }
+      end
+
+      describe "updating a comment with a given id" do
+        before do
+          resource.comments_attributes = [id: c1.id, content: "Updated first comment"]
+          resource.save
+        end
+        subject { resource.comments.map {|c| c.content} }
+        it {is_expected.to include("Updated first comment", "Second comment")}
+        it {is_expected.not_to include("First comment")}
+      end
+
     end
 
   end
