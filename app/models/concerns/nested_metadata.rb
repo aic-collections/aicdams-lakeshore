@@ -24,4 +24,12 @@ module NestedMetadata
     accepts_nested_attributes_for :comments, :aictags, allow_destroy: true
 
   end
+
+  def attributes= attributes
+    ["comments_attributes", "aictags_attributes"].each do |nested_attribute|
+      attributes[nested_attribute].reject! { |k,v| v["content"].empty? if v && v["content"] } if attributes[nested_attribute]
+    end
+    super(attributes)
+  end
+
 end

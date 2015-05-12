@@ -8,21 +8,43 @@ require 'database_cleaner'
 require 'factory_girl'
 require 'devise'
 
+# Require support files
+Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each { |f| require f }
+
 ActiveRecord::Migration.maintain_test_schema!
 
 RSpec.configure do |config|
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
   config.use_transactional_fixtures = false
   config.infer_spec_type_from_file_location!
-  config.before do
-    ActiveFedora::Cleaner.clean!
-    DatabaseCleaner.strategy = :transaction
-    DatabaseCleaner.start
+
+  config.before :each do |example|
+    unless example.metadata[:no_clean]
+      ActiveFedora::Cleaner.clean!
+    end
+  end
+
+  config.before :each do |example|
+    if example.metadata[:type] == :feature && Capybara.current_driver != :rack_test
+      DatabaseCleaner.strategy = :truncation
+    else
+      DatabaseCleaner.strategy = :transaction
+      DatabaseCleaner.start
+    end
+  end  
+
+  config.after do
+    DatabaseCleaner.clean
   end
 
   config.include Devise::TestHelpers, type: :controller
   config.include Capybara::RSpecMatchers, type: :input
+  config.include InputSupport, type: :input
   config.include FactoryGirl::Syntax::Methods
+  config.include SessionSupport, type: :feature
+
+  config.include Warden::Test::Helpers, type: :feature
+  config.after(:each, type: :feature) { Warden.test_reset! }
 end
 
 FactoryGirl.define do

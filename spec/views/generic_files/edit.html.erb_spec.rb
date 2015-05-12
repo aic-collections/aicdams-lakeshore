@@ -36,11 +36,9 @@ describe "generic_files/edit.html.erb" do
 
   it "shows aictype:Resource fields" do
     expect(page).to have_selector("input#generic_file_title", count: 1)
-    expect(page).to have_selector("input#generic_file_comments", count: 1)
     expect(page).to have_selector("input#generic_file_location", count: 1)
     expect(page).to have_selector("input#generic_file_metadata", count: 1)
     expect(page).to have_selector("input#generic_file_publishing_context", count: 1)
-    expect(page).to have_selector("input#generic_file_aictags", count: 1)
     expect(page).to have_selector("input#generic_file_status", count: 1)
     expect(page).to have_selector("input#generic_file_contributor", count: 1)
     expect(page).to have_selector("input#generic_file_coverage", count: 1)

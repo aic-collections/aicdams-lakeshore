@@ -54,6 +54,27 @@ describe GenericFilesController do
       expect(subject.comments.first.category).to eql ["new category"]
       expect(subject.comments.second.content).to eql "second comment"
     end
+
+    context "when the form sends empty comments" do
+      let(:empty_comments) do
+        {
+          comments_attributes: {
+            "0" => { id: comment1.id , _destroy: "false", content: "new comment" }, 
+            "1" => { _destroy: "false", content: "" }
+          }
+        }
+      end
+      
+      before do
+        generic_file.comments = [comment1]
+        generic_file.save
+      end
+
+      it "removes them from the attributes hash" do
+        post :update, id: generic_file, generic_file: empty_comments
+        expect(response).to be_redirect
+      end
+    end
   end
 
   describe "removing existing comments" do

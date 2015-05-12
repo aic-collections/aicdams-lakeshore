@@ -1,0 +1,4 @@
+<% record.comments.each do |comment| %>
+  <%= comment.content %>, Tags: <%= comment.category.join(", ") %>
+  <br/>
+<% end %>

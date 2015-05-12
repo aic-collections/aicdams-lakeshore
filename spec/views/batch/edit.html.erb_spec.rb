@@ -5,9 +5,10 @@ describe 'batch/edit.html.erb' do
   let(:generic_file) do
     GenericFile.new(title: ['some title']).tap do |f|
       f.apply_depositor_metadata("bob")
+      f.comments_attributes = [{content: "foo comment", category: ["bar category"]}]
     end
   end
-  let(:form) { Sufia::Forms::BatchEditForm.new(generic_file) }
+  let(:form) { ResourceBatchEditForm.new(generic_file) }
 
   before do
     allow(controller).to receive(:current_user).and_return(stub_model(User))

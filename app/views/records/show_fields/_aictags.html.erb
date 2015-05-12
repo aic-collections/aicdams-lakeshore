@@ -1,0 +1,4 @@
+<% record.aictags.each do |aictag| %>
+  <%= aictag.content %>, Tags: <%= aictag.category.join(", ") %>
+  <br/>
+<% end %>

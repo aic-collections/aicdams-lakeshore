@@ -16,3 +16,4 @@
 // Required by Blacklight
 //= require blacklight/blacklight
 //= require sufia
+//= require_tree .

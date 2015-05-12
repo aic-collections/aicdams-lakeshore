@@ -29,6 +29,7 @@ group :test do
   gem 'capybara', '~> 2.0'
   gem 'database_cleaner'
   gem 'factory_girl_rails'
+  gem 'poltergeist'
   gem 'rspec-activemodel-mocks'
   gem 'rspec-rails', '~> 3.0'
 end
