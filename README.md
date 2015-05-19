@@ -1,5 +1,7 @@
 # Art Institute of Chicago
 
+[![Build Status](https://travis-ci.org/aic-collections/aicdams-lakeshore.svg?branch=master)](https://travis-ci.org/aic-collections/aicdams-lakeshore)
+
 ## Lakeshore
 
 ## Local Testing
