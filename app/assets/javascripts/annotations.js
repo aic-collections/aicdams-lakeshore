@@ -33,11 +33,11 @@ var source = "<li class=\"field-wrapper input-group input-append\">" +
 
 var template = Handlebars.compile(source);
 
-function CommentsFieldManager(element, options) {
+function AnnotationsFieldManager(element, options) {
   HydraEditor.FieldManager.call(this, element, options); // call super constructor.
 }
 
-CommentsFieldManager.prototype = Object.create(HydraEditor.FieldManager.prototype,
+AnnotationsFieldManager.prototype = Object.create(HydraEditor.FieldManager.prototype,
   {
     createNewField: { value: function($activeField) {
       var fieldName = $activeField.find('input').data('attribute');
@@ -80,18 +80,18 @@ CommentsFieldManager.prototype = Object.create(HydraEditor.FieldManager.prototyp
     }}
   }
 );
-CommentsFieldManager.prototype.constructor = CommentsFieldManager;
+AnnotationsFieldManager.prototype.constructor = AnnotationsFieldManager;
 
-$.fn.manage_comment_fields = function(option) {
+$.fn.manage_annotation_fields = function(option) {
   return this.each(function() {
     var $this = $(this);
     var data  = $this.data('manage_fields');
     var options = $.extend({}, HydraEditor.FieldManager.DEFAULTS, $this.data(), typeof option == 'object' && option);
 
-    if (!data) $this.data('manage_fields', (data = new CommentsFieldManager(this, options)));
+    if (!data) $this.data('manage_fields', (data = new AnnotationsFieldManager(this, options)));
   })
 }
 
 Blacklight.onLoad(function() {
-  $('.annotation_select.form-group').manage_comment_fields();
+  $('.annotation_select.form-group').manage_annotation_fields();
 });
