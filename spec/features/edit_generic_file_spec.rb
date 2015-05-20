@@ -22,9 +22,11 @@ describe "Editing generic files" do
     it "supports adding and removing" do
       visit sufia.edit_generic_file_path(file)
       expect(page).to have_content("Edit #{title}")
+      expect(page).not_to have_button("Category")
       fill_in("generic_file[comments_attributes][0][content]", with: comment0)
       click_button("upload_submit")
       expect(find_field("generic_file[comments_attributes][0][content]").value).to eql comment0
+      expect(page).to have_button("Category")
       fill_in("generic_file[comments_attributes][1][content]", with: comment1)
       within("div.comments-editor") { find_button('Add').click }
       fill_in("generic_file[comments_attributes][2][content]", with: comment2)
@@ -47,9 +49,11 @@ describe "Editing generic files" do
     it "supports adding and removing" do
       visit sufia.edit_generic_file_path(file)
       expect(page).to have_content("Edit #{title}")
+      expect(page).not_to have_button("Category")
       fill_in("generic_file[aictags_attributes][0][content]", with: aictag0)
       click_button("upload_submit")
       expect(find_field("generic_file[aictags_attributes][0][content]").value).to eql aictag0
+      expect(page).to have_button("Category")
       fill_in("generic_file[aictags_attributes][1][content]", with: aictag1)
       within("div.aictags-editor") { find_button('Add').click }
       fill_in("generic_file[aictags_attributes][2][content]", with: aictag2)

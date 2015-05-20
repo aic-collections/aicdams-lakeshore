@@ -17,3 +17,5 @@
 //= require blacklight/blacklight
 //= require sufia
 //= require_tree .
+var ROOT_PATH = "/";
+

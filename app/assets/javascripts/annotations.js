@@ -94,4 +94,27 @@ $.fn.manage_annotation_fields = function(option) {
 
 Blacklight.onLoad(function() {
   $('.annotation_select.form-group').manage_annotation_fields();
+
+  // Open mode to edit annotation categories
+  $('.btn.category').on('click', function(event) {
+    var url = ROOT_PATH+$(this).data("class")+'/'+$(this).data("id")+'/edit';
+    var jqxhr = $.get(url)
+      .done(function(data) {
+        $('#ajax-modal').html(data);
+        $('#ajax-modal').modal('show');
+        $('.multi_value.form-group').manage_fields();
+        $("#ajax-modal form").on("ajax:success", function(e, data, status, xhr) {
+          $('#ajax-modal').modal('hide');
+        });
+        $("#ajax-modal form").on("ajax:error", function(e, data, status, xhr) {
+          // TODO: use flash alerts
+        });
+      })
+      .fail(function(jqXHR, textStatus, errorThrown) {
+        // TODO: use flash alerts
+        alert('Error:'+errorThrown);
+      });
+    event.preventDefault();
+  });
+  
 });

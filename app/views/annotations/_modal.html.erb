@@ -1,0 +1,24 @@
+<div class="modal-content">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title" id="annotation_edit">Add categories</h4>
+  </div>
+  <div class="modal-body">
+    <div id="descriptions_display" class="tab-pane active">
+      <%= simple_form_for @form, remote: true, html: { multipart: true } do |f| %>
+        <div class="well">
+          <label>Content</label>
+          <ul class="listing">
+            <li><%= f.object.content %></li>
+          </ul>
+          <%= render_edit_field_partial(:category, f: f) %>
+        </div>
+        <div>
+          <%= f.submit class: 'btn btn-primary', id: "upload_submit", name: "update_descriptions" do %>
+            <i class="glyphicon glyphicon-floppy-disk"></i> Save Descriptions
+          <% end %>
+        </div>
+      <% end %>
+</div>
+  </div>
+</div>

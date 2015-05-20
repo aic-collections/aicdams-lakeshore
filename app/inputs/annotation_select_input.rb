@@ -32,6 +32,8 @@ class AnnotationSelectInput < MultiValueInput
     field_value = value.send(:content)
     field_name = singular_input_name_for(attribute_name, index, :content)
     @html << @builder.text_field(field_name, options.merge(value: field_value, name: field_name))
+
+    @html << category_button(attribute_name, value) unless field_value.nil?
     
     # hidden field to trigger removal
     destroy_field_name = destroy_name_for(attribute_name, index)
@@ -43,6 +45,18 @@ class AnnotationSelectInput < MultiValueInput
     id = id_for(attribute_name, index, 'id'.freeze)
     hidden_value = value.new_record? ? '' : value.id
     @html << @builder.hidden_field(attribute_name, name: name, id: id, value: hidden_value, data: { id: 'remote' })
+  end
+
+  def category_button(attribute_name, value)
+    class_name = attribute_name.to_s.match("aictags") ? "tags" : attribute_name.to_s
+<<-EOF    
+<span class="input-group-btn">
+  <button class="btn btn-default category" data-id="#{value.id}" data-class="#{class_name}">
+    <i class="icon-white glyphicon-plus"></i>
+    <span>Category</span>
+  </button>
+</span>
+EOF
   end
 
   def name_for(attribute_name, index, field)

@@ -1,0 +1,10 @@
+<%= simple_form_for @form, html: { multipart: true } do |f| %>
+  <div class="well">
+    <% f.object.terms.each do |term| %>
+      <%= render_edit_field_partial(term, f: f) %>
+    <% end %>
+  </div>
+  <%= f.submit class: 'btn btn-primary', onclick: "confirmation_needed = false;", id: "upload_submit", name: "update_descriptions" do %>
+    <i class="glyphicon glyphicon-floppy-disk"></i> Save Descriptions
+  <% end %>
+<% end %>

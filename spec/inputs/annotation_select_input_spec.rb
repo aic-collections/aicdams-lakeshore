@@ -17,4 +17,20 @@ describe AnnotationSelectInput, type: :input do
     end
   end
 
+  describe "#category_button" do
+    let(:id) { "1234" }
+    let(:value) { double("value", id: id) }
+    let(:comments) { :comments }
+    let(:tags)     { :aictags }
+    context "when rendering a comment's category button" do
+      subject { input.send(:category_button, comments, value) }
+      it { is_expected.to include("data-id=\"#{id}\"") }
+      it { is_expected.to include("data-class=\"#{comments}\"") }
+    end
+    context "when rendering a tag's category button" do
+      subject { input.send(:category_button, tags, value) }
+      it { is_expected.to include("data-class=\"tags\"") }
+    end
+  end
+
 end
