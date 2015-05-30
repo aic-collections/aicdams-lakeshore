@@ -110,22 +110,39 @@ describe GenericFile do
   end
 
   describe "aictags" do
-
+    let(:pref_label) { "bar category" }
+    let(:content) { "the tag's content" }
+    let(:category) do
+      TagCat.create.tap do |t|
+        t.pref_label = pref_label
+        t.apply_depositor_metadata "user"
+      end
+    end
+    let(:tag) do
+      Tag.create.tap do |t|
+        t.content = content
+      end
+    end
     let(:tagged_resource) do
       GenericFile.create.tap do |file|
         file.title = ["Tagged thing"]
         file.apply_depositor_metadata "user"
-        file.aictags_attributes = [{content: "foo tag", category: ["bar category"]}]
       end
+    end
+
+    before do
+      tag.tagcats = [category]
+      tag.save
+      tagged_resource.aictags = [tag]
+      tagged_resource.save
     end
 
     subject { tagged_resource.aictags.first }
     it { is_expected.to be_kind_of Tag }
-    specify "has content and a category" do
-      expect(subject.category).to eql ["bar category"]
-      expect(subject.content).to eql "foo tag"
+    specify "has content and categories" do
+      expect(subject.tagcats.first.pref_label).to eql pref_label
+      expect(subject.content).to eql content
     end
-
   end
 
   describe "cardinality" do

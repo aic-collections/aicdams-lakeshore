@@ -9,8 +9,4 @@ class Annotation < ActiveFedora::Base
     index.as :stored_searchable
   end 
 
-  property :category, predicate: ::AIC.category do |index|
-    index.as :stored_searchable
-  end
-
 end
