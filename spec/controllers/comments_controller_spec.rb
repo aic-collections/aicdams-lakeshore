@@ -8,15 +8,27 @@ describe CommentsController do
     allow_any_instance_of(User).to receive(:groups).and_return([])
   end
 
-  let(:comment)   { Comment.create(content: "Test comment") }
+  let(:comment) { Comment.create(content: "Test comment") }
+  let(:content) { "updated content" }
+  let(:cat1)    { "first category" }
 
   describe "#update" do
-    before { post :update, id: comment, comment: { content: "foo comment", category: ["bar category"] } }
-    it "changes the metadata of the comment" do
-      expect(response).to be_redirect
-      expect(comment.reload.content).to eql "foo comment"
-      expect(comment).to be_kind_of(Comment)
-      expect(comment.type).to include(::AICType.Comment)
+    context "both content and category" do
+      before do
+        post :update, id: comment, comment: { content: content, category: [cat1] }
+        comment.reload
+      end
+      it "changes the metadata of the comment" do
+        expect(response).to be_redirect
+        expect(comment.content).to eql content
+        expect(comment.category).to include(cat1)
+        expect(comment).to be_kind_of(Comment)
+      end
+    end
+    context "removing a category" do
+      before { post :update, id: comment, comment: { category: [""] } }
+      subject { comment.category }
+      it { is_expected.to be_empty }
     end
   end
 

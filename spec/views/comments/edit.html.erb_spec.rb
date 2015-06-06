@@ -3,7 +3,7 @@ require 'rails_helper'
 describe "comments/edit.html.erb" do
 
   let(:comment) { Comment.create(content: "A comment") }
-  let(:form) { AnnotationEditForm.new(comment) }
+  let(:form)    { CommentEditForm.new(comment) }
 
   before do
     allow(controller).to receive(:current_user).and_return(stub_model(User))
@@ -13,6 +13,7 @@ describe "comments/edit.html.erb" do
   end
 
   subject { rendered }
-  it { is_expected.to include "Edit Comment" }
+  it { is_expected.to include "<h4>Edit Comment</h4>" }
+  it { is_expected.to include 'value="A comment"' }
 
 end

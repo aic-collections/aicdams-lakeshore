@@ -1,5 +1,5 @@
-class AnnotationPresenter
+class CommentPresenter
   include Hydra::Presenter
-  self.model_class = Annotation
+  self.model_class = Comment
   self.terms = [ :content, :category ]
 end

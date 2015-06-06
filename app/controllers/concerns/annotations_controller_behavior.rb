@@ -9,10 +9,6 @@ module AnnotationsControllerBehavior
     before_action :authenticate_user!, except: [:show]
     before_action :has_access?, except: [:show]
     before_action :set_annotation, only: [:update, :edit]
-
-    class_attribute :edit_form_class, :presenter_class
-    self.presenter_class = AnnotationPresenter
-    self.edit_form_class = AnnotationEditForm
   end
 
   def edit

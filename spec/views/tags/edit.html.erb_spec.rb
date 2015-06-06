@@ -3,7 +3,7 @@ require 'rails_helper'
 describe "tags/edit.html.erb" do
 
   let(:tag) { Tag.create(content: "A tag") }
-  let(:form) { AnnotationEditForm.new(tag) }
+  let(:form) { TagEditForm.new(tag) }
 
   before do
     allow(controller).to receive(:current_user).and_return(stub_model(User))
