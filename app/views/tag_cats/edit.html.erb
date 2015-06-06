@@ -1,0 +1,14 @@
+<h1 class="lower">Edit tag category</h1>
+
+<ul class="nav nav-tabs">
+  <li id="edit_descriptions_link" class="active">
+    <a href="#descriptions_display" data-toggle="tab"><i class="glyphicon glyphicon-tags"></i> Descriptions</a>
+  </li>
+  <li id="edit_permissions_link"><a href="#permissions_display" data-toggle="tab">
+    <i class="glyphicon glyphicon-key"></i> Permissions</a>
+  </li>
+</ul>
+<div class="tab-content">
+  <%= render "descriptions", tag_cat: @tag_cat %>
+  <%= render "permission", tag_cat: @tag_cat %>
+</div>
