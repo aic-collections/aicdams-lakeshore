@@ -83,7 +83,7 @@ describe TagCat do
     end
   end
 
-  describe "permissions validation" do
+  describe "validation" do
     subject do
       category.apply_depositor_metadata user
       category
@@ -115,8 +115,11 @@ describe TagCat do
       end
     end
 
-    context "everything is copacetic" do
-      it { is_expected.to be_valid }
+    context "without a pref_label" do
+      it "should be invalid" do
+        expect(subject).to_not be_valid
+        expect(subject.errors[:pref_label]).to include("can't be blank")
+      end
     end
   end
 

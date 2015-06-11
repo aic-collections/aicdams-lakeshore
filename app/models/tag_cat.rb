@@ -2,6 +2,8 @@ class TagCat < ActiveFedora::Base
   include Sufia::GenericFile::Permissions
   include Hydra::WithDepositor
 
+  validates_presence_of :pref_label
+  
   type ::AICType.TagCat
 
   has_many :aictags, inverse_of: :tagcats, class_name: "Tag"
