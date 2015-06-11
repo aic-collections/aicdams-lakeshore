@@ -7,6 +7,7 @@ module NestedAttributes
       permitted = super
       permitted << { comments_attributes: permitted_annotation_params }
       permitted << { aictags_attributes: permitted_annotation_params }
+      permitted << { tagcat_ids: [] }
       permitted
     end
 
