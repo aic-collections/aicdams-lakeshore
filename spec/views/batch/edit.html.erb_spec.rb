@@ -8,7 +8,7 @@ describe 'batch/edit.html.erb' do
       f.comments_attributes = [{content: "foo comment", category: ["bar category"]}]
     end
   end
-  let(:form) { ResourceBatchEditForm.new(generic_file) }
+  let(:form) { AssetBatchEditForm.new(generic_file) }
 
   before do
     allow(controller).to receive(:current_user).and_return(stub_model(User))

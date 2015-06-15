@@ -19,7 +19,7 @@ describe "generic_files/edit.html.erb" do
       resource_type: ['Book', 'Dataset'])
   end
 
-  let(:form) { ResourceEditForm.new(generic_file) }
+  let(:form) { AssetEditForm.new(generic_file) }
 
   let(:page) do
     render
@@ -34,7 +34,7 @@ describe "generic_files/edit.html.erb" do
     assign(:version_list, version_list)
   end
 
-  it "shows aictype:Resource fields" do
+  it "shows aictype:Asset fields" do
     expect(page).to have_selector("input#generic_file_title", count: 1)
     expect(page).to have_selector("input#generic_file_location", count: 1)
     expect(page).to have_selector("input#generic_file_metadata", count: 1)

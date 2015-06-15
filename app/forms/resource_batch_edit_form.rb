@@ -1,2 +1,0 @@
-class ResourceBatchEditForm < ResourceEditForm
-end

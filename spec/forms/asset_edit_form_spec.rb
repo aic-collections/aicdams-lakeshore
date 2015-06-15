@@ -1,14 +1,14 @@
 require 'rails_helper'
 
-describe ResourceEditForm do
+describe AssetEditForm do
 
   describe "::permitted_annotation_params" do
-    subject { ResourceEditForm.permitted_annotation_params }
+    subject { AssetEditForm.permitted_annotation_params }
     it { is_expected.to include(:id, :_destroy, :content, { category: [] } ) }
   end
 
   describe "::build_permitted_params" do
-    subject { ResourceEditForm.build_permitted_params.map {|c| c.keys if c.is_a? Hash }.flatten }
+    subject { AssetEditForm.build_permitted_params.map {|c| c.keys if c.is_a? Hash }.flatten }
     it { is_expected.to include(:comments_attributes, :aictags_attributes) }
   end
 
@@ -25,7 +25,7 @@ describe ResourceEditForm do
           file.save!
         end
       end
-      let(:form) { ResourceEditForm.new(generic_file) }
+      let(:form) { AssetEditForm.new(generic_file) }
       subject { form[:comments] }
       it { is_expected.to include(c1, c2) }
     end
@@ -38,7 +38,7 @@ describe ResourceEditForm do
           file.save!
         end
       end
-      let(:form) { ResourceEditForm.new(generic_file) }
+      let(:form) { AssetEditForm.new(generic_file) }
       subject { form[:comments] }
       it { is_expected.to include(Comment) }
     end

@@ -1,4 +1,4 @@
-module ResourceMetadata
+module AssetMetadata
   extend ActiveSupport::Concern
   
   included do

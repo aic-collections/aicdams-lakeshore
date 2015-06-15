@@ -1,0 +1,2 @@
+class AssetBatchEditForm < AssetEditForm
+end

@@ -8,7 +8,7 @@ class TagCat < ActiveFedora::Base
 
   has_many :aictags, inverse_of: :tagcats, class_name: "Tag"
 
-  # TODO: include from Resource metadata? or overkill?
+  # TODO: include from Asset metadata? or overkill?
   property :pref_label, predicate: ::RDF::SKOS.prefLabel, multiple: false do |index|
       index.as :stored_searchable
   end

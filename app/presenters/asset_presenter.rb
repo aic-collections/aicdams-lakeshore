@@ -1,4 +1,4 @@
-class ResourcePresenter < Sufia::GenericFilePresenter
+class AssetPresenter < Sufia::GenericFilePresenter
   self.terms = [
     :comments,
     :location,

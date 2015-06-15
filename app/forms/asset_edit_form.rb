@@ -1,4 +1,4 @@
-class ResourceEditForm < ResourcePresenter
+class AssetEditForm < AssetPresenter
   include HydraEditor::Form
   include HydraEditor::Form::Permissions
   include NestedAttributes
