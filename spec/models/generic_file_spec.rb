@@ -4,6 +4,33 @@ describe GenericFile do
 
   subject { GenericFile.new }
 
+  describe "intial RDF types" do
+    subject { GenericFile.new.type }
+    it { is_expected.to include(AICType.Asset) }
+  end
+  describe "asserting StillImage" do
+    before  { subject.assert_still_image }
+    specify { expect(subject.type).to include(AICType.Asset, AICType.StillImage) }
+    context "and re-asserting StillImage" do
+      before  { subject.assert_still_image }
+      specify { expect(subject).not_to receive(:set_value)}
+    end
+    context "and asserting Text" do
+      specify { expect(subject.assert_text).to be false }
+    end
+  end
+  describe "setting type to Text" do
+    before  { subject.assert_text }
+    specify { expect(subject.type).to include(AICType.Asset, AICType.Text) }
+    context "and re-asserting Text" do
+      before  { subject.assert_text }
+      specify { expect(subject).not_to receive(:set_value)}
+    end
+    context "and asserting StillImage" do
+      specify { expect(subject.assert_still_image).to be false }
+    end    
+  end
+
   describe "terms" do
     it { is_expected.to respond_to(:batch_uid) }
     it { is_expected.to respond_to(:aiccreated) }
