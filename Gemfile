@@ -4,6 +4,7 @@ gem 'rails', '4.2.1'
 
 # Hydra Gems
 gem 'sufia', github: 'projecthydra/sufia', branch: 'master'
+gem 'active-fedora', github: 'projecthydra/active_fedora', branch: 'master'
 gem 'kaminari', github: 'jcoyne/kaminari', branch: 'sufia'
 
 gem 'coffee-rails', '~> 4.1.0'

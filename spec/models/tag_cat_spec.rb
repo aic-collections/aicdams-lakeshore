@@ -6,8 +6,9 @@ describe TagCat do
   let(:pref_label) { "the category's content" }
   let(:user) { "user" }
 
-  it "is a kind of AICType.TagCat" do
-    expect(category.type).to include(AICType.TagCat)
+  describe "RDF types" do
+    subject { category.type }
+    it { is_expected.to include(AICType.TagCat, AICType.Resource) }
   end
 
   context "when definng the tag's content" do

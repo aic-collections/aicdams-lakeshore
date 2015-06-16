@@ -7,7 +7,7 @@ class GenericFile < ActiveFedora::Base
   validate :write_once_only_fields, on: :update
   after_save :uid_matches_id, on: :create
 
-  type AICType.Asset
+  type [AICType.Asset, AICType.Resource]
 
   def is_still_image?
     self.type.include? AICType.StillImage

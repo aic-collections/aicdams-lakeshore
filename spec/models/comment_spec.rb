@@ -12,7 +12,7 @@ describe Comment do
 
   describe "#type" do
     subject { comment.type }
-    it { is_expected.to include(AICType.Comment) }
+    it { is_expected.to include(AICType.Comment, AICType.Annotation, AICType.Resource) }
   end
 
   describe "#category" do

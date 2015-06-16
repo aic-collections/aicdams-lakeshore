@@ -4,7 +4,7 @@ class TagCat < ActiveFedora::Base
 
   validates_presence_of :pref_label
   
-  type ::AICType.TagCat
+  type [AICType.TagCat, AICType.Resource]
 
   has_many :aictags, inverse_of: :tagcats, class_name: "Tag"
 

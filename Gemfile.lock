@@ -8,6 +8,22 @@ GIT
       activesupport (>= 3.0.0)
 
 GIT
+  remote: git://github.com/projecthydra/active_fedora.git
+  revision: d11806b4f7e3aa69c2241a6d2b1a485fe00a6880
+  branch: master
+  specs:
+    active-fedora (9.1.1)
+      active-triples (~> 0.7.1)
+      activesupport (>= 4.1.0)
+      deprecation
+      ldp (~> 0.3.1)
+      linkeddata
+      nom-xml (>= 0.5.1)
+      om (~> 3.1)
+      rdf-rdfxml (~> 1.1.0)
+      rsolr (~> 1.0.10)
+
+GIT
   remote: git://github.com/projecthydra/sufia.git
   revision: eb714cb91f4ecd49dec67b0e9996dc3d4e918f1a
   branch: master
@@ -75,18 +91,7 @@ GEM
       erubis (~> 2.7.0)
       rails-dom-testing (~> 1.0, >= 1.0.5)
       rails-html-sanitizer (~> 1.0, >= 1.0.1)
-    active-fedora (9.1.1)
-      active-triples (~> 0.6.0)
-      activesupport (>= 4.1.0)
-      deprecation
-      ldp (~> 0.3.0)
-      linkeddata
-      nom-xml (>= 0.5.1)
-      om (~> 3.1)
-      rdf-ldp
-      rdf-rdfxml (~> 1.1.0)
-      rsolr (~> 1.0.10)
-    active-triples (0.6.1)
+    active-triples (0.7.1)
       activemodel (>= 3.0.0)
       activesupport (>= 3.0.0)
       deprecation (~> 0.1)
@@ -453,9 +458,6 @@ GEM
       rdf (>= 1.1)
     rdf-json (1.1.2)
       rdf (~> 1.1)
-    rdf-ldp (0.1.0)
-      deprecation
-      rdf
     rdf-microdata (2.0.1)
       htmlentities (~> 4.3)
       nokogiri (~> 1.6)
@@ -633,6 +635,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  active-fedora!
   better_errors
   binding_of_caller
   byebug

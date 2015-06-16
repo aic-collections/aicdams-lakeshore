@@ -21,7 +21,7 @@ describe Tag do
 
   describe "#type" do
     subject { tag.type }
-    it { is_expected.to include(AICType.Tag) }
+    it { is_expected.to include(AICType.Tag, AICType.Annotation, AICType.Resource) }
   end
 
   describe "#tagcats" do

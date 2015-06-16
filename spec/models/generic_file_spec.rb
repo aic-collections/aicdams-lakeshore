@@ -6,7 +6,7 @@ describe GenericFile do
 
   describe "intial RDF types" do
     subject { GenericFile.new.type }
-    it { is_expected.to include(AICType.Asset) }
+    it { is_expected.to include(AICType.Asset, AICType.Resource) }
   end
   describe "asserting StillImage" do
     before  { subject.assert_still_image }

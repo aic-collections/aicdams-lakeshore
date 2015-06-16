@@ -1,6 +1,6 @@
 class Tag < Annotation
   
-  type ::AICType.Tag
+  type [AICType.Tag, AICType.Annotation, AICType.Resource]
 
   has_many :generic_files, inverse_of: :aictags, class_name: "GenericFile"
   has_and_belongs_to_many :tagcats, predicate: AIC.category, class_name: "TagCat", inverse_of: :aictags
