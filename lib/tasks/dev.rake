@@ -1,3 +1,5 @@
+require 'active_fedora/cleaner'
+
 desc "Run continuous integration test"
 task ci: ['jetty:clean', 'db:migrate'] do
   jetty_params = Jettywrapper.load_config
@@ -7,10 +9,19 @@ task ci: ['jetty:clean', 'db:migrate'] do
   raise "test failures: #{error}" if error
 end
 
+desc "Clean out development environment"
+task clean: ['jetty:empty', 'db:drop', 'db:migrate']
+
 namespace :jetty do
 
   desc "Configure Jetty"
   task config: ['jetty:clean', 'sufia:jetty:config', 'jetty:start', 'fedora:config']
+
+  desc "Empty out jetty of all its records"
+  task empty: :environment do
+    raise "You can't do this in production" if Rails.env.match("production")
+    ActiveFedora::Cleaner.clean!
+  end
 
 end
 
