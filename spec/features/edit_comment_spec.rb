@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe "Editing annotations" do
+describe "Editing comments" do
 
   let(:user) { FactoryGirl.create(:user) }
   before { sign_in user }
@@ -20,12 +20,6 @@ describe "Editing annotations" do
       click_button("Remove")
       click_button("upload_submit")
       expect(find_field("comment[category][]").value).to be_empty
-    end
-  end
-
-  context "using tags" do
-    it "supports adding and removing existing categories only" do
-      skip "not implemented yet"
     end
   end
 

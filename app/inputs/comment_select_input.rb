@@ -1,4 +1,4 @@
-class AnnotationSelectInput < MultiValueInput
+class CommentSelectInput < MultiValueInput
 
   attr_accessor :html
 
@@ -27,7 +27,7 @@ class AnnotationSelectInput < MultiValueInput
     options
   end
 
-  # Any changes to this markup will also need to be made in app/assets/javascripts/annotation.js
+  # Any changes to this markup will also need to be made in app/assets/javascripts/comments.js
   def build_components(attribute_name, value, index, options)
     field_value = value.send(:content)
     field_name = singular_input_name_for(attribute_name, index, :content)
@@ -47,6 +47,7 @@ class AnnotationSelectInput < MultiValueInput
     @html << @builder.hidden_field(attribute_name, name: name, id: id, value: hidden_value, data: { id: 'remote' })
   end
 
+  # TODO: not needed?
   def category_button(attribute_name, value)
     class_name = attribute_name.to_s.match("aictags") ? "tags" : attribute_name.to_s
 <<-EOF    

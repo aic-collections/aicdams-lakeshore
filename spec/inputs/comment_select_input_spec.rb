@@ -1,11 +1,11 @@
 require 'rails_helper'
 
-describe AnnotationSelectInput, type: :input do
+describe CommentSelectInput, type: :input do
 
   let(:view) { double() }
   let(:generic_file) { GenericFile.new }
   let(:builder) { SimpleForm::FormBuilder.new(:generic_file, generic_file, view, {}) }
-  let(:input) { AnnotationSelectInput.new(builder, :comments, nil, :multi_value, {}) }
+  let(:input) { CommentSelectInput.new(builder, :comments, nil, :multi_value, {}) }
 
   describe "#singular_input_name_for" do
     context "when rendering a comment's input field" do

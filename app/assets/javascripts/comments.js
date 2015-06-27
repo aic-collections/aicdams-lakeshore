@@ -1,9 +1,9 @@
-// This adds new annotation fields to the edit form.
+// This adds new comment fields to the edit form.
 //
 // Duplicated from https://github.com/curationexperts/alexandria-v2/blob/master/app/assets/javascripts/editor.js
 //
-// It uses handelbars.js to create a template into which are passed a field name (comments or aictags), index value
-// and class. This returns a new html string with the fields for the annotation. 
+// It uses handelbars.js to create a template into which are passed a field name, index value
+// and class. This returns a new html string with the fields for the comment. 
 // The hydra-editor gem takes care of the bulk of the actions such attaching the listeners to the "Add" button 
 // and inserting the new field into the html form.
 //
@@ -18,7 +18,7 @@
 // 
 // TODOs:
 //   - select needs to pull values from the Tag class
-//   - QA needs to be involed to query existing annotations
+//   - QA needs to be involed to query existing comments
 //
 //= require hydra-editor/hydra-editor
 //= require handlebars-v3.0.3
@@ -33,11 +33,11 @@ var source = "<li class=\"field-wrapper input-group input-append\">" +
 
 var template = Handlebars.compile(source);
 
-function AnnotationsFieldManager(element, options) {
+function CommentsFieldManager(element, options) {
   HydraEditor.FieldManager.call(this, element, options); // call super constructor.
 }
 
-AnnotationsFieldManager.prototype = Object.create(HydraEditor.FieldManager.prototype,
+CommentsFieldManager.prototype = Object.create(HydraEditor.FieldManager.prototype,
   {
     createNewField: { value: function($activeField) {
       var fieldName = $activeField.find('input').data('attribute');
@@ -58,7 +58,7 @@ AnnotationsFieldManager.prototype = Object.create(HydraEditor.FieldManager.proto
 
     newFieldTemplate: { value: function(fieldName) {
       var index = this.maxIndex();
-      return $(template({ "name": fieldName, "index": index, "class": "annotation_select" }));
+      return $(template({ "name": fieldName, "index": index, "class": "comment_select" }));
     }},
 
     addBehaviorsToInput: { value: function($newField) {
@@ -80,22 +80,22 @@ AnnotationsFieldManager.prototype = Object.create(HydraEditor.FieldManager.proto
     }}
   }
 );
-AnnotationsFieldManager.prototype.constructor = AnnotationsFieldManager;
+CommentsFieldManager.prototype.constructor = CommentsFieldManager;
 
-$.fn.manage_annotation_fields = function(option) {
+$.fn.manage_comment_fields = function(option) {
   return this.each(function() {
     var $this = $(this);
     var data  = $this.data('manage_fields');
     var options = $.extend({}, HydraEditor.FieldManager.DEFAULTS, $this.data(), typeof option == 'object' && option);
 
-    if (!data) $this.data('manage_fields', (data = new AnnotationsFieldManager(this, options)));
+    if (!data) $this.data('manage_fields', (data = new CommentsFieldManager(this, options)));
   })
 }
 
 Blacklight.onLoad(function() {
-  $('.annotation_select.form-group').manage_annotation_fields();
+  $('.comment_select.form-group').manage_comment_fields();
 
-  // Open mode to edit annotation categories
+  // Open mode to edit comment categories
   $('.btn.category').on('click', function(event) {
     var url = ROOT_PATH+$(this).data("class")+'/'+$(this).data("id")+'/edit';
     var jqxhr = $.get(url)

@@ -7,7 +7,7 @@ describe "comments/edit.html.erb" do
 
   before do
     allow(controller).to receive(:current_user).and_return(stub_model(User))
-    assign(:annotation, comment)
+    assign(:comment, comment)
     assign(:form, form)
     render
   end

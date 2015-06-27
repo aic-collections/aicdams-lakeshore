@@ -1,5 +1,5 @@
 class CommentsController < ApplicationController
-  include AnnotationsControllerBehavior
+  include CommentsControllerBehavior
 
   class_attribute :edit_form_class, :presenter_class
   self.presenter_class = CommentPresenter

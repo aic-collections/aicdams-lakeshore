@@ -39,12 +39,6 @@ describe "Editing generic files" do
       expect(find_field("generic_file[comments_attributes][0][content]").value).to eql comment1
       expect(find_field("generic_file[comments_attributes][1][content]").value).to eql comment2
     end
-  end
-
-  context "with aictags" do
-    it "supports adding only existing tags" do
-      skip "not implemented yet"
-    end
-  end  
+  end 
 
 end

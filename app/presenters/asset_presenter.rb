@@ -4,7 +4,7 @@ class AssetPresenter < Sufia::GenericFilePresenter
     :location,
     :metadata,
     :publishing_context,
-    :aictags,
+    #:aictags, # TODO: Add back in
     :status,
     :contributor,
     :coverage,
