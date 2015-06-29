@@ -411,6 +411,9 @@ GEM
     orm_adapter (0.5.0)
     parslet (1.7.0)
       blankslate (>= 2.0, <= 4.0)
+    passenger (5.0.6)
+      rack
+      rake (>= 0.8.1)
     pg (0.18.2)
     poltergeist (1.6.0)
       capybara (~> 2.1)
@@ -651,6 +654,7 @@ DEPENDENCIES
   jquery-rails
   kaminari!
   linkeddata (= 1.1.11)
+  passenger
   pg
   poltergeist
   rails (= 4.2.1)
