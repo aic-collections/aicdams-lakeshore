@@ -411,6 +411,7 @@ GEM
     orm_adapter (0.5.0)
     parslet (1.7.0)
       blankslate (>= 2.0, <= 4.0)
+    pg (0.18.2)
     poltergeist (1.6.0)
       capybara (~> 2.1)
       cliver (~> 0.3.1)
@@ -650,6 +651,7 @@ DEPENDENCIES
   jquery-rails
   kaminari!
   linkeddata (= 1.1.11)
+  pg
   poltergeist
   rails (= 4.2.1)
   rsolr (~> 1.0.6)

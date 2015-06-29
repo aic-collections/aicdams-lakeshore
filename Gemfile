@@ -34,3 +34,7 @@ group :test do
   gem 'rspec-activemodel-mocks'
   gem 'rspec-rails', '~> 3.0'
 end
+
+group :production do
+  gem 'pg'
+end
