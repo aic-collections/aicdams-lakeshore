@@ -11,9 +11,23 @@ module TagsControllerBehavior
     before_action :set_tag, only: [:update, :edit]
   end
 
+  def new
+    @tag = Tag.new
+  end
+
+  def create
+    @tag = Tag.new
+    if update_tag
+      flash[:notice] = "A new tag was created"
+      redirect_to edit_tag_path(@tag)
+    else
+      flash[:error] = @tag.errors.full_messages.join(",")
+      redirect_to new_tag_path
+    end
+  end
+
   def edit
-    set_edit_form
-    render partial: "tags/modal", form: @form if request.xhr?
+    @form = edit_form_class.new(@tag)
   end
 
   def update
@@ -22,27 +36,19 @@ module TagsControllerBehavior
     else
       flash[:error] = "The update was unsuccessful"
     end
-    respond_to do |format|
-      format.html { redirect_to action: "edit" }
-      format.js   { render nothing: true }
-    end
+    redirect_to edit_tag_path(@tag)
   end
 
   private
 
-  def update_tag
-    attributes = edit_form_class.model_attributes(params[@tag.class.to_s.downcase.to_sym])
-    @tag.attributes = attributes
-    @tag.save
-  end
+    def update_tag
+      attributes = edit_form_class.model_attributes(params["tag"])
+      @tag.attributes = attributes
+      @tag.save
+    end
 
-  def set_tag
-    @tag = ActiveFedora::Base.find(params[:id])
-    render_500("Incorrect tag class") unless @tag.is_a?(Tag) || @tag.is_a?(Comment)
-  end
-
-  def set_edit_form
-    @form = edit_form_class.new(@tag)
-  end
+    def set_tag
+      @tag = ActiveFedora::Base.find(params[:id])
+    end
 
 end
