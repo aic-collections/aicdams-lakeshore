@@ -26,6 +26,10 @@ group :development, :test do
   gem 'sqlite3'
 end
 
+group :development do
+  gem 'capistrano-rails', require: false
+end
+
 group :test do
   gem 'capybara', '~> 2.0'
   gem 'database_cleaner'
