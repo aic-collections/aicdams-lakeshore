@@ -136,7 +136,7 @@ describe GenericFile do
 
   end
 
-  describe "aictags" do
+  describe "#aictag_ids" do
     let(:pref_label) { "bar category" }
     let(:content) { "the tag's content" }
     let(:category) do
@@ -160,7 +160,7 @@ describe GenericFile do
     before do
       tag.tagcats = [category]
       tag.save
-      tagged_resource.aictags = [tag]
+      tagged_resource.aictag_ids = [tag.id]
       tagged_resource.save
     end
 
