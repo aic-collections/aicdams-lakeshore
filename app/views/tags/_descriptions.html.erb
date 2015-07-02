@@ -1,5 +1,5 @@
 <%= simple_form_for @tag do |f| %>
-  <%= f.input :content %>
-  <%= f.input :tagcat_ids %>
+  <%= f.input :content, required: true   %>
+  <%= f.input :tagcat_ids, as: :multi_value, input_html: { class: 'form-control' } %>
   <%= f.button :submit %>
 <% end %>
