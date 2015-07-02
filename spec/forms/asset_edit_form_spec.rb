@@ -9,7 +9,7 @@ describe AssetEditForm do
 
   describe "::build_permitted_params" do
     subject { AssetEditForm.build_permitted_params.map {|c| c.keys if c.is_a? Hash }.flatten }
-    it { is_expected.to include(:comments_attributes, :aictags_attributes) }
+    it { is_expected.to include(:comments_attributes, :aictag_ids, :tagcat_ids) }
   end
 
   describe "#initialize_field" do

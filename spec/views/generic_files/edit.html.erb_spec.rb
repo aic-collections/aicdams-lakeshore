@@ -16,7 +16,8 @@ describe "generic_files/edit.html.erb" do
   let(:generic_file) do
     stub_model(GenericFile, id: '123',
       depositor: 'bob',
-      resource_type: ['Book', 'Dataset'])
+      resource_type: ['Book', 'Dataset']
+    )
   end
 
   let(:form) { AssetEditForm.new(generic_file) }
@@ -61,6 +62,10 @@ describe "generic_files/edit.html.erb" do
 
   it "does not show wro on create fields" do
     expect(page).not_to have_selector("input#generic_file_department", count: 1)
+  end
+
+  it "has the tag ids for attached tags" do
+    expect(page).to have_selector("input#generic_file_aictag_ids", count: 1)
   end
 
 end

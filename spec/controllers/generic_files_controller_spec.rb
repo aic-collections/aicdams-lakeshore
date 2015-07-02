@@ -19,129 +19,194 @@ describe GenericFilesController do
   let(:comment2) { Comment.create(content: "second comment") }
   let(:comment3) { Comment.create(content: "third comment", category: ["bat", "baz"]) }
 
-  describe "adding new comments" do
-    let(:attributes) do
-      { comments_attributes: [{content: "foo comment", category: ["bar category"]}] }
-    end
-
-    before { post :update, id: generic_file, generic_file: attributes }
-    subject { generic_file.reload }
-
-    it "should set the values using the parameters hash" do
-      expect(subject.comments.first.content).to eql "foo comment"
-      expect(subject.comments.first.category).to eql ["bar category"]
+  let(:tagcat1) do
+    TagCat.create.tap do |t|
+      t.pref_label = "tagcat1"
+      t.apply_depositor_metadata(user)
+      t.save
     end
   end
 
-  describe "updating existing comments" do
-    let(:attributes) do
-      {
-        comments_attributes: {
-          "0" => { id: comment1.id, content: "updated first comment", category: ["new category"] },
-          "1" => { id: comment2.id, content: "second comment" }
-        }
-      }
+  let(:tagcat2) do
+    TagCat.create.tap do |t|
+      t.pref_label = "tagcat2"
+      t.apply_depositor_metadata(user)
+      t.save
+    end
+  end
+
+  let(:tag1) { Tag.create(content: "tag1", tagcat_ids: [tagcat1.id, tagcat2.id]) }
+  let(:tag2) { Tag.create(content: "tag2", tagcat_ids: [tagcat1.id]) }
+
+  describe "#update" do
+    describe "adding new comments" do
+      let(:attributes) do
+        { comments_attributes: [{content: "foo comment", category: ["bar category"]}] }
+      end
+
+      before { post :update, id: generic_file, generic_file: attributes }
+      subject { generic_file.reload }
+
+      it "should set the values using the parameters hash" do
+        expect(subject.comments.first.content).to eql "foo comment"
+        expect(subject.comments.first.category).to eql ["bar category"]
+      end
     end
 
-    before do
-      generic_file.comments = [comment1, comment2]
-      generic_file.save
-      post :update, id: generic_file, generic_file: attributes
-    end
-    subject { generic_file.reload }
-    it "should set the values using the parameters hash" do
-      expect(subject.comments.first.content).to eql "updated first comment"
-      expect(subject.comments.first.category).to eql ["new category"]
-      expect(subject.comments.second.content).to eql "second comment"
-    end
-
-    context "when the form sends empty comments" do
-      let(:empty_comments) do
+    describe "updating existing comments" do
+      let(:attributes) do
         {
           comments_attributes: {
-            "0" => { id: comment1.id , _destroy: "false", content: "new comment" }, 
-            "1" => { _destroy: "false", content: "" }
+            "0" => { id: comment1.id, content: "updated first comment", category: ["new category"] },
+            "1" => { id: comment2.id, content: "second comment" }
           }
         }
       end
-      
+
       before do
-        generic_file.comments = [comment1]
+        generic_file.comments = [comment1, comment2]
         generic_file.save
+        post :update, id: generic_file, generic_file: attributes
+      end
+      subject { generic_file.reload }
+      it "should set the values using the parameters hash" do
+        expect(subject.comments.first.content).to eql "updated first comment"
+        expect(subject.comments.first.category).to eql ["new category"]
+        expect(subject.comments.second.content).to eql "second comment"
       end
 
-      it "removes them from the attributes hash" do
-        post :update, id: generic_file, generic_file: empty_comments
-        expect(response).to be_redirect
+      context "when the form sends empty comments" do
+        let(:empty_comments) do
+          {
+            comments_attributes: {
+              "0" => { id: comment1.id , _destroy: "false", content: "new comment" }, 
+              "1" => { _destroy: "false", content: "" }
+            }
+          }
+        end
+        
+        before do
+          generic_file.comments = [comment1]
+          generic_file.save
+        end
+
+        it "removes them from the attributes hash" do
+          post :update, id: generic_file, generic_file: empty_comments
+          expect(response).to be_redirect
+        end
       end
     end
-  end
 
-  describe "removing existing comments" do
-    let(:attributes) do
-      {
-        comments_attributes: {
-          "0" => { id: comment1.id, "_destroy" => true },
-          "1" => { id: comment2.id, content: "updated second comment" }
+    describe "removing existing comments" do
+      let(:attributes) do
+        {
+          comments_attributes: {
+            "0" => { id: comment1.id, "_destroy" => true },
+            "1" => { id: comment2.id, content: "updated second comment" }
+          }
         }
-      }
+      end
+
+      before do
+        generic_file.comments = [comment1, comment2]
+        generic_file.save
+        post :update, id: generic_file, generic_file: attributes
+      end
+      subject { generic_file.reload }
+      it "removes the comment from the resource" do
+        expect(subject.comments.first.content).to eql "updated second comment"
+        expect(subject.comments.count).to eql 1
+        expect(Comment.all.map { |c| c.content}).to include("first comment", "updated second comment")
+      end
     end
 
-    before do
-      generic_file.comments = [comment1, comment2]
-      generic_file.save
-      post :update, id: generic_file, generic_file: attributes
-    end
-    subject { generic_file.reload }
-    it "removes the comment from the resource" do
-      expect(subject.comments.first.content).to eql "updated second comment"
-      expect(subject.comments.count).to eql 1
-      expect(Comment.all.map { |c| c.content}).to include("first comment", "updated second comment")
-    end
-  end
-
-  describe "updating comments with categories" do
-    let(:attributes) do
-      {
-        comments_attributes: {
-          "0" => { id: comment3.id, category: ["bat", "buz"] }
+    describe "updating comments with categories" do
+      let(:attributes) do
+        {
+          comments_attributes: {
+            "0" => { id: comment3.id, category: ["bat", "buz"] }
+          }
         }
-      }
+      end
+
+      before do
+        generic_file.comments = [comment3]
+        generic_file.save
+        post :update, id: generic_file, generic_file: attributes
+      end
+      
+      subject { generic_file.reload }
+      it "updates the categories of the comment" do
+        expect(subject.comments.first.category).to include("bat", "buz")
+        expect(subject.comments.first.category).not_to include("baz")
+      end
     end
 
-    before do
-      generic_file.comments = [comment3]
-      generic_file.save
-      post :update, id: generic_file, generic_file: attributes
-    end
-    
-    subject { generic_file.reload }
-    it "updates the categories of the comment" do
-      expect(subject.comments.first.category).to include("bat", "buz")
-      expect(subject.comments.first.category).not_to include("baz")
-    end
-  end
-
-  describe "removing categories from comments" do
-    let(:attributes) do
-      {
-        comments_attributes: {
-          "0" => { id: comment3.id, category: ["buz"] }
+    describe "removing categories from comments" do
+      let(:attributes) do
+        {
+          comments_attributes: {
+            "0" => { id: comment3.id, category: ["buz"] }
+          }
         }
-      }
+      end
+
+      before do
+        generic_file.comments = [comment3]
+        generic_file.save
+        post :update, id: generic_file, generic_file: attributes
+      end
+      
+      subject { generic_file.reload }
+      it "updates the categories of the comment" do
+        expect(subject.comments.first.category).to eql(["buz"])
+      end
     end
 
-    before do
-      generic_file.comments = [comment3]
-      generic_file.save
-      post :update, id: generic_file, generic_file: attributes
+    describe "adding tags" do
+      let(:attributes) { { aictag_ids: [tag1.id] } }
+
+      before { post :update, id: generic_file, generic_file: attributes }
+      subject { generic_file.reload }
+
+      it "should set the values using the parameters hash" do
+        expect(subject.aictags.first.content).to eql "tag1"
+        expect(subject.aictags.first.tagcats.first.pref_label).to eql "tagcat1"
+      end
     end
-    
-    subject { generic_file.reload }
-    it "updates the categories of the comment" do
-      expect(subject.comments.first.category).to eql(["buz"])
+
+    describe "adding additional tags" do
+      let(:attributes) { { aictag_ids: [tag1.id, tag2.id] } }
+
+      before do
+        generic_file.aictag_ids = [tag1.id]
+        generic_file.save
+        expect(generic_file.aictags.count).to eql 1
+        post :update, id: generic_file, generic_file: attributes
+      end
+      subject { generic_file.reload.aictags }
+      specify do
+        expect(subject).to include(tag1, tag2)
+        expect(subject.count).to eql 2
+      end
     end
-  end
+
+    describe "removing tags" do
+      let(:attributes) { { aictag_ids: [tag2.id] } }
+
+      before do
+        generic_file.aictag_ids = [tag1.id, tag2.id]
+        generic_file.save
+        expect(generic_file.aictags.count).to eql 2
+        post :update, id: generic_file, generic_file: attributes
+      end
+      subject { generic_file.reload.aictags }
+      specify do
+        expect(subject).to include(tag2)
+        expect(subject.count).to eql 1
+      end
+    end
+ end
 
   describe "#create" do
 

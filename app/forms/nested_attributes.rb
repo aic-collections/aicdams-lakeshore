@@ -6,7 +6,7 @@ module NestedAttributes
     def build_permitted_params
       permitted = super
       permitted << { comments_attributes: permitted_annotation_params }
-      permitted << { aictags_attributes: permitted_annotation_params }
+      permitted << { aictag_ids: [] }
       permitted << { tagcat_ids: [] }
       permitted
     end
@@ -23,10 +23,6 @@ module NestedAttributes
   
   def comments_attributes= attributes
     model.comments_attributes= attributes
-  end
-
-  def aictags_attributes= attributes
-    model.aictags_attributes= attributes
   end
 
 end
