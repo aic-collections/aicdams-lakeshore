@@ -3,8 +3,8 @@ source 'https://rubygems.org'
 gem 'rails', '4.2.1'
 
 # Hydra Gems
-gem 'sufia', github: 'projecthydra/sufia', branch: 'master'
-gem 'active-fedora', github: 'projecthydra/active_fedora', branch: 'master'
+gem 'sufia', '~> 6.1'
+gem 'active-fedora', github: 'projecthydra/active_fedora', ref: 'd11806b4f7e3aa69c2241a6d2b1a485fe00a6880'
 gem 'kaminari', github: 'jcoyne/kaminari', branch: 'sufia'
 
 gem 'coffee-rails', '~> 4.1.0'
