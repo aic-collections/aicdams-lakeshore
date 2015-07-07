@@ -3,6 +3,8 @@ class AIC < RDF::StrictVocabulary("http://definitions.artic.edu/ontology/1.0/")
   term :after
   term :afterYear,
     label: "After Year".freeze
+  term :artistDisplay,
+    label: "Artist Display Name".freeze
   term :artistUid,
     label: "Artist ID".freeze
   term :batchUid,
@@ -127,7 +129,7 @@ class AIC < RDF::StrictVocabulary("http://definitions.artic.edu/ontology/1.0/")
     comment: "UID assigned to resource from a legacy system".freeze
   term :mainRefNumber,
     label: "Main Reference Number".freeze
-  term :medium,
+  term :mediumDisplay,
     label: "Medium Display".freeze
   term :objectType,
     label: "Object Type".freeze

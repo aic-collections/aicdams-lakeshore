@@ -17,5 +17,6 @@ Rails.application.routes.draw do
   resources :comments
   resources :tags
   resources :tag_cats
+  resources :works
 
 end

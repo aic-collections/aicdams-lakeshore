@@ -8,6 +8,7 @@ module NestedAttributes
       permitted << { comments_attributes: permitted_annotation_params }
       permitted << { aictag_ids: [] }
       permitted << { tagcat_ids: [] }
+      permitted << { asset_ids: [] }
       permitted
     end
 
