@@ -4,12 +4,18 @@ lock '3.4.0'
 set :application, 'lakeshore'
 set :repo_url, 'https://github.com/aic-collections/aicdams-lakeshore.git'
 set :base_dir, "/usr/local/hydra"
-set :aic_config_dir, "/usr/local/hydra/config"
+set :aic_config_dir, "#{fetch(:base_dir)}/config"
 set :user, 'awead'
 set :deploy_to, "#{fetch(:base_dir)}/#{fetch(:application)}"
 set :use_sudo, false
 set :ssh_options, { keys: [File.join(ENV["HOME"], ".ssh", "id_rsa")] }
 set :default_env, { path: "$PATH:#{fetch(:base_dir)}/bin" }
+
+# Solr
+# We'll deploy solr to the same server using a git repo
+set :solr_application, 'solr-jetty'
+set :solr_application_dir, "#{fetch(:base_dir)}/#{fetch(:solr_application)}"
+set :solr_repo_url, "https://github.com/awead/#{fetch(:solr_application)}.git"
 
 set :rails_env, 'production'
 set :log_level, :debug
