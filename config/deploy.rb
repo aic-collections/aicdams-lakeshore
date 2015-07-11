@@ -13,7 +13,7 @@ set :default_env, { path: "$PATH:#{fetch(:base_dir)}/bin" }
 
 set :rails_env, 'production'
 set :log_level, :debug
-set :branch, ENV["REVISION"] || ENV["BRANCH_NAME"]
+set :branch, ENV["REVISION"] || ENV["BRANCH_NAME"] || "master"
 
 set :linked_files, fetch(:linked_files, []).push(
   'config/blacklight.yml',
