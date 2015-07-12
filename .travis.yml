@@ -2,7 +2,6 @@ language: ruby
 cache: bundler
 sudo: false
 rvm:
-  - 2.1
   - 2.2
 env:
   global:
@@ -15,3 +14,5 @@ notifications:
     on_failure: "always"
 services:
   - redis-server
+before_script:
+  - jdk_switcher use oraclejdk8
