@@ -10,12 +10,16 @@ set :deploy_to, "#{fetch(:base_dir)}/#{fetch(:application)}"
 set :use_sudo, false
 set :ssh_options, { keys: [File.join(ENV["HOME"], ".ssh", "id_rsa")] }
 set :default_env, { path: "$PATH:#{fetch(:base_dir)}/bin" }
+set :current_release, "#{fetch(:deploy_to)}/current"
 
 # Solr
 # We'll deploy solr to the same server using a git repo
 set :solr_application, 'solr-jetty'
 set :solr_application_dir, "#{fetch(:base_dir)}/#{fetch(:solr_application)}"
 set :solr_repo_url, "https://github.com/awead/#{fetch(:solr_application)}.git"
+
+# Resque
+set :resque_pid_file, "#{fetch(:current_release)}/tmp/pids/resque-pool.pid"
 
 set :rails_env, 'production'
 set :log_level, :debug

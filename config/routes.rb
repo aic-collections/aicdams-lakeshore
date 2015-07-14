@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   blacklight_for :catalog
   devise_for :users
   Hydra::BatchEdit.add_routes(self)
-  mount Sufia::Engine => '/'
+  
   root to: 'homepage#index'
 
   # Administrative URLs
@@ -19,4 +19,7 @@ Rails.application.routes.draw do
   resources :tag_cats
   resources :works
 
+  # Sufia should come last because in production it will 404 any unknown routes
+  mount Sufia::Engine => '/'
+  
 end

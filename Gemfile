@@ -13,6 +13,7 @@ gem 'devise-guests', '~> 0.3'
 gem 'jbuilder', '~> 2.0'
 gem 'jquery-rails'
 gem 'linkeddata', '=1.1.11'
+gem 'resque-pool'
 gem 'rsolr', '~> 1.0.6'
 gem 'sass-rails', '~> 5.0'
 gem 'sdoc', '~> 0.4.0', group: :doc

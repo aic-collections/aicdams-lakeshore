@@ -10,12 +10,15 @@ if defined?(PhusionPassenger)
       $redis.client.disconnect if $redis
       $redis = Redis.new(host: config[:host], port: config[:port], thread_safe: true) rescue nil
       Resque.redis = $redis
+      Resque.redis.namespace = "#{Sufia.config.redis_namespace}:#{Rails.env}"
       Resque.redis.client.reconnect if Resque.redis
     end
   end
 else
   config = YAML::load(ERB.new(IO.read(File.join(Rails.root, 'config', 'redis.yml'))).result)[Rails.env].with_indifferent_access
   $redis = Redis.new(host: config[:host], port: config[:port], thread_safe: true) rescue nil
+  Resque.redis = $redis
+  Resque.redis.namespace = "#{Sufia.config.redis_namespace}:#{Rails.env}"
 end
 
 
@@ -28,5 +31,6 @@ Nest.class_eval do
 
   def [](key)
     self.class.new("#{self}:#{key.to_param}", @redis)
+    Resque.redis.namespace = "#{Sufia.config.redis_namespace}:#{Rails.env}"
   end
 end
