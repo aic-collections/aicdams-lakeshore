@@ -234,5 +234,19 @@ describe GenericFile do
     it { is_expected.to be_kind_of GenericFile }
   end
 
+  describe "#destroy" do
+    let(:resource) do
+      GenericFile.create.tap do |file|
+        file.apply_depositor_metadata "user"
+        file.save
+      end
+    end
+    it "deletes the resource" do
+      expect(resource.destroy).to be_kind_of(GenericFile)
+    end
+
+
+  end
+
 
 end

@@ -38,4 +38,14 @@ describe Tag do
     end
   end
 
+  describe "#destroy" do
+    subject do
+      tag.save
+      tag
+    end
+    it "deletes the resource" do
+      expect(subject.destroy).to be_kind_of(Tag)
+    end
+  end
+
 end

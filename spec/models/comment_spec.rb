@@ -22,4 +22,14 @@ describe Comment do
     it { is_expected.to include category }
   end
 
+  describe "#destroy" do
+    subject do
+      comment.save
+      comment
+    end
+    it "deletes the resource" do
+      expect(subject.destroy).to be_kind_of(Comment)
+    end
+  end
+
 end
