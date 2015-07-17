@@ -31,36 +31,12 @@ describe GenericFile do
     end    
   end
 
-  describe "terms" do
-    it { is_expected.to respond_to(:batch_uid) }
-    it { is_expected.to respond_to(:aiccreated) }
-    it { is_expected.to respond_to(:department) }
-    it { is_expected.to respond_to(:comments) }
-    it { is_expected.to respond_to(:location) }
-    it { is_expected.to respond_to(:metadata) }
-    it { is_expected.to respond_to(:publishing_context) }
-    it { is_expected.to respond_to(:aictags) }
-    it { is_expected.to respond_to(:legacy_uid) }
-    it { is_expected.to respond_to(:status) }
-    it { is_expected.to respond_to(:uid) }
-    it { is_expected.to respond_to(:updated) }
-    it { is_expected.to respond_to(:contributor) }
-    it { is_expected.to respond_to(:coverage) }
-    it { is_expected.to respond_to(:date) }
-    it { is_expected.to respond_to(:description) }
-    it { is_expected.to respond_to(:format) }
-    it { is_expected.to respond_to(:identifier) }
-    it { is_expected.to respond_to(:language) }
-    it { is_expected.to respond_to(:publisher) }
-    it { is_expected.to respond_to(:relation) }
-    it { is_expected.to respond_to(:rights) }
-    it { is_expected.to respond_to(:source) }
-    it { is_expected.to respond_to(:subject) }
-    it { is_expected.to respond_to(:title) }
-    it { is_expected.to respond_to(:resource_type) }
-    it { is_expected.to respond_to(:described_by) }
-    it { is_expected.to respond_to(:same_as) }
-    it { is_expected.to respond_to(:pref_label) }
+  describe "metadata" do
+    context "defined in the presenter" do
+      AssetPresenter.terms.each do |term|
+        it { is_expected.to respond_to(term) }
+      end
+    end
   end
 
   describe "#comments_attributes" do

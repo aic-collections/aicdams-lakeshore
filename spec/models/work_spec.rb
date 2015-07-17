@@ -9,26 +9,11 @@ describe Work do
 
   describe "metadata" do
     subject { described_class.new }
-    it { is_expected.to respond_to(:assets) }
-    it { is_expected.to respond_to(:after) }
-    it { is_expected.to respond_to(:artist_display) }
-    it { is_expected.to respond_to(:artist_uid) }
-    it { is_expected.to respond_to(:before) }
-    it { is_expected.to respond_to(:coll_cat_uid) }
-    it { is_expected.to respond_to(:credit_line) }
-    it { is_expected.to respond_to(:dept_uid) }
-    it { is_expected.to respond_to(:dimensions_display) }
-    it { is_expected.to respond_to(:exhibition_history) }
-    it { is_expected.to respond_to(:gallery_location) }
-    it { is_expected.to respond_to(:inscriptions) }
-    it { is_expected.to respond_to(:main_ref_number) }
-    it { is_expected.to respond_to(:medium_display) }
-    it { is_expected.to respond_to(:object_type) }
-    it { is_expected.to respond_to(:place_of_origin) }
-    it { is_expected.to respond_to(:provenance_text) }
-    it { is_expected.to respond_to(:publication_history) }
-    it { is_expected.to respond_to(:publ_tag) }
-    it { is_expected.to respond_to(:publ_ver_level) }
+    context "defined in the presenter" do
+      WorkPresenter.terms.each do |term|
+        it { is_expected.to respond_to(term) }
+      end
+    end
   end
 
   describe "related works" do
@@ -56,5 +41,44 @@ describe Work do
       end
     end
   end
+
+  describe "terms writable during creation only" do
+    let(:wro_single_terms) { [:batch_uid, :aiccreated, :department] }
+    let(:error_message) { "is writable only on create"}
+    let(:first_value) { "write-once value" }
+    subject do
+      Work.new.tap do |file|
+        file.batch_uid  = first_value
+        file.aiccreated = first_value
+        file.department = first_value
+        file.legacy_uid = [first_value] 
+        file.save
+      end
+    end
+    specify "are not updateable" do
+      wro_single_terms.each do |term|
+        expect(subject.send(term)).to eql first_value
+        subject.send(term.to_s+"=", "a changed value")
+        expect(subject.save).to be false
+        expect(subject.errors[term]).to eql([error_message])
+      end
+      expect(subject.legacy_uid).to eql [first_value]
+      subject.legacy_uid = ["more","values"]
+      expect(subject.save).to be false
+      expect(subject.errors[:legacy_uid]).to eql([error_message])  
+    end
+  end
+
+  describe "required terms" do
+    subject do
+      Work.create.tap do |file|
+        file.save!
+      end
+    end
+    it { is_expected.to be_kind_of Work }
+    specify "uid matches the id" do
+      expect(subject.uid).to eql subject.id
+    end
+  end  
 
 end

@@ -1,5 +1,12 @@
 class WorkPresenter
   include Hydra::Presenter
+
+  # These are terms inherited from parent classes, excepting the nested terms from NestedMetadata
+  # which are applied the Assets (i.e. GenericFiles)
+  def self.inherited_terms
+    AssetPresenter.terms - [:comments, :aictags, :location, :metadata, :publishing_context]
+  end
+
   self.model_class = Work
   self.terms = [ 
     :assets,
@@ -22,6 +29,6 @@ class WorkPresenter
     :publication_history,
     :publ_tag,
     :publ_ver_level
-  ]
+  ] + self.inherited_terms
 
 end

@@ -1,5 +1,10 @@
 module Validations
   extend ActiveSupport::Concern
+
+  included do
+    validate :write_once_only_fields, on: :update
+    after_save :uid_matches_id, on: :create
+  end
   
   def write_once_only_fields
     [:batch_uid, :aiccreated, :department, :legacy_uid].each do |property|
