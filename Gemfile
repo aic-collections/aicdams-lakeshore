@@ -3,7 +3,7 @@ source 'https://rubygems.org'
 gem 'rails', '4.2.1'
 
 # Hydra Gems
-gem 'sufia', '~> 6.1'
+gem 'sufia', '~> 6.2'
 gem 'active-fedora', github: 'projecthydra/active_fedora', ref: 'd11806b4f7e3aa69c2241a6d2b1a485fe00a6880'
 gem 'kaminari', github: 'jcoyne/kaminari', branch: 'sufia'
 
