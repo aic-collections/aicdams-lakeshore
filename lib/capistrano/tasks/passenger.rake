@@ -18,4 +18,11 @@ namespace :passenger do
     end
   end
 
+  desc "Environment information"
+  task :env do
+    on roles(:app) do
+      execute("env")
+    end
+  end
+
 end
