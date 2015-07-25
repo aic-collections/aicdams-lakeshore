@@ -29,6 +29,8 @@ namespace :solr do
       execute "cp -Rf #{fetch(:deploy_to)}/current/solr_conf/solr.xml #{fetch(:solr_application_dir)}/solr"
       execute "mkdir -p #{fetch(:solr_application_dir)}/solr/aic-production/conf"
       execute "cp -Rf #{fetch(:deploy_to)}/current/solr_conf/conf/* #{fetch(:solr_application_dir)}/solr/aic-production/conf"
+      execute "mkdir -p #{fetch(:solr_application_dir)}/solr/aic-development/conf"
+      execute "cp -Rf #{fetch(:deploy_to)}/current/solr_conf/conf/* #{fetch(:solr_application_dir)}/solr/aic-development/conf"
     end
   end
 
