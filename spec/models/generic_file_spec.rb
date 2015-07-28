@@ -224,5 +224,11 @@ describe GenericFile do
 
   end
 
+  describe "#to_solr" do
+    subject { described_class.new.to_solr }
+    it "has an AIC type" do
+      expect(subject["aic_type_sim"]).to include("Asset")
+    end
+  end
 
 end

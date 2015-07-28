@@ -30,4 +30,8 @@ class GenericFile < ActiveFedora::Base
     self.set_value(:type, t)
   end
 
+  def self.indexer
+    ::AssetIndexer
+  end
+
 end
