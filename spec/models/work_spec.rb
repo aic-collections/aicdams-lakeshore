@@ -81,4 +81,14 @@ describe Work do
     end
   end  
 
+  describe "#to_solr" do
+    subject { described_class.new.to_solr }
+    it "has default public read access" do
+      expect(subject["read_access_group_ssim"]).to include("public")
+    end
+    it "has an AIC type" do
+      expect(subject["aic_type_sim"]).to include("Work")
+    end
+  end
+
 end

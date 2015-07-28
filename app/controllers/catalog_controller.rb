@@ -10,7 +10,6 @@ require 'parsing_nesting/tree'
 class CatalogController < ApplicationController
   include Hydra::Catalog
   include Hydra::Controller::ControllerBehavior
-  include Sufia::Catalog
 
   # These before_filters apply the hydra access controls
   before_filter :enforce_show_permissions, only: :show
@@ -55,7 +54,7 @@ class CatalogController < ApplicationController
 
     # solr fields that will be treated as facets by the blacklight application
     #   The ordering of the field names is the order of the display
-    config.add_facet_field solr_name("resource_type", :facetable), label: "Asset Type", limit: 5
+    config.add_facet_field solr_name("aic_type", :facetable), label: "Asset Type", limit: 5
     config.add_facet_field solr_name("creator", :facetable), label: "Creator", limit: 5
     config.add_facet_field solr_name("tag", :facetable), label: "Keyword", limit: 5
     config.add_facet_field solr_name("subject", :facetable), label: "Subject", limit: 5
@@ -92,6 +91,30 @@ class CatalogController < ApplicationController
     #   The ordering of the field names is the order of the display
     config.add_show_field solr_name("title", :stored_searchable), label: "Title"
     config.add_show_field solr_name("description", :stored_searchable), label: "Description"
+
+    # Work fields
+    config.add_show_field solr_name("assets", :stored_searchable), label: "Keyword"
+    config.add_show_field solr_name("after", :stored_sortable), label: "Keyword"
+    config.add_show_field solr_name("artist_display", :stored_searchable), label: "Keyword"
+    config.add_show_field solr_name("artist_uid", :stored_searchable), label: "Keyword"
+    config.add_show_field solr_name("before", :stored_sortable), label: "Keyword"
+    config.add_show_field solr_name("coll_cat_uid", :stored_searchable), label: "Keyword"
+    config.add_show_field solr_name("credit_line", :stored_searchable), label: "Keyword"
+    config.add_show_field solr_name("dept_uid", :stored_searchable), label: "Keyword"
+    config.add_show_field solr_name("dimensions_display", :stored_searchable), label: "Keyword"
+    config.add_show_field solr_name("exhibition_history", :stored_searchable), label: "Keyword"
+    config.add_show_field solr_name("gallery_location", :stored_searchable), label: "Keyword"
+    config.add_show_field solr_name("inscriptions", :stored_searchable), label: "Keyword"
+    config.add_show_field solr_name("main_ref_number", :stored_searchable), label: "Keyword"
+    config.add_show_field solr_name("medium_display", :stored_searchable), label: "Keyword"
+    config.add_show_field solr_name("object_type", :stored_searchable), label: "Keyword"
+    config.add_show_field solr_name("place_of_origin", :stored_searchable), label: "Keyword"
+    config.add_show_field solr_name("provenance_text", :stored_searchable), label: "Keyword"
+    config.add_show_field solr_name("publication_history", :stored_searchable), label: "Keyword"
+    config.add_show_field solr_name("publ_tag", :stored_searchable), label: "Keyword"
+    config.add_show_field solr_name("publ_ver_level", :stored_searchable), label: "Keyword"
+
+    # Generic File fields
     config.add_show_field solr_name("tag", :stored_searchable), label: "Keyword"
     config.add_show_field solr_name("subject", :stored_searchable), label: "Subject"
     config.add_show_field solr_name("creator", :stored_searchable), label: "Creator"
