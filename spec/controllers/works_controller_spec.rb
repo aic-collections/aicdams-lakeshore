@@ -46,4 +46,10 @@ describe WorksController do
     end
   end
 
+  describe "#show" do
+    before { get :show, id: work }
+    subject { response }
+    it { is_expected.to be_successful }
+  end  
+
 end

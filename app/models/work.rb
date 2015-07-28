@@ -2,8 +2,10 @@ class Work < ActiveFedora::Base
   include WorkMetadata
   include NestedWorkMetadata
   include Sufia::GenericFile::Metadata
+  include Sufia::GenericFile::Featured
   include AssetMetadata
   include Validations
+  include WorkPermissions
 
   type [AICType.Work, AICType.Resource]
 

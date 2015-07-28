@@ -8,7 +8,10 @@ module WorksControllerBehavior
 
     before_action :authenticate_user!, except: [:show]
     before_action :has_access?, except: [:show]
-    before_action :set_work, only: [:update, :edit]
+    before_action :set_work, only: [:update, :edit, :show]
+
+    # TODO
+    #load_and_authorize_resource except: [:index, :show]
   end
 
   def new
@@ -40,6 +43,10 @@ module WorksControllerBehavior
     redirect_to edit_work_path(@work)
   end
 
+  def show
+    @presenter = presenter
+  end
+
   private
 
     def update_work
@@ -50,6 +57,10 @@ module WorksControllerBehavior
 
     def set_work
       @work = Work.find(params[:id])
+    end
+    
+    def presenter
+      presenter_class.new(@work)
     end
 
 end

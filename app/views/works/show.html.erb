@@ -1,0 +1,14 @@
+<%= render_breadcrumbs builder: Sufia::BootstrapBreadcrumbsBuilder %>
+<div class="container-fluid">
+<div class="row">
+  <div class="col-xs-12 col-sm-4">
+    <%= image_tag "default.png", alt: "No preview available", class: "img-responsive" %>
+    <%= render 'show_actions' %>
+  </div>
+  <div class="col-xs-12 col-sm-8">
+    <h1 class="visibility"><%= display_multiple @presenter.title %> <%= render_work_visibility_badge %></h1>
+    <p class="work_description"><%= display_multiple @presenter.description %></p>
+    <%= render 'generic_files/show_descriptions' %>
+  </div><!-- /columns second -->
+</div> <!-- /.row -->
+</div><!-- /.container-fluid -->

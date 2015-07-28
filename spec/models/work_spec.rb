@@ -91,4 +91,14 @@ describe Work do
     end
   end
 
+  describe "visibility" do
+    specify { expect(described_class.visibility).to eql "open" }
+  end
+
+  describe "permissions" do
+    subject { described_class.new } 
+    it { is_expected.to be_public }
+    it { is_expected.not_to be_registered }
+  end
+
 end
