@@ -58,4 +58,10 @@ namespace :deploy do
     end
   end
 
+  after :finished, :update_bin do
+    on roles(:web) do
+      execute "cd #{fetch(:deploy_to)}/current && /usr/bin/env rake rails:update:bin RAILS_ENV=#{fetch(:rails_env)}"
+    end
+  end
+
 end
