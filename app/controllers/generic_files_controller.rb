@@ -5,7 +5,7 @@ class GenericFilesController < ApplicationController
     "image/jpeg",
     "image/png",
     "image/tiff",
-    "image/vnd.adobe.photoshop"
+    "image/vnd.adobe.photoshop",
   ]
 
   TEXT_TYPES = [
@@ -13,13 +13,15 @@ class GenericFilesController < ApplicationController
     "application/pdf",
     "application/rtf",
     "application/vnd.ms-powerpoint",
+    "application/vnd.oasis.opendocument.text",
     "application/vnd.openxmlformats-officedocument.presentationml.presentation",
     "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
     "image/jpeg",
     "image/png",
     "image/tiff",
     "text/html",
-    "text/plain"
+    "text/markdown",
+    "text/plain",
   ]
 
 

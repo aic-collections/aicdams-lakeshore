@@ -1,6 +1,12 @@
-# Be sure to restart your server when you modify this file.
+# Custom Mime types
 
-# Add new mime types for use in respond_to blocks:
-# Mime::Type.register "text/richtext", :rtf
+# Add custom mime types
+md_mime_type = MIME::Type.new('text/markdown') do |t|
+    t.extensions  = %w(markdown mdown mkdn md mkd mdwn mdtxt mdtext)
+end
 
+MIME::Types.add md_mime_type
+
+# Register application mime types
 Mime::Type.register 'application/x-endnote-refer', :endnote
+
