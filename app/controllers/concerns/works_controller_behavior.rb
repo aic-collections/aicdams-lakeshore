@@ -3,12 +3,14 @@ module WorksControllerBehavior
 
   included do
     include Sufia::Controller
+    include Breadcrumbs
 
     layout "sufia-one-column"
 
     before_action :authenticate_user!, except: [:show]
     before_action :has_access?, except: [:show]
     before_action :set_work, only: [:update, :edit, :show]
+    before_action :build_breadcrumbs
 
     # TODO
     #load_and_authorize_resource except: [:index, :show]
