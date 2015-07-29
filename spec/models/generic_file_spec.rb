@@ -18,6 +18,9 @@ describe GenericFile do
     context "and asserting Text" do
       specify { expect(subject.assert_text).to be false }
     end
+    describe "#to_solr" do
+      specify { expect(subject.to_solr[Solrizer.solr_name("aic_type", :facetable)]).to include("Asset", "Still Image") }
+    end
   end
   describe "setting type to Text" do
     before  { subject.assert_text }
@@ -28,7 +31,10 @@ describe GenericFile do
     end
     context "and asserting StillImage" do
       specify { expect(subject.assert_still_image).to be false }
-    end    
+    end
+    describe "#to_solr" do
+      specify { expect(subject.to_solr[Solrizer.solr_name("aic_type", :facetable)]).to include("Asset", "Text") }
+    end
   end
 
   describe "metadata" do
@@ -221,14 +227,6 @@ describe GenericFile do
       expect(resource.destroy).to be_kind_of(GenericFile)
     end
 
-
-  end
-
-  describe "#to_solr" do
-    subject { described_class.new.to_solr }
-    it "has an AIC type" do
-      expect(subject["aic_type_sim"]).to include("Asset")
-    end
   end
 
 end
