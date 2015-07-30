@@ -9,10 +9,11 @@ set :user, 'awead'
 set :deploy_to, "#{fetch(:base_dir)}/#{fetch(:application)}"
 set :use_sudo, false
 set :ssh_options, { keys: [File.join(ENV["HOME"], ".ssh", "id_rsa")] }
+set :aic_proxy, "sysprox.artic.edu:3128"
 
 set :default_env, { 
   path: "$PATH:#{fetch(:base_dir)}/bin",
-  http_proxy: "sysprox.artic.edu:3128"
+  http_proxy: "#{fetch(:aic_proxy)}"
 }
 
 set :current_release, "#{fetch(:deploy_to)}/current"
