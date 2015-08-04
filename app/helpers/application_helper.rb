@@ -12,4 +12,12 @@ module ApplicationHelper
     end
   end
 
+  def link_to_asset asset
+    if asset.title.empty?
+      link_to sufia.generic_file_path(asset)
+    else
+      link_to asset.title.first, sufia.generic_file_path(asset)
+    end
+  end
+
 end
