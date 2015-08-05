@@ -15,7 +15,7 @@ task clean: ['jetty:empty', 'db:drop', 'db:migrate']
 namespace :jetty do
 
   desc "Configure Jetty"
-  task config: ['jetty:clean', 'sufia:jetty:config', 'jetty:start', 'fedora:config']
+  task config: ['jetty:clean', 'sufia:jetty:download_jars'] #, 'jetty:start', 'fedora:config']
 
   desc "Empty out jetty of all its records"
   task empty: :environment do
@@ -31,4 +31,28 @@ namespace :fedora do
     puts "Registering namespace prefixes in Fedora"
     system("script/fedora_config.sh")
   end
+end
+
+namespace :aic do
+
+  namespace :jetty do
+
+    desc "Clean and prepare jetty"
+    task prep: ['jetty:clean', 'sufia:jetty:download_jars']
+
+    desc "Configure solr"
+    task :solr_config do
+      `cp solr_conf/solr.xml jetty/solr/solr.xml`
+      `rm -Rf jetty/solr/*-core`
+      `rm -Rf jetty/solr/aic-*`
+      `mkdir jetty/solr/aic-development`
+      `mkdir jetty/solr/aic-test`
+      `mkdir jetty/solr/aic-production`
+      `cp -R solr_conf/conf jetty/solr/aic-development`
+      `cp -R solr_conf/conf jetty/solr/aic-test`
+      `cp -R solr_conf/conf jetty/solr/aic-production`
+    end
+
+  end
+
 end
