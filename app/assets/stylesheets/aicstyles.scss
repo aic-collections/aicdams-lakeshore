@@ -89,6 +89,22 @@ $yellow: #F0CA00;
   border: 0;
   float: right;
   }
+  
+.home_share_work {
+  background: none;
+  margin: 0 auto;
+  padding: 0;
+  width: 500px;
+  top: 95px;
+  position: relative;
+  }
 
+.btn-primary {
+  background-color: $yellow;
+  border: none;
+  color: #000;
+  }
 
-
+.btn-lg {
+  font-size: 32px;
+  }
