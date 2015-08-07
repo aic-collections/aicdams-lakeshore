@@ -12,10 +12,6 @@ $yellow: #F0CA00;
   min-height: 78px;
   }
   
-.nav > li > a {
-  display: inline-block;
-  }
-  
 #masthead .institution_name {
   font-size: 1.75em;
   display: inline-block;
@@ -30,6 +26,25 @@ $yellow: #F0CA00;
   position: absolute;
   }
   
+#footer {
+  background: $aicred;
+  position: absolute;
+  bottom: 0px;
+  height: 3.5em;
+  min-height: 3.5em;
+  width: 100%;
+    .nav > li > a {
+      display: block;
+      padding: 0px 15px;
+	  color: $yellow;
+      }
+  }
+
+.navbar-default {
+  background-color: $aicred;
+  border: 0;
+  float: right;
+  }
 
 
 
