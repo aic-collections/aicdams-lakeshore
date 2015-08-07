@@ -4,12 +4,12 @@ class WorkPresenter
   # These are terms inherited from parent classes, excepting the nested terms from NestedMetadata
   # which are applied the Assets (i.e. GenericFiles)
   def self.inherited_terms
-    AssetPresenter.terms - [:comments, :aictags, :location, :metadata, :publishing_context]
+    AssetPresenter.terms - [:comments, :aictag_ids, :location, :metadata, :publishing_context]
   end
 
   self.model_class = Work
   self.terms = [ 
-    :assets,
+    :asset_ids,
     :after,
     :artist_display,
     :artist_uid,

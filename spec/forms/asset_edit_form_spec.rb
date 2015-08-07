@@ -45,4 +45,15 @@ describe AssetEditForm do
 
   end
 
+  describe ".model_attributes" do
+    let(:params) do 
+      ActionController::Parameters.new( aictag_ids: [""] )
+    end
+    subject { described_class.model_attributes(params) }
+
+    it "removes empty strings" do
+      expect(subject["aictag_ids"]).to be_empty
+    end
+  end
+
 end

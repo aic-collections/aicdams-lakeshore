@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe WorkPresenter do
 
-  let(:nested_terms) { [:comments, :aictags, :location, :metadata, :publishing_context] }
+  let(:nested_terms) { [:comments, :aictag_ids, :location, :metadata, :publishing_context] }
   let(:terms) { AssetPresenter.terms - nested_terms }
 
   describe "::terms" do

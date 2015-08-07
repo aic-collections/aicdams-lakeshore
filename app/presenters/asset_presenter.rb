@@ -4,7 +4,7 @@ class AssetPresenter < Sufia::GenericFilePresenter
     :location,
     :metadata,
     :publishing_context,
-    :aictags,
+    :aictag_ids,
     :status,
     :contributor,
     :coverage,

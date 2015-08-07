@@ -8,8 +8,7 @@ class AssetEditForm < AssetPresenter
 
   # Override HydraEditor::Form to treat nested attbriutes accordingly
   def initialize_field(key)
-    if reflection = model_class.reflect_on_association(key)
-      raise ArgumentError, "Association ''#{key}'' is not a collection" unless reflection.collection?
+    if key == :comments
       build_association(key)
     else
       super
