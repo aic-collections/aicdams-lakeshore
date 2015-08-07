@@ -133,3 +133,7 @@ $yellow: #F0CA00;
     font-weight: normal;
     }
   }
+  
+div.heading-tile .glyphicon, div.heading-tile .help-icon, div.heading-tile .glyphicon-chevron-right-helper .chevron, .glyphicon-chevron-right-helper div.heading-tile .chevron {
+  background: $aicred;
+  }
