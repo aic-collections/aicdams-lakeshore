@@ -1,4 +1,4 @@
-$mastheadcolor: #f2f2f3;
+$grey: #f2f2f3;
 $aicred: #9d1c33;
 $yellow: #F0CA00;
 
@@ -31,7 +31,7 @@ $yellow: #F0CA00;
   }
 
 #content-wrapper {
-  background-color: $mastheadcolor;
+  background-color: $grey;
   }
 
 #content {
@@ -125,3 +125,11 @@ $yellow: #F0CA00;
 .nav > li > a {
     padding: 10px 0px;
 	}
+
+#home_content {
+  h2 {
+    font-family: Verdana, Arial, sans-serif;
+    font-size: 25px;
+    font-weight: normal;
+    }
+  }
