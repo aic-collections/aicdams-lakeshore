@@ -31,7 +31,6 @@ $yellow: #F0CA00;
   padding-top: 0;
   }
 
-
 #masthead {
   background: $aicred;
   height: 78px;
@@ -50,6 +49,14 @@ $yellow: #F0CA00;
 #logo {
   top: 0px;
   position: absolute;
+  }
+  
+#search-form-header {
+  margin-top: 1.75em;
+  }
+  
+#search-submit-header {
+  background-color: #000000;
   }
   
 #footer {
