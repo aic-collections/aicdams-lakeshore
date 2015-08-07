@@ -59,6 +59,17 @@ $yellow: #F0CA00;
   background-color: #000000;
   }
   
+#home_header {
+  border-top: 0;
+  border-bottom: 0;
+  background-image: url(/assets/lakeshore.jpg);
+  background-position: 0% 51%;
+  }
+  
+.home_marketing_text {
+  display: none;
+  }
+  
 #footer {
   background: $aicred;
   position: absolute;
