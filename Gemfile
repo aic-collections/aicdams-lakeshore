@@ -3,8 +3,7 @@ source 'https://rubygems.org'
 gem 'rails', '4.2.1'
 
 # Hydra Gems
-gem 'sufia', '~> 6.2'
-gem 'active-fedora', github: 'projecthydra/active_fedora', ref: 'd11806b4f7e3aa69c2241a6d2b1a485fe00a6880'
+gem 'sufia', github: 'projecthydra/sufia', ref: 'd8ba848898dec86e6ab3ad8cfd4ca88601e6b4c4'
 gem 'kaminari', github: 'jcoyne/kaminari', branch: 'sufia'
 
 gem 'coffee-rails', '~> 4.1.0'
@@ -12,7 +11,6 @@ gem 'devise'
 gem 'devise-guests', '~> 0.3'
 gem 'jbuilder', '~> 2.0'
 gem 'jquery-rails'
-gem 'linkeddata', '=1.1.11'
 gem 'resque-pool'
 gem 'rsolr', '~> 1.0.6'
 gem 'sass-rails', '~> 5.0'

@@ -53,6 +53,20 @@ describe GenericFilesController do
       end
     end
 
+    describe "adding new comments without categories" do
+      let(:attributes) do
+        { comments_attributes: { "0" => { "content" => "some comment", "_destroy" => "false" } } }
+      end
+
+      before { post :update, id: generic_file, generic_file: attributes }
+      subject { generic_file.reload }
+
+      it "should set the values using the parameters hash" do
+        expect(subject.comments.first.content).to eql "some comment"
+      end
+
+    end
+
     describe "updating existing comments" do
       let(:attributes) do
         {
@@ -170,8 +184,8 @@ describe GenericFilesController do
       subject { generic_file.reload }
 
       it "should set the values using the parameters hash" do
-        expect(subject.aictags.first.content).to eql "tag1"
-        expect(subject.aictags.first.tagcats.first.pref_label).to eql "tagcat1"
+        expect(subject.aictags).to contain_exactly(tag1)
+        expect(subject.aictags.first.tagcats).to contain_exactly(tagcat1, tagcat2)
       end
     end
 
