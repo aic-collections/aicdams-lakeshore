@@ -2,8 +2,8 @@ $grey: #f2f2f3;
 $aicred: #9d1c33;
 $yellow: #F0CA00;
 
-#wrapper {
-  background-image: linear-gradient(to bottom, #ffffff 0%, #FFFFFF 100%);
+body {
+  background-color: $grey;
   }
   
 .container-fluid {
@@ -106,10 +106,12 @@ $yellow: #F0CA00;
   position: relative;
   }
 
-.btn-primary {
-  background-color: $yellow;
-  border: none;
-  color: #000;
+.home_share_work {
+  .btn-primary {
+    background-color: $yellow;
+    border: none;
+    color: #000;
+    }
   }
 
 .btn-lg {
@@ -123,8 +125,12 @@ $yellow: #F0CA00;
   }
   
 .nav > li > a {
-    padding: 10px 0px;
-	}
+  padding: 10px 0px;
+  }
+	
+.nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
+  background-color: $grey;
+  }
 
 #home_content {
   h2 {
@@ -134,6 +140,8 @@ $yellow: #F0CA00;
     }
   }
   
-div.heading-tile .glyphicon, div.heading-tile .help-icon, div.heading-tile .glyphicon-chevron-right-helper .chevron, .glyphicon-chevron-right-helper div.heading-tile .chevron {
+div.heading-tile .glyphicon, div.heading-tile .help-icon, div.heading-tile .glyphicon-chevron-right-helper .chevron, .glyphicon-chevron-right-helper div.heading-tile .chevron  {
   background: $aicred;
+  color: $yellow;
+  border: none;
   }
