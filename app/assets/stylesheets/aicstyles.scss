@@ -5,6 +5,10 @@ $yellow: #F0CA00;
 body {
   background-color: $grey;
   }
+
+#page-positioner {
+  background-color: $grey;
+  }
   
 .container-fluid {
   padding-left: 0px;
@@ -78,7 +82,7 @@ body {
   
 #footer {
   background: $aicred;
-  position: absolute;
+  position: relative;
   bottom: 0px;
   height: 3.5em;
   min-height: 3.5em;
@@ -94,6 +98,7 @@ body {
   background-color: $aicred;
   border: 0;
   float: right;
+  min-height: 0;
   }
   
 .home_share_work {
