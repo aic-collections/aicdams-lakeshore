@@ -1,9 +1,13 @@
-$mastheadcolor: #f2f2f3;
+$grey: #f2f2f3;
 $aicred: #9d1c33;
 $yellow: #F0CA00;
 
-#wrapper {
-  background-image: linear-gradient(to bottom, #ffffff 0%, #FFFFFF 100%);
+body {
+  background-color: $grey;
+  }
+
+#page-positioner {
+  background-color: $grey;
   }
   
 .container-fluid {
@@ -11,9 +15,15 @@ $yellow: #F0CA00;
   padding-right: 0px;
   }
 
+#masthead {
+  .row {
+    margin-left: 0px;
+	margin-right: 0px;
+	}
+  }
+  
 .row {
-  margin-left: 0px;
-  margin-right: 0px;
+  margin-left: 15px;
   }
 
 .col-xs-1, .col-sm-1, .col-md-1, .col-lg-1, .col-xs-2, .col-sm-2, .col-md-2, .col-lg-2, .col-xs-3, .col-sm-3, .col-md-3, .col-lg-3, .col-xs-4, .col-sm-4, .col-md-4, .col-lg-4, .col-xs-5, .col-sm-5, .col-md-5, .col-lg-5, .col-xs-6, .col-sm-6, .col-md-6, .col-lg-6, .col-xs-7, .col-sm-7, .col-md-7, .col-lg-7, .col-xs-8, .col-sm-8, .col-md-8, #search-navbar .search-query-form, .col-lg-8, .col-xs-9, .col-sm-9, .col-md-9, .col-lg-9, .col-xs-10, .col-sm-10, .col-md-10, .col-lg-10, .col-xs-11, .col-sm-11, .col-md-11, .col-lg-11, .col-xs-12, .col-sm-12, .col-md-12, .col-lg-12 {
@@ -24,7 +34,7 @@ $yellow: #F0CA00;
   }
 
 #content-wrapper {
-  background-color: $mastheadcolor;
+  background-color: $grey;
   }
 
 #content {
@@ -72,7 +82,7 @@ $yellow: #F0CA00;
   
 #footer {
   background: $aicred;
-  position: absolute;
+  position: relative;
   bottom: 0px;
   height: 3.5em;
   min-height: 3.5em;
@@ -88,7 +98,65 @@ $yellow: #F0CA00;
   background-color: $aicred;
   border: 0;
   float: right;
+  min-height: 0;
+  }
+  
+.home_share_work {
+  background: none;
+  margin: 0 auto;
+  padding: 0;
+  width: 500px;
+  top: 95px;
+  position: relative;
   }
 
+.home_share_work {
+  .btn-primary {
+    background-color: $yellow;
+    border: none;
+    color: #000;
+    }
+  }
 
+.btn-lg {
+  font-size: 32px;
+  }
+  
+#recentTab {
+  font-size: 25px;
+  border: none;
+  color: #000000;
+  }
+  
+.nav > li > a {
+  padding: 10px 0px;
+  }
+	
+.nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
+  background-color: transparent;
+  }
 
+#home_content {
+  h2 {
+    font-family: Verdana, Arial, sans-serif;
+    font-size: 25px;
+    font-weight: normal;
+	margin-top: 14px;
+    margin-bottom: 13px;
+    }
+  }
+  
+div.heading-tile .glyphicon, div.heading-tile .help-icon, div.heading-tile .glyphicon-chevron-right-helper .chevron, .glyphicon-chevron-right-helper div.heading-tile .chevron  {
+  background: $aicred;
+  color: $yellow;
+  border: none;
+  }
+
+#emptybox {
+  background-color: #fff;
+  height: 400px;
+  }
+  
+.heading-row {
+  padding-top: 20px;
+  }
