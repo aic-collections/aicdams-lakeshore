@@ -21,6 +21,14 @@ RSpec.configure do |config|
   config.before :each do |example|
     unless example.metadata[:no_clean]
       ActiveFedora::Cleaner.clean!
+      # Clear out Redis
+      begin
+        $redis.keys('events:*').each { |key| $redis.del key }
+        $redis.keys('User:*').each { |key| $redis.del key }
+        $redis.keys('GenericFile:*').each { |key| $redis.del key }
+      rescue => e
+        Logger.new(STDOUT).warn "WARNING -- Redis might be down: #{e}"
+      end 
     end
   end
 

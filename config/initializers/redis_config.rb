@@ -10,7 +10,6 @@ if defined?(PhusionPassenger)
       $redis.client.disconnect if $redis
       $redis = Redis.new(host: config[:host], port: config[:port], thread_safe: true) rescue nil
       Resque.redis = $redis
-      Resque.redis.namespace = "#{Sufia.config.redis_namespace}:#{Rails.env}"
       Resque.redis.client.reconnect if Resque.redis
     end
   end
@@ -21,7 +20,6 @@ else
   Resque.redis.namespace = "#{Sufia.config.redis_namespace}:#{Rails.env}"
 end
 
-
 # Code borrowed from Obie's Redis patterns talk at RailsConf'12
 Nest.class_eval do
   def initialize(key, redis=$redis)
@@ -31,6 +29,5 @@ Nest.class_eval do
 
   def [](key)
     self.class.new("#{self}:#{key.to_param}", @redis)
-    Resque.redis.namespace = "#{Sufia.config.redis_namespace}:#{Rails.env}"
   end
 end
