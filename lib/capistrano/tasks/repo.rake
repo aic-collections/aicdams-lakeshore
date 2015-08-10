@@ -1,13 +1,13 @@
 namespace :repo do
 
-  desc "Setup a complete development repo on a server"
+  desc "Clone a new instance of the repository on a server"
   task :clone do
     on roles(:app) do
       execute "cd #{fetch(:base_dir)} && git clone #{fetch(:repo_url)}"
     end
   end
 
-  desc "Configure repo using yml files stored on server"
+  desc "Configure a repo using yml files stored on server"
   task :config do
     on roles(:app) do
       execute "cp #{fetch(:aic_config_dir)}/*.yml #{fetch(:base_dir)}/aicdams-lakeshore/config/"
@@ -16,5 +16,15 @@ namespace :repo do
       execute "cd #{fetch(:base_dir)}/aicdams-lakeshore && /usr/bin/env rake rails:update:bin"
     end
   end
+
+  desc "Remove repo"
+  task :delete do
+    on roles(:app) do
+      execute "rm -Rf #{fetch(:base_dir)}/aicdams-lakeshore"
+    end
+  end
+
+  desc "Re-install repository"
+  task reinstall: ["delete", "clone", "config"]
 
 end
