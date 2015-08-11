@@ -16,7 +16,7 @@ describe Work do
     end
   end
 
-  describe "related works" do
+  describe "#assets" do
     let(:asset) do
       GenericFile.create.tap do |f|
         f.title = ["Asset in a work"]
@@ -24,13 +24,27 @@ describe Work do
         f.save
       end
     end
-    let(:work) { Work.create }
-    subject do
-      work.asset_ids = [asset.id]
-      work.save
-      work
+    let(:work) do
+      Work.create.tap do |w|
+        w.asset_ids = [asset.id]
+        w.save
+      end
     end
-    specify { expect(subject.assets).to include(asset) }
+    specify { expect(work.assets).to include(asset) }
+    context "when removing the asset from the work" do
+      before { work.asset_ids = [] }
+      it "retains the asset" do
+        expect(work.assets).to be_empty
+        expect(GenericFile.all).to include(asset)
+      end
+    end
+    context "when deleting the asset" do
+      before { asset.destroy }
+      it "removes the asset from the work" do
+        pending
+        expect(work.assets).to be_empty
+      end
+    end
   end
 
   describe "cardinality" do
