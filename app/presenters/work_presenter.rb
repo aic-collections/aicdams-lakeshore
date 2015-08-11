@@ -8,8 +8,7 @@ class WorkPresenter
   end
 
   self.model_class = Work
-  self.terms = [ 
-    :asset_ids,
+  self.terms = [
     :after,
     :artist_display,
     :artist_uid,
