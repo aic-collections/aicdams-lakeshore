@@ -59,9 +59,10 @@ namespace :deploy do
     end
   end
 
-  after :finished, :update_bin do
+  after :finished, :post_install_tasks do
     on roles(:web) do
       execute "cd #{fetch(:deploy_to)}/current && /usr/bin/env rake rails:update:bin RAILS_ENV=#{fetch(:rails_env)}"
+      execute "cd #{fetch(:deploy_to)}/current && /usr/bin/env rake solr:reindex RAILS_ENV=#{fetch(:rails_env)}"
     end
   end
 
