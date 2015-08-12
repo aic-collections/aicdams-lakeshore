@@ -26,6 +26,10 @@ class CatalogController < ApplicationController
     solr_name('date_modified', :stored_sortable, type: :date)
   end
 
+  def self.file_size_field
+    solr_name("file_size", :stored_sortable, type: :integer)
+  end
+
   configure_blacklight do |config|          config.view.gallery.partials = [:index_header, :index]
           config.view.masonry.partials = [:index]
           config.view.slideshow.partials = [:index]
@@ -336,6 +340,8 @@ class CatalogController < ApplicationController
     config.add_sort_field "#{uploaded_field} asc", label: "date uploaded \u25B2"
     config.add_sort_field "#{modified_field} desc", label: "date modified \u25BC"
     config.add_sort_field "#{modified_field} asc", label: "date modified \u25B2"
+    config.add_sort_field "#{file_size_field} desc", label: "file size \u25BC"
+    config.add_sort_field "#{file_size_field} asc", label: "file size \u25B2"
 
     # If there are more than this many search results, no spelling ("did you
     # mean") suggestion is offered.
