@@ -19,10 +19,17 @@ describe GenericFile do
       specify { expect(subject.assert_text).to be false }
     end
     describe "#to_solr" do
-      before { allow(subject).to receive(:file_size).and_return(["1234"]) }
+      before do
+        allow(subject).to receive(:file_size).and_return(["1234"])
+        allow(subject).to receive(:width).and_return(["8"])
+        allow(subject).to receive(:height).and_return(["12"])
+
+      end
       it "contains our custom solr fields" do
         expect(subject.to_solr[Solrizer.solr_name("aic_type", :facetable)]).to include("Asset", "Still Image")
         expect(subject.to_solr[CatalogController.file_size_field]).to eq "1234"
+        expect(subject.to_solr[CatalogController.image_width_field]).to eq "8"
+        expect(subject.to_solr[CatalogController.image_height_field]).to eq "12"
       end
     end
   end
