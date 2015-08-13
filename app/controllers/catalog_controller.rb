@@ -234,6 +234,7 @@ class CatalogController < ApplicationController
     end
 
     config.add_search_field('date_created') do |field|
+      field.include_in_advanced_search = false
       field.solr_parameters = {
         :"spellcheck.dictionary" => "date_created"
       }
@@ -256,6 +257,7 @@ class CatalogController < ApplicationController
     end
 
     config.add_search_field('language') do |field|
+      field.include_in_advanced_search = false
       field.solr_parameters = {
         :"spellcheck.dictionary" => "language"
       }
@@ -267,6 +269,7 @@ class CatalogController < ApplicationController
     end
 
     config.add_search_field('resource_type') do |field|
+      field.include_in_advanced_search = false
       field.solr_parameters = {
         :"spellcheck.dictionary" => "resource_type"
       }
@@ -302,6 +305,7 @@ class CatalogController < ApplicationController
     end
 
     config.add_search_field('based_near') do |field|
+      field.include_in_advanced_search = false
       field.label = "Location"
       field.solr_parameters = {
         :"spellcheck.dictionary" => "based_near"
@@ -314,6 +318,7 @@ class CatalogController < ApplicationController
     end
 
     config.add_search_field('tag') do |field|
+      field.include_in_advanced_search = false
       field.solr_parameters = {
         :"spellcheck.dictionary" => "tag"
       }
@@ -333,6 +338,7 @@ class CatalogController < ApplicationController
     end
 
     config.add_search_field('rights') do |field|
+      field.include_in_advanced_search = false
       solr_name = solr_name("rights", :stored_searchable)
       field.solr_local_parameters = {
         qf: solr_name,

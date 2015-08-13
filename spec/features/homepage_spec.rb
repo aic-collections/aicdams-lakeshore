@@ -8,6 +8,12 @@ describe "Visting the home page", type: :feature do
 
     it "renders the homepage" do
       expect(page).to have_content "Sufia"
+      expect(page).to have_content "Advanced Search"
+      within("div#advanced_search") do
+        expect(page).to have_content "Contributor"
+        expect(page).to have_content "Creator"
+        expect(page).to have_content "Title"
+      end
     end
   
   end
