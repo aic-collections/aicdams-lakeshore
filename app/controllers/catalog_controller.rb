@@ -30,14 +30,6 @@ class CatalogController < ApplicationController
     solr_name("file_size", :stored_sortable, type: :integer)
   end
 
-  def self.image_height_field
-    "image_height_iim"
-  end 
-
-  def self.image_width_field
-    "image_width_iim"
-  end
-
   configure_blacklight do |config|          config.view.gallery.partials = [:index_header, :index]
           config.view.masonry.partials = [:index]
           config.view.slideshow.partials = [:index]
@@ -74,8 +66,8 @@ class CatalogController < ApplicationController
     config.add_facet_field solr_name("based_near", :facetable), label: "Location", limit: 5
     config.add_facet_field solr_name("publisher", :facetable), label: "Publisher", limit: 5
     config.add_facet_field solr_name("file_format", :facetable), label: "File Format", limit: 5
-    config.add_facet_field image_width_field, label: "Image Width", range: true
-    config.add_facet_field image_height_field, label: "Image Height", range: true
+    config.add_facet_field solr_name("image_width", :searchable, type: :integer), label: "Image Width", range: true
+    config.add_facet_field solr_name("image_height", :searchable, type: :integer), label: "Image Height", range: true
 
     # Have BL send all facet field names to Solr, which has been the default
     # previously. Simply remove these lines if you'd rather use Solr request

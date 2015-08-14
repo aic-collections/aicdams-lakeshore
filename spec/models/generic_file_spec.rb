@@ -28,8 +28,8 @@ describe GenericFile do
       it "contains our custom solr fields" do
         expect(subject.to_solr[Solrizer.solr_name("aic_type", :facetable)]).to include("Asset", "Still Image")
         expect(subject.to_solr[CatalogController.file_size_field]).to eq "1234"
-        expect(subject.to_solr[CatalogController.image_width_field]).to eq "8"
-        expect(subject.to_solr[CatalogController.image_height_field]).to eq "12"
+        expect(subject.to_solr[Solrizer.solr_name("image_width", :searchable, type: :integer)]).to eq ["8"]
+        expect(subject.to_solr[Solrizer.solr_name("image_height", :searchable, type: :integer)]).to eq ["12"]
       end
     end
   end
