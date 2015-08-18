@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   root to: 'homepage#index'
 
   # Administrative URLs
+  mount Hydra::RoleManagement::Engine => '/admin'
   namespace :admin do
     # Job monitoring
     constraints ResqueAdmin do

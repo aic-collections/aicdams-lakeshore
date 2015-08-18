@@ -6,10 +6,11 @@ gem 'rails', '4.2.1'
 gem 'sufia', github: 'projecthydra/sufia', ref: 'd8ba848898dec86e6ab3ad8cfd4ca88601e6b4c4'
 gem 'kaminari', github: 'jcoyne/kaminari', branch: 'sufia'
 
-gem "blacklight_range_limit"
+gem 'blacklight_range_limit'
 gem 'coffee-rails', '~> 4.1.0'
 gem 'devise'
 gem 'devise-guests', '~> 0.3'
+gem 'hydra-role-management'
 gem 'jbuilder', '~> 2.0'
 gem 'jquery-rails'
 gem 'resque-pool'

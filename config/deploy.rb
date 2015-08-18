@@ -32,6 +32,7 @@ set :log_level, :debug
 set :branch, ENV["REVISION"] || ENV["BRANCH_NAME"] || "master"
 
 set :linked_files, fetch(:linked_files, []).push(
+  'config/admin.yml',
   'config/blacklight.yml',
   'config/database.yml',
   'config/fedora.yml',

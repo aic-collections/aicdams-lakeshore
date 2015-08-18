@@ -17,6 +17,7 @@
       </li>
       <%= render partial: 'users/user_util_links_extra' %>
       <li class="divider"></li>
+      <%= render partial: '/admin_links' if current_user.admin? %>
       <li>
         <%= link_to raw('<span class="glyphicon glyphicon-log-out"></span> log out'), destroy_user_session_path, id: 'logout_nav_link' %>
       </li>

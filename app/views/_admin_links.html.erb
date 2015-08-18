@@ -1,0 +1,9 @@
+<li>
+  <%= link_to raw('<span class="glyphicon glyphicon-wrench"></span> manage roles'), 
+        role_management.roles_path, id: 'manage_role_link' %>
+</li>
+<li>
+  <%= link_to raw('<span class="glyphicon glyphicon-equalizer"></span> resque admin'),
+        admin_resque_server_path, id: 'resque_admin_link', target: '_blank' %>
+</li>
+<li class="divider"></li>

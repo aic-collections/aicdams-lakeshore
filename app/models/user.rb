@@ -1,17 +1,14 @@
 class User < ActiveRecord::Base
-  # Connects this user object to Hydra behaviors.
-  include Hydra::User# Connects this user object to Sufia behaviors. 
- include Sufia::User
+  include Blacklight::User
+  include Hydra::User
+  include Sufia::User
   include Sufia::UserUsageStats
-
-
+  include Hydra::RoleManagement::UserRoles
 
   if Blacklight::Utils.needs_attr_accessible?
-
     attr_accessible :email, :password, :password_confirmation
   end
-# Connects this user object to Blacklights Bookmarks. 
-  include Blacklight::User
+
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
@@ -22,5 +19,9 @@ class User < ActiveRecord::Base
   # the account.
   def to_s
     email
+  end
+
+  def admin?
+    ADMINS.include?(self.email)
   end
 end

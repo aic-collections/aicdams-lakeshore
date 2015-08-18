@@ -1,0 +1,11 @@
+development:
+  - awead@aic.org
+  - joe@aic.org
+
+test:
+  - joe@aic.org
+  - awead@aic.org
+
+production:
+  - god@aic.org
+  - awead@aic.org

@@ -7,6 +7,10 @@ class Ability
       can [:create, :edit],             Work  
       can [:create, :destroy, :update], FeaturedWork
     end
+
+    if current_user.admin?
+      can [:create, :index, :edit, :update, :destroy, :show, :add_user, :remove_user], Role
+    end
   end
 
 end
