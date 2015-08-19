@@ -8,6 +8,13 @@
   </div>
 
   <div id="advanced_search">
+    <div class="form-group">
+      <%= label_tag :resource_type, "Resource Type:", class: 'control-label col-sm-4' %>
+      <div class="col-sm-8">
+        <%= select_tag "[f][#{Solrizer.solr_name("aic_type", :facetable)}][]", options_for_select(resource_type_facets), 
+              include_blank: true, class: 'form-control' %>
+      </div>
+    </div>
     <%= render 'advanced/advanced_search_fields' %>
   </div>
 

@@ -28,4 +28,8 @@ module ApplicationHelper
     end
   end
 
+  def resource_type_facets
+    @resource_types.reject { |r| r.kind_of?(Integer) }.sort
+  end
+
 end
