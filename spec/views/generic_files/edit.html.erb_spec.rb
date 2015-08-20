@@ -15,8 +15,7 @@ describe "generic_files/edit.html.erb" do
 
   let(:generic_file) do
     stub_model(GenericFile, id: '123',
-      depositor: 'bob',
-      resource_type: ['Book', 'Dataset']
+      depositor: 'bob'
     )
   end
 
@@ -54,7 +53,6 @@ describe "generic_files/edit.html.erb" do
     expect(page).to have_selector("select#generic_file_rights", count: 1)
     expect(page).to have_selector("input#generic_file_source", count: 1)
     expect(page).to have_selector("input#generic_file_subject", count: 1)
-    expect(page).to have_selector("select#generic_file_resource_type", count: 1)
     expect(page).to have_selector("input#generic_file_described_by", count: 1)
     expect(page).to have_selector("input#generic_file_same_as", count: 1)
     expect(page).to have_selector("input#generic_file_pref_label", count: 1)

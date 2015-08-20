@@ -1,4 +1,4 @@
-<h2>Assets</h2>
+<h2>Relationships</h2>
 <% @work.assets.each do |asset| %>
-  <%= link_to_asset(asset) %>
+  <%= render partial: 'generic_files/asset_display', locals: { asset: asset } %>
 <% end %>

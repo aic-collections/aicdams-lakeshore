@@ -1,0 +1,14 @@
+<% presenter = AssetPresenter.new(asset) %>
+<div class="media">
+  <div class="media-left">
+    <%= link_to_asset(asset) %>
+  </div>
+  <div class="media-body">
+    <dl class="dl-horizontal file-show-term file-show-descriptions">
+      <% present_terms(presenter, presenter.brief_terms) do |r, term| %>
+        <dt><%= r.label(term) %></dt>
+        <dd><%= r.value(term) %></dd>
+      <% end %>
+    </dl>
+  </div>
+</div>

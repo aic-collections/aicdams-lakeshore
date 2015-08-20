@@ -27,8 +27,11 @@ describe "works/show.html.erb" do
   subject { rendered }
 
   specify do
-    expect(subject).to include('<h2>Assets</h2>')
+    expect(subject).to include('<h2>Relationships</h2>')
     expect(subject).to include('src="/downloads/abc?file=thumbnail"')
+    expect(subject).to include('<dt>Relation</dt>')
+    expect(subject).to include('<dt>Asset type</dt>')
+    expect(subject).to include('<dt>Identifier</dt>')
   end
 
 end

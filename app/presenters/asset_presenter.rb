@@ -20,9 +20,22 @@ class AssetPresenter < Sufia::GenericFilePresenter
     :source,
     :subject,
     :title,
-    :resource_type,
     :described_by,
     :same_as,
     :pref_label
   ]
+
+  def brief_terms
+    [
+      :relation,
+      :asset_type,
+      :identifier
+    ]
+  end
+
+  def asset_type
+    return "Image" if model.is_still_image?
+    return "Text Document" if model.is_text?
+  end 
+
 end

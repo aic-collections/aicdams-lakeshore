@@ -22,9 +22,9 @@ module ApplicationHelper
 
   def asset_image_tag(asset)
     if asset.title.empty?
-      image_tag "default.png", alt: "No preview available", class: "img-responsive"
+      image_tag "default.png", alt: "No preview available", class: "media-object", width: "150"
     else
-      image_tag sufia.download_path(asset, file: 'thumbnail'), class: "img-responsive", alt: "#{asset.title.first}"
+      image_tag sufia.download_path(asset, file: 'thumbnail'), class: "media-object", width: "150", alt: "#{asset.title.first}"
     end
   end
 
