@@ -3,7 +3,7 @@ source 'https://rubygems.org'
 gem 'rails', '4.2.1'
 
 # Hydra Gems
-gem 'sufia', github: 'projecthydra/sufia', ref: 'd8ba848898dec86e6ab3ad8cfd4ca88601e6b4c4'
+gem 'sufia', '~> 6.3.0'
 gem 'kaminari', github: 'jcoyne/kaminari', branch: 'sufia'
 
 gem 'blacklight_range_limit'
