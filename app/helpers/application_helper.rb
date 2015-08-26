@@ -14,9 +14,9 @@ module ApplicationHelper
 
   def link_to_asset(asset)
     if asset.title.empty?
-      link_to asset_image_tag(asset), sufia.download_path(asset), target: "_blank", title: "Download the document", id: "file_download", data: { label: asset.id }
+      link_to asset_image_tag(asset), sufia.generic_file_path(asset), title: "Download the document", id: "file_download", data: { label: asset.id }
     else
-      link_to asset_image_tag(asset), sufia.download_path(asset), target: "_blank", title: "#{asset.title.first}", id: "file_download", data: { label: asset.id }
+      link_to asset_image_tag(asset), sufia.generic_file_path(asset), title: "#{asset.title.first}", id: "file_download", data: { label: asset.id }
     end
   end
 
