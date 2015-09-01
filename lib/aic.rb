@@ -1,77 +1,92 @@
 class AIC < RDF::StrictVocabulary("http://definitions.artic.edu/ontology/1.0/")
 
-  term :after
-  term :afterYear,
-    label: "After Year".freeze
-  term :artistDisplay,
-    label: "Artist Display Name".freeze
+  term :actorType,
+    label: "Actor Type".freeze,
+    comment: "Type of the actor: individual person, group, corporate entity".freeze
   term :artistUid,
-    label: "Artist ID".freeze
+    label: "Artist ID".freeze,
+    comment: "Artist ID".freeze
   term :batchUid,
     label: "Batch UID".freeze,
     comment: "UID of batch process that ingested the resource".freeze
-  term :before
-  term :beforeYear,
-    label: "Before Year".freeze
   term :birthDate,
     label: "Birth Date".freeze,
     comment: "Birth date".freeze
-  term :birthPlace,
-    label: "Birth Place".freeze,
-    comment: "Birth place. ".freeze
   term :birthYear,
     label: "Birth Year".freeze,
     comment: "Birth year".freeze
-  term :category
+  term :captureDevice,
+    label: "Capture Device".freeze,
+    comment: "Capture device of original file".freeze
+  term :category,
+    label: "Category".freeze,
+    comment: "Comment category".freeze
   term :citiUid,
-    label: "CITI UID (PKey)".freeze,
-    comment: "PKey from CITI table".freeze
-  term :collCatUid,
-    label: "Collection Category ID".freeze
+    label: "CITI UID".freeze,
+    comment: "CITI unique identifier (PKey)".freeze
+  term :compositing,
+    label: "Compositing".freeze,
+    comment: "Compositing type".freeze
+  term :conservationDocType,
+    label: "Conservation Document Type".freeze,
+    comment: "Document type used by Conservation".freeze
   term :content,
-    comment: "Annotation content".freeze
+    label: "Content".freeze,
+    comment: "Annontation content".freeze
+  term :contributor,
+    label: "Contributor".freeze,
+    comment: "Person or corporate body who participated in the creation of the resource".freeze
   term :created,
-    label: "Created (external)".freeze,
+    label: "Created On".freeze,
     comment: "Creation timestamp for resources not managed by Hydra".freeze
-  term :creatorUid,
-    label: "Creator ID".freeze
+  term :createdBy,
+    label: "Created By".freeze,
+    comment: "Person or corporate body who was primarily responsible for the creation of the resource".freeze
+  term :creatorDisplay,
+    label: "Creator".freeze,
+    comment: "Creator of the work (display)".freeze
   term :creditLine,
-    label: "Credit Line".freeze
+    label: "Credit Line".freeze,
+    comment: "Credit line".freeze
+  term :dateDisplay,
+    label: "Date (display)".freeze,
+    comment: "Collocation date(s)".freeze
   term :deathDate,
     label: "Death Date".freeze,
     comment: "Death date".freeze
-  term :deathPlace,
-    label: "Death Place".freeze,
-    comment: "Birth place".freeze
   term :deathYear,
     label: "Death Year".freeze,
     comment: "Death year".freeze
+  term :department,
+    label: "Department".freeze,
+    comment: "AIC department".freeze
   term :deptCreated,
     label: "Created by Department".freeze,
     comment: "Department of resource creator".freeze
-  term :deptUid,
-    label: "Department ID".freeze
-  term :deptUid,
-    label: "CITI Department ID".freeze,
-    comment: "Department ID from CITI".freeze
+  term :digitizationSource,
+    label: "Digitization source".freeze,
+    comment: "Original document for non-born-digital assets".freeze
   term :dimensionsDisplay,
-    label: "Dimensions Display".freeze
+    label: "Dimensions Display".freeze,
+    comment: "Display dimensions".freeze
+  term :documentType,
+    label: "Document Type".freeze,
+    comment: "Select one document type from the hierarchy".freeze
+  term :earliestDate,
+    label: "Earliest Date".freeze,
+    comment: "Earliest preferred date".freeze
+  term :earliestYear,
+    label: "Earliest Year".freeze,
+    comment: "Earliest preferred year".freeze
   term :endDate,
     label: "End Date".freeze,
     comment: "End date".freeze
   term :exhibitionHistory,
-    label: "Exhibition History".freeze
-  term :firstName,
-    label: "First Name".freeze,
-    comment: "First name".freeze
+    label: "Exhibition History".freeze,
+    comment: "Exhibition history text".freeze
   term :galleryLocation,
-    label: "Gallery Location".freeze
-  term :geoLocX,
-    label: "X Coordinate".freeze,
-    comment: "X coordinate".freeze
-  term :geoLocY,
-    label: "Y Coordinate".freeze,
-    comment: "Y coordinate".freeze
+    label: "Gallery Location".freeze,
+    comment: "Gallery location".freeze
   term :hasComment,
     label: "Comment".freeze,
     comment: "Comment".freeze
@@ -81,88 +96,80 @@ class AIC < RDF::StrictVocabulary("http://definitions.artic.edu/ontology/1.0/")
   term :hasDocument,
     label: "Has Document".freeze,
     comment: "Asset documenting the resource".freeze
-  term :hasDocument,
-    label: "Has Document".freeze,
-    comment: "URI of document".freeze
-  term :hasInstance,
-    label: "Instance".freeze,
-    comment: "Asset instance URI".freeze
-  term :hasLocation,    label: "Location".freeze,
-   comment: "Location related to the resource".freeze
-  term :hasMetadata,
-    label: "Metadata".freeze,
-    comment: "Metadata set related to the resource".freeze
-  term :hasOriginalInstance,
-    label: "Original Instance".freeze,
-    comment: "Original instance URI".freeze
-  term :hasPrefRepresentation,
-    label: "Has Preferred Representation".freeze,
-    comment: "Asset URI. This is the asset used to generate the thumbnail for the resource".freeze
-  term :hasPublishingContext,
-    label: "Publishing Context".freeze,
-    comment: "Context that the resource is published in".freeze
+  term :hasPreferredRepresentation,
+    label: "Has Preferred Image".freeze,
+    comment: "Asset that is a primary representation of the Resource. This asset is used to create the thumbnail for non-Asset resources".freeze
   term :hasRepresentation,
     label: "Has Representation".freeze,
-    comment: "Asset representing the resource".freeze
-  term :hasRepresentation,
-    label: "Has Representation".freeze,
-    comment: "Asset URI".freeze
-  term :hasRole,
-    label: "Role".freeze,
-    comment: "Location role".freeze
-  term :hasRole,
-    label: "Role".freeze,
-    comment: "Character role".freeze
-  term :hasTag,
-    label: "Tag".freeze,
-    comment: "Tag attached to the resource".freeze
+    comment: "Asset representing (depicting) the resource".freeze
   term :inscriptions,
-    label: "Inscriptions".freeze
-  term :isDerivedFrom,
-    label: "Derived From".freeze,
-    comment: "Source instance for the derivative".freeze
-  term :lastName,
-    label: "Last Name".freeze,
-    comment: "Last name".freeze
+    label: "Inscriptions".freeze,
+    comment: "Inscriptions on object".freeze
+  term :latestDate,
+    label: "Latest Date".freeze,
+    comment: "Latest preferred date".freeze
+  term :latestYear,
+    label: "Latest Year".freeze,
+    comment: "Latest preferred year".freeze
   term :legacyUid,
-    label: "Has Preferred Representation".freeze,
+    label: "Legacy ID".freeze,
     comment: "UID assigned to resource from a legacy system".freeze
+  term :lightType,
+    label: "Light Type".freeze,
+    comment: "Light type used to capture the image".freeze
   term :mainRefNumber,
-    label: "Main Reference Number".freeze
+    label: "Main Reference Number".freeze,
+    comment: "Main reference number".freeze
   term :mediumDisplay,
-    label: "Medium Display".freeze
+    label: "Medium Display".freeze,
+    comment: "Display medium".freeze
+  term :nameOfficial,
+    label: "Official Name".freeze,
+    comment: "Official name".freeze
+  term :nameWorking,
+    label: "Working Name".freeze,
+    comment: "Working name".freeze
   term :objectType,
-    label: "Object Type".freeze
-  term :originalFileName,
-    label: "Original file name".freeze
-  term :placeOfOrigin,
-    label: "Place of Origin".freeze
-  term :playsAs,
-    label: "As Character".freeze,
-    comment: "Character that the actor plays a role as".freeze
-  term :playsAs,
-    label: "As Location".freeze,
-    comment: "Location that the place plays a role as".freeze
+    label: "Object Type".freeze,
+    comment: "Object type".freeze
+  term :placeOfOriginUid,
+    label: "Place of Origin".freeze,
+    comment: "Place of origin".freeze
   term :provenanceText,
-    label: "Provenance Text".freeze
-  term :pubCatUid,
-    label: "Publish Category ID".freeze
-  term :publTag,
-    label: "Publishing Tag".freeze
-  term :publVerLevel,
-    label: "Publish Verification Level".freeze
+    label: "Provenance Text".freeze,
+    comment: "Provenance text".freeze
   term :publicationHistory,
-    label: "Publication History".freeze
+    label: "Publication History".freeze,
+    comment: "Publication history text".freeze
+  term :publVerLevel,
+    label: "Publish Verification Level".freeze,
+    comment: "Publish verification level".freeze
+  term :specialImageType,
+    label: "Special Image Type".freeze,
+    comment: "Technical image type".freeze
   term :startDate,
     label: "Start Date".freeze,
     comment: "Start date".freeze
   term :status,
-    comment: "Status URI".freeze
+    label: "Status".freeze,
+    comment: "Status of the resource".freeze
+  term :tag,
+    label: "Tag".freeze,
+    comment: "Tag attached to the resource".freeze
+  term :transcript,
+    label: "Transcript".freeze,
+    comment: "Plain-text transcription, either manually or automatically extracted from the document".freeze
+  term :typeUid,
+    label: "Type ID".freeze,
+    comment: "Type (ID) of exhibition".freeze
   term :uid,
     label: "UID".freeze,
     comment: "Primary ID of resource. This is generated by UIDminter".freeze
   term :updated,
-    label: "Updated (external)".freeze,
+    label: "Updated On".freeze,
     comment: "Update timestamp for resources not managed by Hydra".freeze
+  term :view,
+    label: "View".freeze,
+    comment: "Viewing angle, overall or detail, etc".freeze
 
 end
