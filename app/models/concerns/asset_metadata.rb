@@ -3,65 +3,39 @@ module AssetMetadata
   
   included do
 
-    # Same as Sufia batch id?
-    property :batch_uid, predicate: AIC.batchUid, multiple: false do |index|
-      index.as :stored_searchable
-    end 
-
-    property :aiccreated, predicate: AIC.created, multiple: false do |index|
-      index.type :date
-      index.as :stored_sortable
-    end
-
-    property :department, predicate: AIC.deptCreated, multiple: false do |index|
+    property :asset_capture_device, predicate: AIC.captureDevice, multiple: false do |index|
       index.as :stored_searchable
     end
-
+    
+    # TODO: This needs to be a ListItem
+    property :digitization_source, predicate: AIC.digitizationSource, multiple: false do |index|
+      index.as :stored_searchable
+    end
+    
+    # TODO: Needs to be a DocumentType
+    property :document_type, predicate: AIC.documentType, multiple: false do |index|
+      index.as :stored_searchable
+    end
+    
     property :legacy_uid, predicate: AIC.legacyUid do |index|
       index.as :stored_searchable
     end
-
-    property :status, predicate: AIC.status, multiple: false do |index|
+    
+    # TODO: This needs to be a ListItem
+    property :tag, predicate: AIC.tag do |index|
       index.as :stored_searchable
     end
 
-    property :uid, predicate: AIC.uid, multiple: false
+    has_and_belongs_to_many :comments, predicate: AIC.hasComment, class_name: "Comment", inverse_of: :generic_files
+    accepts_nested_attributes_for :comments, allow_destroy: true
 
-    property :updated, predicate: AIC.updated, multiple: false do |index|
-      index.type :date
-      index.as :stored_sortable
-    end
+  end
 
-    # Additional DC terms not in Sufia::GenericFile::Metadata
-
-    property :coverage, predicate: ::RDF::DC.coverage do |index|
-      index.as :stored_searchable
+  def attributes= attributes
+    ["comments_attributes"].each do |nested_attribute|
+      attributes[nested_attribute].reject! { |k,v| v["content"].empty? if v && v["content"] } if attributes[nested_attribute]
     end
-    property :date, predicate: ::RDF::DC.date do |index|
-      index.as :stored_searchable
-    end
-    property :format, predicate: ::RDF::DC.format do |index|
-      index.as :stored_searchable
-    end
-    property :relation, predicate: ::RDF::DC.relation do |index|
-      index.as :stored_searchable
-    end
-    property :resource_type, predicate: ::RDF::DC.type do |index|
-      index.as :stored_searchable
-    end
-
-    # Addtional terms in other schema
-
-    property :described_by, predicate: ::RDF::Vocab::IANA.describedby do |index|
-      index.as :stored_searchable
-    end
-    property :same_as, predicate: ::RDF::OWL.sameAs do |index|
-      index.as :stored_searchable
-    end
-    property :pref_label, predicate: ::RDF::SKOS.prefLabel, multiple: false do |index|
-      index.as :stored_searchable
-    end
-
+    super(attributes)
   end
 
 end

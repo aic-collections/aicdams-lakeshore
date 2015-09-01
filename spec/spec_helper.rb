@@ -46,6 +46,9 @@ RSpec.configure do |config|
   #     --seed 1234
   config.order = :random
 
+  # Exclude blocks of broken tests
+  config.filter_run_excluding broken: true
+
 # The settings below are suggested to provide a good initial experience
 # with RSpec, but feel free to customize to your heart's content.
 =begin

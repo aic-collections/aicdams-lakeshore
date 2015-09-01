@@ -1,29 +1,18 @@
 class AssetPresenter < Sufia::GenericFilePresenter
-  self.terms = [
-    :comments,
-    :location,
-    :metadata,
-    :publishing_context,
-    :aictag_ids,
-    :status,
-    :contributor,
-    :coverage,
-    :creator,
-    :date,
-    :description,
-    :format,
-    :identifier,
-    :language,
-    :publisher,
-    :relation,
-    :rights,
-    :source,
-    :subject,
-    :title,
-    :described_by,
-    :same_as,
-    :pref_label
-  ]
+
+  def self.asset_terms
+    [:asset_capture_device, :digitization_source, :document_type, :legacy_uid, :comments, :tag]
+  end
+
+  def self.still_image_terms
+    [:compositing, :light_type, :view]
+  end
+
+  def self.text_terms
+    [:transcript]
+  end
+
+  self.terms = ResourcePresenter.terms + self.still_image_terms + self.text_terms + self.asset_terms
 
   def brief_terms
     [

@@ -1,10 +1,14 @@
-class GenericFile < ActiveFedora::Base
+class GenericFile < Resource
   include Sufia::GenericFile
-  include Validations
+  include StillImageMetadata
+  include TextMetadata
   include AssetMetadata
-  include NestedMetadata
 
-  type [AICType.Asset, AICType.Resource]
+  def self.aic_type
+    super << AICType.Asset
+  end
+
+  type aic_type
 
   def is_still_image?
     self.type.include? AICType.StillImage
