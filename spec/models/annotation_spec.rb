@@ -3,8 +3,8 @@ require 'rails_helper'
 describe Annotation do
 
   describe "RDF types" do
-    subject { Annotation.new.type }
-    it { is_expected.to include(AICType.Annotation, AICType.Resource) }
+    subject { described_class.new.type }
+    it { is_expected.to contain_exactly(AICType.Annotation, AICType.Resource) }
   end
 
 end
