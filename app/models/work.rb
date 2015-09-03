@@ -1,13 +1,13 @@
-class Work < ActiveFedora::Base
+class Work < CitiResource
   include WorkMetadata
-  include NestedWorkMetadata
-  include Sufia::GenericFile::Metadata
   include Sufia::GenericFile::Featured
-  include AssetMetadata
-  include Validations
   include WorkPermissions
 
-  type [AICType.Work, AICType.Resource]
+  def self.aic_type
+    super << AICType.Work
+  end
+
+  type aic_type
 
   def self.indexer
     ::WorkIndexer
