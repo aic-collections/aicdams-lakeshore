@@ -44,6 +44,7 @@ describe Tag do
       tag
     end
     it "deletes the resource" do
+      pending "No longer relevant"
       expect(subject.destroy).to be_kind_of(Tag)
     end
   end

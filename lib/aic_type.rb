@@ -50,6 +50,12 @@ class AICType < RDF::StrictVocabulary("http://definitions.artic.edu/ontology/1.0
     subClassOf: "aictype:Asset".freeze,
     label: "Still Image".freeze,
     comment: "Still image".freeze
+  term :Tag,
+    label: "Tag".freeze,
+    comment: "Deprecated tag type".freeze
+  term :TagCat,
+    label: "Tag Category".freeze,
+    comment: "Deprecated tag category type".freeze 
   term :Text,
     subClassOf: "aictype:Asset".freeze,
     label: "Text Document".freeze,
