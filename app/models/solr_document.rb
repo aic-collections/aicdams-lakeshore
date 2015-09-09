@@ -7,6 +7,7 @@ class SolrDocument
   # Adds Sufia behaviors to the SolrDocument.
   include Sufia::SolrDocumentBehavior
 
+  include SolrDocumentExtensions
 
   # self.unique_key = 'id'
   

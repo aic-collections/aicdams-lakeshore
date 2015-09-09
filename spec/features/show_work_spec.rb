@@ -8,7 +8,13 @@ describe "Displaying a work from CITI" do
   end
 
   it "shows all the information about the resource" do
-    expect(page).to have_content("The Great Sidewalk Gum")
+    click_link("The Great Sidewalk Gum")
+    within("dl") do
+      expect(page).to have_content("The Great Sidewalk Gum")
+      expect(page).to have_content("Gift of Mr. Dummy Lee & Mrs. Parrot Funkaroo")
+      click_link("http://definitions.artic.edu/ontology/1.0/status/active")
+    end
+
   end
 
 end

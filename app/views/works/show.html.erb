@@ -6,7 +6,7 @@
     <%= render 'show_actions' %>
   </div>
   <div class="col-xs-12 col-sm-8">
-    <h1 class="visibility"><%= display_multiple @presenter.title %> <%= render_work_visibility_badge %></h1>
+    <h1 class="visibility"><%= @presenter.pref_label %> <%= render_work_visibility_badge %></h1>
     <%= render 'list_assets' unless @work.assets.empty? %>
     <%= render 'generic_files/show_descriptions' %>
   </div><!-- /columns second -->
