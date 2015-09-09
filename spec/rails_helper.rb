@@ -50,6 +50,7 @@ RSpec.configure do |config|
   config.include InputSupport, type: :input
   config.include FactoryGirl::Syntax::Methods
   config.include SessionSupport, type: :feature
+  config.include FixtureLoader
 
   config.include Warden::Test::Helpers, type: :feature
   config.after(:each, type: :feature) { Warden.test_reset! }

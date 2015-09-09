@@ -1,4 +1,9 @@
 require 'active_fedora/cleaner'
+require './spec/support/fixture_loader'
+
+class DevelopmentLoader
+  include FixtureLoader
+end
 
 desc "Run continuous integration test"
 task ci: ['jetty:clean', 'db:migrate'] do
@@ -30,6 +35,14 @@ namespace :fedora do
   task :config do
     puts "Registering namespace prefixes in Fedora"
     system("script/fedora_config.sh")
+  end
+
+  desc "Create fixture resources in Fedora from turtle files"
+  task :load_fixtures do
+    loader = DevelopmentLoader.new
+    Dir.glob("spec/fixtures/*.ttl").each do |f|
+      loader.load_fedora_fixture(f)
+    end
   end
 end
 

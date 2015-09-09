@@ -67,4 +67,12 @@ describe Work do
     it { is_expected.not_to be_registered }
   end
 
+  context "with CITI resources" do
+    before { load_fedora_fixture(fedora_fixture("work.ttl")) }
+    it "indexes them into solr" do
+      expect(Work.all.count).to eql 1
+    end
+
+  end
+
 end
