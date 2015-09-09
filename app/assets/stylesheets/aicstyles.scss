@@ -2,6 +2,11 @@ $grey: #f2f2f3;
 $aicred: #9d1c33;
 $yellow: #F0CA00;
 
+@font-face {
+  font-family:'ideallight';
+  src:font-url('IdealSans-Light.otf') format('truetype');
+}
+
 body {
   background-color: $grey;
   }
@@ -53,6 +58,7 @@ body {
   }
   
 #masthead .institution_name {
+  font-family: 'ideallight';
   font-size: 1.75em;
   display: inline-block;
   left: 95px;
