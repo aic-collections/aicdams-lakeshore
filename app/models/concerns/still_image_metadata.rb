@@ -3,18 +3,13 @@ module StillImageMetadata
   
   included do
 
-    # TODO: These all need to be ListItem types
-    property :compositing, predicate: AIC.compositing, multiple: false do |index|
-      index.as :stored_searchable
-    end
+    # TODO: this needs to be singular: enforce cardinality on AT resources
+    property :compositing, predicate: AIC.compositing, multiple: true, class_name: ListItem
+
+    # TODO: this needs to be singular: enforce cardinality on AT resources
+    property :light_type, predicate: AIC.lightType, multiple: true, class_name: ListItem
     
-    property :light_type, predicate: AIC.lightType, multiple: false do |index|
-      index.as :stored_searchable
-    end
-    
-    property :view, predicate: AIC.view do |index|
-      index.as :stored_searchable
-    end
+    property :view, predicate: AIC.view, class_name: ListItem
 
   end
 

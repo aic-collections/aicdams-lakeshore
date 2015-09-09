@@ -69,15 +69,11 @@ module ResourceMetadata
 
     accepts_nested_attributes_for :documents, :preferred_representations, :representations, allow_destroy: false
 
-    # TODO: this need to be a ListType
-    property :dept_created, predicate: AIC.deptCreated, multiple: false do |index|
-      index.as :stored_searchable
-    end
+    # TODO: this needs to be singular: enforce cardinality on AT resources
+    property :dept_created, predicate: AIC.deptCreated, multiple: true, class_name: ListItem
 
-    # TODO: this need to be a ListType
-    property :status, predicate: AIC.status, multiple: false do |index|
-      index.as :stored_searchable
-    end
+    # TODO: this needs to be singular: enforce cardinality on AT resources
+    property :status, predicate: AIC.status, multiple: true, class_name: ListItem
 
     # TODO: this needs to be a MetadataSet
     property :described_by, predicate: ::RDF::Vocab::IANA.describedby do |index|

@@ -23,10 +23,7 @@ module WorkMetadata
       index.as :stored_searchable
     end
 
-    # TODO: Needs to be ListType
-    property :department, predicate: AIC.department do |index|
-      index.as :stored_searchable
-    end
+    property :department, predicate: AIC.department, multiple: true, class_name: ListItem
 
     property :dimensions_display, predicate: AIC.dimensionsDisplay do |index|
       index.as :stored_searchable

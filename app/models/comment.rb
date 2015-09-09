@@ -8,9 +8,7 @@ class Comment < Annotation
   
   has_many :generic_files, inverse_of: :comments, class_name: "GenericFile"
 
-  # TODO: This needs to be a ListItem
-  property :category, predicate: AIC.category do |index|
-    index.as :stored_searchable
-  end
+  # TODO: this needs to be singular: enforce cardinality on AT resources
+  property :category, predicate: AIC.category, multiple: true, class_name: ListItem
 
 end
