@@ -1,8 +1,8 @@
 require 'rails_helper'
 
-describe "works/new.html.erb" do
+describe "works/edit.html.erb" do
 
-  let(:work) { Work.create(artist_display: ["Picasso"]) }
+  let(:work) { Work.create(pref_label: "Sample Work") }
   let(:form) { WorkEditForm.new(work) }
 
   before do
@@ -15,8 +15,10 @@ describe "works/new.html.erb" do
   subject { rendered }
 
   specify do
-    expect(subject).to include "New Work"
-    expect(subject).to include("value=\"Picasso\"")
+    expect(subject).to include("Edit Work")
+    expect(subject).to include("Documents")
+    expect(subject).to include("Representations")
+    expect(subject).to include("Preferred representations")
   end
 
 end
