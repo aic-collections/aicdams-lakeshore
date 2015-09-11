@@ -18,7 +18,7 @@ Rails.application.routes.draw do
   resources :comments
   resources :tags
   resources :tag_cats
-  resources :works
+  resources :works, except: [:new, :create, :destroy]
 
   # Sufia should come last because in production it will 404 any unknown routes
   mount Sufia::Engine => '/'
