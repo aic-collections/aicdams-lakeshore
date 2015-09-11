@@ -20,7 +20,7 @@ class WorkPresenter
     :earliest_year,
     :exhibition_history,
     :gallery_location,
-    :assets,
+    :asset_ids,
     :inscriptions,
     :latest_date,
     :latest_year,
