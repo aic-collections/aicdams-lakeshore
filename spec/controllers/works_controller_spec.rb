@@ -18,31 +18,17 @@ describe WorksController do
     end
   end
 
-  describe "#new" do
-    before { get :new }
-    subject { response }
-    it { is_expected.to be_successful }    
-  end
-
   describe "#edit" do
     before { get :edit, id: work }
     subject { response }
     it { is_expected.to be_successful }
   end
 
-  describe "#create" do
-    before { post :create, work: { gallery_location: ["East wing"], asset_ids: [asset.id] } }
-    specify "a new work with assets" do
-      expect(response).to be_redirect
-      expect(flash[:notice]).to eql "A new work was created"
-    end
-  end
-
   describe "#update" do
-    before { post :update, id: work, work: { artist_display: ["Picasso"] } }
+    before { post :update, id: work, work: { asset_ids: [asset.id] } }
     specify do
       expect(response).to be_redirect
-      expect(work.reload.artist_display).to eql ["Picasso"]
+      expect(work.reload.asset_ids).to contain_exactly(asset.id)
     end
   end
 

@@ -20,24 +20,8 @@ module WorksControllerBehavior
     redirect_to catalog_index_path(params.except(:controller, :action).merge(f: { Solrizer.solr_name("aic_type", :facetable) => ["Work"] }))
   end
 
-  def new
-    @work = Work.new
-    @form = edit_form_class.new(@work)
-  end
-
   def edit
     @form = edit_form_class.new(@work)
-  end
-
-  def create
-    @work = Work.new
-    if update_work
-      flash[:notice] = "A new work was created"
-      redirect_to edit_work_path(@work)
-    else
-      flash[:error] = @work.errors.full_messages.join(",")
-      redirect_to new_work_path
-    end
   end
 
   def update
