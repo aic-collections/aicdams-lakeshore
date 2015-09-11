@@ -2,12 +2,9 @@ require 'rails_helper'
 
 describe WorkPresenter do
 
-  let(:nested_terms) { [:comments, :aictag_ids, :location, :metadata, :publishing_context] }
-  let(:terms) { AssetPresenter.terms - nested_terms }
-
   describe "::terms" do
-    it "includes all of AssetPresenter terms" do
-      expect(WorkPresenter.terms).to include(*terms)
+    it "includes all of CitiResourcePresenter terms" do
+      expect(WorkPresenter.terms).to include(*CitiResourcePresenter.terms)
     end
   end
 
