@@ -39,6 +39,7 @@ describe Resource do
   describe "required terms" do
     subject { described_class.create }
     specify "uid matches the id" do
+      pending "Waiting on successful implementation"
       expect(subject.uid).to eql subject.id
     end
   end

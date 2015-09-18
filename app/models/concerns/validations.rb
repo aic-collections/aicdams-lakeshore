@@ -1,10 +1,10 @@
 module Validations
   extend ActiveSupport::Concern
 
+  # TODO: More information needed before we can implement these validations (see #100)
   included do
-    # TODO: Probably not relevant
     # validate :write_once_only_fields, on: :update
-    after_save :uid_matches_id, on: :create
+    # after_save :uid_matches_id, on: :create
   end
   
   def write_once_only_fields
