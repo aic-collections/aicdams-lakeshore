@@ -23,7 +23,7 @@ describe BatchUpdateJob do
     let(:title) { { file.id => ['File One'], file2.id => ['File Two'] }}
     let(:metadata) do
       { read_groups_string: '', read_users_string: 'archivist1, archivist2',
-        format: [''], coverage: ['foo'] 
+        asset_capture_device: 'Sony camera', digitization_source: ['painting'] 
       }.with_indifferent_access
     end
 
