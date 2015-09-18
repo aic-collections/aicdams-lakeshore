@@ -177,49 +177,6 @@ describe GenericFilesController do
       end
     end
 
-    describe "adding tags" do
-      let(:attributes) { { aictag_ids: [tag1.id] } }
-
-      before { post :update, id: generic_file, generic_file: attributes }
-      subject { generic_file.reload }
-
-      it "should set the values using the parameters hash" do
-        expect(subject.aictags).to contain_exactly(tag1)
-        expect(subject.aictags.first.tagcats).to contain_exactly(tagcat1, tagcat2)
-      end
-    end
-
-    describe "adding additional tags" do
-      let(:attributes) { { aictag_ids: [tag1.id, tag2.id] } }
-
-      before do
-        generic_file.aictag_ids = [tag1.id]
-        generic_file.save
-        expect(generic_file.aictags.count).to eql 1
-        post :update, id: generic_file, generic_file: attributes
-      end
-      subject { generic_file.reload.aictags }
-      specify do
-        expect(subject).to include(tag1, tag2)
-        expect(subject.count).to eql 2
-      end
-    end
-
-    describe "removing tags" do
-      let(:attributes) { { aictag_ids: [tag2.id] } }
-
-      before do
-        generic_file.aictag_ids = [tag1.id, tag2.id]
-        generic_file.save
-        expect(generic_file.aictags.count).to eql 2
-        post :update, id: generic_file, generic_file: attributes
-      end
-      subject { generic_file.reload.aictags }
-      specify do
-        expect(subject).to include(tag2)
-        expect(subject.count).to eql 1
-      end
-    end
  end
 
   describe "#create" do
