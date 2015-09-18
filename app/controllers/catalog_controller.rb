@@ -30,12 +30,13 @@ class CatalogController < ApplicationController
     solr_name("file_size", :stored_sortable, type: :integer)
   end
 
-  configure_blacklight do |config|          config.view.gallery.partials = [:index_header, :index]
-          config.view.masonry.partials = [:index]
-          config.view.slideshow.partials = [:index]
+  configure_blacklight do |config|
 
-          config.show.tile_source_field = :content_metadata_image_iiif_info_ssm
-          config.show.partials.insert(1, :openseadragon)
+    config.view.gallery.partials = [:index_header, :index]
+    config.view.masonry.partials = [:index]
+    config.view.slideshow.partials = [:index]
+    config.show.tile_source_field = :content_metadata_image_iiif_info_ssm
+    config.show.partials.insert(1, :openseadragon)
 
     #Show gallery view
     config.view.gallery.partials = [:index_header, :index]
@@ -96,42 +97,50 @@ class CatalogController < ApplicationController
     # solr fields to be displayed in the show (single result) view
     #   The ordering of the field names is the order of the display
     config.add_show_field solr_name("title", :stored_searchable), label: "Title"
-    config.add_show_field solr_name("description", :stored_searchable), label: "Description"
+
+    # Resource fields
+    config.add_show_field solr_name("contributor", :stored_searchable),   label: AIC.contributor.label
+    config.add_show_field solr_name("created_by", :stored_searchable),    label: AIC.createdBy.label
+    config.add_show_field solr_name("description", :stored_searchable),   label: ::RDF::DC.description.label
+    config.add_show_field solr_name("label", :stored_searchable),         label: ::RDF::RDFS.label.label
+    config.add_show_field solr_name("language", :stored_searchable),      label: ::RDF::DC.language.label
+    config.add_show_field solr_name("pref_label", :stored_searchable),    label: ::RDF::SKOS.prefLabel.label
+    config.add_show_field solr_name("publisher", :stored_searchable),     label: ::RDF::DC.publisher.label
+    config.add_show_field solr_name("rights", :stored_searchable),        label: ::RDF::DC.rights.label
+    config.add_show_field solr_name("rights_holder", :stored_searchable), label: ::RDF::DC.rightsHolder.label
+    config.add_show_field solr_name("same_as", :stored_searchable),       label: ::RDF::OWL.sameAs.label
 
     # Work fields
-    config.add_show_field solr_name("assets", :stored_searchable), label: "Keyword"
-    config.add_show_field solr_name("after", :stored_sortable), label: "Keyword"
-    config.add_show_field solr_name("artist_display", :stored_searchable), label: "Keyword"
-    config.add_show_field solr_name("artist_uid", :stored_searchable), label: "Keyword"
-    config.add_show_field solr_name("before", :stored_sortable), label: "Keyword"
-    config.add_show_field solr_name("coll_cat_uid", :stored_searchable), label: "Keyword"
-    config.add_show_field solr_name("credit_line", :stored_searchable), label: "Keyword"
-    config.add_show_field solr_name("dept_uid", :stored_searchable), label: "Keyword"
-    config.add_show_field solr_name("dimensions_display", :stored_searchable), label: "Keyword"
-    config.add_show_field solr_name("exhibition_history", :stored_searchable), label: "Keyword"
-    config.add_show_field solr_name("gallery_location", :stored_searchable), label: "Keyword"
-    config.add_show_field solr_name("inscriptions", :stored_searchable), label: "Keyword"
-    config.add_show_field solr_name("main_ref_number", :stored_searchable), label: "Keyword"
-    config.add_show_field solr_name("medium_display", :stored_searchable), label: "Keyword"
-    config.add_show_field solr_name("object_type", :stored_searchable), label: "Keyword"
-    config.add_show_field solr_name("place_of_origin", :stored_searchable), label: "Keyword"
-    config.add_show_field solr_name("provenance_text", :stored_searchable), label: "Keyword"
-    config.add_show_field solr_name("publication_history", :stored_searchable), label: "Keyword"
-    config.add_show_field solr_name("publ_tag", :stored_searchable), label: "Keyword"
-    config.add_show_field solr_name("publ_ver_level", :stored_searchable), label: "Keyword"
+    config.add_show_field solr_name("artist_uid", :stored_searchable),          label: AIC.artistUid.label
+    config.add_show_field solr_name("citi_uid", :stored_searchable),            label: AIC.citiUid.label
+    config.add_show_field solr_name("creator_display", :stored_searchable),     label: AIC.creatorDisplay.label
+    config.add_show_field solr_name("credit_line", :stored_searchable),         label: AIC.creditLine.label
+    config.add_show_field solr_name("date_display", :stored_searchable),        label: AIC.dateDisplay.label
+    config.add_show_field solr_name("dimensions_display", :stored_searchable),  label: AIC.dimensionsDisplay.label
+    config.add_show_field solr_name("earliest_year", :stored_searchable),       label: AIC.earliestYear.label
+    config.add_show_field solr_name("exhibition_history", :stored_searchable),  label: AIC.exhibitionHistory.label
+    config.add_show_field solr_name("gallery_location", :stored_searchable),    label: AIC.galleryLocation.label
+    config.add_show_field solr_name("inscriptions", :stored_searchable),        label: AIC.inscriptions.label
+    config.add_show_field solr_name("latest_year", :stored_searchable),         label: AIC.latestYear.label
+    config.add_show_field solr_name("main_ref_number", :stored_searchable),     label: AIC.mainRefNumber.label
+    config.add_show_field solr_name("medium_display", :stored_searchable),      label: AIC.mediumDisplay.label
+    config.add_show_field solr_name("object_type", :stored_searchable),         label: AIC.objectType.label
+    config.add_show_field solr_name("place_of_origin_uid", :stored_searchable), label: AIC.placeOfOriginUid.label
+    config.add_show_field solr_name("provenance_text", :stored_searchable),     label: AIC.provenanceText.label
+    config.add_show_field solr_name("publ_ver_level", :stored_searchable),      label: AIC.publVerLevel.label
+    config.add_show_field solr_name("publication_history", :stored_searchable), label: AIC.publicationHistory.label
+    
+    config.add_show_field solr_name("earliest_date", :stored_searchable, type: :date), label: AIC.earliestDate.label
+    config.add_show_field solr_name("latest_date", :stored_searchable, type: :date),   label: AIC.latestDate.label
 
-    # Generic File fields
+    # Generic File fields (from base Sufia install)
     config.add_show_field solr_name("tag", :stored_searchable), label: "Keyword"
     config.add_show_field solr_name("subject", :stored_searchable), label: "Subject"
     config.add_show_field solr_name("creator", :stored_searchable), label: "Creator"
-    config.add_show_field solr_name("contributor", :stored_searchable), label: "Contributor"
-    config.add_show_field solr_name("publisher", :stored_searchable), label: "Publisher"
     config.add_show_field solr_name("based_near", :stored_searchable), label: "Location"
-    config.add_show_field solr_name("language", :stored_searchable), label: "Language"
     config.add_show_field solr_name("date_uploaded", :stored_searchable), label: "Date Uploaded"
     config.add_show_field solr_name("date_modified", :stored_searchable), label: "Date Modified"
     config.add_show_field solr_name("date_created", :stored_searchable), label: "Date Created"
-    config.add_show_field solr_name("rights", :stored_searchable), label: "Rights"
     config.add_show_field solr_name("resource_type", :stored_searchable), label: "Asset Type"
     config.add_show_field solr_name("format", :stored_searchable), label: "File Format"
     config.add_show_field solr_name("identifier", :stored_searchable), label: "Identifier"
