@@ -52,6 +52,7 @@ describe AssetEditForm do
     subject { described_class.model_attributes(params) }
 
     it "removes empty strings" do
+      pending "this needs to apply to documents, representations and preferred representations"
       expect(subject["aictag_ids"]).to be_empty
     end
   end
