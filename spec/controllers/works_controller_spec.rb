@@ -10,14 +10,6 @@ describe WorksController do
 
   let(:work) { Work.create }
 
-  let(:asset) do
-    GenericFile.create.tap do |f|
-      f.title = ["Asset in a work"]
-      f.apply_depositor_metadata user
-      f.save
-    end
-  end
-
   describe "#edit" do
     before { get :edit, id: work }
     subject { response }
@@ -25,10 +17,64 @@ describe WorksController do
   end
 
   describe "#update" do
-    before { post :update, id: work, work: { asset_ids: [asset.id] } }
-    specify do
-      expect(response).to be_redirect
-      expect(work.reload.asset_ids).to contain_exactly(asset.id)
+    context "with an asset" do
+      let(:asset) do
+        GenericFile.create.tap do |f|
+          f.title = ["Asset in a work"]
+          f.apply_depositor_metadata user
+          f.save
+        end
+      end
+      before { post :update, id: work, work: { asset_ids: [asset.id] } }
+      specify do
+        expect(response).to be_redirect
+        expect(work.reload.asset_ids).to contain_exactly(asset.id)
+      end
+    end
+
+    context "with a document" do
+      let(:document) do
+        GenericFile.create.tap do |f|
+          f.title = ["Document for a work"]
+          f.apply_depositor_metadata user
+          f.save
+        end
+      end
+      before { post :update, id: work, work: { document_ids: [document.id] } }
+      specify do
+        expect(response).to be_redirect
+        expect(work.reload.document_ids).to contain_exactly(document.id)
+      end
+    end
+
+    context "with a representation" do
+      let(:representation) do
+        GenericFile.create.tap do |f|
+          f.title = ["Representation of a work"]
+          f.apply_depositor_metadata user
+          f.save
+        end
+      end
+      before { post :update, id: work, work: { representation_ids: [representation.id] } }
+      specify do
+        expect(response).to be_redirect
+        expect(work.reload.representation_ids).to contain_exactly(representation.id)
+      end    
+    end
+
+    context "with a preferred representation" do
+      let(:preferred_representation) do
+        GenericFile.create.tap do |f|
+          f.title = ["Representation of a work"]
+          f.apply_depositor_metadata user
+          f.save
+        end
+      end
+      before { post :update, id: work, work: { preferred_representation_ids: [preferred_representation.id] } }
+      specify do
+        expect(response).to be_redirect
+        expect(work.reload.preferred_representation_ids).to contain_exactly(preferred_representation.id)
+      end
     end
   end
 

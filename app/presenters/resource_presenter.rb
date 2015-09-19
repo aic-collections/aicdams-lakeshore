@@ -28,7 +28,7 @@ class ResourcePresenter < AbstractPresenter
   end
 
   def self.assets
-    [:documents, :representations, :preferred_representations]
+    [:document_ids, :representation_ids, :preferred_representation_ids]
   end
 
 

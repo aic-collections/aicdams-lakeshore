@@ -1,4 +1,28 @@
 <h2>Relationships</h2>
-<% @work.assets.each do |asset| %>
-  <%= render partial: 'generic_files/asset_display', locals: { asset: asset } %>
+<% unless @work.assets.empty? %>
+  <h3>Assets</h3>
+  <% @work.assets.each do |asset| %>
+    <%= render partial: 'generic_files/asset_display', locals: { asset: asset } %>
+  <% end %>
+<% end %>
+
+<% unless @work.representations.empty? %>
+  <h3>Representations</h3>
+  <% @work.representations.each do |asset| %>
+    <%= render partial: 'generic_files/asset_display', locals: { asset: asset } %>
+  <% end %>
+<% end %>
+
+<% unless @work.preferred_representations.empty? %>
+  <h3>Preferred Representations</h3>
+  <% @work.preferred_representations.each do |asset| %>
+    <%= render partial: 'generic_files/asset_display', locals: { asset: asset } %>
+  <% end %>
+<% end %>
+
+<% unless @work.documents.empty? %>
+  <h3>Documents</h3>
+  <% @work.documents.each do |asset| %>
+    <%= render partial: 'generic_files/asset_display', locals: { asset: asset } %>
+  <% end %>
 <% end %>

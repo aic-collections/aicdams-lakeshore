@@ -47,6 +47,35 @@ describe Work do
     end
   end
 
+  describe "#representations and #preferred_representations" do
+    let(:representation) do
+      GenericFile.create.tap do |f|
+        f.title = ["Representation of a work"]
+        f.apply_depositor_metadata "user"
+        f.save
+      end
+    end
+    let(:work) do
+      Work.create.tap do |w|
+        w.representation_ids = [representation.id]
+        w.preferred_representation_ids = [representation.id]
+        w.save
+      end
+    end
+    specify { expect(work.representations).to include(representation) }
+    specify { expect(work.preferred_representations).to include(representation) }
+    context "when removing the representation from the work" do
+      before do
+        work.representation_ids = []
+        work.save
+      end
+      it "retains the preferred representation" do
+        expect(work.representations).to be_empty
+        expect(work.preferred_representations).to include(representation)
+      end
+    end
+  end
+
   describe "#to_solr" do
     subject { described_class.new.to_solr }
     it "has default public read access" do

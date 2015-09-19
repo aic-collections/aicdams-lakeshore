@@ -20,11 +20,12 @@ describe Resource do
     let(:asset) do
       GenericFile.create.tap do |file|
         file.apply_depositor_metadata "user"
+        file.save
       end
     end
 
     before do
-      ResourcePresenter.assets.map { |rel| resource.send(rel.to_s + "=", [asset]) }
+      ResourcePresenter.assets.map { |rel| resource.send(rel.to_s + "=", [asset.id]) }
       resource.save
       resource.reload
     end
