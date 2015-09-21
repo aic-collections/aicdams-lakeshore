@@ -20,6 +20,11 @@ Rails.application.routes.draw do
   resources :tag_cats
   resources :works, except: [:new, :create, :destroy]
 
+  # Lakeshore API
+  scope "api" do
+    post "reindex", to: "reindex#update"
+  end
+
   # Sufia should come last because in production it will 404 any unknown routes
   mount Sufia::Engine => '/'
   
