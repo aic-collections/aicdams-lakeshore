@@ -6,8 +6,8 @@
     </div>
   <% end %>
   <%= label_tag :asset_type, "Asset Type" %>
-  <%= select_tag :asset_type, options_for_select({ "Still Image" => "still_image", "Text" => "text" }, "still_image") %>
-  <div class="well">
+  <%= select_tag :asset_type, options_for_select({ "Still Image" => "still_image", "Text" => "text" }), prompt: "Select..." %>
+  <div class="well" id="fileupload_selection">
     <%= render partial: 'generic_files/upload/form_fields' %>
   </div>
 <% end %>

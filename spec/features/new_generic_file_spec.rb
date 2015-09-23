@@ -10,9 +10,14 @@ describe "Editing generic files" do
   end
 
   describe "choosing asset type" do
-    it "provides a dropdown option" do
+    it "displays the file selection form" do
+      expect(page).not_to have_content(" I have read and do agree")
       select("Still Image", from: "asset_type")
+      expect(page).to have_content(" I have read and do agree")
       select("Text", from: "asset_type")
+      expect(page).to have_content(" I have read and do agree")
+      select("Select...", from: "asset_type")
+      expect(page).not_to have_content(" I have read and do agree")
     end
 
   end
