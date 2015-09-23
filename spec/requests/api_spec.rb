@@ -10,7 +10,7 @@ describe "The API" do
         post "/api/reindex", body
       end
       it "returns a successful response" do
-        expect(response.status).to eql 200
+        expect(response.status).to eql 204
       end
     end
 

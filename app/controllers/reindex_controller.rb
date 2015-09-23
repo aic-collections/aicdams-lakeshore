@@ -5,9 +5,9 @@ class ReindexController < ActionController::Base
   # Updates the index of a set of objects, given their ids
   def update
     if reindex_submitted_ids
-      render nothing: true, status: :ok
+      head :no_content
     else
-      render nothing: true, status: :bad_request
+      head :bad_request
     end
   end
 
