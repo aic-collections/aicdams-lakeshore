@@ -14,27 +14,46 @@ describe Resource do
     end
   end
 
-  describe "nested assets" do
-    
+  describe "nested resources" do    
     let(:resource) { described_class.new }
-    let(:asset) do
-      GenericFile.create.tap do |file|
-        file.apply_depositor_metadata "user"
-        file.save
+
+    context "with other assets" do
+      let(:asset) do
+        GenericFile.create.tap do |file|
+          file.apply_depositor_metadata "user"
+          file.save
+        end
+      end
+      
+      before do
+        ResourcePresenter.assets.map { |rel| resource.send(rel.to_s + "=", [asset.id]) }
+        resource.save
+        resource.reload
+      end
+      
+      specify "are types of GenericFile objects" do
+        expect(resource.documents).to include(GenericFile)
+        expect(resource.representations).to include(GenericFile)
+        expect(resource.preferred_representations).to include(GenericFile)
       end
     end
 
-    before do
-      ResourcePresenter.assets.map { |rel| resource.send(rel.to_s + "=", [asset.id]) }
-      resource.save
-      resource.reload
-    end
-    specify "are types of GenericFile objects" do
-      expect(resource.documents).to include(GenericFile)
-      expect(resource.representations).to include(GenericFile)
-      expect(resource.preferred_representations).to include(GenericFile)
-    end
+    context "with a MetadataSet" do
+      let(:metadata) do
+        MetadataSet.create.tap do |set|
+          set.save
+        end
+      end
 
+      before do
+        resource.described_by = [metadata]
+        resource.save
+        resource.reload
+      end
+ 
+      subject { resource.described_by }
+      it { is_expected.to include(MetadataSet) }
+    end
   end
 
   describe "required terms" do

@@ -63,22 +63,18 @@ module ResourceMetadata
       index.as :stored_searchable
     end
 
-    has_and_belongs_to_many :documents, predicate: AIC.hasDocument, class_name: "GenericFile"
-    has_and_belongs_to_many :preferred_representations, predicate: AIC.hasPreferredRepresentation, class_name: "GenericFile"
-    has_and_belongs_to_many :representations, predicate: AIC.hasRepresentation, class_name: "GenericFile"
-
-    accepts_nested_attributes_for :documents, :preferred_representations, :representations, allow_destroy: false
-
     # TODO: this needs to be singular: enforce cardinality on AT resources
     property :dept_created, predicate: AIC.deptCreated, multiple: true, class_name: ListItem
 
     # TODO: this needs to be singular: enforce cardinality on AT resources
     property :status, predicate: AIC.status, multiple: true, class_name: ListItem
 
-    # TODO: this needs to be a MetadataSet
-    property :described_by, predicate: ::RDF::Vocab::IANA.describedby do |index|
-      index.as :stored_searchable
-    end
+    has_and_belongs_to_many :described_by, predicate: ::RDF::Vocab::IANA.describedby, class_name: "MetadataSet"
+    has_and_belongs_to_many :documents, predicate: AIC.hasDocument, class_name: "GenericFile"
+    has_and_belongs_to_many :preferred_representations, predicate: AIC.hasPreferredRepresentation, class_name: "GenericFile"
+    has_and_belongs_to_many :representations, predicate: AIC.hasRepresentation, class_name: "GenericFile"
+
+    accepts_nested_attributes_for :described_by, :documents, :preferred_representations, :representations, allow_destroy: false
 
   end
 end
