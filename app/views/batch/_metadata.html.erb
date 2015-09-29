@@ -8,7 +8,7 @@
         <div class="form-group">
           <%= f.input_label :title, as: :multi_value_with_help, label: "Title #{index + 1}" %>
           <div id="additional_title_clone">
-            <%= f.text_field :title, name: "title[#{gen_f.id}][]", value: gen_f.label, class: 'form-control', required: true %>
+            <%= f.text_field :title, name: "title[#{gen_f.id}][]", value: gen_f.uid, class: 'form-control', required: true %>
           </div>
         </div>
       <% end %>

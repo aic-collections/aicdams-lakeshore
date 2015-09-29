@@ -47,6 +47,7 @@ describe GenericFile do
       it "uses a UID for still images" do
         expect(subject.id).to start_with("SI")
         expect(subject.uri).not_to match(/\/-/)
+        expect(subject.uid).to eql(subject.id)
       end
     end
   end

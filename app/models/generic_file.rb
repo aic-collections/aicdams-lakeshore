@@ -44,6 +44,11 @@ class GenericFile < Resource
     ::AssetIndexer
   end
 
+  # Overrides Sufia::Noid to set both #id and #uid to the minted uid
+  def assign_id
+    self.uid = service.mint
+  end
+
   private
 
     # Overrides Sufia::Noid#service

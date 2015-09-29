@@ -57,4 +57,9 @@ describe AssetEditForm do
     end
   end
 
+  describe ".terms" do
+    subject { described_class.terms }
+    it { is_expected.not_to include(:uid) }
+  end
+
 end

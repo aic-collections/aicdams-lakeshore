@@ -2,7 +2,8 @@ class AssetEditForm < AssetPresenter
   include HydraEditor::Form
   include HydraEditor::Form::Permissions
   include NestedAttributes
-  self.required_fields = [:title]
+
+  self.terms = AssetPresenter.terms - [:uid]
   
   protected
 
