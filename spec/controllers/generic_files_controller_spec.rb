@@ -13,6 +13,7 @@ describe GenericFilesController do
   let(:generic_file) do
     GenericFile.create do |gf|
       gf.apply_depositor_metadata(user)
+      gf.assert_still_image
     end
   end
   let(:comment1) { Comment.create(content: "first comment") }

@@ -22,6 +22,7 @@ describe WorksController do
         GenericFile.create.tap do |f|
           f.title = ["Asset in a work"]
           f.apply_depositor_metadata user
+          f.assert_still_image
           f.save
         end
       end
@@ -37,6 +38,7 @@ describe WorksController do
         GenericFile.create.tap do |f|
           f.title = ["Document for a work"]
           f.apply_depositor_metadata user
+          f.assert_text
           f.save
         end
       end
@@ -52,6 +54,7 @@ describe WorksController do
         GenericFile.create.tap do |f|
           f.title = ["Representation of a work"]
           f.apply_depositor_metadata user
+          f.assert_still_image
           f.save
         end
       end
@@ -67,6 +70,7 @@ describe WorksController do
         GenericFile.create.tap do |f|
           f.title = ["Representation of a work"]
           f.apply_depositor_metadata user
+          f.assert_still_image
           f.save
         end
       end

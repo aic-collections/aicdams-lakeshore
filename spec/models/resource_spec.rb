@@ -21,6 +21,7 @@ describe Resource do
       let(:asset) do
         GenericFile.create.tap do |file|
           file.apply_depositor_metadata "user"
+          file.assert_still_image
           file.save
         end
       end

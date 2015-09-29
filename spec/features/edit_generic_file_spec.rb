@@ -8,6 +8,7 @@ describe "Editing generic files" do
     GenericFile.new.tap do |f|
       f.title = [title]
       f.apply_depositor_metadata(user.user_key)
+      f.assert_still_image
       f.save!
     end
   end

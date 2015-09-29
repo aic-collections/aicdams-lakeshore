@@ -34,8 +34,21 @@ class GenericFile < Resource
     self.set_value(:type, t)
   end
 
+  def prefix
+    return "TX" if is_text?
+    return "SI" if is_still_image?
+    raise ArgumentError, "Can't assign a prefix without a type"
+  end
+
   def self.indexer
     ::AssetIndexer
   end
+
+  private
+
+    # Overrides Sufia::Noid#service
+    def service
+      @service ||= UidMinter.new(prefix)
+    end
 
 end

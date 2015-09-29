@@ -25,6 +25,7 @@ describe "CITI works" do
     let!(:asset) do
       GenericFile.create.tap do |f|
         f.apply_depositor_metadata(user)
+        f.assert_still_image
         f.title = ["Fixture work"]
         f.save
       end

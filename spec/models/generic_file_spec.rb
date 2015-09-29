@@ -4,6 +4,13 @@ describe GenericFile do
 
   subject { GenericFile.new }
 
+  context "without setting a type" do
+    before { subject.apply_depositor_metadata("user") }
+    it "raises and error" do
+      expect( lambda { subject.save }).to raise_error(ArgumentError, "Can't assign a prefix without a type")
+    end
+  end
+
   describe "intial RDF types" do
     subject { GenericFile.new.type }
     it { is_expected.to include(AICType.Asset, AICType.Resource) }
@@ -32,6 +39,16 @@ describe GenericFile do
         expect(subject.to_solr[Solrizer.solr_name("image_height", :searchable, type: :integer)]).to eq ["12"]
       end
     end
+    describe "minting uids" do
+      before do
+        subject.apply_depositor_metadata "user"
+        subject.save
+      end
+      it "uses a UID for still images" do
+        expect(subject.id).to start_with("SI")
+        expect(subject.uri).not_to match(/\/-/)
+      end
+    end
   end
   describe "setting type to Text" do
     before  { subject.assert_text }
@@ -45,6 +62,16 @@ describe GenericFile do
     end
     describe "#to_solr" do
       specify { expect(subject.to_solr[Solrizer.solr_name("aic_type", :facetable)]).to include("Asset", "Text") }
+    end
+    describe "minting uids" do
+      before do
+        subject.apply_depositor_metadata "user"
+        subject.save
+      end
+      it "uses a UID for still images" do
+        expect(subject.id).to start_with("TX")
+        expect(subject.uri).not_to match(/\/-/)
+      end
     end
   end
 
@@ -78,6 +105,7 @@ describe GenericFile do
         GenericFile.create.tap do |file|
           file.title = ["Commented thing without a category"]
           file.apply_depositor_metadata "user"
+          file.assert_still_image
           file.comments_attributes = [{content: "foo comment"}]
         end
       end
@@ -101,6 +129,7 @@ describe GenericFile do
       let(:resource) do
         GenericFile.create.tap do |file|
           file.apply_depositor_metadata "user"
+          file.assert_still_image
         end
       end
       let(:c1) { Comment.create(content: "First comment") }
@@ -179,7 +208,8 @@ describe GenericFile do
     let(:example_file) do
       GenericFile.create.tap do |file|
         file.apply_depositor_metadata "user"
-        file.save!
+        file.assert_still_image
+        file.save
       end
     end
     subject { ActiveFedora::Base.load_instance_from_solr(example_file.id) }
@@ -190,6 +220,7 @@ describe GenericFile do
     let(:resource) do
       GenericFile.create.tap do |file|
         file.apply_depositor_metadata "user"
+        file.assert_still_image
         file.save
       end
     end

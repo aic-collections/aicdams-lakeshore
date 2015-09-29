@@ -7,6 +7,7 @@ describe ContentUpdateEventJob do
     GenericFile.create.tap do |file|
       file.title = ["Event job file"]
       file.apply_depositor_metadata user
+      file.assert_still_image
       file.save
     end
   end

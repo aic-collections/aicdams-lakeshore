@@ -8,6 +8,7 @@ describe BatchUpdateJob do
   let!(:file) do
     GenericFile.new(batch: batch) do |file|
       file.apply_depositor_metadata(user)
+      file.assert_still_image
       file.save!
     end
   end
@@ -15,6 +16,7 @@ describe BatchUpdateJob do
   let!(:file2) do
     GenericFile.new(batch: batch) do |file|
       file.apply_depositor_metadata(user)
+      file.assert_still_image
       file.save!
     end
   end

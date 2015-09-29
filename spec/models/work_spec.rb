@@ -21,6 +21,7 @@ describe Work do
       GenericFile.create.tap do |f|
         f.title = ["Asset in a work"]
         f.apply_depositor_metadata "user"
+        f.assert_still_image
         f.save
       end
     end
@@ -51,6 +52,7 @@ describe Work do
     let(:representation) do
       GenericFile.create.tap do |f|
         f.title = ["Representation of a work"]
+        f.assert_still_image
         f.apply_depositor_metadata "user"
         f.save
       end
