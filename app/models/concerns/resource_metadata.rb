@@ -59,7 +59,7 @@ module ResourceMetadata
       index.as :stored_searchable
     end
 
-    property :label, predicate: ::RDF::RDFS.label, multiple: false do |index|
+    property :resource_label, predicate: ::RDF::RDFS.label do |index|
       index.as :stored_searchable
     end
 

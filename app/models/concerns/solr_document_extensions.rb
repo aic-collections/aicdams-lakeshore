@@ -2,7 +2,7 @@ module SolrDocumentExtensions
   extend ActiveSupport::Concern
 
   def title_or_label
-    super || pref_label
+    title || pref_label
   end
 
   def pref_label

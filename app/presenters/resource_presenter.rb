@@ -13,7 +13,7 @@ class ResourcePresenter < AbstractPresenter
       :dept_created,
       :described_by,
       :description,
-      :label,
+      :resource_label,
       :language,
       :legacy_uid,
       :pref_label,
