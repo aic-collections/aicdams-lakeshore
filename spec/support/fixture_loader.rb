@@ -1,11 +1,11 @@
 module FixtureLoader
 
-  def load_fedora_fixture(ttl)
+  def load_fedora_fixture(ttl, index = true)
     data = File.read(ttl)
     id = SecureRandom.hex(16)
     url = fedora_url(id)
     ActiveFedora.fedora.connection.put(url, data)
-    ActiveFedora::Base.find(id).update_index
+    ActiveFedora::Base.find(id).update_index if index
   end
 
   def fedora_fixture(file)

@@ -38,32 +38,32 @@
 @prefix dc: <http://purl.org/dc/elements/1.1/> .
 
 
-<> a aic:Work;
-    aic:citiUid "43523"^^<http://www.w3.org/2001/XMLSchema#integer> ;
-    aic:galleryLocation "Gallery 1234"^^<http://www.w3.org/2001/XMLSchema#string> ;
-    aic:dimensionsDisplay "1230 x 820 mm"^^<http://www.w3.org/2001/XMLSchema#string> ;
-    aic:status <http://definitions.artic.edu/ontology/1.0/status/active> ;
-    aic:creditLine "Gift of Mr. Dummy Lee & Mrs. Parrot Funkaroo"^^<http://www.w3.org/2001/XMLSchema#string> ;
-    aic:mediumDisplay "Oil Painting"^^<http://www.w3.org/2001/XMLSchema#string> ;
-    aic:updated "2014-04-16T14:29Z"^^<http://www.w3.org/2001/XMLSchema#dateTime> ;
-    aic:publVerLevel "0"^^<http://www.w3.org/2001/XMLSchema#integer> ;
-    aic:exhibitionHistory "Group show at the Garage Gallery Association of Illinois"^^<http://www.w3.org/2001/XMLSchema#string> ;
-    aic:objectType "Painting"^^<http://www.w3.org/2001/XMLSchema#string> ;
-    aic:latestYear "1995"^^<http://www.w3.org/2001/XMLSchema#integer> ;
-    aic:latestDate "1995-12-31"^^<http://www.w3.org/2001/XMLSchema#string> ;
-    aic:deptUid "3"^^<http://www.w3.org/2001/XMLSchema#integer> ;
-    aic:earliestYear "1990"^^<http://www.w3.org/2001/XMLSchema#integer> ;
-    aic:mainRefNumber "1999.397"^^<http://www.w3.org/2001/XMLSchema#string> ;
-    aic:created "2001-01-01T00:00Z"^^<http://www.w3.org/2001/XMLSchema#dateTime> ;
-    aic:description "This is a nice painting."^^<http://www.w3.org/2001/XMLSchema#string> ;
-    aic:uid "WO-43523"^^<http://www.w3.org/2001/XMLSchema#string> ;
-    aic:publicationHistory "The Book of Best Paintings on the Block"^^<http://www.w3.org/2001/XMLSchema#string> ;
-    aic:creatorDisplay """Dolly Boojum\nAmerican, born 1275"""^^<http://www.w3.org/2001/XMLSchema#string> ;
-    fedorasystem:hasModel "Work"^^<http://www.w3.org/2001/XMLSchema#string> ;
-    aic:title "The Great Sidewalk Gum"^^<http://www.w3.org/2001/XMLSchema#string> ;
-    skos:prefLabel "The Great Sidewalk Gum"^^<http://www.w3.org/2001/XMLSchema#string> ;
-    aic:artistUid "-12356"^^<http://www.w3.org/2001/XMLSchema#integer> ;
-    aic:provenanceText "Picked up from a dumpster on Damen and Diversey\nOrigin unknown"^^<http://www.w3.org/2001/XMLSchema#string> ;
-    aic:earliestDate "1990-12-31"^^<http://www.w3.org/2001/XMLSchema#string> ;
-    aic:dateDisplay "1995 (maybe)"^^<http://www.w3.org/2001/XMLSchema#string> ;
-    aic:inscriptions "Signed, recto, lower right, \"XYZ\""^^<http://www.w3.org/2001/XMLSchema#string> .
+<> a aictype:Work ;
+  aic:citiUid "43523"^^<http://www.w3.org/2001/XMLSchema#integer> ;
+  aic:galleryLocation "Gallery 1234"^^<http://www.w3.org/2001/XMLSchema#string> ;
+  aic:dimensionsDisplay "1230 x 820 mm"^^<http://www.w3.org/2001/XMLSchema#string> ;
+  aic:status <http://definitions.artic.edu/ontology/1.0/status/active> ;
+  aic:creditLine "Gift of Mr. Dummy Lee & Mrs. Parrot Funkaroo"^^<http://www.w3.org/2001/XMLSchema#string> ;
+  aic:mediumDisplay "Oil Painting"^^<http://www.w3.org/2001/XMLSchema#string> ;
+  aic:updated "2014-04-16T14:29Z"^^<http://www.w3.org/2001/XMLSchema#dateTime> ;
+  aic:publVerLevel "0"^^<http://www.w3.org/2001/XMLSchema#integer> ;
+  aic:exhibitionHistory "Group show at the Garage Gallery Association of Illinois"^^<http://www.w3.org/2001/XMLSchema#string> ;
+  aic:objectType "Painting"^^<http://www.w3.org/2001/XMLSchema#string> ;
+  aic:latestYear "1995"^^<http://www.w3.org/2001/XMLSchema#integer> ;
+  aic:latestDate "1995-12-31"^^<http://www.w3.org/2001/XMLSchema#string> ;
+  aic:deptUid "3"^^<http://www.w3.org/2001/XMLSchema#integer> ;
+  aic:earliestYear "1990"^^<http://www.w3.org/2001/XMLSchema#integer> ;
+  aic:mainRefNumber "1999.397"^^<http://www.w3.org/2001/XMLSchema#string> ;
+  aic:created "2001-01-01T00:00Z"^^<http://www.w3.org/2001/XMLSchema#dateTime> ;
+  aic:description "This is a nice painting."^^<http://www.w3.org/2001/XMLSchema#string> ;
+  aic:uid "WO-43523"^^<http://www.w3.org/2001/XMLSchema#string> ;
+  aic:publicationHistory "The Book of Best Paintings on the Block"^^<http://www.w3.org/2001/XMLSchema#string> ;
+  aic:creatorDisplay """Dolly Boojum\nAmerican, born 1275"""^^<http://www.w3.org/2001/XMLSchema#string> ;
+  fedorasystem:hasModel "Work"^^<http://www.w3.org/2001/XMLSchema#string> ;
+  aic:title "The Great Sidewalk Gum"^^<http://www.w3.org/2001/XMLSchema#string> ;
+  skos:prefLabel "The Great Sidewalk Gum"^^<http://www.w3.org/2001/XMLSchema#string> ;
+  aic:artistUid "-12356"^^<http://www.w3.org/2001/XMLSchema#integer> ;
+  aic:provenanceText "Picked up from a dumpster on Damen and Diversey\nOrigin unknown"^^<http://www.w3.org/2001/XMLSchema#string> ;
+  aic:earliestDate "1990-12-31"^^<http://www.w3.org/2001/XMLSchema#string> ;
+  aic:dateDisplay "1995 (maybe)"^^<http://www.w3.org/2001/XMLSchema#string> ;
+  aic:inscriptions "Signed, recto, lower right, \"XYZ\""^^<http://www.w3.org/2001/XMLSchema#string> .
