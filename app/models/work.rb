@@ -1,7 +1,7 @@
 class Work < CitiResource
   include WorkMetadata
   include Sufia::GenericFile::Featured
-  include WorkPermissions
+  include CitiBehaviors
 
   def self.aic_type
     super << AICType.Work
@@ -9,12 +9,8 @@ class Work < CitiResource
 
   type aic_type
 
-  def self.indexer
-    ::WorkIndexer
-  end
-
-  def self.visibility
-    "open"
+  def featureable?
+    true
   end
 
 end

@@ -1,11 +1,6 @@
 class WorkPresenter
   include Hydra::Presenter
-
-  # These are terms inherited from parent classes, excepting the nested terms from NestedMetadata
-  # which are applied the Assets (i.e. GenericFiles)
-  def self.inherited_terms
-    CitiResourcePresenter.terms
-  end
+  include RelatedAssetTerms
 
   self.model_class = Work
   self.terms = [
@@ -31,6 +26,10 @@ class WorkPresenter
     :provenance_text,
     :publ_ver_level,
     :publication_history,
-  ] + self.inherited_terms
+  ] + CitiResourceTerms.all
+
+  def assets
+    self.to_model.assets
+  end
 
 end

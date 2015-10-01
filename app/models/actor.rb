@@ -1,4 +1,5 @@
 class Actor < CitiResource
+  include CitiBehaviors
 
   def self.aic_type
     super << AICType.Actor

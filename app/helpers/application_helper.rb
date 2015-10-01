@@ -4,12 +4,20 @@ module ApplicationHelper
     track_solr_document_path(*args)
   end
 
-  def render_work_visibility_badge
-    if can? :edit, @work
-      render_visibility_link @work
+  def track_actor_path(*args)
+    track_solr_document_path(*args)
+  end
+
+  def render_resource_visibility_badge
+    if can? :edit, @resource
+      render_visibility_link @resource
     else
-      render_visibility_label @work
+      render_visibility_label @resource
     end
+  end
+
+  def edit_resource_path
+    send("edit_#{@resource.class.to_s.downcase}_path", @resource)
   end
 
   def link_to_asset(asset)

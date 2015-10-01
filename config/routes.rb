@@ -19,6 +19,7 @@ Rails.application.routes.draw do
   resources :tags
   resources :tag_cats
   resources :works, except: [:new, :create, :destroy]
+  resources :actors, except: [:new, :create, :destroy]
 
   # Lakeshore API
   scope "api" do

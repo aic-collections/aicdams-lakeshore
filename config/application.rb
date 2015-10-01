@@ -14,6 +14,7 @@ module Lakeshore
     end
 
     config.autoload_paths << Rails.root.join('lib')
+    config.autoload_paths << Rails.root.join('app', 'presenters', 'terms')
 	
 	config.assets.paths << Rails.root.join('app', 'assets', 'fonts')
     

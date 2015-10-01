@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe "works/edit.html.erb" do
+describe "citi_resources/edit.html.erb" do
 
   let(:work) { Work.create(pref_label: "Sample Work") }
   let(:form) { WorkEditForm.new(work) }
@@ -15,7 +15,7 @@ describe "works/edit.html.erb" do
   subject { rendered }
 
   it "has inputs for all id-based nested assets" do
-    expect(subject).to include("Edit Work")
+    expect(subject).to include("Edit Resource")
     expect(subject).to include('name="work[asset_ids][]" value="" id="work_asset_ids"')
     expect(subject).to include('name="work[document_ids][]" value="" id="work_document_ids"')
     expect(subject).to include('name="work[representation_ids][]" value="" id="work_representation_ids"')

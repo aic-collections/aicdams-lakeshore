@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe "works/show.html.erb" do
+describe "citi_resources/show.html.erb" do
 
   let(:asset) do
     stub_model(GenericFile, id: 'abc',
@@ -19,7 +19,7 @@ describe "works/show.html.erb" do
   before do
     allow(controller).to receive(:current_user).and_return(stub_model(User))
     allow(work).to receive(:assets).and_return([asset])
-    assign(:work, work)
+    assign(:resource, work)
     assign(:presenter, presenter)
     render
   end

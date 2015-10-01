@@ -4,7 +4,8 @@ class Ability
 
   def custom_permissions
     if registered_user?
-      can [:create, :edit],             Work  
+      can [:create, :edit],             Work
+      can [:create, :edit],             Actor
       can [:create, :destroy, :update], FeaturedWork
     end
 
