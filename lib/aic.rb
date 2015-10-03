@@ -32,7 +32,7 @@ class AIC < RDF::StrictVocabulary("http://definitions.artic.edu/ontology/1.0/")
     comment: "Document type used by Conservation".freeze
   term :content,
     label: "Content".freeze,
-    comment: "Annontation content".freeze
+    comment: "Annotation content".freeze
   term :contributor,
     label: "Contributor".freeze,
     comment: "Person or corporate body who participated in the creation of the resource".freeze

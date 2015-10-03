@@ -3,7 +3,7 @@ class AICType < RDF::StrictVocabulary("http://definitions.artic.edu/ontology/1.0
   term :Actor,
     subClassOf: "aictype:CitiResource".freeze,
     label: "Actor".freeze,
-    comment: "Actor (CITI Agent): a person or coporate body".freeze
+    comment: "Actor (CITI Agent): a person or corporate body".freeze
   term :Annotation,
     subClassOf: "aictype:Resource".freeze,
     label: "Annotation".freeze,
@@ -18,7 +18,7 @@ class AICType < RDF::StrictVocabulary("http://definitions.artic.edu/ontology/1.0
   term :Comment,
     subClassOf: "aictype:Annotation".freeze,
     label: "Comment".freeze,
-    comment: "Commen".freeze
+    comment: "Comment".freeze
   term :ConservationMetadata,
     subClassOf: "aictype:MetadataSet".freeze,
     label: "Conservation Metadata".freeze,
