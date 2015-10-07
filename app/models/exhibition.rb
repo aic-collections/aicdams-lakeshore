@@ -1,4 +1,5 @@
 class Exhibition < CitiResource
+  include CitiBehaviors
 
   def self.aic_type
     super << AICType.Exhibition

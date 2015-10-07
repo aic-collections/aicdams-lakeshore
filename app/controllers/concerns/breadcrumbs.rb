@@ -5,6 +5,7 @@ module Breadcrumbs
     edit_generic_files
     edit_works
     edit_actors
+    edit_exhibitions
   end
 
   private
@@ -24,4 +25,8 @@ module Breadcrumbs
       add_breadcrumb "View Actor", actor_path(params["id"])
     end
 
+    def edit_exhibitions
+      return unless /edit/ =~ action_name && controller_name == "exhibitions"
+      add_breadcrumb "View Exhibition", exhibition_path(params["id"])
+    end
 end

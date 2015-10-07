@@ -1,13 +1,14 @@
-class ExhibitionPresenter < AbstractPresenter
+class ExhibitionPresenter
+  include Hydra::Presenter
+  include RelatedAssetTerms
 
-  def self.terms
-    [
-      :start_date,
-      :end_date,
-      :name_official,
-      :name_working,
-      :type_uid
-    ] + CitiResourcePresenter.terms
-  end
+  self.model_class = Exhibition
+  self.terms = [
+    :start_date,
+    :end_date,
+    :name_official,
+    :name_working,
+    :type_uid
+  ] + CitiResourceTerms.all
 
 end

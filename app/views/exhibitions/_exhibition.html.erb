@@ -1,0 +1,13 @@
+<li>
+  <h2>
+    <%= link_to exhibition.title_or_label, exhibition_path(exhibition) %>
+  </h2>
+  <div class="row">
+    <div class="col-sm-3">
+      <%= render_thumbnail_tag exhibition %>
+    </div>
+    <div class="col-sm-9">
+      <%= render 'shared/attributes', work: exhibition %>
+    </table>
+  </div>
+</li>
