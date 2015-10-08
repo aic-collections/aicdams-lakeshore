@@ -4,7 +4,7 @@ Blacklight.onLoad(function () {
 
   $('#fileupload_selection').addClass("hidden");
   $('#asset_type').change(function() {
-    if ($("select option:selected").attr("value").match(/still_image|text/)) {
+    if ($("select#asset_type option:selected").attr("value").match(/still_image|text/)) {
       $('#fileupload_selection').removeClass("hidden");
     }
     else {
