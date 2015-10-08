@@ -12,6 +12,10 @@ module ApplicationHelper
     track_solr_document_path(*args)
   end
 
+  def track_transaction_path(*args)
+    track_solr_document_path(*args)
+  end
+
   def render_resource_visibility_badge
     if can? :edit, @resource
       render_visibility_link @resource

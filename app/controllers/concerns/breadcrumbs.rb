@@ -6,6 +6,7 @@ module Breadcrumbs
     edit_works
     edit_actors
     edit_exhibitions
+    edit_transactions
   end
 
   private
@@ -28,5 +29,10 @@ module Breadcrumbs
     def edit_exhibitions
       return unless /edit/ =~ action_name && controller_name == "exhibitions"
       add_breadcrumb "View Exhibition", exhibition_path(params["id"])
+    end
+
+    def edit_transactions
+      return unless /edit/ =~ action_name && controller_name == "transactions"
+      add_breadcrumb "View Transaction", transaction_path(params["id"])
     end
 end

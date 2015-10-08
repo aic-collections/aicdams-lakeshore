@@ -1,7 +1,8 @@
-class TransactionPresenter < AbstractPresenter
+class TransactionPresenter
+  include Hydra::Presenter
+  include RelatedAssetTerms
 
-  def self.terms
-    CitiResourcePresenter.terms
-  end
+  self.model_class = Transaction
+  self.terms = CitiResourceTerms.all
 
 end
