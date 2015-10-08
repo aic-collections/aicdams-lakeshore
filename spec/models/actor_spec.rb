@@ -14,34 +14,7 @@ describe Actor do
     end
   end
 
-  describe "#to_solr" do
-    subject { described_class.new.to_solr }
-    it "has default public read access" do
-      expect(subject["read_access_group_ssim"]).to include("public")
-    end
-    it "has an AIC type" do
-      expect(subject["aic_type_sim"]).to include("Actor")
-    end
-  end
+  it_behaves_like "a model for a Citi resource"
+  it_behaves_like "an unfeatureable model"
 
-  describe "visibility" do
-    specify { expect(described_class.visibility).to eql "open" }
-  end
-
-  describe "featureability" do
-    specify { expect(described_class.new).not_to be_featureable }
-  end
-
-  describe "permissions" do
-    subject { described_class.new } 
-    it { is_expected.to be_public }
-    it { is_expected.not_to be_registered }
-  end
-
-  context "with CITI resources" do
-    before { load_fedora_fixture(fedora_fixture("actor.ttl")) }
-    it "indexes them into solr" do
-      expect(Actor.all.count).to eql 1
-    end
-  end
 end
