@@ -9,7 +9,7 @@ describe CitiResource do
 
   describe "terms" do
     subject { described_class.new }
-    CitiResourcePresenter.terms.each do |term|
+    CitiResourceTerms.all.each do |term|
       it { is_expected.to respond_to(term) }
     end
   end

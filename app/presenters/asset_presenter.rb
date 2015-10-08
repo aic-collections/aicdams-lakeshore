@@ -12,7 +12,7 @@ class AssetPresenter < Sufia::GenericFilePresenter
     [:transcript]
   end
 
-  self.terms = ResourcePresenter.terms + self.still_image_terms + self.text_terms + self.asset_terms
+  self.terms = ResourceTerms.all + self.still_image_terms + self.text_terms + self.asset_terms
 
   # TODO: needs to show either representation, preferred representation, or document
   def brief_terms

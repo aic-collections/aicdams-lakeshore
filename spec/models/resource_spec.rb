@@ -9,7 +9,7 @@ describe Resource do
 
   describe "terms" do
     subject { described_class.new }
-    ResourcePresenter.terms.each do |term|
+    ResourceTerms.all.each do |term|
       it { is_expected.to respond_to(term) }
     end
   end
@@ -27,7 +27,7 @@ describe Resource do
       end
       
       before do
-        ResourcePresenter.assets.map { |rel| resource.send(rel.to_s + "=", [asset.id]) }
+        ResourceTerms.related_asset_ids.map { |rel| resource.send(rel.to_s + "=", [asset.id]) }
         resource.save
         resource.reload
       end
