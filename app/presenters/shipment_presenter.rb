@@ -1,7 +1,8 @@
-class ShipmentPresenter < AbstractPresenter
+class ShipmentPresenter
+  include Hydra::Presenter
+  include RelatedAssetTerms
 
-  def self.terms
-    CitiResourcePresenter.terms
-  end
+  self.model_class = Shipment
+  self.terms = CitiResourceTerms.all
 
 end

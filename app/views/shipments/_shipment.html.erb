@@ -1,0 +1,13 @@
+<li>
+  <h2>
+    <%= link_to shipment.title_or_label, shipment_path(shipment) %>
+  </h2>
+  <div class="row">
+    <div class="col-sm-3">
+      <%= render_thumbnail_tag shipment %>
+    </div>
+    <div class="col-sm-9">
+      <%= render 'shared/attributes', work: shipment %>
+    </table>
+  </div>
+</li>

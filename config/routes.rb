@@ -22,6 +22,7 @@ Rails.application.routes.draw do
   resources :actors, except: [:new, :create, :destroy]
   resources :exhibitions, except: [:new, :create, :destroy]
   resources :transactions, except: [:new, :create, :destroy]
+  resources :shipments, except: [:new, :create, :destroy]
 
   # Lakeshore API
   scope "api" do

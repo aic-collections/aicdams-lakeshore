@@ -4,7 +4,7 @@ module SufiaHelper
   include Sufia::SufiaHelperBehavior
 
   def url_for_document doc, options = {}
-    if (doc.is_a?(SolrDocument) && doc.hydra_model.match(/Work|Actor|Exhibition|Transaction/))
+    if (doc.is_a?(SolrDocument) && doc.hydra_model.match(/Work|Actor|Exhibition|Transaction|Shipment/))
       doc
     else
       [sufia, doc]

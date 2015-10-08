@@ -8,6 +8,7 @@ class Ability
       can [:create, :edit],             Actor
       can [:create, :edit],             Exhibition
       can [:create, :edit],             Transaction
+      can [:create, :edit],             Shipment
       can [:create, :destroy, :update], FeaturedWork
     end
 
