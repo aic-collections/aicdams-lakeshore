@@ -2,6 +2,14 @@ require 'rails_helper'
 
 describe GenericFile do
 
+  let(:example_file) do
+    GenericFile.create.tap do |file|
+      file.apply_depositor_metadata "user"
+      file.assert_still_image
+      file.save
+    end
+  end
+
   subject { GenericFile.new }
 
   context "without setting a type" do
@@ -97,27 +105,19 @@ describe GenericFile do
   end
 
   describe "loading from solr" do
-    let(:example_file) do
-      GenericFile.create.tap do |file|
-        file.apply_depositor_metadata "user"
-        file.assert_still_image
-        file.save
-      end
-    end
     subject { ActiveFedora::Base.load_instance_from_solr(example_file.id) }
     it { is_expected.to be_kind_of GenericFile }
   end
 
   describe "#destroy" do
-    let(:resource) do
-      GenericFile.create.tap do |file|
-        file.apply_depositor_metadata "user"
-        file.assert_still_image
-        file.save
-      end
-    end
     it "deletes the resource" do
-      expect(resource.destroy).to be_kind_of(GenericFile)
+      expect(example_file.destroy).to be_kind_of(GenericFile)
+    end
+  end
+
+  describe "#status" do
+    it "is set to active" do
+      expect(example_file.status.first.id).to eq(AICStatus.active.to_s)
     end
   end
 

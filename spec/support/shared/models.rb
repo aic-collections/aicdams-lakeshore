@@ -21,9 +21,12 @@ shared_examples "a model for a Citi resource" do
   end
 
   context "with CITI resources" do
-    before { load_fedora_fixture(fedora_fixture("#{described_class.to_s.downcase}.ttl")) }
-    it "indexes them into solr" do
-      expect(described_class.all.count).to eql 1
+    before  { load_fedora_fixture(fedora_fixture("#{described_class.to_s.downcase}.ttl")) }
+    subject { described_class.all.first }
+    it { is_expected.to be_kind_of(described_class) }
+
+    it "defaults to active" do
+      expect(subject.status.first.id).to eq(AICStatus.active.to_s)
     end
   end
 

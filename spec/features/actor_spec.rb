@@ -15,8 +15,7 @@ describe "CITI actors" do
       within("dl") do
         expect(page).to have_content("Pablo Picasso (1881-1973)")
         expect(page).to have_content("10-25-1881")
-        # TODO: see issue 61
-        # click_link("http://definitions.artic.edu/ontology/1.0/status/active")
+        click_link("http://definitions.artic.edu/ontology/1.0/status/active")
       end
       within("#show_actions") { expect(page).not_to have_content("Edit") }
     end
