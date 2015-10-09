@@ -102,6 +102,9 @@ class AIC < RDF::StrictVocabulary("http://definitions.artic.edu/ontology/1.0/")
   term :hasRepresentation,
     label: "Has Representation".freeze,
     comment: "Asset representing (depicting) the resource".freeze
+  term :icon,
+    label: "Icon",
+    comment: "URI of thumbnail or icon representing the resource"
   term :inscriptions,
     label: "Inscriptions".freeze,
     comment: "Inscriptions on object".freeze

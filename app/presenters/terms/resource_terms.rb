@@ -24,6 +24,7 @@ class ResourceTerms
       :status,
       :uid,
       :resource_updated,
+      :icon,
     ]
   end
 

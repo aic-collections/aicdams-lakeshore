@@ -63,6 +63,10 @@ module ResourceMetadata
       index.as :stored_searchable
     end
 
+    property :icon, predicate: AIC.icon, multiple: false do |index|
+      index.as :stored_searchable
+    end
+
     # TODO: this needs to be singular: enforce cardinality on AT resources
     property :dept_created, predicate: AIC.deptCreated, multiple: true, class_name: ListItem
 

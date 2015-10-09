@@ -66,7 +66,7 @@ describe Resource do
   end
 
   describe "cardinality" do
-    [:batch_uid, :resource_created, :dept_created, :status, :resource_updated, :pref_label, :uid].each do |term|
+    [:batch_uid, :resource_created, :dept_created, :status, :resource_updated, :pref_label, :uid, :icon].each do |term|
       it "limits #{term} to a single value" do
         pending "Can't enforce singular AT resources" if [:dept_created, :status].include?(term)
         subject.send(term.to_s+"=","foo")
