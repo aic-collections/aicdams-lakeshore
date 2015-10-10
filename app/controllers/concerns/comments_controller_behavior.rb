@@ -38,7 +38,7 @@ module CommentsControllerBehavior
 
   def set_comment
     @comment = ActiveFedora::Base.find(params[:id])
-    render_500("Incorrect comment class") unless @comment.is_a?(Tag) || @comment.is_a?(Comment)
+    render_500("Incorrect comment class") unless @comment.is_a?(Comment)
   end
 
   def set_edit_form

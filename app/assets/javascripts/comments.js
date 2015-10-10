@@ -17,7 +17,6 @@
 // }
 // 
 // TODOs:
-//   - select needs to pull values from the Tag class
 //   - QA needs to be involed to query existing comments
 //
 //= require hydra-editor/hydra-editor

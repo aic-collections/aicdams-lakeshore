@@ -20,25 +20,6 @@ describe GenericFilesController do
   let(:comment2) { Comment.create(content: "second comment") }
   let(:comment3) { Comment.create(content: "third comment", category: ["bat", "baz"]) }
 
-  let(:tagcat1) do
-    TagCat.create.tap do |t|
-      t.pref_label = "tagcat1"
-      t.apply_depositor_metadata(user)
-      t.save
-    end
-  end
-
-  let(:tagcat2) do
-    TagCat.create.tap do |t|
-      t.pref_label = "tagcat2"
-      t.apply_depositor_metadata(user)
-      t.save
-    end
-  end
-
-  let(:tag1) { Tag.create(content: "tag1", tagcat_ids: [tagcat1.id, tagcat2.id]) }
-  let(:tag2) { Tag.create(content: "tag2", tagcat_ids: [tagcat1.id]) }
-
   describe "#update" do
     describe "adding new comments" do
       let(:attributes) do
