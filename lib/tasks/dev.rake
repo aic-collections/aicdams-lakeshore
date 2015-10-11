@@ -38,11 +38,11 @@ namespace :fedora do
   end
 
   desc "Create fixture resources in Fedora from turtle files"
-  task :load_fixtures do
+  task load_fixtures: :environment do
     ActiveFedora::Cleaner.clean!
     loader = DevelopmentLoader.new
     Dir.glob("spec/fixtures/*.ttl").each do |f|
-      loader.load_fedora_fixture(f, false)
+      loader.load_fedora_fixture(f, true)
     end
   end
 end
