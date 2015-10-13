@@ -27,7 +27,7 @@ describe AIC do
     expect(AIC.dateDisplay).to be_kind_of RDF::Vocabulary::Term
     expect(AIC.deathDate).to be_kind_of RDF::Vocabulary::Term
     expect(AIC.deathYear).to be_kind_of RDF::Vocabulary::Term
-    expect(AIC.department).to be_kind_of RDF::Vocabulary::Term
+    expect(AIC.deptUid).to be_kind_of RDF::Vocabulary::Term
     expect(AIC.deptCreated).to be_kind_of RDF::Vocabulary::Term
     expect(AIC.digitizationSource).to be_kind_of RDF::Vocabulary::Term
     expect(AIC.dimensionsDisplay).to be_kind_of RDF::Vocabulary::Term

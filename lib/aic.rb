@@ -57,7 +57,7 @@ class AIC < RDF::StrictVocabulary("http://definitions.artic.edu/ontology/1.0/")
   term :deathYear,
     label: "Death Year".freeze,
     comment: "Death year".freeze
-  term :department,
+  term :deptUid,
     label: "Department".freeze,
     comment: "AIC department".freeze
   term :deptCreated,

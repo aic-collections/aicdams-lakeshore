@@ -23,7 +23,10 @@ module WorkMetadata
       index.as :stored_searchable
     end
 
-    property :department, predicate: AIC.department, multiple: true, class_name: ListItem
+    property :department, predicate: AIC.deptUid, multiple: true do |index|
+      index.type :integer
+      index.as :stored_searchable
+    end
 
     property :dimensions_display, predicate: AIC.dimensionsDisplay do |index|
       index.as :stored_searchable
