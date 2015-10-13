@@ -62,7 +62,7 @@ describe AIC do
     expect(AIC.status).to be_kind_of RDF::Vocabulary::Term
     expect(AIC.tag).to be_kind_of RDF::Vocabulary::Term
     expect(AIC.transcript).to be_kind_of RDF::Vocabulary::Term
-    expect(AIC.typeUid).to be_kind_of RDF::Vocabulary::Term
+    expect(AIC.exhibitionTypeUid).to be_kind_of RDF::Vocabulary::Term
     expect(AIC.uid).to be_kind_of RDF::Vocabulary::Term
     expect(AIC.updated).to be_kind_of RDF::Vocabulary::Term
     expect(AIC.view).to be_kind_of RDF::Vocabulary::Term

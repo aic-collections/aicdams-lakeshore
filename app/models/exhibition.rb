@@ -25,7 +25,8 @@ class Exhibition < CitiResource
     index.as :stored_searchable
   end
   
-  property :type_uid, predicate: AIC.typeUid, multiple: false do |index|
+  property :type_uid, predicate: AIC.exhibitionTypeUid, multiple: false do |index|
+    index.type :integer
     index.as :stored_searchable
   end
 

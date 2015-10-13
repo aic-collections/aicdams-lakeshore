@@ -162,7 +162,7 @@ class AIC < RDF::StrictVocabulary("http://definitions.artic.edu/ontology/1.0/")
   term :transcript,
     label: "Transcript".freeze,
     comment: "Plain-text transcription, either manually or automatically extracted from the document".freeze
-  term :typeUid,
+  term :exhibitionTypeUid,
     label: "Type ID".freeze,
     comment: "Type (ID) of exhibition".freeze
   term :uid,

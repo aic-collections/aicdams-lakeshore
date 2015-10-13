@@ -39,16 +39,16 @@
 
 
 <> a aictype:Exhibition ;
-	aic:citiUid "2846"^^<http://www.w3.org/2001/XMLSchemastring> ;
-	aic:typeUid "1"^^<http://www.w3.org/2001/XMLSchemaint> ;
-	aic:uid "EX-2846"^^<http://www.w3.org/2001/XMLSchemastring> ;
+	aic:citiUid "2846"^^<http://www.w3.org/2001/XMLSchema#string> ;
+	aic:exhibitionTypeUid "1"^^<http://www.w3.org/2001/XMLSchema#int> ;
+	aic:uid "EX-2846"^^<http://www.w3.org/2001/XMLSchema#string> ;
 	aic:status <http://definitions.artic.edu/ontology/1.0/status/active> ;
-	aic:updated "2004-01-01T00:00Z"^^<http://www.w3.org/2001/XMLSchemadateTime> ;
+	aic:updated "2004-01-01T00:00Z"^^<http://www.w3.org/2001/XMLSchema#dateTime> ;
 	fedorasystem:hasModel "Exhibition"^^<http://www.w3.org/2001/XMLSchema#string> ;
-	skos:prefLabel "EX-2846"^^<http://www.w3.org/2001/XMLSchemastring> ;
-	aic:endDate "2015-10-12"^^<http://www.w3.org/2001/XMLSchemadate> ;
-	aic:startDate "2015-08-01"^^<http://www.w3.org/2001/XMLSchemadate> ;
-	aic:nameWorking "[WORKING TITLE] My Awesome Show"^^<http://www.w3.org/2001/XMLSchemastring> ;
-	dcterm:description "This is a very awesome show featuring the very much best artist ever lived."^^<http://www.w3.org/2001/XMLSchemastring> ;
-	aic:nameOfficial "My Very Much Awesome Show"^^<http://www.w3.org/2001/XMLSchemastring> ;
-	aic:created "2004-01-01T00:00Z"^^<http://www.w3.org/2001/XMLSchemadateTime> .
+	skos:prefLabel "EX-2846"^^<http://www.w3.org/2001/XMLSchema#string> ;
+	aic:endDate "2015-10-12"^^<http://www.w3.org/2001/XMLSchema#date> ;
+	aic:startDate "2015-08-01"^^<http://www.w3.org/2001/XMLSchema#date> ;
+	aic:nameWorking "[WORKING TITLE] My Awesome Show"^^<http://www.w3.org/2001/XMLSchema#string> ;
+	dcterm:description "This is a very awesome show featuring the very much best artist ever lived."^^<http://www.w3.org/2001/XMLSchema#string> ;
+	aic:nameOfficial "My Very Much Awesome Show"^^<http://www.w3.org/2001/XMLSchema#string> ;
+	aic:created "2004-01-01T00:00Z"^^<http://www.w3.org/2001/XMLSchema#dateTime> .
