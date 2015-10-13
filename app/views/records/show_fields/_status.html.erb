@@ -1,3 +1,5 @@
 <% unless record.status.empty? %>
-  <%= link_to(record.status.first.id, url_for(record.status.first.id)) %>
+  <%# TODO: something in the AssetPresenter is returning the status as hash instead of the ListItem, see #109 %>
+  <% status_id = record.status.first.is_a?(ListItem) ? record.status.first.id : record.status.first["id"] %>
+  <%= link_to(status_id, url_for(status_id)) %>
 <% end %>
