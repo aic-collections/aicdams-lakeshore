@@ -22,5 +22,5 @@ To register all the namespaces with Fedora, with Fedora running
 
 To run the test suite
 
-    bundle exec rake rspec
+    bundle exec rspec spec
 
