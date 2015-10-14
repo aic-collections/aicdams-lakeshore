@@ -8,6 +8,7 @@
 # server 'db.example.com', user: 'deploy', roles: %w{db}
 server 'aicdamstest02.artic.edu', user: 'awead', roles: %w{web app db}
 
+set :linked_files, fetch(:linked_files, []).push('config/fedora-cert.pem')
 
 # role-based syntax
 # ==================
