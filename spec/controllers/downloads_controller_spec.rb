@@ -19,6 +19,7 @@ describe DownloadsController do
     allow_any_instance_of(FileContentDatastream).to receive(:content).and_return("file content")
     allow_any_instance_of(FileContentDatastream).to receive(:new_record?).and_return(false)
     allow_any_instance_of(FileContentDatastream).to receive(:mime_type).and_return("text/plain")
+    allow_any_instance_of(FileContentDatastream).to receive(:size).and_return(1234)
   end  
 
   describe "#show" do

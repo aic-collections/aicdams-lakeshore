@@ -1,10 +1,12 @@
 source 'https://rubygems.org'
 
-gem 'rails', '4.2.1'
+gem 'rails', '4.2.4'
 
 # Hydra Gems
-gem 'sufia', '~> 6.3.0'
+gem 'sufia', github: 'projecthydra/sufia', ref: '08a677d7c5916e530890bc9d3ebe425e5cb6c943'
 gem 'kaminari', github: 'jcoyne/kaminari', branch: 'sufia'
+gem 'active-fedora', '= 9.4.2'
+gem 'hydra-head', github: 'projecthydra/hydra-head', ref: '84b4406c0f369dc2562e06a981b7ea925ceab814'
 
 gem 'blacklight_range_limit'
 gem 'coffee-rails', '~> 4.1.0'
