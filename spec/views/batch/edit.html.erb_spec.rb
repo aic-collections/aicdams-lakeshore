@@ -18,7 +18,7 @@ describe 'batch/edit.html.erb' do
   end
 
   it "should not show Sufia's keyword field" do
-    expect(render).not_to have_selector "input#generic_file_tag"
+    expect(render).not_to have_selector "input#generic_file_resource_type"
   end
 
 end

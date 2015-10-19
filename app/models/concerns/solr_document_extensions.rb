@@ -9,4 +9,12 @@ module SolrDocumentExtensions
     Array(self[Solrizer.solr_name('pref_label', :stored_searchable)]).first
   end
 
+  def title
+    if Array(self[Solrizer.solr_name('title')]).empty?
+      pref_label
+    else
+      Array(self[Solrizer.solr_name('title')]).first
+    end
+  end
+
 end

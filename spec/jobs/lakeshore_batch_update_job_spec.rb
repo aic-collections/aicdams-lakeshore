@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe BatchUpdateJob do
+describe LakeshoreBatchUpdateJob do
 
   let(:user) { FactoryGirl.find_or_create(:jill) }
   let(:batch) { Batch.create }
@@ -31,7 +31,7 @@ describe BatchUpdateJob do
 
     let(:visibility) { nil }
 
-    let(:job) { BatchUpdateJob.new(user.user_key, batch.id, title, metadata, visibility) }
+    let(:job) { described_class.new(user.user_key, batch.id, title, metadata, visibility) }
 
     describe "updates metadata" do
       before do
@@ -39,9 +39,9 @@ describe BatchUpdateJob do
         job.run
       end
 
-      it "should update the titles" do
-        expect(file.reload.title).to eq ['File One']
-      end
+      subject { file.reload }
+      its(:title) { is_expected.to eq(['File One'])}
+      its(:pref_label) { is_expected.to eq(file.id)}
     end
   end
 end

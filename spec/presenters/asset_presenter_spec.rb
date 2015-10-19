@@ -7,6 +7,7 @@ describe AssetPresenter do
   describe "#terms" do
     subject { presenter.terms }
     it { is_expected.not_to include(:resource_type) }
+    it { is_expected.to include(:title) }
   end
 
   # TODO: needs to show either representation, preferred representation, or document

@@ -39,6 +39,7 @@ group :test do
   gem 'factory_girl_rails'
   gem 'poltergeist'
   gem 'rspec-activemodel-mocks'
+  gem 'rspec-its'
   gem 'rspec-rails', '~> 3.0'
 end
 
