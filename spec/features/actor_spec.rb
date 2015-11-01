@@ -4,8 +4,6 @@ describe "CITI actors" do
 
   let(:user) { FactoryGirl.create(:user) }
 
-  before { load_fedora_fixture(fedora_fixture("actor.ttl")) }
-
   context "when viewing" do
     before { visit(root_path) }
     it "shows all the information about the resource" do

@@ -163,7 +163,7 @@ describe GenericFilesController do
 
   describe "#create" do
 
-    let(:mock) { GenericFile.new(id: 'test123') }
+    let(:mock) { GenericFile.new }
     let(:batch) { Batch.create }
     let(:batch_id) { batch.id }
     let(:file) { fixture_file_upload('/sun.png') }

@@ -21,7 +21,6 @@ shared_examples "a model for a Citi resource" do
   end
 
   context "with CITI resources" do
-    before  { load_fedora_fixture(fedora_fixture("#{described_class.to_s.downcase}.ttl")) }
     subject { described_class.all.first }
     it { is_expected.to be_kind_of(described_class) }
 

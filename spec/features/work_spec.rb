@@ -4,8 +4,6 @@ describe "CITI works" do
 
   let(:user) { FactoryGirl.create(:user) }
 
-  before { load_fedora_fixture(fedora_fixture("work.ttl")) }
-
   context "when viewing" do
     before { visit(root_path) }
     it "shows all the information about the resource" do

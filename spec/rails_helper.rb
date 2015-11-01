@@ -18,9 +18,19 @@ RSpec.configure do |config|
   config.use_transactional_fixtures = false
   config.infer_spec_type_from_file_location!
 
+  config.before :suite do
+    ActiveFedora::Cleaner.clean!
+    class TestLoader
+      include FixtureLoader
+    end
+    loader = TestLoader.new
+    Dir.glob("spec/fixtures/*.ttl").each do |f|
+      loader.load_fedora_fixture(f)
+    end
+  end
+
   config.before :each do |example|
     unless example.metadata[:no_clean]
-      ActiveFedora::Cleaner.clean!
       # Clear out Redis
       begin
         $redis.keys('events:*').each { |key| $redis.del key }
