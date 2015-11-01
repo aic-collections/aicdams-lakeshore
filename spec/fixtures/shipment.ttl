@@ -38,10 +38,10 @@
 @prefix dc: <http://purl.org/dc/elements/1.1/> .
 
 
-<> a aictype:Shipment ;
-	aic:uid "SH-3469"^^<http://www.w3.org/2001/XMLSchemastring> ;
+<> a aictype:Shipment , aictype:Activity , aictype:Event , aictype:NonInformationResource , aictype:Resource ;
+	aic:uid "SH-3469"^^<http://www.w3.org/2001/XMLSchema#string> ;
 	aic:status <http://definitions.artic.edu/ontology/1.0/status/active> ;
-	aic:updated "2015-06-23T00:00Z"^^<http://www.w3.org/2001/XMLSchemadateTime> ;
-	fedorasystem:hasModel "Shipment"^^<http://www.w3.org/2001/XMLSchemastring> ;
-	skos:prefLabel "SH-3469"^^<http://www.w3.org/2001/XMLSchemastring> ;
-	aic:created "2015-01-25T00:00Z"^^<http://www.w3.org/2001/XMLSchemadateTime> .
+	aic:updated "2015-06-23T00:00Z"^^<http://www.w3.org/2001/XMLSchema#dateTime> ;
+	fedorasystem:hasModel "Shipment"^^<http://www.w3.org/2001/XMLSchema#string> ;
+	skos:prefLabel "SH-3469"^^<http://www.w3.org/2001/XMLSchema#string> ;
+	aic:created "2015-01-25T00:00Z"^^<http://www.w3.org/2001/XMLSchema#dateTime> .

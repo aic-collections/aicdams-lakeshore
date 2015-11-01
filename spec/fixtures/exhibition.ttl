@@ -38,9 +38,8 @@
 @prefix dc: <http://purl.org/dc/elements/1.1/> .
 
 
-<> a aictype:Exhibition ;
+<> a aictype:Exhibition , aictype:Activity , aictype:Event , aictype:NonInformationResource , aictype:Resource ;
 	aic:citiUid "2846"^^<http://www.w3.org/2001/XMLSchema#string> ;
-	aic:exhibitionTypeUid "1"^^<http://www.w3.org/2001/XMLSchema#int> ;
 	aic:uid "EX-2846"^^<http://www.w3.org/2001/XMLSchema#string> ;
 	aic:status <http://definitions.artic.edu/ontology/1.0/status/active> ;
 	aic:updated "2004-01-01T00:00Z"^^<http://www.w3.org/2001/XMLSchema#dateTime> ;
@@ -51,4 +50,5 @@
 	aic:nameWorking "[WORKING TITLE] My Awesome Show"^^<http://www.w3.org/2001/XMLSchema#string> ;
 	dcterm:description "This is a very awesome show featuring the very much best artist ever lived."^^<http://www.w3.org/2001/XMLSchema#string> ;
 	aic:nameOfficial "My Very Much Awesome Show"^^<http://www.w3.org/2001/XMLSchema#string> ;
-	aic:created "2004-01-01T00:00Z"^^<http://www.w3.org/2001/XMLSchema#dateTime> .
+	aic:created "2004-01-01T00:00Z"^^<http://www.w3.org/2001/XMLSchema#dateTime> ;
+	aic:exhibitionTypeUid "1"^^<http://www.w3.org/2001/XMLSchema#int> .

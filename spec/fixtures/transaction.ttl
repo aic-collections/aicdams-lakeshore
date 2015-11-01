@@ -38,12 +38,12 @@
 @prefix dc: <http://purl.org/dc/elements/1.1/> .
 
 
-<> a aictype:Transaction ;
-	aic:citiUid "123456"^^<http://www.w3.org/2001/XMLSchemastring> ;
-	aic:uid "TR-123456"^^<http://www.w3.org/2001/XMLSchemastring> ;
+<> a aictype:Transaction , aictype:Activity , aictype:Event , aictype:NonInformationResource , aictype:Resource ;
+	aic:citiUid "123456"^^<http://www.w3.org/2001/XMLSchema#string> ;
+	aic:uid "TR-123456"^^<http://www.w3.org/2001/XMLSchema#string> ;
 	aic:status <http://definitions.artic.edu/ontology/1.0/status/active> ;
-	aic:updated "2010-01-01T00:00Z"^^<http://www.w3.org/2001/XMLSchemadate> ;
-	fedorasystem:hasModel "Transaction"^^<http://www.w3.org/2001/XMLSchemastring> ;
-	skos:prefLabel "TR-123456"^^<http://www.w3.org/2001/XMLSchemastring> ;
+	aic:updated "2010-01-01T00:00Z"^^<http://www.w3.org/2001/XMLSchema#dateTime> ;
+	fedorasystem:hasModel "Transaction"^^<http://www.w3.org/2001/XMLSchema#string> ;
+	skos:prefLabel "TR-123456"^^<http://www.w3.org/2001/XMLSchema#string> ;
 	aic:exhibitionUid "2846"^^<http://www.w3.org/2001/XMLSchema#string> ;
-	aic:created "2004-01-01T00:00Z"^^<http://www.w3.org/2001/XMLSchemadate> .
+	aic:created "2004-01-01T00:00Z"^^<http://www.w3.org/2001/XMLSchema#dateTime> .

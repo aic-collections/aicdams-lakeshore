@@ -38,17 +38,17 @@
 @prefix dc: <http://purl.org/dc/elements/1.1/> .
 
 
-<> a aictype:Actor ;
-	aic:citiUid "19646"^^<http://www.w3.org/2001/XMLSchemastring> ;
-	aic:birthDate "10-25-1881"^^<http://www.w3.org/2001/XMLSchemadate> ;
-	aic:deathYear "1973"^^<http://www.w3.org/2001/XMLSchemaint> ;
-	aic:deathDate "04-08-1973"^^<http://www.w3.org/2001/XMLSchemadate> ;
-	aic:uid "AC-19646"^^<http://www.w3.org/2001/XMLSchemastring> ;
-	aic:staus <http://definitions.artic.edu/ontology/1.0/status/active> ;
-	aic:updated "2015-11-24T00:00Z"^^<http://www.w3.org/2001/XMLSchemadateTime> ;
-	aic:birthYear "1881"^^<http://www.w3.org/2001/XMLSchemaint> ;
-	fedorasystem:hasModel "Actor"^^<http://www.w3.org/2001/XMLSchemastring> ;
-	skos:prefLabel "Pablo Picasso (1881-1973)"^^<http://www.w3.org/2001/XMLSchemastring> ;
-	rdfs:label "Pablo Diego José Francisco de Paula Juan Nepomuceno María de los Remedios Cipriano de la Santísima Trinidad Ruiz y Picasso"^^<http://www.w3.org/2001/XMLSchemastring> , "Picasso, Pablo"^^<http://www.w3.org/2001/XMLSchemastring> ;
-	aic:actorType "1"^^<http://www.w3.org/2001/XMLSchemaint> ;
-	aic:created "2015-11-12T00:00Z"^^<http://www.w3.org/2001/XMLSchemadateTime> .
+<> a aictype:Actor , aictype:NonInformationResource , aictype:Resource ;
+	aic:citiUid "19646"^^<http://www.w3.org/2001/XMLSchema#string> ;
+	aic:birthDate "25-10-1881"^^<http://www.w3.org/2001/XMLSchema#date> ;
+	aic:deathYear "1973"^^<http://www.w3.org/2001/XMLSchema#int> ;
+	aic:deathDate "04-08-1973"^^<http://www.w3.org/2001/XMLSchema#date> ;
+	aic:uid "AC-19646"^^<http://www.w3.org/2001/XMLSchema#string> ;
+	aic:status <http://definitions.artic.edu/ontology/1.0/status/active> ;
+	aic:updated "2015-11-24T00:00Z"^^<http://www.w3.org/2001/XMLSchema#dateTime> ;
+	aic:birthYear "1881"^^<http://www.w3.org/2001/XMLSchema#int> ;
+	fedorasystem:hasModel "Actor"^^<http://www.w3.org/2001/XMLSchema#string> ;
+	skos:prefLabel "Pablo Picasso (1881-1973)"^^<http://www.w3.org/2001/XMLSchema#string> ;
+	rdfs:label "Pablo Diego José Francisco de Paula Juan Nepomuceno María de los Remedios Cipriano de la Santísima Trinidad Ruiz y Picasso"^^<http://www.w3.org/2001/XMLSchema#string> , "Picasso, Pablo"^^<http://www.w3.org/2001/XMLSchema#string> ;
+	aic:actorType "1"^^<http://www.w3.org/2001/XMLSchema#int> ;
+	aic:created "2015-11-12T00:00Z"^^<http://www.w3.org/2001/XMLSchema#dateTime> .

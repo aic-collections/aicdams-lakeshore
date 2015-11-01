@@ -12,7 +12,9 @@ describe "CITI transactions", order: :defined do
       click_link("TR-123456")
       within("dl") do
         expect(page).to have_content("TR-123456")
-        expect(page).to have_content("2004-01-01T00:00Z ")
+        expect(page).to have_content("2004-01-01T00:00:00+00:00")
+        expect(page).to have_content("2010-01-01T00:00:00+00:00")
+        expect(page).to have_content("123456")
         click_link("http://definitions.artic.edu/ontology/1.0/status/active")
       end
       within("#show_actions") { expect(page).not_to have_content("Edit") }

@@ -12,7 +12,14 @@ describe "CITI actors", order: :defined do
       click_link("Pablo Picasso (1881-1973)")
       within("dl") do
         expect(page).to have_content("Pablo Picasso (1881-1973)")
-        expect(page).to have_content("10-25-1881")
+        expect(page).to have_content("19646")
+        expect(page).to have_content("1881-10-25")
+        expect(page).to have_content("1973")
+        expect(page).to have_content("1973-08-04")
+        expect(page).to have_content("AC-19646")
+        expect(page).to have_content("2015-11-12T00:00:00+00:00 ")
+        expect(page).to have_content("1881")
+        expect(page).to have_content("Pablo Diego José Francisco de Paula Juan Nepomuceno María de los Remedios Cipriano de la Santísima Trinidad Ruiz y Picasso")
         click_link("http://definitions.artic.edu/ontology/1.0/status/active")
       end
       within("#show_actions") { expect(page).not_to have_content("Edit") }

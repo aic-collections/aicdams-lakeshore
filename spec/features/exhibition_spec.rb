@@ -11,8 +11,15 @@ describe "CITI exhibitions", order: :defined do
       click_button("Go")
       click_link("EX-2846")
       within("dl") do
-        expect(page).to have_content("My Very Much Awesome Show ")
-        expect(page).to have_content("2015-10-12 ")
+        expect(page).to have_content("2846")
+        expect(page).to have_content("EX-2846")
+        expect(page).to have_content("2015-10-12")
+        expect(page).to have_content("2015-08-01")
+        expect(page).to have_content("[WORKING TITLE] My Awesome Show")
+        expect(page).to have_content("This is a very awesome show featuring the very much best artist ever lived.")
+        expect(page).to have_content("My Very Much Awesome Show")
+        expect(page).to have_content("2004-01-01T00:00:00+00:00")
+        expect(page).to have_content("1")
         click_link("http://definitions.artic.edu/ontology/1.0/status/active")
       end
       within("#show_actions") { expect(page).not_to have_content("Edit") }
