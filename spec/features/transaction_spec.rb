@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe "CITI transactions" do
+describe "CITI transactions", order: :defined do
 
   let(:user) { FactoryGirl.create(:user) }
 
