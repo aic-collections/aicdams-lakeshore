@@ -28,7 +28,7 @@ module CitiBehaviors
 
   def status
     current = super
-    return current unless current.empty?
+    return current unless (current.nil? || current.empty?)
     [ListItem.new(AICStatus.active)]
   end
 

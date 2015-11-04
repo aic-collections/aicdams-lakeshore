@@ -5,6 +5,8 @@ class DevelopmentLoader
   include FixtureLoader
 end
 
+Jettywrapper.hydra_jetty_version = "v8.5.0"
+
 desc "Run continuous integration test"
 task ci: ['aic:jetty:prep', 'db:migrate'] do
   jetty_params = Jettywrapper.load_config
