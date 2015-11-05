@@ -1,11 +1,3 @@
-<%# Move logic to presenter, rectify issue with status hash, see #109 %>
-<% unless record.status.empty? %>
-  <% status = record.status.first %>
-  <% if status.is_a?(StatusType) %>
-    <%= status.pref_label %>
-  <% elsif status.is_a?(UndefinedListItem) || status.is_a?(ActiveTriples::Resource)  %>
-    <%= link_to(status.id, url_for(status.id)) %>
-  <% else %>
-    <%= link_to(status["id"], url_for(status["id"])) %>
-  <% end %>
+<% unless record.status.nil? %>
+    <%= record.status.pref_label %>
 <% end %>

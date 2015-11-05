@@ -21,7 +21,6 @@ class ResourceTerms
       :rights,
       :rights_holder,
       :same_as,
-      :status,
       :uid,
       :resource_updated,
       :icon,

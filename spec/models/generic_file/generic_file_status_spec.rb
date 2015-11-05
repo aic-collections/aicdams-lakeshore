@@ -18,29 +18,34 @@ describe "GenericFile" do
     end
 
     context "invalid" do
-      before { example_file.status = [StatusType.invalid] }
+      before { example_file.status = StatusType.invalid }
       it { is_expected.to be_invalid }
     end
 
     context "disabled" do
-      before { example_file.status = [StatusType.disabled] }
+      before { example_file.status = StatusType.disabled }
       it { is_expected.to be_disabled }
     end
 
     context "deleted" do
-      before { example_file.status = [StatusType.deleted] }
+      before { example_file.status = StatusType.deleted }
       it { is_expected.to be_deleted }
     end
 
     context "archived" do
-      before { example_file.status = [StatusType.archived] }
+      before { example_file.status = StatusType.archived }
       it { is_expected.to be_archived }
     end
   end
 
-  describe "#status_ids" do
+  describe "loading from solr" do
+    subject { ActiveFedora::Base.load_instance_from_solr(example_file.id) }
+    it { is_expected.to be_active }
+  end
+
+  describe "#status_id" do
     before do
-      example_file.status_ids = [StatusType.deleted.id]
+      example_file.status_id = StatusType.deleted.id
       example_file.save
       example_file.reload
     end

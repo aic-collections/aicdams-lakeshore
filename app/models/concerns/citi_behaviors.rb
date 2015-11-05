@@ -26,10 +26,4 @@ module CitiBehaviors
     false
   end
 
-  def status
-    current = super
-    return current unless (current.nil? || current.empty?)
-    [UndefinedListItem.new(AICStatus.active)]
-  end
-
 end

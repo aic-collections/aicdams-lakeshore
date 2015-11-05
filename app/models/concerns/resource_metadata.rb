@@ -70,9 +70,6 @@ module ResourceMetadata
     # TODO: this needs to be singular: enforce cardinality on AT resources
     property :dept_created, predicate: AIC.deptCreated, multiple: true, class_name: UndefinedListItem
 
-    # TODO: this needs to be singular: enforce cardinality on AT resources
-    property :status, predicate: AIC.status, multiple: true, class_name: "StatusType"
-
     has_and_belongs_to_many :described_by, predicate: ::RDF::Vocab::IANA.describedby, class_name: "MetadataSet"
     has_and_belongs_to_many :documents, predicate: AIC.hasDocument, class_name: "GenericFile"
     has_and_belongs_to_many :preferred_representations, predicate: AIC.hasPreferredRepresentation, class_name: "GenericFile"

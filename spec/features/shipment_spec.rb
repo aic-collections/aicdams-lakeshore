@@ -14,7 +14,7 @@ describe "CITI shipments", order: :defined do
         expect(page).to have_content("SH-3469")
         expect(page).to have_content("2015-01-25T00:00:00+00:00")
         expect(page).to have_content("2015-06-23T00:00:00+00:00")
-        click_link("http://definitions.artic.edu/ontology/1.0/status/active")
+        expect(page).to have_content("Active")
       end
       within("#show_actions") { expect(page).not_to have_content("Edit") }
     end

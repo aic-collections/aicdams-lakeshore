@@ -3,31 +3,44 @@ module Status
 
   included do
 
+    property :status, predicate: AIC.status, multiple: false, class_name: "StatusType"
+
     def active?
-      self.status.first == StatusType.active
+      self.status == StatusType.active
     end
 
     def invalid?
-      self.status.first == StatusType.invalid
+      self.status == StatusType.invalid
     end
     
     def archived?
-      self.status.first == StatusType.archived
+      self.status == StatusType.archived
     end
     
     def disabled?
-      self.status.first == StatusType.disabled
+      self.status == StatusType.disabled
     end
     
     def deleted?
-      self.status.first == StatusType.deleted
+      self.status == StatusType.deleted
     end
 
-    # Normally, has_and_belongs_to_many creates this, but we don't need the Solr relations
-    # so we create a setter method manually.
-    def status_ids=(*args)
-      self.status = args.map { |id| StatusType.find(id).first }.compact
+    def status_id=(id)
+      return unless id.present?
+      self.status = StatusType.find(id)
     end
 
   end
+
+  private
+
+    # TODO: This really ought to go into ActiveFedora
+    def adapt_single_attribute_value(value, attribute_name)
+      if attribute_name == "status"
+        return nil unless value["id"].present?
+        StatusType.find(value["id"])
+      else
+        super
+      end
+    end
 end

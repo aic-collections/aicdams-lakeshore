@@ -25,4 +25,10 @@ class StatusType < ListItem
   def self.archived
     self.where(pref_label: "Archived").first
   end
+
+  def self.options
+    options = {}
+    StatusType.all.map { |t| options[t.pref_label] = t.id }
+    options
+  end
 end

@@ -20,7 +20,7 @@ describe "CITI exhibitions", order: :defined do
         expect(page).to have_content("My Very Much Awesome Show")
         expect(page).to have_content("2004-01-01T00:00:00+00:00")
         expect(page).to have_content("1")
-        click_link("http://definitions.artic.edu/ontology/1.0/status/active")
+        expect(page).to have_content("Active")
       end
       within("#show_actions") { expect(page).not_to have_content("Edit") }
     end

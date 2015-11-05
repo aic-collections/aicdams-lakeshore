@@ -20,7 +20,7 @@ describe "CITI actors", order: :defined do
         expect(page).to have_content("2015-11-12T00:00:00+00:00 ")
         expect(page).to have_content("1881")
         expect(page).to have_content("Pablo Diego José Francisco de Paula Juan Nepomuceno María de los Remedios Cipriano de la Santísima Trinidad Ruiz y Picasso")
-        click_link("http://definitions.artic.edu/ontology/1.0/status/active")
+        expect(page).to have_content("Active")
       end
       within("#show_actions") { expect(page).not_to have_content("Edit") }
     end

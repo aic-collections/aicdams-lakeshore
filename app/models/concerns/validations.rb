@@ -5,7 +5,6 @@ module Validations
   included do
     # validate :write_once_only_fields, on: :update
     # after_save :uid_matches_id, on: :create
-    before_create :status_is_active
   end
   
   def write_once_only_fields
@@ -18,10 +17,6 @@ module Validations
     return if self.uid == self.id
     self.uid = self.id
     self.save
-  end
-
-  def status_is_active
-    self.status = [StatusType.where(pref_label: "Active").first]
   end
 
 end

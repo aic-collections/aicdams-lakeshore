@@ -1,6 +1,7 @@
 class ActorPresenter
   include Hydra::Presenter
   include RelatedAssetTerms
+  include CitiStatus
 
   self.model_class = Actor
   self.terms = [

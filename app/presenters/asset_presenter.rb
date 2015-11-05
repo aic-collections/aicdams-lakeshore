@@ -12,7 +12,8 @@ class AssetPresenter < Sufia::GenericFilePresenter
     [:transcript]
   end
 
-  self.terms = ResourceTerms.all + self.still_image_terms + self.text_terms + self.asset_terms + [:title]
+  # TODO: :status should be added back to ResourceTerms, see #127
+  self.terms = ResourceTerms.all + self.still_image_terms + self.text_terms + self.asset_terms + [:title, :status]
 
   # TODO: needs to show either representation, preferred representation, or document
   def brief_terms
@@ -26,6 +27,6 @@ class AssetPresenter < Sufia::GenericFilePresenter
   def asset_type
     return "Image" if model.is_still_image?
     return "Text Document" if model.is_text?
-  end 
+  end
 
 end

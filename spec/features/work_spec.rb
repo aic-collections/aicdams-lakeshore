@@ -14,7 +14,7 @@ describe "CITI works", order: :defined do
         expect(page).to have_content("The Great Sidewalk Gum")
         expect(page).to have_content("Gift of Mr. Dummy Lee & Mrs. Parrot Funkaroo")
         expect(page).to have_xpath("//span[@itemprop = 'department']", text: "3")
-        click_link("http://definitions.artic.edu/ontology/1.0/status/active")
+        expect(page).to have_content("Active")
       end
       within("#show_actions") { expect(page).not_to have_content("Edit") }
     end

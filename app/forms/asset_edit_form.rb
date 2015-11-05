@@ -3,11 +3,12 @@ class AssetEditForm < AssetPresenter
   include HydraEditor::Form::Permissions
   include NestedAttributes
 
-  self.terms = AssetPresenter.terms - [:uid]
+  # Use :status_id instead of :status as the editing term
+  self.terms = AssetPresenter.terms - [:uid, :status] + [:status_id]
   
   protected
 
-  # Override HydraEditor::Form to treat nested attbriutes accordingly
+  # Override HydraEditor::Form to treat nested attributes accordingly
   def initialize_field(key)
     if key == :comments
       build_association(key)

@@ -11,6 +11,8 @@ class GenericFile < Resource
 
   type aic_type
 
+  before_create :status_is_active
+
   def is_still_image?
     self.type.include? AICType.StillImage
   end
@@ -48,6 +50,10 @@ class GenericFile < Resource
   # Overrides Sufia::Noid to set both #id and #uid to the minted uid
   def assign_id
     self.uid = service.mint
+  end
+
+  def status_is_active
+    self.status = StatusType.active
   end
 
   private

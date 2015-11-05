@@ -66,9 +66,10 @@ describe Resource do
   end
 
   describe "cardinality" do
-    [:batch_uid, :resource_created, :dept_created, :status, :resource_updated, :pref_label, :uid, :icon].each do |term|
+    # TODO: Add :status once CITI resources are loading the correct active StatusType, see #127
+    [:batch_uid, :resource_created, :dept_created, :resource_updated, :pref_label, :uid, :icon].each do |term|
       it "limits #{term} to a single value" do
-        pending "Can't enforce singular AT resources" if [:dept_created, :status].include?(term)
+        pending "Can't enforce singular AT resources" if term == :dept_created
         subject.send(term.to_s+"=","foo")
         expect(subject.send(term.to_s)).to eql "foo"
       end
