@@ -1,5 +1,11 @@
+<%# Move logic to presenter, rectify issue with status hash, see #109 %>
 <% unless record.status.empty? %>
-  <%# TODO: something in the AssetPresenter is returning the status as hash instead of the ListItem, see #109 %>
-  <% status_id = record.status.first.is_a?(ListItem) ? record.status.first.id : record.status.first["id"] %>
-  <%= link_to(status_id, url_for(status_id)) %>
+  <% status = record.status.first %>
+  <% if status.is_a?(StatusType) %>
+    <%= status.pref_label %>
+  <% elsif status.is_a?(UndefinedListItem) || status.is_a?(ActiveTriples::Resource)  %>
+    <%= link_to(status.id, url_for(status.id)) %>
+  <% else %>
+    <%= link_to(status["id"], url_for(status["id"])) %>
+  <% end %>
 <% end %>

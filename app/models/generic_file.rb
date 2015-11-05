@@ -3,6 +3,7 @@ class GenericFile < Resource
   include StillImageMetadata
   include TextMetadata
   include AssetMetadata
+  include Status
 
   def self.aic_type
     super << AICType.Asset

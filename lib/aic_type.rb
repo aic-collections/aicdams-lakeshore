@@ -46,6 +46,10 @@ class AICType < RDF::StrictVocabulary("http://definitions.artic.edu/ontology/1.0
     subClassOf: "aictype:CitiResource".freeze,
     label: "Shipment".freeze,
     comment: "CITI Shipment".freeze
+  term :StatusType,
+    subClassOf: "aictype:ListItem".freeze,
+    label: "Status".freeze,
+    comment: "The status of a resource".freeze
   term :StillImage,
     subClassOf: "aictype:Asset".freeze,
     label: "Still Image".freeze,

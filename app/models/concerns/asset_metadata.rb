@@ -8,16 +8,16 @@ module AssetMetadata
     end
 
     # TODO: this needs to be singular: enforce cardinality on AT resources
-    property :digitization_source, predicate: AIC.digitizationSource, multiple: true, class_name: ListItem
+    property :digitization_source, predicate: AIC.digitizationSource, multiple: true, class_name: UndefinedListItem
     
     # TODO: this needs to be singular: enforce cardinality on AT resources
-    property :document_type, predicate: AIC.documentType, multiple: true, class_name: ListItem
+    property :document_type, predicate: AIC.documentType, multiple: true, class_name: UndefinedListItem
     
     property :legacy_uid, predicate: AIC.legacyUid do |index|
       index.as :stored_searchable
     end
     
-    property :tag, predicate: AIC.tag, multiple: true, class_name: ListItem
+    property :tag, predicate: AIC.tag, multiple: true, class_name: UndefinedListItem
 
     has_and_belongs_to_many :comments, predicate: AIC.hasComment, class_name: "Comment", inverse_of: :generic_files
     accepts_nested_attributes_for :comments, allow_destroy: true

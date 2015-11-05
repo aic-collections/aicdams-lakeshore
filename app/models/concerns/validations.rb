@@ -5,7 +5,7 @@ module Validations
   included do
     # validate :write_once_only_fields, on: :update
     # after_save :uid_matches_id, on: :create
-    before_save :status_is_active, on: :create
+    before_create :status_is_active
   end
   
   def write_once_only_fields
@@ -21,7 +21,7 @@ module Validations
   end
 
   def status_is_active
-    self.status = [ListItem.new(AICStatus.active)]
+    self.status = [StatusType.where(pref_label: "Active").first]
   end
 
 end

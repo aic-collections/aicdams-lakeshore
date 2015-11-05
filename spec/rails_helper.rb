@@ -22,11 +22,13 @@ RSpec.configure do |config|
     ActiveFedora::Cleaner.clean!
     class TestLoader
       include FixtureLoader
+      include ListLoader
     end
     loader = TestLoader.new
     Dir.glob("spec/fixtures/*.ttl").each do |f|
       loader.load_fedora_fixture(f)
     end
+    loader.load_lists
   end
 
   config.before :each do |example|

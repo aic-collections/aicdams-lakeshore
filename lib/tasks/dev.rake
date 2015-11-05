@@ -1,8 +1,10 @@
 require 'active_fedora/cleaner'
 require './spec/support/fixture_loader'
+require './spec/support/list_loader'
 
 class DevelopmentLoader
   include FixtureLoader
+  include ListLoader
 end
 
 Jettywrapper.hydra_jetty_version = "v8.5.0"
@@ -43,6 +45,7 @@ namespace :fedora do
     Dir.glob("spec/fixtures/*.ttl").each do |f|
       loader.load_fedora_fixture(f, true)
     end
+    loader.load_lists
   end
 end
 

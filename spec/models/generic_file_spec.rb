@@ -115,10 +115,4 @@ describe GenericFile do
     end
   end
 
-  describe "#status" do
-    it "is set to active" do
-      expect(example_file.status.first.id).to eq(AICStatus.active.to_s)
-    end
-  end
-
 end

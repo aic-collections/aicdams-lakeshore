@@ -1,0 +1,50 @@
+require 'rails_helper'
+
+describe "GenericFile" do
+
+  let(:example_file) do
+    GenericFile.create.tap do |file|
+      file.apply_depositor_metadata "user"
+      file.assert_still_image
+      file.save
+    end
+  end
+
+  subject { example_file }
+
+  describe "#status" do
+    context "by default" do
+      it { is_expected.to be_active }
+    end
+
+    context "invalid" do
+      before { example_file.status = [StatusType.invalid] }
+      it { is_expected.to be_invalid }
+    end
+
+    context "disabled" do
+      before { example_file.status = [StatusType.disabled] }
+      it { is_expected.to be_disabled }
+    end
+
+    context "deleted" do
+      before { example_file.status = [StatusType.deleted] }
+      it { is_expected.to be_deleted }
+    end
+
+    context "archived" do
+      before { example_file.status = [StatusType.archived] }
+      it { is_expected.to be_archived }
+    end
+  end
+
+  describe "#status_ids" do
+    before do
+      example_file.status_ids = [StatusType.deleted.id]
+      example_file.save
+      example_file.reload
+    end
+    it { is_expected.to be_deleted }
+  end
+
+end
