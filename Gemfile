@@ -5,7 +5,7 @@ gem 'rails', '4.2.4'
 # Hydra Gems
 gem 'sufia', github: 'projecthydra/sufia', ref: '74397e40043cc1a30aa4782eb9e82932cbbedef4'
 gem 'kaminari', github: 'jcoyne/kaminari', branch: 'sufia'
-gem 'active-fedora', github: 'projecthydra/active_fedora', ref: '6588da340144df87f4bc7b6050dc7c8920d58653'
+gem 'active-fedora', github: 'projecthydra/active_fedora', branch: 'empty-dates'
 gem 'hydra-pcdm', '~> 0.3'
 
 gem 'blacklight_range_limit'
