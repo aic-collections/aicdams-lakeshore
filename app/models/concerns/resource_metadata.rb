@@ -70,7 +70,9 @@ module ResourceMetadata
     # TODO: this needs to be singular: enforce cardinality on AT resources
     property :dept_created, predicate: AIC.deptCreated, multiple: true, class_name: UndefinedListItem
 
-    has_and_belongs_to_many :described_by, predicate: ::RDF::Vocab::IANA.describedby, class_name: "MetadataSet"
+    # TODO: Using ::RDF::Vocab::IANA.describedby causes Ldp::Conflict
+    has_and_belongs_to_many :described_by, predicate: ::RDF::URI("http://need.another.predicate/here"), class_name: "MetadataSet"
+
     has_and_belongs_to_many :documents, predicate: AIC.hasDocument, class_name: "GenericFile"
     has_and_belongs_to_many :preferred_representations, predicate: AIC.hasPreferredRepresentation, class_name: "GenericFile"
     has_and_belongs_to_many :representations, predicate: AIC.hasRepresentation, class_name: "GenericFile"

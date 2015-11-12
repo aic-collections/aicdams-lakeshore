@@ -1,8 +1,8 @@
 class LakeshoreBatchUpdateJob < BatchUpdateJob
 
-  def update_file(gf, user)
-    gf.pref_label = gf.id if user.can?(:edit, gf)
+  def apply_metadata(gf)
     super
+    gf.pref_label = gf.id
   end
 
 end
