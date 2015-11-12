@@ -11,6 +11,7 @@ namespace :repo do
   task :config do
     on roles(:app) do
       execute "cp #{fetch(:aic_config_dir)}/*.yml #{fetch(:base_dir)}/aicdams-lakeshore/config/"
+      execute "cp #{fetch(:aic_config_dir)}/fedora-cert.pem #{fetch(:base_dir)}/aicdams-lakeshore/config/"
       execute "cd #{fetch(:base_dir)}/aicdams-lakeshore && HTTP_PROXY=#{fetch(:aic_proxy)} bundle install"
       execute "cd #{fetch(:base_dir)}/aicdams-lakeshore && /usr/bin/env rake db:migrate"
       execute "cd #{fetch(:base_dir)}/aicdams-lakeshore && /usr/bin/env rake rails:update:bin"

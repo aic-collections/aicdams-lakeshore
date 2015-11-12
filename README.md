@@ -24,3 +24,25 @@ To run the test suite
 
     bundle exec rspec spec
 
+## Deployment
+
+### Development Server
+
+A cloned repo is deployed directly to the development server and run in development mode, i.e. not the
+usual way Capistrano is used.
+
+    bundle exec cap dev repo:clone
+    bundle exec cap dev repo:config
+
+### Test Server
+
+Deployed via Capistrano in the normal fashion:
+
+    bundle exec cap test deploy
+
+### Passenger
+
+Passenger is installed and deployed the same for all environments:
+
+    bundle exec cap dev passenger:install
+    bundle exec cap dev passenger:config
