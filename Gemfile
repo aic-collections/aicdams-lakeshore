@@ -3,7 +3,7 @@ source 'https://rubygems.org'
 gem 'rails', '4.2.4'
 
 # Hydra Gems
-gem 'sufia', github: 'projecthydra/sufia', ref: '53bb93bc50e0f292051a63b9df0f12ba401905da'
+gem 'sufia', '~> 6.4'
 gem 'kaminari', github: 'jcoyne/kaminari', branch: 'sufia'
 gem 'hydra-pcdm', '~> 0.3'
 
