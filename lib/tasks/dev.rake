@@ -1,4 +1,5 @@
 require 'active_fedora/cleaner'
+require 'jettywrapper'
 require './spec/support/fixture_loader'
 require './spec/support/list_loader'
 
