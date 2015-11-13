@@ -5,6 +5,7 @@ module ListLoader
   end
 
   def status
+    raise "Status list already exists!" unless List.where(pref_label: "Status").empty?
     list = List.new(pref_label: "Status")
     list.members = [invalid, deleted, disabled, active, archived]
     list.save

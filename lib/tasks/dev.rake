@@ -47,6 +47,11 @@ namespace :fedora do
     end
     loader.load_lists
   end
+
+  desc "Load lists into Fedora"
+  task load_lists: :environment do
+    DevelopmentLoader.new.load_lists
+  end
 end
 
 namespace :aic do
