@@ -82,4 +82,24 @@ class GenericFilesController < ApplicationController
     return json_error("Submitted file is an unknown mime type")
   end
 
+  protected
+
+    def update_file
+      if updated_file_matches_existing_type?
+        super
+      else
+        flash[:error] = "New version's mime type does not match existing type"
+        false
+      end
+    end
+
+    def updated_file_matches_existing_type?
+      if @generic_file.is_still_image?
+        STILL_IMAGE_TYPES.include?(MIME::Types.of(params["filedata"].original_filename).first.content_type)
+      elsif @generic_file.is_text?
+        TEXT_TYPES.include?(MIME::Types.of(params["filedata"].original_filename).first.content_type)
+      else
+        false
+      end
+    end
 end

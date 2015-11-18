@@ -82,4 +82,29 @@ describe GenericFilesController do
       end
     end
   end
+
+  describe "#update" do
+    subject { flash[:error] }
+    context "when uploading a text file to a still image" do
+      let(:image_asset) do
+        GenericFile.create do |gf|
+          gf.apply_depositor_metadata(user)
+          gf.assert_still_image
+        end
+      end      
+      before { post :update, id: image_asset, filedata: fixture_file_upload('/text.txt') }
+      it { is_expected.to include("New version's mime type does not match existing type") }
+    end
+
+    context "when uploading a still image to a text file" do
+      let(:text_asset) do
+        GenericFile.create do |gf|
+          gf.apply_depositor_metadata(user)
+          gf.assert_text
+        end
+      end      
+      before { post :update, id: text_asset, filedata: fixture_file_upload('/fake_photoshop.psd') }
+      it { is_expected.to include("New version's mime type does not match existing type") }
+    end
+  end
 end
