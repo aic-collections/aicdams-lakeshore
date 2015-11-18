@@ -36,17 +36,11 @@ class GenericFilesController < ApplicationController
   before_filter :verify_mime_type, only: [:create]
 
   def require_asset_type
-    unless params.has_key? :asset_type
-      flash[:error] = "You must provide an asset type"
-      redirect_to sufia.dashboard_index_path
-    end
+    return json_error("You must provide an asset type") unless params.has_key? :asset_type
   end
 
   def verify_asset_type
-    unless params[:asset_type].match(/still_image|text/)
-      flash[:error] = "Asset type must be either still_image or text"
-      redirect_to sufia.dashboard_index_path
-    end
+    return json_error("Asset type must be either still_image or text") unless params[:asset_type].match(/still_image|text/)
   end
 
   def update_metadata_from_upload_screen
@@ -77,19 +71,15 @@ class GenericFilesController < ApplicationController
   end
 
   def reject_still_image_types
-    flash[:error] = "Submitted file does not have a mime type for a still image"
-    redirect_to sufia.dashboard_index_path 
+    return json_error("Submitted file does not have a mime type for a still image")
   end
 
-
   def reject_text_types
-    flash[:error] = "Submitted file does not have a mime type for a text file"
-    redirect_to sufia.dashboard_index_path 
+    return json_error("Submitted file does not have a mime type for a text file")
   end
 
   def return_unknown_mime_type
-    flash[:error] = "Submitted file is an unknown mime type"
-    redirect_to sufia.dashboard_index_path 
+    return json_error("Submitted file is an unknown mime type")
   end
 
 end

@@ -15,22 +15,23 @@ describe GenericFilesController do
     let(:batch) { Batch.create }
     let(:batch_id) { batch.id }
     let(:file) { fixture_file_upload('/sun.png') }
+    let(:json_response) { JSON.parse(response.body) }
 
     before { allow(GenericFile).to receive(:new).and_return(mock) }
 
     context "without an asset type" do
       before { xhr :post, :create, files: [file], Filename: 'The sun', batch_id: batch_id, terms_of_service: '1' }
       it "should return an error" do
-        expect(response).to be_redirect
-        expect(flash[:error]).to eql "You must provide an asset type"
+        expect(response).to be_success
+        expect(json_response.first["error"]).to eq("You must provide an asset type")
       end
     end
 
     context "with an incorrect asset type" do
       before { xhr :post, :create, files: [file], Filename: 'The sun', batch_id: batch_id, terms_of_service: '1', asset_type: "asdf" }
       it "should return an error" do
-        expect(response).to be_redirect
-        expect(flash[:error]).to eql "Asset type must be either still_image or text"
+        expect(response).to be_success
+        expect(json_response.first["error"]).to eq("Asset type must be either still_image or text")
       end
     end
 
@@ -58,8 +59,8 @@ describe GenericFilesController do
       it "returns an error" do
         file = fixture_file_upload('/text.txt')
         xhr :post, :create, files: [file], Filename: 'An incorrect image file', batch_id: batch_id, terms_of_service: '1', asset_type: 'still_image'
-        expect(response).to be_redirect
-        expect(flash[:error]).to eql "Submitted file does not have a mime type for a still image"
+        expect(response).to be_success
+        expect(json_response.first["error"]).to eq("Submitted file does not have a mime type for a still image")
       end
     end
 
@@ -67,8 +68,8 @@ describe GenericFilesController do
       it "returns an error" do
         file = fixture_file_upload('/fake_photoshop.psd')
         xhr :post, :create, files: [file], Filename: 'An incorrect text file', batch_id: batch_id, terms_of_service: '1', asset_type: 'text'
-        expect(response).to be_redirect
-        expect(flash[:error]).to eql "Submitted file does not have a mime type for a text file"
+        expect(response).to be_success
+        expect(json_response.first["error"]).to eq("Submitted file does not have a mime type for a text file")
       end
     end
 
@@ -76,8 +77,8 @@ describe GenericFilesController do
       it "returns an error" do
         file = fixture_file_upload('/fake_file.xzy')
         xhr :post, :create, files: [file], Filename: 'File with an unknown mime type', batch_id: batch_id, terms_of_service: '1', asset_type: 'text'
-        expect(response).to be_redirect
-        expect(flash[:error]).to eql "Submitted file is an unknown mime type"
+        expect(response).to be_success
+        expect(json_response.first["error"]).to eq("Submitted file is an unknown mime type")
       end
     end
   end
