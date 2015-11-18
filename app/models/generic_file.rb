@@ -12,6 +12,7 @@ class GenericFile < Resource
   type aic_type
 
   before_create :status_is_active
+  validate :uid_matches_id, on: :update
 
   def is_still_image?
     self.type.include? AICType.StillImage
@@ -54,6 +55,10 @@ class GenericFile < Resource
 
   def status_is_active
     self.status = StatusType.active
+  end
+
+  def uid_matches_id
+    self.errors.add :uid, 'must match id' if self.uid != self.id
   end
 
   private

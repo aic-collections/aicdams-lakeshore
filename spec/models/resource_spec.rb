@@ -57,14 +57,6 @@ describe Resource do
     end
   end
 
-  describe "required terms" do
-    subject { described_class.create }
-    specify "uid matches the id" do
-      pending "Waiting on successful implementation"
-      expect(subject.uid).to eql subject.id
-    end
-  end
-
   describe "cardinality" do
     # TODO: Add :status once CITI resources are loading the correct active StatusType, see #127
     [:batch_uid, :resource_created, :dept_created, :resource_updated, :pref_label, :uid, :icon].each do |term|

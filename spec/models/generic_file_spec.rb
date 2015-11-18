@@ -115,4 +115,15 @@ describe GenericFile do
     end
   end
 
+  describe "#uid" do
+    context "when changed" do
+      subject do
+        example_file.uid = "1234"
+        example_file.save
+        example_file.errors
+      end
+      its(:full_messages) { is_expected.to include("Uid must match id") }
+    end
+  end
+
 end
