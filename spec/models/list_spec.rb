@@ -25,4 +25,14 @@ describe List do
     end
   end
 
+  context "when adding duplicate items" do
+    let(:status_list) { List.where(pref_label: "Status").first }
+    before do 
+      status_list.members << StatusType.new(pref_label: "Active")
+      status_list.save
+    end
+    subject { status_list.errors }
+    its(:full_messages) { is_expected.to include("Members must be unique") }
+  end
+
 end
