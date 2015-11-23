@@ -3,9 +3,12 @@ require 'rails_helper'
 describe "CITI shipments", order: :defined do
 
   let(:user) { FactoryGirl.create(:user) }
+  before do
+    sign_in(user)
+    visit(catalog_index_path)
+  end
 
   context "when viewing" do
-    before { visit(root_path) }
     it "shows all the information about the resource" do
       fill_in("q", with: "SH-3469")
       click_button("Go")
@@ -16,7 +19,6 @@ describe "CITI shipments", order: :defined do
         expect(page).to have_content("2015-06-23T00:00:00+00:00")
         expect(page).to have_content("Active")
       end
-      within("#show_actions") { expect(page).not_to have_content("Edit") }
     end
   end
 
@@ -28,11 +30,6 @@ describe "CITI shipments", order: :defined do
         f.title = ["Fixture work"]
         f.save
       end
-    end
-
-    before do
-      sign_in(user)
-      visit(catalog_index_path)
     end
     
     it "only adds resources" do

@@ -3,9 +3,12 @@ require 'rails_helper'
 describe "CITI works", order: :defined do
 
   let(:user) { FactoryGirl.create(:user) }
+  before do
+    sign_in(user)
+    visit(catalog_index_path)
+  end
 
   context "when viewing" do
-    before { visit(root_path) }
     it "shows all the information about the resource" do
       fill_in("q", with: "Sidewalk Gum")
       click_button("Go")
@@ -16,7 +19,6 @@ describe "CITI works", order: :defined do
         expect(page).to have_xpath("//span[@itemprop = 'department']", text: "3")
         expect(page).to have_content("Active")
       end
-      within("#show_actions") { expect(page).not_to have_content("Edit") }
     end
   end
 
@@ -28,11 +30,6 @@ describe "CITI works", order: :defined do
         f.title = ["Fixture work"]
         f.save
       end
-    end
-
-    before do
-      sign_in(user)
-      visit(catalog_index_path)
     end
     
     it "only adds resources" do
@@ -52,7 +49,6 @@ describe "CITI works", order: :defined do
       expect(page).to have_content("Representations")
       expect(page).to have_content("Preferred Representations")
       expect(page).to have_content("Documents")
-
     end
   end
 

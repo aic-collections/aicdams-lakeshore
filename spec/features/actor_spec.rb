@@ -3,9 +3,12 @@ require 'rails_helper'
 describe "CITI actors", order: :defined do
 
   let(:user) { FactoryGirl.create(:user) }
+  before do
+    sign_in(user)
+    visit(catalog_index_path)
+  end
 
   context "when viewing" do
-    before { visit(root_path) }
     it "shows all the information about the resource" do
       fill_in("q", with: "Pablo Picasso")
       click_button("Go")
@@ -22,7 +25,6 @@ describe "CITI actors", order: :defined do
         expect(page).to have_content("Pablo Diego José Francisco de Paula Juan Nepomuceno María de los Remedios Cipriano de la Santísima Trinidad Ruiz y Picasso")
         expect(page).to have_content("Active")
       end
-      within("#show_actions") { expect(page).not_to have_content("Edit") }
     end
   end
 
@@ -34,11 +36,6 @@ describe "CITI actors", order: :defined do
         f.title = ["Fixture work"]
         f.save
       end
-    end
-
-    before do
-      sign_in(user)
-      visit(catalog_index_path)
     end
     
     it "only adds resources" do
@@ -55,7 +52,6 @@ describe "CITI actors", order: :defined do
       expect(page).to have_content("Representations")
       expect(page).to have_content("Preferred Representations")
       expect(page).to have_content("Documents")
-
     end
   end
 
