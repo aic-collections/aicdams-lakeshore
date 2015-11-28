@@ -16,7 +16,19 @@ describe SolrDocument do
       before { subject[Solrizer.solr_name("title", :stored_searchable)] = "work title" }
       its(:title) { is_expected.to eq("work title") }
     end
+  end
 
+  describe "visibility" do
+    context "by default" do
+      its(:public?) { is_expected.to be false }
+      its(:private?) { is_expected.to be false }
+      its(:department?) { is_expected.to be true }
+    end
+    context "when registered" do
+      before { subject["read_access_group_ssim"] = ["registered"] }
+      its(:department?) { is_expected.to be false }
+      its(:registered?) { is_expected.to be true }
+    end
   end
 
 end

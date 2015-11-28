@@ -4,6 +4,8 @@ class GenericFile < Resource
   include TextMetadata
   include AssetMetadata
   include Status
+  include LakeshorePermissions
+  include LakeshoreVisibility
 
   def self.aic_type
     super << AICType.Asset
@@ -13,6 +15,7 @@ class GenericFile < Resource
 
   before_create :status_is_active
   validate :uid_matches_id, on: :update
+  validate :public_cannot_read
 
   def is_still_image?
     self.type.include? AICType.StillImage
@@ -61,11 +64,36 @@ class GenericFile < Resource
     self.errors.add :uid, 'must match id' if self.uid != self.id
   end
 
+  # TODO: Move to module if other classes require this
+  def public_cannot_read
+    self.errors[:read_users] = "Public cannot have read access" if read_groups.include?("public")
+  end
+
+  def apply_depositor_metadata(depositor)
+    super
+    self.dept_created = user_dept(depositor)
+    true
+  end
+
   private
 
     # Overrides Sufia::Noid#service
     def service
       @service ||= UidMinter.new(prefix)
+    end
+
+    # TODO: Replace once departments are imported from CITI
+    def user_dept(depositor)
+      case depositor
+      when User
+        depositor.department
+      when Array
+        User.find(depositor.first).department
+      else
+        User.find(depositor).department
+      end
+    rescue
+      nil
     end
 
 end

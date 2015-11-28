@@ -75,6 +75,7 @@ FactoryGirl.define do
 
     factory :jill do
       email 'jilluser@example.com'
+      department 'accounting'
     end
   end
 end

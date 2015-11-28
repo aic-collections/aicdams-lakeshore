@@ -12,11 +12,11 @@ shared_examples "a model for a Citi resource" do
   end
 
   describe "visibility" do
-    specify { expect(described_class.visibility).to eql "open" }
+    specify { expect(described_class.visibility).to eql "department" }
   end
 
   describe "permissions" do
-    it { is_expected.to be_public }
+    it { is_expected.to be_department }
     it { is_expected.not_to be_registered }
   end
 end

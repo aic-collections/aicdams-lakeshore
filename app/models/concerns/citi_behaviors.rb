@@ -3,6 +3,7 @@
 # that allow them to behave with other objects.
 module CitiBehaviors
   extend ActiveSupport::Concern
+  include LakeshorePermissions
 
   class_methods do
     def indexer
@@ -10,12 +11,8 @@ module CitiBehaviors
     end
 
     def visibility
-      "open"
+      "department"
     end
-  end  
-
-  def public?
-    true
   end
 
   def registered?

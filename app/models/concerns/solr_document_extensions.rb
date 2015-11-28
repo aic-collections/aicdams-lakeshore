@@ -1,5 +1,6 @@
 module SolrDocumentExtensions
   extend ActiveSupport::Concern
+  include LakeshorePermissions
 
   def title_or_label
     title || pref_label

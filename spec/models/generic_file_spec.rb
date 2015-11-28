@@ -2,9 +2,11 @@ require 'rails_helper'
 
 describe GenericFile do
 
+  let(:user) { FactoryGirl.find_or_create(:jill) }
+
   let(:example_file) do
     GenericFile.create.tap do |file|
-      file.apply_depositor_metadata "user"
+      file.apply_depositor_metadata(user)
       file.assert_still_image
       file.save
     end
@@ -124,6 +126,11 @@ describe GenericFile do
       end
       its(:full_messages) { is_expected.to include("Uid must match id") }
     end
+  end
+
+  describe "#dept_created" do
+    subject { example_file }
+    its(:dept_created) { is_expected.to eq("accounting") }
   end
 
 end

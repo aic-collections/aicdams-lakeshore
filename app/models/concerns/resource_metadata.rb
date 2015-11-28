@@ -67,8 +67,10 @@ module ResourceMetadata
       index.as :stored_searchable
     end
 
-    # TODO: this needs to be singular: enforce cardinality on AT resources
-    property :dept_created, predicate: AIC.deptCreated, multiple: true, class_name: UndefinedListItem
+    # TODO: change to ListItem once departments are imported from CITI
+    property :dept_created, predicate: AIC.deptCreated, multiple: false do |index|
+      index.as :stored_searchable
+    end
 
     # TODO: Using ::RDF::Vocab::IANA.describedby causes Ldp::Conflict
     has_and_belongs_to_many :described_by, predicate: ::RDF::URI("http://need.another.predicate/here"), class_name: "MetadataSet"
