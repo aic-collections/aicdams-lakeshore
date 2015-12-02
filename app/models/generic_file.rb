@@ -16,6 +16,7 @@ class GenericFile < Resource
   before_create :status_is_active
   validate :uid_matches_id, on: :update
   validate :public_cannot_read
+  before_destroy :asset_cannot_be_referenced
 
   def is_still_image?
     self.type.include? AICType.StillImage
@@ -75,6 +76,16 @@ class GenericFile < Resource
     true
   end
 
+  def asset_cannot_be_referenced
+    message = "are set for this asset"
+    incomming_resources = represented_resources
+    self.errors[:works] = "are using this as a representation" unless self.works.empty?
+    self.errors[:documents] = message unless incomming_resources[:documents].empty?
+    self.errors[:preferred_representations] = message unless incomming_resources[:preferred_representations].empty?
+    self.errors[:representations] = message unless incomming_resources[:representations].empty?
+    return false unless self.errors.empty?
+  end
+
   private
 
     # Overrides Sufia::Noid#service
@@ -95,5 +106,4 @@ class GenericFile < Resource
     rescue
       nil
     end
-
 end

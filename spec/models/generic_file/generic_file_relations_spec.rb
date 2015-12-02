@@ -33,6 +33,13 @@ describe "Resources that nest assets" do
         expect(resource.preferred_representations).to include(asset)
       end
     end
+    context "when removing the asset" do
+      before { asset.destroy }
+      specify do
+        expect(asset.errors).to include(:representations)
+        expect(asset).to be_persisted
+      end 
+    end
   end
 
   describe Work do
@@ -53,9 +60,9 @@ describe "Resources that nest assets" do
       end
       context "when deleting the asset" do
         before { asset.destroy }
-        it "removes the asset from the resource" do
-          pending
-          expect(resource.assets).to be_empty
+        specify do
+          expect(asset.errors).to include(:works)
+          expect(asset).to be_persisted
         end
       end
     end
