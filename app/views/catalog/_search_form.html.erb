@@ -22,9 +22,29 @@
                 <%= link_to t("sufia.search.form.option.all.label_long"), "#",
                     data: { "search-option" => catalog_index_path, "search-label" => t("sufia.search.form.option.all.label_short") } %>
               </li>
+			  <li>
+                <%= link_to "All Assets", "#",
+                    data: { "search-option" => works_path, "search-label" => "Assets" } %>
+              </li>
               <li>
-                <%= link_to "Only Works", "#",
+                <%= link_to "Works", "#",
                     data: { "search-option" => works_path, "search-label" => "Works" } %>
+              </li>
+			  <li>
+                <%= link_to "Actors", "#",
+                    data: { "search-option" => actors_path, "search-label" => "Actors" } %>
+              </li>
+			  <li>
+                <%= link_to "Exhibitions", "#",
+                    data: { "search-option" => exhibitions_path, "search-label" => "Exhibitions" } %>
+              </li>
+			  <li>
+                <%= link_to "Shipments", "#",
+                    data: { "search-option" => shipments_path, "search-label" => "Shipments" } %>
+              </li>
+			  <li>
+                <%= link_to "Transactions", "#",
+                    data: { "search-option" => transactions_path, "search-label" => "Transactions" } %>
               </li>
 
               <% if current_user %>
@@ -36,14 +56,7 @@
                   <%= link_to t("sufia.search.form.option.my_collections.label_long"), "#",
                       data: { "search-option" => sufia.dashboard_collections_path, "search-label" => t("sufia.search.form.option.my_collections.label_short") } %>
                 </li>
-                <li>
-                  <%= link_to t("sufia.search.form.option.my_highlights.label_long"), "#",
-                      data: { "search-option" => sufia.dashboard_highlights_path, "search-label" => t("sufia.search.form.option.my_highlights.label_short") } %>
-                </li>
-                <li>
-                  <%= link_to t("sufia.search.form.option.my_shares.label_long"), "#",
-                      data: { "search-option" => sufia.dashboard_shares_path, "search-label" => t("sufia.search.form.option.my_shares.label_short") } %>
-                </li>
+            
               <% end %>
 
             </ul>
