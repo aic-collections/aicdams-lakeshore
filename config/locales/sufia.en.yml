@@ -5,3 +5,12 @@ en:
     institution_name:       "AIC"
     institution_name_full:  "The Art Institute of Chicago"
     sort_label:             "Sort the listing of items"
+    search:
+      form:
+        option:
+          all:
+            label_short:  "All"
+            label_long:   "All Resources"
+          my_files:
+            label_short:  "My Assets"
+            label_long:   "My Assets"
