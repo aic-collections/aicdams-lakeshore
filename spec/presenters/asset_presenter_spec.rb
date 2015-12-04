@@ -29,4 +29,13 @@ describe AssetPresenter do
     end    
   end
 
+  describe "relationships" do
+    subject { presenter }
+    its(:documents) { is_expected.to be_empty }
+    its(:representations) { is_expected.to be_empty }
+    its(:preferred_representations) { is_expected.to be_empty }
+    its(:assets) { is_expected.to be_empty }
+    it { is_expected.not_to be_representing }
+  end
+
 end

@@ -1,0 +1,11 @@
+<div class="media">
+  <div class="media-left">
+    <%= link_to_resource(resource) %>
+  </div>
+  <div class="media-body">
+    <dl class="dl-horizontal file-show-term file-show-descriptions">
+      <dt>Resource</dt>
+      <dd><%= resource.class.to_s.capitalize %></dd>
+    </dl>
+  </div>
+</div>

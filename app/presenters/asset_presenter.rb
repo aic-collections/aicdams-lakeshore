@@ -1,5 +1,7 @@
 class AssetPresenter < Sufia::GenericFilePresenter
 
+  delegate :documents, :representations, :preferred_representations, :assets, :representing?, to: :representing_resource
+
   def self.asset_terms
     [:asset_capture_device, :digitization_source, :document_type, :legacy_uid, :comments, :tag]
   end
@@ -29,4 +31,9 @@ class AssetPresenter < Sufia::GenericFilePresenter
     return "Text Document" if model.is_text?
   end
 
+  private
+
+    def representing_resource
+      @representing_resource ||= RepresentingResource.new(model.id)
+    end
 end
