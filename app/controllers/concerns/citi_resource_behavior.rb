@@ -17,7 +17,7 @@ module CitiResourceBehavior
   end
 
   def index
-    redirect_to catalog_index_path(params.except(:controller, :action).merge(f: { Solrizer.solr_name("aic_type", :facetable) => [@resource.class.to_s] }))
+    redirect_to catalog_index_path(params.except(:controller, :action).merge(f: { Solrizer.solr_name("aic_type", :facetable) => [self.class.to_s.gsub(/sController/,"")] }))
   end
 
   def edit

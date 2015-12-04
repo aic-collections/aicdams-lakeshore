@@ -76,7 +76,7 @@ shared_examples "a controller for a Citi resource" do |resource_name|
   describe "#index" do
     before { get :index }
     subject { response }
-    it { is_expected.to be_redirect }
+    it { is_expected.to redirect_to("http://test.host/catalog?f%5Baic_type_sim%5D%5B%5D=#{resource_name.capitalize}") }
   end
 
 end
