@@ -61,7 +61,7 @@ describe "Resources that nest assets" do
       context "when deleting the asset" do
         before { asset.destroy }
         specify do
-          expect(asset.errors).to include(:works)
+          expect(asset.errors).to include(:representations)
           expect(asset).to be_persisted
         end
       end

@@ -77,12 +77,9 @@ class GenericFile < Resource
   end
 
   def asset_cannot_be_referenced
-    message = "are set for this asset"
-    incomming_resources = represented_resources
-    self.errors[:works] = "are using this as a representation" unless self.works.empty?
-    self.errors[:documents] = message unless incomming_resources[:documents].empty?
-    self.errors[:preferred_representations] = message unless incomming_resources[:preferred_representations].empty?
-    self.errors[:representations] = message unless incomming_resources[:representations].empty?
+    if representing_resource.representing?
+      self.errors[:representations] = "are assigned to this resource"
+    end    
     return false unless self.errors.empty?
   end
 
@@ -91,6 +88,10 @@ class GenericFile < Resource
     # Overrides Sufia::Noid#service
     def service
       @service ||= UidMinter.new(prefix)
+    end
+
+    def representing_resource
+      @representing_resource ||= RepresentingResource.new(self.id)
     end
 
     # TODO: Replace once departments are imported from CITI

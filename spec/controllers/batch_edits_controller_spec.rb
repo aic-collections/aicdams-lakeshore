@@ -18,18 +18,8 @@ describe BatchEditsController do
     end
   end
 
-  let(:mock_represented_resources) do
-    {
-      documents: ["asset"],
-      preferred_representations: [],
-      representations: []
-    }
-  end
-  
   describe "#destroy" do
-    before do
-      allow_any_instance_of(GenericFile).to receive(:represented_resources).and_return(mock_represented_resources)
-    end
+    before { allow_any_instance_of(RepresentingResource).to receive(:representing?).and_return(true) }
 
     it "reports an error if the asset has resources linking to it" do
       put :update, update_type: "delete_all", return_controller: "my/files", batch_document_ids: [image_asset.id]

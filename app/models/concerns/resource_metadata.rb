@@ -82,13 +82,4 @@ module ResourceMetadata
     accepts_nested_attributes_for :described_by, :documents, :preferred_representations, :representations, allow_destroy: false
 
   end
-
-  # Builds array of resources that use this resource as a representation
-  def represented_resources
-    {
-      documents: ActiveFedora::Base.where(hasDocument_ssim: self.id),
-      preferred_representations: ActiveFedora::Base.where(hasPreferredRepresentation_ssim: self.id),
-      representations: ActiveFedora::Base.where(hasRepresentation_ssim: self.id)
-    }
-  end
 end
