@@ -11,14 +11,14 @@ module CitiBehaviors
     end
 
     def visibility
-      "department"
+      Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_AUTHENTICATED
     end
   end
 
   def registered?
-    false
+    true
   end
-  
+
   def featureable?
     false
   end
