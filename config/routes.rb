@@ -1,7 +1,14 @@
 Rails.application.routes.draw do
   
   blacklight_for :catalog
-  devise_for :users
+  
+  # Devise settings
+  devise_for :users, :skip => [:registrations]                                          
+  as :user do
+    get 'users/edit' => 'devise/registrations#edit', :as => 'edit_user_registration'    
+    patch 'users/:id' => 'devise/registrations#update', :as => 'user_registration'            
+  end
+
   Hydra::BatchEdit.add_routes(self)
   
   root to: 'homepage#index'

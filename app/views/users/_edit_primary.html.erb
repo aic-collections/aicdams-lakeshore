@@ -29,12 +29,7 @@
     <%= render partial: 'zotero', locals: { f: f, user: @user } %>
   <% end %>
 
-  <div class="form-group">
-    <%= f.label :department, "Department", class: 'col-xs-4 control-label' %>
-    <div class="col-xs-8">
-       <%= f.text_field :department, class: "form-control" %>
-    </div>
-  </div><!-- .form-group -->
+  <%= link_to("Change your password", edit_user_registration_path) %>
 
   <%= render partial: 'trophy_edit', locals: {trophies: @trophies} %>
 
