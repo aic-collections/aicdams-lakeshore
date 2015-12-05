@@ -140,6 +140,9 @@ Sufia.config do |config|
     config.browse_everything = nil
   end
 
+  # Sets a default department for depositors
+  config.default_department = "aic"
+
 end
 
 Date::DATE_FORMATS[:standard] = "%m/%d/%Y"

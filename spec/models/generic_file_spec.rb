@@ -128,9 +128,18 @@ describe GenericFile do
     end
   end
 
-  describe "#dept_created" do
-    subject { example_file }
-    its(:dept_created) { is_expected.to eq("accounting") }
+  describe "#apply_depositor_metadata" do
+    context "when the user has a department" do
+      subject { example_file }
+      its(:dept_created) { is_expected.to eq("accounting") }
+    end
+    context "when the user has no assigned department" do
+      let(:file) { GenericFile.new }
+      before { file.apply_depositor_metadata("no department") }
+      it "defaults to a configured value" do
+        expect(file.dept_created).to eq("aic")
+      end
+    end
   end
 
 end

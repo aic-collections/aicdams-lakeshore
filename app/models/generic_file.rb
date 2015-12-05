@@ -72,7 +72,7 @@ class GenericFile < Resource
 
   def apply_depositor_metadata(depositor)
     super
-    self.dept_created = user_dept(depositor)
+    self.dept_created = user_dept(depositor) || Sufia.config.default_department
     true
   end
 
