@@ -17,6 +17,6 @@ describe Work do
   end
 
   it_behaves_like "a model for a Citi resource"
-  it_behaves_like "a featureable model"
+  it_behaves_like "an unfeatureable model"
 
 end

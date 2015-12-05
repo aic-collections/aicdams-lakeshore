@@ -8,9 +8,4 @@ class Work < CitiResource
   end
 
   type aic_type
-
-  def featureable?
-    true
-  end
-
 end
