@@ -4,11 +4,11 @@ class Ability
 
   def custom_permissions
     if registered_user?
-      can [:create, :edit],             Work
-      can [:create, :edit],             Actor
-      can [:create, :edit],             Exhibition
-      can [:create, :edit],             Transaction
-      can [:create, :edit],             Shipment
+      can [:create, :edit], Work
+      can [:create, :edit], Actor
+      can [:create, :edit], Exhibition
+      can [:create, :edit], Transaction
+      can [:create, :edit], Shipment
     end
 
     if current_user.admin?

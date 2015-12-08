@@ -24,4 +24,10 @@ class User < ActiveRecord::Base
   def admin?
     ADMINS.include?(self.email)
   end
+
+  def groups
+    groups = super
+    groups += ["admin"] if admin?
+    groups
+  end
 end

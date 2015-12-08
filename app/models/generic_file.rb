@@ -15,7 +15,7 @@ class GenericFile < Resource
 
   before_create :status_is_active
   validate :uid_matches_id, on: :update
-  validate :public_cannot_read
+  validate :public_cannot_read, :admin_can_edit
   before_destroy :asset_cannot_be_referenced
 
   def is_still_image?
@@ -68,6 +68,11 @@ class GenericFile < Resource
   # TODO: Move to module if other classes require this
   def public_cannot_read
     self.errors[:read_users] = "Public cannot have read access" if read_groups.include?("public")
+  end
+
+  def admin_can_edit
+    return if self.edit_groups.include?("admin")
+    self.edit_groups += ["admin"]
   end
 
   def apply_depositor_metadata(depositor)

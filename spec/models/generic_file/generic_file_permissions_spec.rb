@@ -35,6 +35,21 @@ describe "GenericFile" do
     end
   end
 
+  describe "#admin_can_edit" do
+    context "for new resources" do
+      before { subject.save }
+      its(:edit_groups) { is_expected.to include("admin") }
+    end
+    context "when the admin group is removed" do
+      before do
+        subject.save
+        subject.edit_groups -= ["admin"]
+        subject.save
+      end
+      its(:edit_groups) { is_expected.to include("admin") }
+    end
+  end
+
   describe "visibility" do
     context "by default" do
       its(:visibility) { is_expected.to eq(LakeshoreVisibility::VISIBILITY_TEXT_VALUE_DEPARTMENT)}

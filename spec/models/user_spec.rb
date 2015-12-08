@@ -10,14 +10,26 @@ describe User do
 
   context "with an admin" do
     let(:user) { stub_model(User, email: "joe@aic.org") }
-    subject { user.admin? }
-    it { is_expected.to be true }
+    describe "#admin?" do
+      subject { user.admin? }
+      it { is_expected.to be true }
+    end
+    describe "#groups" do
+      subject { user }
+      its(:groups) { is_expected.to contain_exactly("admin", "registered") }
+    end  
   end
 
   context "without an admin" do
     let(:user) { stub_model(User, email: "bob@aic.org") }
-    subject { user.admin? }
-    it { is_expected.to be false }
+    describe "#admin?" do
+      subject { user.admin? }
+      it { is_expected.to be false }
+    end
+    describe "#groups" do
+      subject { user }
+      its(:groups) { is_expected.to contain_exactly("registered") }
+    end 
   end
 
 end
