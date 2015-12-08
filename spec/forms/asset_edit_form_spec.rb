@@ -59,7 +59,8 @@ describe AssetEditForm do
 
   describe ".terms" do
     subject { described_class.terms }
-    it { is_expected.not_to include(:uid) }
+    it { is_expected.not_to include(:uid, :status, :dept_created) }
+    it { is_expected.to include(:status_id) }
   end
 
 end

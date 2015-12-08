@@ -4,7 +4,7 @@ class AssetEditForm < AssetPresenter
   include NestedAttributes
 
   # Use :status_id instead of :status as the editing term
-  self.terms = AssetPresenter.terms - [:uid, :status] + [:status_id]
+  self.terms = AssetPresenter.terms - [:uid, :status, :dept_created] + [:status_id]
   
   protected
 
