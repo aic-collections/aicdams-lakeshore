@@ -15,6 +15,10 @@
       <li>
         <%= link_to raw('<span class="glyphicon glyphicon-user"></span> my profile'), sufia.profile_path(current_user), id: 'profile_nav_link' %>
       </li>
+      <li>
+        <%= link_to raw('<span class="glyphicon glyphicon-th-list"></span> lists'), lists_path, 
+            id: 'list_link' %>
+      </li>
       <%= render partial: 'users/user_util_links_extra' %>
       <li class="divider"></li>
       <%= render partial: '/admin_links' if current_user.admin? %>
