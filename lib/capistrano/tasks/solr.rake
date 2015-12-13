@@ -34,6 +34,15 @@ namespace :solr do
     end
   end
 
+  desc "Reinstalls a clean solr configuration"
+  task :reconfig do
+    on roles(:app) do
+      execute "rm -Rf #{fetch(:solr_application_dir)}/solr/aic-development/conf"
+      execute "rm -Rf #{fetch(:solr_application_dir)}/solr/aic-production/conf"
+      invoke "solr:config"
+    end
+  end
+
   desc "Stop jetty"
   task :stop do
     on roles(:app) do
