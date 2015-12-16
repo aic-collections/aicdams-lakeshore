@@ -34,11 +34,13 @@ module Status
 
   private
 
-    # TODO: This really ought to go into ActiveFedora
+    # Returns the correct type class for status when loading an object from Solr
     def adapt_single_attribute_value(value, attribute_name)
       if attribute_name == "status"
-        return nil unless value["id"].present?
-        StatusType.find(value["id"])
+        return unless value.present?
+        id = value.fetch("id", nil)
+        return if id.nil?
+        StatusType.find(id)
       else
         super
       end
