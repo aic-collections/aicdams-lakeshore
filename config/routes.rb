@@ -1,16 +1,15 @@
 Rails.application.routes.draw do
-  
   blacklight_for :catalog
-  
+
   # Devise settings
-  devise_for :users, :skip => [:registrations]                                          
+  devise_for :users, skip: [:registrations]
   as :user do
-    get 'users/edit' => 'devise/registrations#edit', :as => 'edit_user_registration'    
-    patch 'users/:id' => 'devise/registrations#update', :as => 'user_registration'            
+    get 'users/edit' => 'devise/registrations#edit', :as => 'edit_user_registration'
+    patch 'users/:id' => 'devise/registrations#update', :as => 'user_registration'
   end
 
   Hydra::BatchEdit.add_routes(self)
-  
+
   root to: 'homepage#index'
 
   # Administrative URLs
@@ -41,5 +40,4 @@ Rails.application.routes.draw do
 
   # Sufia should come last because in production it will 404 any unknown routes
   mount Sufia::Engine => '/'
-  
 end

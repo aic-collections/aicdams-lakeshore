@@ -12,11 +12,11 @@ module LakeshoreVisibility
       # only set explicit permissions
       case value
       when Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PUBLIC
-        self.errors[:visibility] = "cannot be #{Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PUBLIC}"
+        errors[:visibility] = "cannot be #{Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PUBLIC}"
       when Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_AUTHENTICATED
         registered_visibility!
       when Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PRIVATE
-        self.errors[:visibility] = "cannot be #{Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PRIVATE}"
+        errors[:visibility] = "cannot be #{Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PRIVATE}"
       when VISIBILITY_TEXT_VALUE_DEPARTMENT
         department_visibility!
       else
@@ -24,7 +24,7 @@ module LakeshoreVisibility
       end
     end
 
-    # Overrides Hydra::AccessControls::Visibility to set default visibility to department  
+    # Overrides Hydra::AccessControls::Visibility to set default visibility to department
     def visibility
       if read_groups.include? Hydra::AccessControls::AccessRight::PERMISSION_TEXT_VALUE_PUBLIC
         Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PUBLIC
@@ -34,7 +34,6 @@ module LakeshoreVisibility
         VISIBILITY_TEXT_VALUE_DEPARTMENT
       end
     end
-
   end
 
   private
@@ -50,6 +49,6 @@ module LakeshoreVisibility
     end
 
     def department_visibility_groups
-      [PERMISSION_TEXT_VALUE_DEPARTMENT, self.dept_created].compact
+      [PERMISSION_TEXT_VALUE_DEPARTMENT, dept_created].compact
     end
 end

@@ -1,8 +1,8 @@
 class ApplicationController < ActionController::Base
   helper Openseadragon::OpenseadragonHelper
-  # Adds a few additional behaviors into the application controller 
-  include Blacklight::Controller  
-# Adds Sufia behaviors into the application controller 
+  # Adds a few additional behaviors into the application controller
+  include Blacklight::Controller
+  # Adds Sufia behaviors into the application controller
   include Sufia::Controller
 
   include Hydra::Controller::ControllerBehavior
@@ -13,5 +13,4 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
   before_action :authenticate_user!
-
 end

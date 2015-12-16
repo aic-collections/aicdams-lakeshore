@@ -7,5 +7,4 @@ class DownloadsController < ApplicationController
     prepare_file_headers
     send_data(file.content)
   end
-
 end

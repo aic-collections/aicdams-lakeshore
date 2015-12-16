@@ -1,5 +1,4 @@
 class UpdateIndexJob < ActiveFedoraIdBasedJob
-
   def queue_name
     :resolrize
   end
@@ -7,5 +6,4 @@ class UpdateIndexJob < ActiveFedoraIdBasedJob
   def run
     object.update_index
   end
-
 end

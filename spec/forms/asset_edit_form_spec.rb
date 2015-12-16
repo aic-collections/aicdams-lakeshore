@@ -1,17 +1,15 @@
 require 'rails_helper'
 
 describe AssetEditForm do
-
   describe "::build_permitted_params" do
-    let(:resources_by_id) { [ :aictag_ids, :tagcat_ids, :asset_ids, :document_ids, :representation_ids, :preferred_representation_ids ]}
-    let(:params_keys) { AssetEditForm.build_permitted_params.map {|c| c.keys if c.is_a? Hash }.flatten }
-    let(:comments_attributes) { { comments_attributes: [:id, :_destroy, :content, {category: []}] } }
+    let(:resources_by_id) { [:aictag_ids, :tagcat_ids, :asset_ids, :document_ids, :representation_ids, :preferred_representation_ids] }
+    let(:params_keys) { described_class.build_permitted_params.map { |c| c.keys if c.is_a? Hash }.flatten }
+    let(:comments_attributes) { { comments_attributes: [:id, :_destroy, :content, { category: [] }] } }
     specify { expect(params_keys).to include(:comments_attributes, *resources_by_id) }
-    specify { expect(AssetEditForm.build_permitted_params).to include(comments_attributes) }
+    specify { expect(described_class.build_permitted_params).to include(comments_attributes) }
   end
 
   describe "#initialize_field" do
-
     context "with comments" do
       let(:c1) { Comment.create(content: "first comment") }
       let(:c2) { Comment.create(content: "second comment") }
@@ -24,7 +22,7 @@ describe AssetEditForm do
           file.save!
         end
       end
-      let(:form) { AssetEditForm.new(generic_file) }
+      let(:form) { described_class.new(generic_file) }
       subject { form[:comments] }
       it { is_expected.to include(c1, c2) }
     end
@@ -38,16 +36,15 @@ describe AssetEditForm do
           file.save!
         end
       end
-      let(:form) { AssetEditForm.new(generic_file) }
+      let(:form) { described_class.new(generic_file) }
       subject { form[:comments] }
       it { is_expected.to include(Comment) }
     end
-
   end
 
   describe ".model_attributes" do
-    let(:params) do 
-      ActionController::Parameters.new( aictag_ids: [""] )
+    let(:params) do
+      ActionController::Parameters.new(aictag_ids: [""])
     end
     subject { described_class.model_attributes(params) }
 
@@ -62,5 +59,4 @@ describe AssetEditForm do
     it { is_expected.not_to include(:uid, :status, :dept_created) }
     it { is_expected.to include(:status_id) }
   end
-
 end

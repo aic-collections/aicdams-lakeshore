@@ -2,34 +2,32 @@ module Status
   extend ActiveSupport::Concern
 
   included do
-
     property :status, predicate: AIC.status, multiple: false, class_name: "StatusType"
 
     def active?
-      self.status == StatusType.active
+      status == StatusType.active
     end
 
     def invalid?
-      self.status == StatusType.invalid
+      status == StatusType.invalid
     end
-    
+
     def archived?
-      self.status == StatusType.archived
+      status == StatusType.archived
     end
-    
+
     def disabled?
-      self.status == StatusType.disabled
+      status == StatusType.disabled
     end
-    
+
     def deleted?
-      self.status == StatusType.deleted
+      status == StatusType.deleted
     end
 
     def status_id=(id)
       return unless id.present?
       self.status = StatusType.find(id)
     end
-
   end
 
   private

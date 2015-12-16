@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 describe BatchController do
-
   subject { described_class }
   its(:edit_form_class) { is_expected.to eq(AssetBatchEditForm) }
 
@@ -31,5 +30,4 @@ describe BatchController do
       end
     end
   end
-
 end

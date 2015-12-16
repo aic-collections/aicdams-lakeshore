@@ -20,9 +20,8 @@ class ListsController < ApplicationController
     def load_resource
       @resource = List.find(params[:id])
     end
-    
+
     def presenter
       presenter_class.new(@resource)
     end
-
 end

@@ -1,6 +1,5 @@
 class ReindexController < ActionController::Base
-
-  before_filter :parse_json, only: [:update]
+  before_action :parse_json, only: [:update]
 
   # Updates the index of a set of objects, given their ids
   def update
@@ -18,8 +17,7 @@ class ReindexController < ActionController::Base
     end
 
     def reindex_submitted_ids
-      return false if @json.empty? || !@json.kind_of?(Array)
+      return false if @json.empty? || !@json.is_a?(Array)
       @json.map { |id| Sufia.queue.push(UpdateIndexJob.new(id)) }
     end
-
 end

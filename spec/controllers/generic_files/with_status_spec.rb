@@ -24,6 +24,5 @@ describe GenericFilesController do
     before { post :update, id: generic_file, generic_file: attributes }
     subject { generic_file.reload }
     it { is_expected.to be_disabled }
-
   end
 end

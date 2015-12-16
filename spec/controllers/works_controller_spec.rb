@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 describe WorksController do
-
   it_behaves_like "a controller for a Citi resource", "work"
 
   let(:user) { FactoryGirl.find_or_create(:jill) }
@@ -30,5 +29,4 @@ describe WorksController do
       end
     end
   end
-
 end

@@ -6,5 +6,4 @@ class Shipment < CitiResource
   end
 
   type aic_type
-
 end

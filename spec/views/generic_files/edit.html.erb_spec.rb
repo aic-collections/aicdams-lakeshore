@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 describe "generic_files/edit.html.erb" do
-
   let(:resource_version) do
     ActiveFedora::VersionsGraph::ResourceVersion.new.tap do |v|
       v.uri = 'http://example.com/version1'
@@ -15,15 +14,15 @@ describe "generic_files/edit.html.erb" do
 
   let(:generic_file) do
     stub_model(GenericFile, id: '123',
-      depositor: 'bob'
-    )
+                            depositor: 'bob'
+              )
   end
 
   let(:form) { AssetEditForm.new(generic_file) }
 
   let(:page) do
     render
-    page = Capybara::Node::Simple.new(rendered)
+    Capybara::Node::Simple.new(rendered)
   end
 
   before do
@@ -48,5 +47,4 @@ describe "generic_files/edit.html.erb" do
     pending "Tags need to be remodeled using ListItem types"
     expect(page).to have_selector("input#generic_file_aictag_ids", count: 1)
   end
-
 end

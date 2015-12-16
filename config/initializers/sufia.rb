@@ -1,7 +1,6 @@
 # Returns an array containing the vhost 'CoSign service' value and URL
 Sufia.config do |config|
-
-  config.fits_to_desc_mapping= {
+  config.fits_to_desc_mapping = {
     file_title: :title,
     file_author: :creator
   }
@@ -44,7 +43,7 @@ Sufia.config do |config|
     "Research Paper" => "Research Paper",
     "Software or Program Code" => "Software or Program Code",
     "Video" => "Video",
-    "Other" => "Other",
+    "Other" => "Other"
   }
 
   config.resource_types_to_schema = {
@@ -67,11 +66,11 @@ Sufia.config do |config|
     "Research Paper" => "http://schema.org/ScholarlyArticle",
     "Software or Program Code" => "http://schema.org/Code",
     "Video" => "http://schema.org/VideoObject",
-    "Other" => "http://schema.org/CreativeWork",
+    "Other" => "http://schema.org/CreativeWork"
   }
 
   config.permission_levels = {
-    "Choose Access"=>"none",
+    "Choose Access" => "none",
     "View/Download" => "read",
     "Edit" => "edit"
   }
@@ -142,7 +141,6 @@ Sufia.config do |config|
 
   # Sets a default department for depositors
   config.default_department = "aic"
-
 end
 
 Date::DATE_FORMATS[:standard] = "%m/%d/%Y"

@@ -1,5 +1,4 @@
 class RepresentingResource
-
   attr_reader :id
 
   def initialize(id)
@@ -35,5 +34,4 @@ class RepresentingResource
         ActiveFedora::Base.where(solr_field => id)
       end
     end
-
 end

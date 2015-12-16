@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 describe "Resources that nest assets" do
-
   let(:resource) { described_class.new }
 
   let(:asset) do
@@ -38,14 +37,14 @@ describe "Resources that nest assets" do
       specify do
         expect(asset.errors).to include(:representations)
         expect(asset).to be_persisted
-      end 
+      end
     end
   end
 
   describe Work do
     it_behaves_like "a resource that can nest assets"
 
-    describe "#assets" do   
+    describe "#assets" do
       before do
         resource.asset_ids = [asset.id]
         resource.save
@@ -71,5 +70,4 @@ describe "Resources that nest assets" do
   describe Actor do
     it_behaves_like "a resource that can nest assets"
   end
-
 end

@@ -22,13 +22,13 @@ describe GenericFilesController do
 
   describe "adding new comments" do
     let(:attributes) do
-      { comments_attributes: [{content: "foo comment", category: ["bar category"]}] }
+      { comments_attributes: [{ content: "foo comment", category: ["bar category"] }] }
     end
 
     before { post :update, id: generic_file, generic_file: attributes }
     subject { generic_file.reload }
 
-    it "should set the values using the parameters hash" do
+    it "sets the values using the parameters hash" do
       expect(subject.comments.first.content).to eql "foo comment"
       expect(subject.comments.first.category).to eql ["bar category"]
     end
@@ -42,7 +42,7 @@ describe GenericFilesController do
     before { post :update, id: generic_file, generic_file: attributes }
     subject { generic_file.reload }
 
-    it "should set the values using the parameters hash" do
+    it "sets the values using the parameters hash" do
       expect(subject.comments.first.content).to eql "some comment"
     end
   end
@@ -63,7 +63,7 @@ describe GenericFilesController do
       post :update, id: generic_file, generic_file: attributes
     end
     subject { generic_file.reload }
-    it "should set the values using the parameters hash" do
+    it "sets the values using the parameters hash" do
       expect(subject.comments.first.content).to eql "updated first comment"
       expect(subject.comments.first.category).to eql ["new category"]
       expect(subject.comments.second.content).to eql "second comment"
@@ -73,12 +73,12 @@ describe GenericFilesController do
       let(:empty_comments) do
         {
           comments_attributes: {
-            "0" => { id: comment1.id , _destroy: "false", content: "new comment" }, 
+            "0" => { id: comment1.id, _destroy: "false", content: "new comment" },
             "1" => { _destroy: "false", content: "" }
           }
         }
       end
-      
+
       before do
         generic_file.comments = [comment1]
         generic_file.save
@@ -110,7 +110,7 @@ describe GenericFilesController do
     it "removes the comment from the resource" do
       expect(subject.comments.first.content).to eql "updated second comment"
       expect(subject.comments.count).to eql 1
-      expect(Comment.all.map { |c| c.content}).to include("first comment", "updated second comment")
+      expect(Comment.all.map(&:content)).to include("first comment", "updated second comment")
     end
   end
 
@@ -128,7 +128,7 @@ describe GenericFilesController do
       generic_file.save
       post :update, id: generic_file, generic_file: attributes
     end
-    
+
     subject { generic_file.reload }
     it "updates the categories of the comment" do
       expect(subject.comments.first.category).to include("bat", "buz")
@@ -150,7 +150,7 @@ describe GenericFilesController do
       generic_file.save
       post :update, id: generic_file, generic_file: attributes
     end
-    
+
     subject { generic_file.reload }
     it "updates the categories of the comment" do
       expect(subject.comments.first.category).to eql(["buz"])

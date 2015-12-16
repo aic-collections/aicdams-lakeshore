@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 describe "CITI actors", order: :defined do
-
   let(:user) { FactoryGirl.create(:user) }
   before do
     sign_in(user)
@@ -42,7 +41,7 @@ describe "CITI actors", order: :defined do
         f.save
       end
     end
-    
+
     it "only adds resources" do
       click_link("Pablo Picasso (1881-1973)")
       click_link("Edit")
@@ -59,5 +58,4 @@ describe "CITI actors", order: :defined do
       expect(page).to have_content("Documents")
     end
   end
-
 end

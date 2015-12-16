@@ -1,5 +1,4 @@
 class CitiResource < Resource
-  
   def self.aic_type
     super << AICType.CitiResource
   end
@@ -15,5 +14,4 @@ class CitiResource < Resource
   def status
     StatusType.active
   end
-
 end

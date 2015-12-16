@@ -5,9 +5,7 @@ class ListPresenter
     model.pref_label
   end
 
-  def members
-    model.members
-  end
+  delegate :members, to: :model
 
   def member_list
     list = []
@@ -20,7 +18,7 @@ class ListPresenter
   private
 
     def model
-      @model ||= self.to_model
+      @model ||= to_model
     end
 
     def member_description(item)

@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 describe Actor do
-
   describe "RDF type" do
     subject { described_class.new.type }
     it { is_expected.to contain_exactly(AICType.Actor, AICType.Resource, AICType.CitiResource) }
@@ -16,5 +15,4 @@ describe Actor do
 
   it_behaves_like "a model for a Citi resource"
   it_behaves_like "an unfeatureable model"
-
 end

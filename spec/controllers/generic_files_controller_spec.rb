@@ -21,7 +21,7 @@ describe GenericFilesController do
 
     context "without an asset type" do
       before { xhr :post, :create, files: [file], Filename: 'The sun', batch_id: batch_id, terms_of_service: '1' }
-      it "should return an error" do
+      it "returns an error" do
         expect(response).to be_success
         expect(json_response.first["error"]).to eq("You must provide an asset type")
       end
@@ -29,7 +29,7 @@ describe GenericFilesController do
 
     context "with an incorrect asset type" do
       before { xhr :post, :create, files: [file], Filename: 'The sun', batch_id: batch_id, terms_of_service: '1', asset_type: "asdf" }
-      it "should return an error" do
+      it "returns an error" do
         expect(response).to be_success
         expect(json_response.first["error"]).to eq("Asset type must be either still_image or text")
       end
@@ -53,7 +53,7 @@ describe GenericFilesController do
         expect(response).to be_success
         expect(generic_file.type).to include AICType.Text
       end
-    end    
+    end
 
     context "with an incorrect StillImage mime type" do
       it "returns an error" do
@@ -91,7 +91,7 @@ describe GenericFilesController do
           gf.apply_depositor_metadata(user)
           gf.assert_still_image
         end
-      end      
+      end
       before { post :update, id: image_asset, filedata: fixture_file_upload('/text.txt') }
       it { is_expected.to include("New version's mime type does not match existing type") }
     end
@@ -102,7 +102,7 @@ describe GenericFilesController do
           gf.apply_depositor_metadata(user)
           gf.assert_text
         end
-      end      
+      end
       before { post :update, id: text_asset, filedata: fixture_file_upload('/fake_photoshop.psd') }
       it { is_expected.to include("New version's mime type does not match existing type") }
     end

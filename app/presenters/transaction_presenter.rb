@@ -5,9 +5,8 @@ class TransactionPresenter
 
   self.model_class = Transaction
   self.terms = CitiResourceTerms.all
-  
-  def summary_terms
-     [ :uid, :created_by, :resource_created, :resource_updated ]
-  end
 
+  def summary_terms
+    [:uid, :created_by, :resource_created, :resource_updated]
+  end
 end

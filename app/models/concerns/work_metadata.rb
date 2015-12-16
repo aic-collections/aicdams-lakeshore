@@ -1,8 +1,7 @@
 module WorkMetadata
   extend ActiveSupport::Concern
-  
-  included do
 
+  included do
     property :artist_uid, predicate: AIC.artistUid do |index|
       index.as :stored_searchable
     end
@@ -92,7 +91,5 @@ module WorkMetadata
     property :publication_history, predicate: AIC.publicationHistory, multiple: false do |index|
       index.as :stored_searchable
     end
-  
   end
-
 end

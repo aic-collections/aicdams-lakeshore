@@ -18,33 +18,33 @@ class GenericFile < Resource
   validate :public_cannot_read, :admin_can_edit
   before_destroy :asset_cannot_be_referenced
 
-  def is_still_image?
-    self.type.include? AICType.StillImage
+  def still_image?
+    type.include? AICType.StillImage
   end
 
-  def is_text?
-    self.type.include? AICType.Text
+  def text?
+    type.include? AICType.Text
   end
 
   def assert_still_image
-    return true if is_still_image?
-    return false if is_text?
-    t = self.get_values(:type)
+    return true if still_image?
+    return false if text?
+    t = get_values(:type)
     t << AICType.StillImage
-    self.set_value(:type, t)
+    set_value(:type, t)
   end
 
   def assert_text
-    return true if is_text?
-    return false if is_still_image?
-    t = self.get_values(:type)
+    return true if text?
+    return false if still_image?
+    t = get_values(:type)
     t << AICType.Text
-    self.set_value(:type, t)
+    set_value(:type, t)
   end
 
   def prefix
-    return "TX" if is_text?
-    return "SI" if is_still_image?
+    return "TX" if text?
+    return "SI" if still_image?
     raise ArgumentError, "Can't assign a prefix without a type"
   end
 
@@ -62,16 +62,16 @@ class GenericFile < Resource
   end
 
   def uid_matches_id
-    self.errors.add :uid, 'must match id' if self.uid != self.id
+    errors.add :uid, 'must match id' if uid != id
   end
 
   # TODO: Move to module if other classes require this
   def public_cannot_read
-    self.errors[:read_users] = "Public cannot have read access" if read_groups.include?("public")
+    errors[:read_users] = "Public cannot have read access" if read_groups.include?("public")
   end
 
   def admin_can_edit
-    return if self.edit_groups.include?("admin")
+    return if edit_groups.include?("admin")
     self.edit_groups += ["admin"]
   end
 
@@ -83,9 +83,9 @@ class GenericFile < Resource
 
   def asset_cannot_be_referenced
     if representing_resource.representing?
-      self.errors[:representations] = "are assigned to this resource"
-    end    
-    return false unless self.errors.empty?
+      errors[:representations] = "are assigned to this resource"
+    end
+    return false unless errors.empty?
   end
 
   private
@@ -96,7 +96,7 @@ class GenericFile < Resource
     end
 
     def representing_resource
-      @representing_resource ||= RepresentingResource.new(self.id)
+      @representing_resource ||= RepresentingResource.new(id)
     end
 
     # TODO: Replace once departments are imported from CITI

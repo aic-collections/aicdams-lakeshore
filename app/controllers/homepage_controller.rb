@@ -9,8 +9,7 @@ class HomepageController < ApplicationController
   protected
 
     def resource_types
-      (results, _) = search_results({ q: '', rows: 0 }, (search_params_logic - [:show_only_generic_files]))
+      results, _junk = search_results({ q: '', rows: 0 }, (search_params_logic - [:show_only_generic_files]))
       @resource_types = results["facet_counts"]["facet_fields"][Solrizer.solr_name("aic_type", :facetable)]
     end
-
 end

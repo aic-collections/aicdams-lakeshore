@@ -6,5 +6,4 @@ class Transaction < CitiResource
   end
 
   type aic_type
-
 end

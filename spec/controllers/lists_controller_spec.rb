@@ -12,11 +12,10 @@ describe ListsController do
   end
 
   describe "#show" do
-    let(:list) {  List.where(pref_label: "Status").first }
+    let(:list) { List.where(pref_label: "Status").first }
     before { get :show, id: list }
     it "displays all the items in the list" do
       expect(response).to be_success
     end
   end
-
 end

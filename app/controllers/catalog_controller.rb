@@ -12,11 +12,11 @@ class CatalogController < ApplicationController
   include Hydra::Controller::ControllerBehavior
 
   # These before_filters apply the hydra access controls
-  before_filter :enforce_show_permissions, only: :show
+  before_action :enforce_show_permissions, only: :show
   # This applies appropriate access controls to all solr queries
   CatalogController.search_params_logic += [:add_access_controls_to_solr_params, :add_advanced_parse_q_to_solr]
 
-  skip_before_filter :default_html_head
+  skip_before_action :default_html_head
 
   def self.uploaded_field
     solr_name('date_uploaded', :stored_sortable, type: :date)
@@ -31,14 +31,13 @@ class CatalogController < ApplicationController
   end
 
   configure_blacklight do |config|
-
     config.view.gallery.partials = [:index_header, :index]
     config.view.masonry.partials = [:index]
     config.view.slideshow.partials = [:index]
     config.show.tile_source_field = :content_metadata_image_iiif_info_ssm
     config.show.partials.insert(1, :openseadragon)
 
-    #Show gallery view
+    # Show gallery view
     config.view.gallery.partials = [:index_header, :index]
     config.view.slideshow.partials = [:index]
 
@@ -129,7 +128,7 @@ class CatalogController < ApplicationController
     config.add_show_field solr_name("provenance_text", :stored_searchable),     label: AIC.provenanceText.label
     config.add_show_field solr_name("publ_ver_level", :stored_searchable),      label: AIC.publVerLevel.label
     config.add_show_field solr_name("publication_history", :stored_searchable), label: AIC.publicationHistory.label
-    
+
     config.add_show_field solr_name("earliest_date", :stored_searchable, type: :date), label: AIC.earliestDate.label
     config.add_show_field solr_name("latest_date", :stored_searchable, type: :date),   label: AIC.latestDate.label
 
@@ -163,7 +162,7 @@ class CatalogController < ApplicationController
     # solr request handler? The one set in config[:default_solr_parameters][:qt],
     # since we aren't specifying it otherwise.
     config.add_search_field('all_fields', label: 'All Fields', include_in_advanced_search: false) do |field|
-      all_names = config.show_fields.values.map{|val| val.field}.join(" ")
+      all_names = config.show_fields.values.map(&:field).join(" ")
       title_name = solr_name("title", :stored_searchable)
       field.solr_parameters = {
         qf: "#{all_names} file_format_tesim all_text_timv",
@@ -178,7 +177,7 @@ class CatalogController < ApplicationController
     # subject, language, resource_type, format, identifier, based_near,
     config.add_search_field('contributor') do |field|
       # solr_parameters hash are sent to Solr as ordinary url query params.
-      field.solr_parameters = { :"spellcheck.dictionary" => "contributor" }
+      field.solr_parameters = { "spellcheck.dictionary": "contributor" }
 
       # :solr_local_parameters will be sent using Solr LocalParams
       # syntax, as eg {! qf=$title_qf }. This is neccesary to use
@@ -192,7 +191,7 @@ class CatalogController < ApplicationController
     end
 
     config.add_search_field('creator') do |field|
-      field.solr_parameters = { :"spellcheck.dictionary" => "creator" }
+      field.solr_parameters = { "spellcheck.dictionary": "creator" }
       solr_name = solr_name("creator", :stored_searchable)
       field.solr_local_parameters = {
         qf: solr_name,
@@ -202,7 +201,7 @@ class CatalogController < ApplicationController
 
     config.add_search_field('title') do |field|
       field.solr_parameters = {
-        :"spellcheck.dictionary" => "title"
+        "spellcheck.dictionary": "title"
       }
       solr_name = solr_name("title", :stored_searchable)
       field.solr_local_parameters = {
@@ -214,7 +213,7 @@ class CatalogController < ApplicationController
     config.add_search_field('description') do |field|
       field.label = "Abstract or Summary"
       field.solr_parameters = {
-        :"spellcheck.dictionary" => "description"
+        "spellcheck.dictionary": "description"
       }
       solr_name = solr_name("description", :stored_searchable)
       field.solr_local_parameters = {
@@ -225,7 +224,7 @@ class CatalogController < ApplicationController
 
     config.add_search_field('publisher') do |field|
       field.solr_parameters = {
-        :"spellcheck.dictionary" => "publisher"
+        "spellcheck.dictionary": "publisher"
       }
       solr_name = solr_name("publisher", :stored_searchable)
       field.solr_local_parameters = {
@@ -237,7 +236,7 @@ class CatalogController < ApplicationController
     config.add_search_field('date_created') do |field|
       field.include_in_advanced_search = false
       field.solr_parameters = {
-        :"spellcheck.dictionary" => "date_created"
+        "spellcheck.dictionary": "date_created"
       }
       solr_name = solr_name("created", :stored_searchable)
       field.solr_local_parameters = {
@@ -248,7 +247,7 @@ class CatalogController < ApplicationController
 
     config.add_search_field('subject') do |field|
       field.solr_parameters = {
-        :"spellcheck.dictionary" => "subject"
+        "spellcheck.dictionary": "subject"
       }
       solr_name = solr_name("subject", :stored_searchable)
       field.solr_local_parameters = {
@@ -260,7 +259,7 @@ class CatalogController < ApplicationController
     config.add_search_field('language') do |field|
       field.include_in_advanced_search = false
       field.solr_parameters = {
-        :"spellcheck.dictionary" => "language"
+        "spellcheck.dictionary": "language"
       }
       solr_name = solr_name("language", :stored_searchable)
       field.solr_local_parameters = {
@@ -272,7 +271,7 @@ class CatalogController < ApplicationController
     config.add_search_field('resource_type') do |field|
       field.include_in_advanced_search = false
       field.solr_parameters = {
-        :"spellcheck.dictionary" => "resource_type"
+        "spellcheck.dictionary": "resource_type"
       }
       solr_name = solr_name("resource_type", :stored_searchable)
       field.solr_local_parameters = {
@@ -284,7 +283,7 @@ class CatalogController < ApplicationController
     config.add_search_field('format') do |field|
       field.include_in_advanced_search = false
       field.solr_parameters = {
-        :"spellcheck.dictionary" => "format"
+        "spellcheck.dictionary": "format"
       }
       solr_name = solr_name("format", :stored_searchable)
       field.solr_local_parameters = {
@@ -296,7 +295,7 @@ class CatalogController < ApplicationController
     config.add_search_field('identifier') do |field|
       field.include_in_advanced_search = false
       field.solr_parameters = {
-        :"spellcheck.dictionary" => "identifier"
+        "spellcheck.dictionary": "identifier"
       }
       solr_name = solr_name("id", :stored_searchable)
       field.solr_local_parameters = {
@@ -309,7 +308,7 @@ class CatalogController < ApplicationController
       field.include_in_advanced_search = false
       field.label = "Location"
       field.solr_parameters = {
-        :"spellcheck.dictionary" => "based_near"
+        "spellcheck.dictionary": "based_near"
       }
       solr_name = solr_name("based_near", :stored_searchable)
       field.solr_local_parameters = {
@@ -321,7 +320,7 @@ class CatalogController < ApplicationController
     config.add_search_field('tag') do |field|
       field.include_in_advanced_search = false
       field.solr_parameters = {
-        :"spellcheck.dictionary" => "tag"
+        "spellcheck.dictionary": "tag"
       }
       solr_name = solr_name("tag", :stored_searchable)
       field.solr_local_parameters = {
@@ -364,5 +363,4 @@ class CatalogController < ApplicationController
     # mean") suggestion is offered.
     config.spell_max = 5
   end
-
 end

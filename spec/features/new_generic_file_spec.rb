@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 describe "Editing generic files" do
-
   let(:user) { FactoryGirl.create(:user) }
 
   before do
@@ -19,7 +18,5 @@ describe "Editing generic files" do
       select("Select...", from: "asset_type")
       expect(page).not_to have_content(" I have read and do agree")
     end
-
   end
-
 end

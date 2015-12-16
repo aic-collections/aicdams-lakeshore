@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 describe UidTranslator do
-
   describe "::id_to_uri" do
     context "with a prefixed id" do
       let(:id) { "SI-123456" }
@@ -15,5 +14,4 @@ describe UidTranslator do
       it { is_expected.to match(/df\/67\/si\/12\/df67si12rg$/) }
     end
   end
-
 end

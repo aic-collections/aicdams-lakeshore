@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 describe Resource do
-
   describe "RDF type" do
     subject { described_class.new.type }
     it { is_expected.to eql([AICType.Resource]) }
@@ -14,7 +13,7 @@ describe Resource do
     end
   end
 
-  describe "nested resources" do    
+  describe "nested resources" do
     let(:resource) { described_class.new }
 
     context "with other assets" do
@@ -25,13 +24,13 @@ describe Resource do
           file.save
         end
       end
-      
+
       before do
         ResourceTerms.related_asset_ids.map { |rel| resource.send(rel.to_s + "=", [asset.id]) }
         resource.save
         resource.reload
       end
-      
+
       specify "are types of GenericFile objects" do
         expect(resource.documents).to include(GenericFile)
         expect(resource.representations).to include(GenericFile)
@@ -41,9 +40,7 @@ describe Resource do
 
     context "with a MetadataSet" do
       let(:metadata) do
-        MetadataSet.create.tap do |set|
-          set.save
-        end
+        MetadataSet.create.tap(&:save)
       end
 
       before do
@@ -51,7 +48,7 @@ describe Resource do
         resource.save
         resource.reload
       end
- 
+
       subject { resource.described_by }
       it { is_expected.to include(MetadataSet) }
     end
@@ -61,10 +58,9 @@ describe Resource do
     # TODO: Add :status once CITI resources are loading the correct active StatusType, see #127
     [:batch_uid, :resource_created, :dept_created, :resource_updated, :pref_label, :uid, :icon].each do |term|
       it "limits #{term} to a single value" do
-        subject.send(term.to_s+"=","foo")
+        subject.send(term.to_s + "=", "foo")
         expect(subject.send(term.to_s)).to eql "foo"
       end
     end
   end
-
 end

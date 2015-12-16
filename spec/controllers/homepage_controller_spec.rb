@@ -4,7 +4,7 @@ describe HomepageController do
   routes { Sufia::Engine.routes }
   let(:user) { FactoryGirl.find_or_create(:jill) }
 
-  describe "#index" do    
+  describe "#index" do
     context "with a public user" do
       it "redirects to the login page" do
         get :index
@@ -20,5 +20,4 @@ describe HomepageController do
       end
     end
   end
-
 end

@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 describe Work do
-
   describe "intial RDF types" do
     subject { described_class.new.type }
     it { is_expected.to contain_exactly(AICType.Work, AICType.CitiResource, AICType.Resource) }
@@ -18,5 +17,4 @@ describe Work do
 
   it_behaves_like "a model for a Citi resource"
   it_behaves_like "an unfeatureable model"
-
 end

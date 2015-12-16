@@ -6,5 +6,4 @@ class ConservationMetadataPresenter
     :conservation_doc_type,
     :special_image_type
   ] + ResourceTerms.all
-
 end

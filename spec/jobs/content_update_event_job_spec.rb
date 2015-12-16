@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 describe ContentUpdateEventJob do
-  
   let(:user) { FactoryGirl.find_or_create(:jill) }
   let(:generic_file) do
     GenericFile.create.tap do |file|
@@ -15,7 +14,7 @@ describe ContentUpdateEventJob do
   context "when calling the job directly" do
     before do
       allow(User).to receive(:find_by_user_key).and_return(user)
-      ContentUpdateEventJob.new(generic_file.id, user.id).run
+      described_class.new(generic_file.id, user.id).run
     end
 
     it "adds messages to the user and file events queue" do
@@ -34,7 +33,5 @@ describe ContentUpdateEventJob do
       expect(user.profile_events).not_to be_empty
       expect(generic_file.events).not_to be_empty
     end
-
   end
-
 end

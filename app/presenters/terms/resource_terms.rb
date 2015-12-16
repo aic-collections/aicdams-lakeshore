@@ -1,7 +1,6 @@
 class ResourceTerms
-
   def self.all
-    self.properties + self.related_asset_ids
+    properties + related_asset_ids
   end
 
   def self.properties
@@ -23,7 +22,7 @@ class ResourceTerms
       :same_as,
       :uid,
       :resource_updated,
-      :icon,
+      :icon
     ]
   end
 
@@ -34,5 +33,4 @@ class ResourceTerms
   def self.related_assets
     [:documents, :representations, :preferred_representations]
   end
-
 end

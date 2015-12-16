@@ -1,9 +1,8 @@
 require 'rails_helper'
 
 describe Comment do
-
   let(:content) { "comment content" }
-  let(:comment) { Comment.create(content: content) }
+  let(:comment) { described_class.create(content: content) }
 
   describe "RDF types" do
     subject { described_class.new.type }
@@ -28,8 +27,7 @@ describe Comment do
       comment
     end
     it "deletes the resource" do
-      expect(subject.destroy).to be_kind_of(Comment)
+      expect(subject.destroy).to be_kind_of(described_class)
     end
   end
-
 end

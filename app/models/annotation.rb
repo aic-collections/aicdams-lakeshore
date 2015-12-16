@@ -1,5 +1,5 @@
 class Annotation < Resource
-  include ActiveFedora::Validations  
+  include ActiveFedora::Validations
   validates_presence_of :content
 
   def self.aic_type
@@ -7,9 +7,8 @@ class Annotation < Resource
   end
 
   type aic_type
-  
+
   property :content, predicate: AIC.content, multiple: false do |index|
     index.as :stored_searchable
-  end 
-
+  end
 end

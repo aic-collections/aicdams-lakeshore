@@ -1,9 +1,8 @@
 require 'rails_helper'
 
 describe ListItemEditForm do
+  subject { described_class.new(ListItem.new) }
 
-  subject { described_class.new(ListItem.new()) }
-    
   its(:terms) { is_expected.to contain_exactly(:pref_label, :description) }
 
   describe "#model_attributes" do

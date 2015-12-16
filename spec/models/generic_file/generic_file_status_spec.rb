@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 describe "GenericFile" do
-
   let(:example_file) do
     GenericFile.create.tap do |file|
       file.apply_depositor_metadata "user"
@@ -51,5 +50,4 @@ describe "GenericFile" do
     end
     it { is_expected.to be_deleted }
   end
-
 end

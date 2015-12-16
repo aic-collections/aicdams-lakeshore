@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 describe ListItemsController do
-
   let(:user) { FactoryGirl.find_or_create(:jill) }
   before { sign_in user }
   let(:list) { List.create }
@@ -35,7 +34,7 @@ describe ListItemsController do
 
   context "with an existing list and list item" do
     before { list.members << ListItem.create(pref_label: "Foo") }
-    
+
     describe "#edit" do
       context "with a html request" do
         before { get :edit, list_id: list, id: list.members.first }
@@ -46,7 +45,7 @@ describe ListItemsController do
         its(:response) { is_expected.to be_success }
       end
     end
- 
+
     describe "#update" do
       before { xhr :patch, :update, list_id: list, id: list.members.first, list_item: { description: ["a description"] } }
       subject { list.reload.members.first }
@@ -62,5 +61,4 @@ describe ListItemsController do
       expect(ListItem.exists?(list_item.id)).to be false
     end
   end
-
 end

@@ -37,5 +37,4 @@ describe CommentsController do
     subject { response }
     it { is_expected.to be_successful }
   end
-
 end

@@ -30,5 +30,4 @@ class Actor < CitiResource
     index.type :integer
     index.as :stored_searchable
   end
-
 end

@@ -7,10 +7,8 @@ class List < ActiveFedora::Base
   validate :list_item_uniqness, on: [:update]
 
   def list_item_uniqness
-    labels = self.members.map { |s| s.pref_label }
-    if labels.detect { |l| labels.count(l) > 1 }
-      self.errors.add :members, "must be unique"
-    end
+    labels = members.map(&:pref_label)
+    return unless labels.detect { |l| labels.count(l) > 1 }
+    errors.add :members, "must be unique"
   end
-
 end

@@ -1,7 +1,6 @@
 # Allows us to access the database responsible for minting uids. Although we never query the table directly,
 # we define an AR::Base instance that corresponds to an existing table and call the stored procedure from there.
 class Uid < ActiveRecord::Base
-
   establish_connection "uidminter"
 
   def self.table_name
@@ -13,12 +12,11 @@ class Uid < ActiveRecord::Base
   # @return [ActiveRecord::Result]
   #
   # Sample result:
-  #   <ActiveRecord::Result:0x007f66cb551890 @columns=["newid"], 
-  #     @rows=[["TX-000003"]], 
-  #     @hash_rows=nil, 
+  #   <ActiveRecord::Result:0x007f66cb551890 @columns=["newid"],
+  #     @rows=[["TX-000003"]],
+  #     @hash_rows=nil,
   #     @column_types={"newid"=>#<ActiveRecord::Type::String:0x007f66cb572b08 @precision=nil, @scale=nil, @limit=nil>}>
   def self.mint_uid(prefix)
-    self.connection.exec_query("select mintUid('#{prefix}', '') AS newid")
+    connection.exec_query("select mintUid('#{prefix}', '') AS newid")
   end
-
 end

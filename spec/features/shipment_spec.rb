@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 describe "CITI shipments", order: :defined do
-
   let(:user) { FactoryGirl.create(:user) }
   before do
     sign_in(user)
@@ -36,7 +35,7 @@ describe "CITI shipments", order: :defined do
         f.save
       end
     end
-    
+
     it "only adds resources" do
       click_link("SH-3469")
       click_link("Edit")
@@ -53,5 +52,4 @@ describe "CITI shipments", order: :defined do
       expect(page).to have_content("Documents")
     end
   end
-
 end

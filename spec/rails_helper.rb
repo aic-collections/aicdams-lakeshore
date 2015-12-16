@@ -40,7 +40,7 @@ RSpec.configure do |config|
         $redis.keys('GenericFile:*').each { |key| $redis.del key }
       rescue => e
         Logger.new(STDOUT).warn "WARNING -- Redis might be down: #{e}"
-      end 
+      end
     end
   end
 
@@ -51,7 +51,7 @@ RSpec.configure do |config|
       DatabaseCleaner.strategy = :transaction
       DatabaseCleaner.start
     end
-  end  
+  end
 
   config.after do
     DatabaseCleaner.clean
@@ -81,7 +81,7 @@ FactoryGirl.define do
 end
 
 module FactoryGirl
-  def self.find_or_create(handle, by=:email)
+  def self.find_or_create(handle, by = :email)
     tmpl = FactoryGirl.build(handle)
     tmpl.class.send("find_by_#{by}".to_sym, tmpl.send(by)) || FactoryGirl.create(handle)
   end

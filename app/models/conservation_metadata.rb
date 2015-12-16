@@ -1,5 +1,4 @@
 class ConservationMetadata < MetadataSet
-
   def self.aic_type
     super << AICType.ConservationMetadata
   end
@@ -11,5 +10,4 @@ class ConservationMetadata < MetadataSet
 
   # TODO: this needs to be singular: enforce cardinality on AT resources
   property :special_image_type, predicate: AIC.specialImageType, multiple: true, class_name: UndefinedListItem
-
 end

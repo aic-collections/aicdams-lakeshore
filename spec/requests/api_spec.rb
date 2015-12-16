@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 describe "The API" do
-
   describe "reindexing resources" do
     context "with correct input" do
       let(:body) { '["res1", "res2", "res3"]' }
@@ -27,5 +26,4 @@ describe "The API" do
       it { is_expected.to eql 500 }
     end
   end
-
 end

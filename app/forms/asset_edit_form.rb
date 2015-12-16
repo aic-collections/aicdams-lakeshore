@@ -5,28 +5,27 @@ class AssetEditForm < AssetPresenter
 
   # Use :status_id instead of :status as the editing term
   self.terms = AssetPresenter.terms - [:uid, :status, :dept_created] + [:status_id]
-  
+
   protected
 
-  # Override HydraEditor::Form to treat nested attributes accordingly
-  def initialize_field(key)
-    if key == :comments
-      build_association(key)
-    else
-      super
+    # Override HydraEditor::Form to treat nested attributes accordingly
+    def initialize_field(key)
+      if key == :comments
+        build_association(key)
+      else
+        super
+      end
     end
-  end
 
   private
 
-  def build_association(key)
-    association = model.send(key)
-    if association.empty?
-      self[key] = Array(association.build)
-    else
-      association.build
-      self[key] = association
+    def build_association(key)
+      association = model.send(key)
+      if association.empty?
+        self[key] = Array(association.build)
+      else
+        association.build
+        self[key] = association
+      end
     end
-  end
-
 end

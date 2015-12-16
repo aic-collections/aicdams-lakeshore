@@ -4,13 +4,13 @@ class BatchEditsController < ApplicationController
   include Sufia::BatchEditsControllerBehavior
 
   def destroy_collection
-      batch.each do |doc_id|
-        obj = ActiveFedora::Base.find(doc_id, :cast=>true)
-        report_delete_error unless obj.destroy
-      end
-      flash[:notice] = "Batch delete complete" if flash[:error].nil?
-      after_destroy_collection    
-  end 
+    batch.each do |doc_id|
+      obj = ActiveFedora::Base.find(doc_id, cast: true)
+      report_delete_error unless obj.destroy
+    end
+    flash[:notice] = "Batch delete complete" if flash[:error].nil?
+    after_destroy_collection
+  end
 
   protected
 

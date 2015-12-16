@@ -22,7 +22,7 @@ class User < ActiveRecord::Base
   end
 
   def admin?
-    ADMINS.include?(self.email)
+    ADMINS.include?(email)
   end
 
   def groups

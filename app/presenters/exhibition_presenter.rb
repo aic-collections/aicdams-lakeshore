@@ -11,9 +11,8 @@ class ExhibitionPresenter
     :name_working,
     :type_uid
   ] + CitiResourceTerms.all
-  
-  def summary_terms
-    [ :uid, :name_official, :created_by, :resource_created, :resource_updated ]
-  end
 
+  def summary_terms
+    [:uid, :name_official, :created_by, :resource_created, :resource_updated]
+  end
 end

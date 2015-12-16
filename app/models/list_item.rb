@@ -3,5 +3,4 @@ class ListItem < ActiveFedora::Base
   include ResourceMetadata
 
   type [AICType.Resource, AICType.ListItem]
-
 end

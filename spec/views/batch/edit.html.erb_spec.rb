@@ -5,7 +5,7 @@ describe 'batch/edit.html.erb' do
   let(:generic_file) do
     GenericFile.new(title: ['some title']).tap do |f|
       f.apply_depositor_metadata("bob")
-      f.comments_attributes = [{content: "foo comment", category: ["bar category"]}]
+      f.comments_attributes = [{ content: "foo comment", category: ["bar category"] }]
     end
   end
   let(:form) { AssetBatchEditForm.new(generic_file) }
@@ -17,8 +17,7 @@ describe 'batch/edit.html.erb' do
     render
   end
 
-  it "should not show Sufia's keyword field" do
+  it "does not show Sufia's keyword field" do
     expect(render).not_to have_selector "input#generic_file_resource_type"
   end
-
 end

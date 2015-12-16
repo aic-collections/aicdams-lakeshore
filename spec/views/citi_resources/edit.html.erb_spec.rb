@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 describe "citi_resources/edit.html.erb" do
-
   let(:work) { Work.create(pref_label: "Sample Work") }
   let(:form) { WorkEditForm.new(work) }
 
@@ -27,7 +26,6 @@ describe "citi_resources/edit.html.erb" do
     expect(subject).to include("Documents")
     expect(subject).to include("Representations")
     expect(subject).to include("Preferred representations")
-    expect(subject).to include("Assets") 
+    expect(subject).to include("Assets")
   end
-
 end

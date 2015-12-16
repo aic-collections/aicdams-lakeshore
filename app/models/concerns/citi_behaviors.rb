@@ -22,5 +22,4 @@ module CitiBehaviors
   def featureable?
     false
   end
-
 end

@@ -1,7 +1,7 @@
 module SessionSupport
   def sign_in(who = :user)
     logout
-    user = who.is_a?(User) ? who : FactoryGirl.build(:user).tap { |u| u.save! }
+    user = who.is_a?(User) ? who : FactoryGirl.build(:user).tap(&:save!)
     visit new_user_session_path
     fill_in 'Email', with: user.email
     fill_in 'Password', with: user.password

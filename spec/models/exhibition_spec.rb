@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 describe Exhibition do
-
   describe "RDF type" do
     subject { described_class.new.type }
     it { is_expected.to contain_exactly(AICType.Exhibition, AICType.Resource, AICType.CitiResource) }
@@ -15,6 +14,5 @@ describe Exhibition do
   end
 
   it_behaves_like "a model for a Citi resource"
-  it_behaves_like "an unfeatureable model"  
-
+  it_behaves_like "an unfeatureable model"
 end

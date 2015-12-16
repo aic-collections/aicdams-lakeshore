@@ -1,5 +1,4 @@
 module ListLoader
-
   def load_lists
     status
   end
@@ -13,7 +12,7 @@ module ListLoader
 
   def invalid
     StatusType.new.tap do |s|
-      s.pref_label = "Invalid" 
+      s.pref_label = "Invalid"
       s.identifier = -2
       s.description = ["Record is missing some critical fields (such as from an unclean import from a foreign system) and should be reviewed and corrected or replaced before being used by any application."]
     end

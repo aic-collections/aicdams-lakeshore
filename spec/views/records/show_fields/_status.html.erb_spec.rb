@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 describe "records/show_fields/_status.html.erb" do
-
   let(:asset) do
     stub_model(GenericFile, id: 'abc', status: StatusType.active)
   end
@@ -13,5 +12,4 @@ describe "records/show_fields/_status.html.erb" do
     before { render partial: "records/show_fields/status.html.erb", locals: { record: AssetPresenter.new(asset) } }
     it { is_expected.to match("Active") }
   end
-
 end

@@ -3,5 +3,4 @@ class ListItemEditForm
 
   self.model_class = ListItem
   self.terms = [:pref_label, :description]
-
 end

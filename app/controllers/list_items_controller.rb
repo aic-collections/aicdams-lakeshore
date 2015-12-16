@@ -1,5 +1,4 @@
 class ListItemsController < ApplicationController
-
   before_action :find_list, only: [:create, :destroy]
 
   def new

@@ -19,5 +19,4 @@ class Ability
       !obj.department?
     end
   end
-
 end

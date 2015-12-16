@@ -1,8 +1,7 @@
 require 'rails_helper'
 
 describe AssetPresenter do
-
-  let(:presenter) { AssetPresenter.new(GenericFile.new) }
+  let(:presenter) { described_class.new(GenericFile.new) }
 
   describe "#terms" do
     subject { presenter.terms }
@@ -18,15 +17,15 @@ describe AssetPresenter do
 
   describe "#asset_type" do
     context "with an image" do
-      before { allow_any_instance_of(GenericFile).to receive(:is_still_image?).and_return(true) }
+      before { allow_any_instance_of(GenericFile).to receive(:still_image?).and_return(true) }
       subject { presenter.asset_type }
       it { is_expected.to eql("Image") }
     end
     context "with an text document" do
-      before { allow_any_instance_of(GenericFile).to receive(:is_text?).and_return(true) }
+      before { allow_any_instance_of(GenericFile).to receive(:text?).and_return(true) }
       subject { presenter.asset_type }
       it { is_expected.to eql("Text Document") }
-    end    
+    end
   end
 
   describe "relationships" do
@@ -37,5 +36,4 @@ describe AssetPresenter do
     its(:assets) { is_expected.to be_empty }
     it { is_expected.not_to be_representing }
   end
-
 end

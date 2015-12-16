@@ -1,16 +1,14 @@
 require 'rails_helper'
 
 describe GenericFile do
-
-  subject { GenericFile.new }
+  subject { described_class.new }
 
   describe "#comments_attributes" do
-
     let(:commented_resource) do
-      GenericFile.create.tap do |file|
+      described_class.create.tap do |file|
         file.title = ["Commented thing"]
         file.apply_depositor_metadata "user"
-        file.comments_attributes = [{content: "foo comment", category: ["bar category"]}]
+        file.comments_attributes = [{ content: "foo comment", category: ["bar category"] }]
       end
     end
 
@@ -23,11 +21,11 @@ describe GenericFile do
 
     context "without a category" do
       let(:commented_resource) do
-        GenericFile.create.tap do |file|
+        described_class.create.tap do |file|
           file.title = ["Commented thing without a category"]
           file.apply_depositor_metadata "user"
           file.assert_still_image
-          file.comments_attributes = [{content: "foo comment"}]
+          file.comments_attributes = [{ content: "foo comment" }]
         end
       end
       subject { commented_resource.save }
@@ -36,10 +34,10 @@ describe GenericFile do
 
     context "without content" do
       let(:commented_resource) do
-        GenericFile.create.tap do |file|
+        described_class.create.tap do |file|
           file.title = ["Commented thing without a category"]
           file.apply_depositor_metadata "user"
-          file.comments_attributes = [{content: nil}]
+          file.comments_attributes = [{ content: nil }]
         end
       end
       subject { commented_resource.save }
@@ -48,7 +46,7 @@ describe GenericFile do
 
     context "with existing comments" do
       let(:resource) do
-        GenericFile.create.tap do |file|
+        described_class.create.tap do |file|
           file.apply_depositor_metadata "user"
           file.assert_still_image
         end
@@ -70,12 +68,10 @@ describe GenericFile do
           resource.comments_attributes = [id: c1.id, content: "Updated first comment"]
           resource.save
         end
-        subject { resource.comments.map {|c| c.content} }
-        it {is_expected.to include("Updated first comment", "Second comment")}
-        it {is_expected.not_to include("First comment")}
+        subject { resource.comments.map(&:content) }
+        it { is_expected.to include("Updated first comment", "Second comment") }
+        it { is_expected.not_to include("First comment") }
       end
-
     end
   end
-
 end

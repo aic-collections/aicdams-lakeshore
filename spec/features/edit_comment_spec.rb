@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 describe "Editing comments" do
-
   let(:user) { FactoryGirl.create(:user) }
   before { sign_in user }
   let(:category1) { "First category" }
@@ -22,5 +21,4 @@ describe "Editing comments" do
       expect(find_field("comment[category][]").value).to be_empty
     end
   end
-
 end

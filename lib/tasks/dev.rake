@@ -2,6 +2,7 @@ require 'active_fedora/cleaner'
 require 'jettywrapper'
 require './spec/support/fixture_loader'
 require './spec/support/list_loader'
+require 'rubocop/rake_task'
 
 class DevelopmentLoader
   include FixtureLoader
@@ -10,8 +11,14 @@ end
 
 Jettywrapper.hydra_jetty_version = "v8.5.0"
 
+desc 'Run style checker'
+RuboCop::RakeTask.new(:rubocop) do |task|
+  task.requires << 'rubocop-rspec'
+  task.fail_on_error = true
+end
+
 desc "Run continuous integration test"
-task ci: ['aic:jetty:prep', 'db:migrate'] do
+task ci: [:rubocop, 'aic:jetty:prep', 'db:migrate'] do
   jetty_params = Jettywrapper.load_config
   error = Jettywrapper.wrap(jetty_params) do
     Rake::Task['spec'].invoke

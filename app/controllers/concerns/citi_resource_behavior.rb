@@ -13,11 +13,11 @@ module CitiResourceBehavior
     before_action :build_breadcrumbs
 
     # TODO
-    #load_and_authorize_resource except: [:index, :show]
+    # load_and_authorize_resource except: [:index, :show]
   end
 
   def index
-    redirect_to catalog_index_path(params.except(:controller, :action).merge(f: { Solrizer.solr_name("aic_type", :facetable) => [self.class.to_s.gsub(/sController/,"")] }))
+    redirect_to catalog_index_path(params.except(:controller, :action).merge(f: { Solrizer.solr_name("aic_type", :facetable) => [self.class.to_s.gsub(/sController/, "")] }))
   end
 
   def edit
@@ -50,7 +50,7 @@ module CitiResourceBehavior
     def load_resource
       @resource = ActiveFedora::Base.find(params[:id])
     end
-    
+
     def presenter
       presenter_class.new(@resource)
     end
@@ -58,5 +58,4 @@ module CitiResourceBehavior
     def resource_edit_path
       send("edit_#{@resource.class.to_s.downcase}_path", @resource)
     end
-
 end

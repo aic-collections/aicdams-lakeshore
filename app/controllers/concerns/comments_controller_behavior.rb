@@ -30,19 +30,18 @@ module CommentsControllerBehavior
 
   private
 
-  def update_comment
-    attributes = edit_form_class.model_attributes(params[@comment.class.to_s.downcase.to_sym])
-    @comment.attributes = attributes
-    @comment.save
-  end
+    def update_comment
+      attributes = edit_form_class.model_attributes(params[@comment.class.to_s.downcase.to_sym])
+      @comment.attributes = attributes
+      @comment.save
+    end
 
-  def set_comment
-    @comment = ActiveFedora::Base.find(params[:id])
-    render_500("Incorrect comment class") unless @comment.is_a?(Comment)
-  end
+    def set_comment
+      @comment = ActiveFedora::Base.find(params[:id])
+      render_500("Incorrect comment class") unless @comment.is_a?(Comment)
+    end
 
-  def set_edit_form
-    @form = edit_form_class.new(@comment)
-  end
-
+    def set_edit_form
+      @form = edit_form_class.new(@comment)
+    end
 end

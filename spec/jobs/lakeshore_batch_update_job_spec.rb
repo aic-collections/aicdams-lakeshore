@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 describe LakeshoreBatchUpdateJob do
-
   let(:user) { FactoryGirl.find_or_create(:jill) }
   let(:batch) { Batch.create }
 
@@ -22,10 +21,10 @@ describe LakeshoreBatchUpdateJob do
   end
 
   describe "#run" do
-    let(:title) { { file.id => ['File One'], file2.id => ['File Two'] }}
+    let(:title) { { file.id => ['File One'], file2.id => ['File Two'] } }
     let(:metadata) do
       { read_groups_string: '', read_users_string: 'archivist1, archivist2',
-        asset_capture_device: 'Sony camera', digitization_source: ['painting'] 
+        asset_capture_device: 'Sony camera', digitization_source: ['painting']
       }.with_indifferent_access
     end
 
@@ -40,8 +39,8 @@ describe LakeshoreBatchUpdateJob do
       end
 
       subject { file.reload }
-      its(:title) { is_expected.to eq(['File One'])}
-      its(:pref_label) { is_expected.to eq(file.id)}
+      its(:title) { is_expected.to eq(['File One']) }
+      its(:pref_label) { is_expected.to eq(file.id) }
     end
   end
 end

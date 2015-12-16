@@ -3,8 +3,8 @@ module SufiaHelper
   include Sufia::BlacklightOverride
   include Sufia::SufiaHelperBehavior
 
-  def url_for_document doc, options = {}
-    if (doc.is_a?(SolrDocument) && doc.hydra_model.match(/Work|Actor|Exhibition|Transaction|Shipment/))
+  def url_for_document(doc, _options = {})
+    if doc.is_a?(SolrDocument) && doc.hydra_model.match(/Work|Actor|Exhibition|Transaction|Shipment/)
       doc
     else
       [sufia, doc]
@@ -22,5 +22,4 @@ module SufiaHelper
       content_tag :span, "Department", class: "label label-warning", title: t('sufia.visibility.open_title_attr')
     end
   end
-
 end

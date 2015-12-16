@@ -1,5 +1,4 @@
 module ApplicationHelper
-
   def track_work_path(*args)
     track_solr_document_path(*args)
   end
@@ -61,7 +60,6 @@ module ApplicationHelper
   end
 
   def resource_type_facets
-    @resource_types.reject { |r| r.kind_of?(Integer) }.sort
+    @resource_types.reject { |r| r.is_a?(Integer) }.sort
   end
-
 end

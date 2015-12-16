@@ -1,5 +1,4 @@
 shared_examples "a controller for a Citi resource" do |resource_name|
-
   let(:user) { FactoryGirl.find_or_create(:jill) }
   before do
     allow(controller).to receive(:has_access?).and_return(true)
@@ -7,7 +6,7 @@ shared_examples "a controller for a Citi resource" do |resource_name|
     allow_any_instance_of(User).to receive(:groups).and_return([])
   end
 
-  let(:resource)      { resource_name.capitalize.constantize.create }
+  let(:resource) { resource_name.capitalize.constantize.create }
   let(:param_key) { resource_name.downcase }
 
   describe "#edit" do
@@ -17,7 +16,6 @@ shared_examples "a controller for a Citi resource" do |resource_name|
   end
 
   describe "#update" do
-
     context "with a document" do
       let(:document) do
         GenericFile.create.tap do |f|
@@ -47,7 +45,7 @@ shared_examples "a controller for a Citi resource" do |resource_name|
       specify do
         expect(response).to be_redirect
         expect(resource.reload.representation_ids).to contain_exactly(representation.id)
-      end    
+      end
     end
 
     context "with a preferred representation" do
@@ -78,5 +76,4 @@ shared_examples "a controller for a Citi resource" do |resource_name|
     subject { response }
     it { is_expected.to redirect_to("http://test.host/catalog?f%5Baic_type_sim%5D%5B%5D=#{resource_name.capitalize}") }
   end
-
 end

@@ -1,5 +1,4 @@
 module FixtureLoader
-
   def load_fedora_fixture(ttl, index = true)
     data = File.read(ttl)
     id = SecureRandom.hex(16)
@@ -20,5 +19,4 @@ module FixtureLoader
       id.insert(8, "-").insert(13, "-").insert(18, "-").insert(23, "-")
       [ActiveFedora.config.credentials[:url], ActiveFedora.config.credentials[:base_path], base, id].join("/")
     end
-
 end

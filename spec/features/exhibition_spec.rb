@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 describe "CITI exhibitions", order: :defined do
-
   let(:user) { FactoryGirl.create(:user) }
   before do
     sign_in(user)
@@ -43,7 +42,7 @@ describe "CITI exhibitions", order: :defined do
         f.save
       end
     end
-    
+
     it "only adds resources" do
       click_link("EX-2846")
       click_link("Edit")
@@ -60,5 +59,4 @@ describe "CITI exhibitions", order: :defined do
       expect(page).to have_content("Documents")
     end
   end
-
 end

@@ -1,8 +1,7 @@
 require 'rails_helper'
 
 describe UpdateIndexJob do
-
-  let(:object) do 
+  let(:object) do
     GenericFile.create.tap do |f|
       f.apply_depositor_metadata "user"
       f.assert_still_image
@@ -15,5 +14,4 @@ describe UpdateIndexJob do
   it "updates the index of a single object" do
     expect(job["responseHeader"]["status"]).to eql 0
   end
-
 end

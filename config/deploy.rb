@@ -8,13 +8,11 @@ set :aic_config_dir, "#{fetch(:base_dir)}/config"
 set :user, 'awead'
 set :deploy_to, "#{fetch(:base_dir)}/#{fetch(:application)}"
 set :use_sudo, false
-set :ssh_options, { keys: [File.join(ENV["HOME"], ".ssh", "id_rsa")] }
+set :ssh_options, keys: [File.join(ENV["HOME"], ".ssh", "id_rsa")]
 set :aic_proxy, "sysprox.artic.edu:3128"
 
-set :default_env, { 
-  path: "$PATH:#{fetch(:base_dir)}/bin",
-  http_proxy: "#{fetch(:aic_proxy)}"
-}
+set :default_env,   path: "$PATH:#{fetch(:base_dir)}/bin",
+                    http_proxy: "#{fetch(:aic_proxy)}"
 
 set :current_release, "#{fetch(:deploy_to)}/current"
 
@@ -38,7 +36,7 @@ set :linked_files, fetch(:linked_files, []).push(
   'config/fedora.yml',
   'config/redis.yml',
   'config/secrets.yml',
-  'config/solr.yml',
+  'config/solr.yml'
 )
 set :linked_dirs, fetch(:linked_dirs, []).push(
   'log',
@@ -46,12 +44,11 @@ set :linked_dirs, fetch(:linked_dirs, []).push(
   'tmp/cache',
   'tmp/sockets',
   'vendor/bundle',
-  'public/system',
+  'public/system'
 )
 set :keep_releases, 10
 
 namespace :deploy do
-
   # Create a symlink in the shared directory to the config directory
   # This keeps the configuration files separate from Capistratno's managed deploy directory.
   before 'check:linked_dirs', :link_config do
@@ -66,5 +63,4 @@ namespace :deploy do
       execute "cd #{fetch(:deploy_to)}/current && touch tmp/restart.txt"
     end
   end
-
 end

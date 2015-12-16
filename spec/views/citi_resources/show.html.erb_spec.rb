@@ -1,18 +1,17 @@
 require 'rails_helper'
 
 describe "citi_resources/show.html.erb" do
-
   let(:asset) do
     stub_model(GenericFile, id: 'abc',
-      title: ["Asset title"]
-    )
+                            title: ["Asset title"]
+              )
   end
 
   let(:work) do
     stub_model(Work, id: '123',
-      pref_label: "Sample Work",
-      exhibition_history: "Showed at a gallery somwhere"
-    )
+                     pref_label: "Sample Work",
+                     exhibition_history: "Showed at a gallery somwhere"
+              )
   end
   let(:presenter) { WorkPresenter.new(work) }
 
@@ -32,5 +31,4 @@ describe "citi_resources/show.html.erb" do
     expect(subject).to include('<dt>Asset type</dt>')
     expect(subject).to include('<dt>Identifier</dt>')
   end
-
 end

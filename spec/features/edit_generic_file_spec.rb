@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 describe "Editing generic files" do
-
   let(:user) { FactoryGirl.create(:user) }
   let(:title) { "Sample file to edit" }
   let(:file) do
@@ -34,12 +33,11 @@ describe "Editing generic files" do
       click_button("upload_submit")
       expect(find_field("generic_file[comments_attributes][0][content]").value).to eql comment0
       expect(find_field("generic_file[comments_attributes][1][content]").value).to eql comment1
-      expect(find_field("generic_file[comments_attributes][2][content]").value).to eql comment2    
+      expect(find_field("generic_file[comments_attributes][2][content]").value).to eql comment2
       within("div.comments-editor") { first(:button, "Remove").click }
       click_button("upload_submit")
       expect(find_field("generic_file[comments_attributes][0][content]").value).to eql comment1
       expect(find_field("generic_file[comments_attributes][1][content]").value).to eql comment2
     end
-  end 
-
+  end
 end

@@ -1,5 +1,4 @@
 class UidMinter
-
   attr_reader :prefix
 
   # @param [String] prefix two-letter prefix indicating the type of resource
@@ -16,12 +15,12 @@ class UidMinter
 
   def uid_from_database
     response = new_uid
-    response.rows.map { |r| r.first }.first
+    response.rows.map(&:first).first
   end
 
   private
 
-    # Because the process of creating a new uid is tied to a database stored procedure that only exists 
+    # Because the process of creating a new uid is tied to a database stored procedure that only exists
     # on specific servers, a mock method is provided for testing and development purposes.
     def mock_id
       [prefix, rand.to_s[2..7]].join("-")
@@ -32,5 +31,4 @@ class UidMinter
     def new_uid
       Uid.mint_uid(prefix)
     end
-
 end

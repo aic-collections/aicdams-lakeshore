@@ -2,7 +2,6 @@ require 'rails_helper'
 require 'cancan/matchers'
 
 describe Sufia::Ability do
-
   let(:user) { FactoryGirl.find_or_create(:user) }
   let(:jill) { FactoryGirl.find_or_create(:jill) }
 
@@ -20,5 +19,4 @@ describe Sufia::Ability do
       it { is_expected.not_to be_able_to(:read, file) }
     end
   end
-
 end

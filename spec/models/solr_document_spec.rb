@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 describe SolrDocument do
-
   describe "#title_or_label" do
     before { subject[Solrizer.solr_name("pref_label", :stored_searchable)] = "work label" }
     its(:title_or_label) { is_expected.to eq("work label") }
@@ -30,5 +29,4 @@ describe SolrDocument do
       its(:registered?) { is_expected.to be true }
     end
   end
-
 end

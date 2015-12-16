@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 describe "GenericFile" do
-
   let(:user) { FactoryGirl.find_or_create(:jill) }
 
   let(:department_file) do
@@ -52,7 +51,7 @@ describe "GenericFile" do
 
   describe "visibility" do
     context "by default" do
-      its(:visibility) { is_expected.to eq(LakeshoreVisibility::VISIBILITY_TEXT_VALUE_DEPARTMENT)}
+      its(:visibility) { is_expected.to eq(LakeshoreVisibility::VISIBILITY_TEXT_VALUE_DEPARTMENT) }
       its(:read_groups) { is_expected.to be_empty }
     end
 
@@ -72,7 +71,7 @@ describe "GenericFile" do
       its(:read_groups) { is_expected.to contain_exactly(Hydra::AccessControls::AccessRight::PERMISSION_TEXT_VALUE_AUTHENTICATED) }
       its(:visibility) { is_expected.to eq(Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_AUTHENTICATED) }
     end
-    
+
     context "when changing from registered to department" do
       subject { registered_file }
       before { registered_file.visibility = LakeshoreVisibility::VISIBILITY_TEXT_VALUE_DEPARTMENT }
@@ -80,5 +79,4 @@ describe "GenericFile" do
       its(:visibility) { is_expected.to eq(LakeshoreVisibility::VISIBILITY_TEXT_VALUE_DEPARTMENT) }
     end
   end
-
 end

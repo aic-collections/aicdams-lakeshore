@@ -17,5 +17,4 @@ module SolrDocumentExtensions
       Array(self[Solrizer.solr_name('title')]).first
     end
   end
-
 end

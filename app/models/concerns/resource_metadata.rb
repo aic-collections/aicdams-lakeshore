@@ -1,15 +1,14 @@
 module ResourceMetadata
   extend ActiveSupport::Concern
-  
+
   included do
-    
     property :batch_uid, predicate: AIC.batchUid, multiple: false do |index|
       index.as :stored_searchable
-    end 
-    
+    end
+
     property :contributor, predicate: AIC.contributor do |index|
       index.as :stored_searchable
-    end 
+    end
 
     property :resource_created, predicate: AIC.created, multiple: false do |index|
       index.type :date
@@ -38,15 +37,15 @@ module ResourceMetadata
     property :language, predicate: ::RDF::DC.language do |index|
       index.as :stored_searchable
     end
-    
+
     property :publisher, predicate: ::RDF::DC.publisher do |index|
       index.as :stored_searchable
     end
-    
+
     property :rights, predicate: ::RDF::DC.rights do |index|
       index.as :stored_searchable
     end
-    
+
     property :rights_holder, predicate: ::RDF::DC.rightsHolder do |index|
       index.as :stored_searchable
     end
@@ -54,7 +53,7 @@ module ResourceMetadata
     property :same_as, predicate: ::RDF::OWL.sameAs do |index|
       index.as :stored_searchable
     end
-    
+
     property :pref_label, predicate: ::RDF::SKOS.prefLabel, multiple: false do |index|
       index.as :stored_searchable
     end
@@ -80,6 +79,5 @@ module ResourceMetadata
     has_and_belongs_to_many :representations, predicate: AIC.hasRepresentation, class_name: "GenericFile"
 
     accepts_nested_attributes_for :described_by, :documents, :preferred_representations, :representations, allow_destroy: false
-
   end
 end

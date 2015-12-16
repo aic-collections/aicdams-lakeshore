@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 describe "Visting the home page", type: :feature do
-
   let(:user) { FactoryGirl.create(:user) }
   before do
     sign_in(user)
@@ -17,5 +16,4 @@ describe "Visting the home page", type: :feature do
       expect(page).to have_content "Title"
     end
   end
-
 end
