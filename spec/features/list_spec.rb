@@ -8,10 +8,10 @@ describe "Lists" do
   before do
     List.create(pref_label: "My List")
     sign_in(user)
-    visit(lists_path)
   end
 
   specify "may have items curated by the user" do
+    visit(lists_path)
     # List page
     expect(page).to have_link("My Dashboard")
     within("#my_list_list") do
