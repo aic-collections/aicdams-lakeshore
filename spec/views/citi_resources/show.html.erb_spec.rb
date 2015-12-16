@@ -27,10 +27,8 @@ describe "citi_resources/show.html.erb" do
   subject { rendered }
 
   specify do
-    expect(subject).to include('<h2>Relationships</h2>')
+    expect(subject).to include('<h2 class="underline">Asset Relationships</h2>')
     expect(subject).to include('src="/downloads/abc?file=thumbnail"')
-    # TODO: needs to show either representation, preferred representation, or document
-    #expect(subject).to include('<dt>Relation</dt>')
     expect(subject).to include('<dt>Asset type</dt>')
     expect(subject).to include('<dt>Identifier</dt>')
   end

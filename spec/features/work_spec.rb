@@ -13,7 +13,13 @@ describe "CITI works", order: :defined do
       fill_in("q", with: "Sidewalk Gum")
       click_button("Go")
       click_link("The Great Sidewalk Gum")
-      within("dl") do
+      within("dl#show_brief_descriptions") do
+        expect(page).to have_content("WO-43523")
+        expect(page).to have_content("1999.397")
+        expect(page).to have_content("2001-01-01T00:00:00+00:00")
+        expect(page).to have_content("2014-04-16T14:29:00+00:00")
+      end
+      within("dl#show_descriptions") do
         expect(page).to have_content("The Great Sidewalk Gum")
         expect(page).to have_content("Gift of Mr. Dummy Lee & Mrs. Parrot Funkaroo")
         expect(page).to have_xpath("//span[@itemprop = 'department']", text: "3")

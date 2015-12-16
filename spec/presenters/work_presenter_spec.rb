@@ -11,4 +11,9 @@ describe WorkPresenter do
     before { allow_any_instance_of(Work).to receive(:assets).and_return([sample_asset]) }
     specify { expect(presenter.assets).to contain_exactly(sample_asset) }
   end
+  
+  describe "#summary_terms" do
+    subject { presenter }
+    its(:summary_terms) { is_expected.to contain_exactly(:uid, :main_ref_number, :created_by, :resource_created, :resource_updated) }
+  end
 end

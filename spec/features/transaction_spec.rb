@@ -13,7 +13,12 @@ describe "CITI transactions", order: :defined do
       fill_in("q", with: "TR-123456")
       click_button("Go")
       click_link("TR-123456")
-      within("dl") do
+      within("dl#show_brief_descriptions") do
+        expect(page).to have_content("TR-123456")
+        expect(page).to have_content("2004-01-01T00:00:00+00:00")
+        expect(page).to have_content("2010-01-01T00:00:00+00:00")
+      end
+      within("dl#show_descriptions") do
         expect(page).to have_content("TR-123456")
         expect(page).to have_content("2004-01-01T00:00:00+00:00")
         expect(page).to have_content("2010-01-01T00:00:00+00:00")

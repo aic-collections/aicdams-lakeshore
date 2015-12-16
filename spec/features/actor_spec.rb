@@ -13,7 +13,12 @@ describe "CITI actors", order: :defined do
       fill_in("q", with: "Pablo Picasso")
       click_button("Go")
       click_link("Pablo Picasso (1881-1973)")
-      within("dl") do
+      within("dl#show_brief_descriptions") do
+        expect(page).to have_content("AC-19646")
+        expect(page).to have_content("2015-11-12T00:00:00+00:00")
+        expect(page).to have_content("2015-11-24T00:00:00+00:00")
+      end
+      within("dl#show_descriptions") do
         expect(page).to have_content("Pablo Picasso (1881-1973)")
         expect(page).to have_content("19646")
         expect(page).to have_content("1881-10-25")

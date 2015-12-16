@@ -13,7 +13,13 @@ describe "CITI exhibitions", order: :defined do
       fill_in("q", with: "My Very Much Awesome Show ")
       click_button("Go")
       click_link("EX-2846")
-      within("dl") do
+      within("dl#show_brief_descriptions") do
+        expect(page).to have_content("EX-2846")
+        expect(page).to have_content("My Very Much Awesome Show")
+        expect(page).to have_content("2004-01-01T00:00:00+00:00")
+        expect(page).to have_content("2004-01-01T00:00:00+00:00")
+      end
+      within("dl#show_descriptions") do
         expect(page).to have_content("2846")
         expect(page).to have_content("EX-2846")
         expect(page).to have_content("2015-10-12")

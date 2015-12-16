@@ -12,17 +12,14 @@ describe "Lists" do
 
   specify "may have items curated by the user" do
     visit(lists_path)
+    sleep(5)
     # List page
-    expect(page).to have_link("My Dashboard")
     within("#my_list_list") do
       expect(page).to have_content("My List")
       click_link("Modify items")
     end
 
     # My List page
-    expect(page).to have_link("My Dashboard")
-    expect(page).to have_link("Lists")
-    expect(page).to have_content("View List")
     click_link("Add items")
     sleep(5)
     fill_in("list_item[pref_label]", with: "My Item")

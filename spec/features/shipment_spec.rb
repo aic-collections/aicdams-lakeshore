@@ -13,7 +13,12 @@ describe "CITI shipments", order: :defined do
       fill_in("q", with: "SH-3469")
       click_button("Go")
       click_link("SH-3469")
-      within("dl") do
+      within("dl#show_brief_descriptions") do
+        expect(page).to have_content("SH-3469")
+        expect(page).to have_content("2015-01-25T00:00:00+00:00")
+        expect(page).to have_content("2015-06-23T00:00:00+00:00")
+      end
+      within("dl#show_descriptions") do
         expect(page).to have_content("SH-3469")
         expect(page).to have_content("2015-01-25T00:00:00+00:00")
         expect(page).to have_content("2015-06-23T00:00:00+00:00")
