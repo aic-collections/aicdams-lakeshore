@@ -62,4 +62,17 @@ module ApplicationHelper
   def resource_type_facets
     @resource_types.reject { |r| r.is_a?(Integer) }.sort
   end
+
+  def link_to_citi(controllername, citiid)
+    if controllername == "works"
+      tableid = 3
+    elsif controllername == "exhibitions"
+      tableid = 151
+    elsif controllername == "transactions"
+      tableid = 167
+    elsif controllername == "shipments"
+      tableid = 180
+    end
+    link_to "View this object in CITI", "http://citiworker10.artic.edu:8080/edit/?tableID=" + tableid.to_s + "&uid=" + citiid.to_s, target: "_blank"
+  end
 end
