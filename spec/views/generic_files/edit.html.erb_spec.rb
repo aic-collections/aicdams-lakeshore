@@ -14,7 +14,8 @@ describe "generic_files/edit.html.erb" do
 
   let(:generic_file) do
     stub_model(GenericFile, id: '123',
-                            depositor: 'bob'
+                            depositor: 'bob',
+                            status: StatusType.active
               )
   end
 
@@ -35,8 +36,9 @@ describe "generic_files/edit.html.erb" do
 
   # TODO: Flesh this out based on more feedback and add additional test to display
   # fields based on StillImage or Text type.
-  it "shows aictype:Asset fields" do
+  it "shows the fields" do
     expect(page).to have_selector("input#generic_file_contributor", count: 1)
+    expect(page).to have_select("generic_file[status_id]", selected: 'Active')
   end
 
   it "does not show wro on create fields" do

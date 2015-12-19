@@ -6,6 +6,11 @@ class AssetEditForm < AssetPresenter
   # Use :status_id instead of :status as the editing term
   self.terms = AssetPresenter.terms - [:uid, :status, :dept_created] + [:status_id]
 
+  def status_id
+    return if status.nil?
+    status.id
+  end
+
   protected
 
     # Override HydraEditor::Form to treat nested attributes accordingly
