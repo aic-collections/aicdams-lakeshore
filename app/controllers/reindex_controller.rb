@@ -18,6 +18,13 @@ class ReindexController < ActionController::Base
 
     def reindex_submitted_ids
       return false if @json.empty? || !@json.is_a?(Array)
-      @json.map { |id| Sufia.queue.push(UpdateIndexJob.new(id)) }
+      @json.each do |id|
+        Sufia.queue.push(UpdateIndexJob.new(id)) unless deleted_from_solr?(id)
+      end
+    end
+
+    def deleted_from_solr?(id)
+      return if ActiveFedora::Base.exists?(id)
+      Blacklight.default_index.connection.delete_by_id(id)
     end
 end
