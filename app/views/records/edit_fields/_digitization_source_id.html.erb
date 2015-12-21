@@ -1,0 +1,2 @@
+<%= f.input :digitization_source_id, as: :select_with_help, collection: DigitizationSource.options, include_blank: true,
+    selected: @form.digitization_source_id, input_html: { class: 'form-control', multiple: false } %>

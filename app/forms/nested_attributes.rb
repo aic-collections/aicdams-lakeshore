@@ -21,7 +21,10 @@ module NestedAttributes
           { preferred_representation_ids: [] },
           { aictag_ids: [] },
           { tagcat_ids: [] },
-          { status_ids: [] }
+          { status_ids: [] },
+          { view_ids: [] },
+          { document_type_ids: [] },
+          { tag_ids: [] }
         ]
       end
 

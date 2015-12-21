@@ -15,6 +15,8 @@ describe Comment do
   end
 
   describe "#category" do
+    # pending
+    # it_behaves_like "a vocabulary term that accepts multiple values", "category"
     let(:category) { "comment category" }
     before { comment.category = [category] }
     subject { comment.category }

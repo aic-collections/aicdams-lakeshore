@@ -44,9 +44,11 @@ describe AssetEditForm do
 
   describe ".model_attributes" do
     let(:params) do
-      ActionController::Parameters.new(aictag_ids: [""])
+      ActionController::Parameters.new(aictag_ids: [""], digitization_source_id: "1234")
     end
     subject { described_class.model_attributes(params) }
+
+    it { is_expected.to include(:digitization_source_id) }
 
     it "removes empty strings" do
       pending "this needs to apply to documents, representations and preferred representations"

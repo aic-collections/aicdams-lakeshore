@@ -24,7 +24,7 @@ describe LakeshoreBatchUpdateJob do
     let(:title) { { file.id => ['File One'], file2.id => ['File Two'] } }
     let(:metadata) do
       { read_groups_string: '', read_users_string: 'archivist1, archivist2',
-        asset_capture_device: 'Sony camera', digitization_source: ['painting']
+        asset_capture_device: 'Sony camera'
       }.with_indifferent_access
     end
 

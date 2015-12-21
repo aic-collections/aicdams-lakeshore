@@ -26,10 +26,12 @@ Metrics/MethodLength:
 Metrics/ClassLength:
   Exclude:
     - 'lib/aic.rb'
+    - 'lib/aic_type.rb'
     - 'app/controllers/catalog_controller.rb'
 
 Metrics/ModuleLength:
   Exclude:
+    - 'spec/support/list_loader.rb'
 
 Style/BlockDelimiters:
   Exclude:

@@ -31,6 +31,18 @@ class AssetPresenter < Sufia::GenericFilePresenter
     return "Text Document" if model.text?
   end
 
+  def views
+    model.view.map(&:pref_label).join(", ")
+  end
+
+  def document_types
+    model.document_type.map(&:pref_label).join(", ")
+  end
+
+  def tags
+    model.tag.map(&:pref_label).join(", ")
+  end
+
   private
 
     def representing_resource

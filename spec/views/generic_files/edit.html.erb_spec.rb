@@ -15,7 +15,10 @@ describe "generic_files/edit.html.erb" do
   let(:generic_file) do
     stub_model(GenericFile, id: '123',
                             depositor: 'bob',
-                            status: StatusType.active
+                            status: StatusType.active,
+                            digitization_source: DigitizationSource.all.first,
+                            compositing: Compositing.all.first,
+                            light_type: nil
               )
   end
 
@@ -39,6 +42,9 @@ describe "generic_files/edit.html.erb" do
   it "shows the fields" do
     expect(page).to have_selector("input#generic_file_contributor", count: 1)
     expect(page).to have_select("generic_file[status_id]", selected: 'Active')
+    expect(page).to have_select("generic_file[digitization_source_id]", selected: 'Sample Digitization Source List Item')
+    expect(page).to have_select("generic_file[compositing_id]", selected: 'Sample Compositing List Item')
+    expect(page).to have_select("generic_file[light_type_id]", options: ['Sample Light Type List Item', ''])
   end
 
   it "does not show wro on create fields" do

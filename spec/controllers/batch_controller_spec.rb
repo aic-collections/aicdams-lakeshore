@@ -19,11 +19,11 @@ describe BatchController do
           user.user_key,
           batch.id,
           { '1' => 'foo' },
-          { tag: [] },
+          { document_type_ids: [] },
           'open'
         ).and_return(batch_update_message)
         expect(Sufia.queue).to receive(:push).with(batch_update_message).once
-        post :update, id: batch.id, title: { '1' => 'foo' }, visibility: 'open', generic_file: { tag: [""] }
+        post :update, id: batch.id, title: { '1' => 'foo' }, visibility: 'open', generic_file: { document_type_ids: [] }
         expect(assigns(:batch_update_job)).to eq(batch_update_message)
         expect(response).to redirect_to routes.url_helpers.dashboard_files_path
         expect(flash[:notice]).to include("Your files are being processed")

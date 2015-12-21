@@ -1,0 +1,2 @@
+<%= f.input :light_type_id, as: :select_with_help, collection: LightType.options, include_blank: true,
+    selected: @form.light_type_id, input_html: { class: 'form-control', multiple: false } %>

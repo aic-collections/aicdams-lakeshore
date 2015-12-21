@@ -97,7 +97,7 @@ describe GenericFile do
   describe "cardinality" do
     [:asset_capture_device, :digitization_source, :document_type].each do |term|
       it "limits #{term} to a single value" do
-        pending "Can't enforce singular AT resources" unless term == :asset_capture_device
+        pending "Can't enforce singular AT resources" if term == :document_type
         subject.send(term.to_s + "=", "foo")
         expect(subject.send(term.to_s)).to eql "foo"
       end
