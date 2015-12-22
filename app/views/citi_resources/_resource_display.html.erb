@@ -5,7 +5,11 @@
   <div class="media-body">
     <dl class="dl-horizontal file-show-term file-show-descriptions">
       <dt>Resource</dt>
-      <dd><%= resource.class.to_s.capitalize %></dd>
+      <dd class="assetview"><%= resource.class.to_s.capitalize %></dd>
+	  <dt>Uid</dt>
+	  <dd class="assetview"><%= resource.uid.to_s.capitalize %></dd>
+	  <dt>Pref label</dt>
+	  <dd class="assetview"><%= resource.pref_label.to_s.capitalize %></dd>
     </dl>
   </div>
 </div>
