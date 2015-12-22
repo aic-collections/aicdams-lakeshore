@@ -32,6 +32,9 @@
       <%= f.input :rights, as: :select_with_modal_help, collection: Sufia.config.cc_licenses,
           input_html: { class: 'form-control', multiple: true } %>
 
+      <%= f.input :document_type_ids, as: :select_with_help, label: "Document Types", collection: DocumentType.options,
+          required: true, input_html: { class: 'form-control', multiple: true } %>
+
       <%= render "generic_files/rights_modal" %>
 
       <button id="show_addl_descriptions" class="btn btn-default" aria-label="reveal additional metadata description fields">Show Additional Fields</button>

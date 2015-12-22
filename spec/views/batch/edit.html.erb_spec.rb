@@ -14,10 +14,17 @@ describe 'batch/edit.html.erb' do
     allow(controller).to receive(:current_user).and_return(stub_model(User))
     assign :batch, batch
     assign :form, form
-    render
   end
 
-  it "does not show Sufia's keyword field" do
-    expect(render).not_to have_selector "input#generic_file_resource_type"
+  let(:page) do
+    render
+    Capybara::Node::Simple.new(rendered)
+  end
+
+  it "draws the form" do
+    within("div#generic_file_document_type_ids") do
+      expect(page).to have_content('required="required')
+    end
+    expect(page).not_to have_selector "input#generic_file_resource_type"
   end
 end

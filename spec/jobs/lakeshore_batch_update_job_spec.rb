@@ -24,7 +24,8 @@ describe LakeshoreBatchUpdateJob do
     let(:title) { { file.id => ['File One'], file2.id => ['File Two'] } }
     let(:metadata) do
       { read_groups_string: '', read_users_string: 'archivist1, archivist2',
-        asset_capture_device: 'Sony camera'
+        asset_capture_device: 'Sony camera',
+        document_type_ids: ["", DocumentType.all.first.id]
       }.with_indifferent_access
     end
 
@@ -41,6 +42,7 @@ describe LakeshoreBatchUpdateJob do
       subject { file.reload }
       its(:title) { is_expected.to eq(['File One']) }
       its(:pref_label) { is_expected.to eq(file.id) }
+      its(:document_type) { is_expected.to eq(DocumentType.all) }
     end
   end
 end

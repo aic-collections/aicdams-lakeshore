@@ -18,8 +18,10 @@ module AssetMetadata
 
     property :document_type, predicate: AIC.documentType, multiple: true, class_name: "ListItem"
 
+    # TODO: See issue #178
     def document_type_ids=(ids)
       return if ids.nil?
+      ids.reject!(&:empty?)
       self.document_type = ids.map { |id| ListItem.find(id) }
     end
 

@@ -13,17 +13,17 @@ describe BatchController do
   describe "#update" do
     let(:batch_update_message) { double('batch update message') }
     let(:batch) { Batch.create }
-    context "enquing a batch job" do
+    context "en-queuing a batch job" do
       it "is successful" do
         expect(LakeshoreBatchUpdateJob).to receive(:new).with(
           user.user_key,
           batch.id,
           { '1' => 'foo' },
-          { document_type_ids: [] },
+          { document_type_ids: DocumentType.all.map(&:id) },
           'open'
         ).and_return(batch_update_message)
         expect(Sufia.queue).to receive(:push).with(batch_update_message).once
-        post :update, id: batch.id, title: { '1' => 'foo' }, visibility: 'open', generic_file: { document_type_ids: [] }
+        post :update, id: batch.id, title: { '1' => 'foo' }, visibility: 'open', generic_file: { document_type_ids: DocumentType.all.map(&:id) }
         expect(assigns(:batch_update_job)).to eq(batch_update_message)
         expect(response).to redirect_to routes.url_helpers.dashboard_files_path
         expect(flash[:notice]).to include("Your files are being processed")
