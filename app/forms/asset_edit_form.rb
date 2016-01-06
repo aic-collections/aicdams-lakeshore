@@ -3,18 +3,11 @@ class AssetEditForm < AssetPresenter
   include HydraEditor::Form::Permissions
   include NestedAttributes
 
-  def self.vocabulary_terms
-    [:status, :digitization_source, :compositing, :light_type, :view, :document_type, :tag]
-  end
-
-  def self.vocabulary_id_terms
-    [
-      :status_id, :digitization_source_id, :compositing_id, :light_type_id,
-      :view_ids, :document_type_ids, :tag_ids
-    ]
-  end
-
-  self.terms = AssetPresenter.terms - [:uid, :dept_created] - vocabulary_terms + vocabulary_id_terms
+  self.terms = [
+    :title, :created_by, :description, :language, :publisher, :rights_holder,
+    :asset_capture_device, :status_id, :digitization_source_id, :compositing_id,
+    :light_type_id, :view_ids, :document_type_ids, :tag_ids
+  ]
 
   def status_id
     return if status.nil?
