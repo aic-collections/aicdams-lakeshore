@@ -24,6 +24,15 @@ To run the test suite
 
     bundle exec rspec spec
 
+### Configuring SSL
+
+Generate a keystore
+
+    keytool -keystore keystore -alias jetty -genkey -keyalg RSA
+    cp keystore jetty_config
+
+Make sure the common name is set to `localhost` or whatever is specified in fedora.yml
+
 ## Deployment
 
 ### Development Server
