@@ -6,7 +6,7 @@ module NestedAttributes
     #
     # @return [Array<Hash>] hashes of elements allowed in a form
     def build_permitted_params
-      super + resources_nested_by_id + resources_nested_by_attributes
+      super + resources_nested_by_id + resources_nested_by_attributes + related_resources_for
     end
 
     private
@@ -33,6 +33,12 @@ module NestedAttributes
       # parameter hash.
       def resources_nested_by_attributes
         [{ comments_attributes: [:id, :_destroy, :content, { category: [] }] }]
+      end
+
+      # Resources that are the subjects of related resources. For example, specifying
+      # that a Work has a representation of one or more assets.
+      def related_resources_for
+        [:representation_for, :document_for]
       end
   end
 

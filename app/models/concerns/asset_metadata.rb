@@ -49,6 +49,26 @@ module AssetMetadata
     super(attributes)
   end
 
+  # Adds the asset as a representation to the resource
+  # @param [String] resource_id that will have the asset as a representation
+  def representation_for=(resource_id)
+    resource = ActiveFedora::Base.find(resource_id)
+    resource.representation_ids += [id]
+    resource.save
+  rescue ActiveFedora::ObjectNotFoundError
+    nil
+  end
+
+  # Adds the asset as a document to the resource
+  # @param [String] resource_id that will have the asset as a document
+  def document_for=(resource_id)
+    resource = ActiveFedora::Base.find(resource_id)
+    resource.document_ids += [id]
+    resource.save
+  rescue ActiveFedora::ObjectNotFoundError
+    nil
+  end
+
   private
 
     # Returns the correct type class for status when loading an object from Solr

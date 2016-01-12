@@ -2,16 +2,9 @@
 <h2 class="non lower">Actions</h2>
   <p>
     <% if can? :edit, @resource %>
-      <%= link_to "Edit", edit_resource_path %>
-    <% end %>
-    <% if can?(:create, FeaturedWork) && @resource.featureable? %>
-      <% if FeaturedWork.can_create_another? && !@resource.featured?%>
-        &nbsp;|&nbsp;
-        <%= link_to "Feature", sufia.featured_work_path(@resource, format: :json), data: {behavior: 'feature'} %>
-      <% elsif @resource.featured? %>
-        &nbsp;|&nbsp;
-        <%= link_to "Unfeature", sufia.featured_work_path(@resource, format: :json), data: {behavior: 'unfeature-page'} %>
-      <% end %>
+      <%= link_to "Edit", edit_resource_path %> |
+      <%= link_to "Add representations", sufia.new_generic_file_path(representation_for: params[:id]) %> |
+      <%= link_to "Add documents", sufia.new_generic_file_path(document_for: params[:id]) %> |
     <% end %>
   </p>
 </div>
