@@ -63,4 +63,12 @@ describe Resource do
       end
     end
   end
+
+  describe "#resource_created" do
+    context "with a bad date" do
+      let(:bad_resource) { described_class.create(resource_created: "bad date") }
+      subject { ActiveFedora::Base.load_instance_from_solr(bad_resource.id) }
+      its(:resource_created) { is_expected.to eq("bad date is not a valid date") }
+    end
+  end
 end

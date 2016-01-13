@@ -10,9 +10,11 @@ class Resource < ActiveFedora::Base
 
   private
 
-    # TODO: Remove this when projecthydra/active_fedora#939 is merged
+    # ActiveFedora casts values into DateTime objects
+    # However, when comming from CITI, these values are sometimes suspect, see issue #198
     def adapt_single_attribute_value(value, attribute_name)
-      return nil if date_attribute?(attribute_name) && !value.present?
       super
+    rescue ArgumentError
+      "#{value} is not a valid date"
     end
 end
