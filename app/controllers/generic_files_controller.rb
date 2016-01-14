@@ -58,7 +58,7 @@ class GenericFilesController < ApplicationController
         if MIME::Types.of(file.original_filename).empty?
           return_unknown_mime_type
         else
-          reject_still_image_types unless STILL_IMAGE_TYPES.include?(MIME::Types.of(file.original_filename).first.content_type)
+          reject_still_image_types(file) unless STILL_IMAGE_TYPES.include?(MIME::Types.of(file.original_filename).first.content_type)
         end
       end
     end
@@ -67,18 +67,18 @@ class GenericFilesController < ApplicationController
         if MIME::Types.of(file.original_filename).empty?
           return_unknown_mime_type
         else
-          reject_text_types unless TEXT_TYPES.include?(MIME::Types.of(file.original_filename).first.content_type)
+          reject_text_types(file) unless TEXT_TYPES.include?(MIME::Types.of(file.original_filename).first.content_type)
         end
       end
     end
   end
 
-  def reject_still_image_types
-    json_error("Submitted file does not have a mime type for a still image")
+  def reject_still_image_types(file)
+    json_error("Submitted file does not have a mime type for a still image", file.original_filename)
   end
 
-  def reject_text_types
-    json_error("Submitted file does not have a mime type for a text file")
+  def reject_text_types(file)
+    json_error("Submitted file does not have a mime type for a text file", file.original_filename)
   end
 
   def return_unknown_mime_type
