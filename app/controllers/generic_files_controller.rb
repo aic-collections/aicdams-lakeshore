@@ -33,6 +33,10 @@ class GenericFilesController < ApplicationController
   before_action :verify_asset_type, only: [:create]
   before_action :verify_mime_type, only: [:create]
 
+  def index
+    redirect_to catalog_index_path(params.except(:controller, :action).merge(f: { Solrizer.solr_name("aic_type", :facetable) => ["Asset"] }))
+  end
+
   def require_asset_type
     return json_error("You must provide an asset type") unless params.key? :asset_type
   end

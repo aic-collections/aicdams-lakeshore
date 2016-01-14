@@ -107,4 +107,11 @@ describe GenericFilesController do
       it { is_expected.to include("New version's mime type does not match existing type") }
     end
   end
+
+  describe "#index" do
+    routes { Lakeshore::Application.routes }
+    before { get :index }
+    subject { response }
+    it { is_expected.to redirect_to("http://test.host/catalog?f%5Baic_type_sim%5D%5B%5D=Asset") }
+  end
 end

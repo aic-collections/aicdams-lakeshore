@@ -33,6 +33,8 @@ Rails.application.routes.draw do
     resources :list_items, except: [:index, :show]
   end
 
+  resources :generic_files, only: [:index]
+
   # Lakeshore API
   scope "api" do
     post "reindex", to: "reindex#update"
