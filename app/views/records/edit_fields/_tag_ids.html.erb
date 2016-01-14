@@ -1,2 +1,2 @@
-<%= f.input :tag_ids, as: :select_with_help, label: "Tags", collection: Tag.options,
+<%= f.input :tag_ids, as: :select_with_help, label: t('simple_form.labels.generic_file.tag'), collection: Tag.options,
     selected: @form.tag_ids, input_html: { class: 'form-control', multiple: true } %>

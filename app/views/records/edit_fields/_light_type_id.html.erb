@@ -1,2 +1,3 @@
-<%= f.input :light_type_id, as: :select_with_help, collection: LightType.options, include_blank: true,
-    selected: @form.light_type_id, input_html: { class: 'form-control', multiple: false } %>
+<%= f.input :light_type_id, as: :select_with_help, label: t('simple_form.labels.generic_file.light_type'), 
+	collection: LightType.options, include_blank: true, selected: @form.light_type_id,
+	input_html: { class: 'form-control', multiple: false } %>

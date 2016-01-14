@@ -1,2 +1,3 @@
-<%= f.input :compositing_id, as: :select_with_help, collection: Compositing.options, include_blank: true,
-    selected: @form.compositing_id, input_html: { class: 'form-control', multiple: false } %>
+<%= f.input :compositing_id, as: :select_with_help, label: t('simple_form.labels.generic_file.compositing'),
+	collection: Compositing.options, include_blank: true, selected: @form.compositing_id,
+	input_html: { class: 'form-control', multiple: false } %>

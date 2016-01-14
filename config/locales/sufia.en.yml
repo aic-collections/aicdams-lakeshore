@@ -58,11 +58,34 @@ en:
         user_deposits:
           heading: "Display assets deposited by users"
 
+  simple_form:
+    labels:
+      generic_file:
+        uid:                  "UID"
+        legacy_uid:           "Legacy UID"
+        document_type:        "Document Type"
+        status:               "Status"
+        resource_created:     "Resource Created"
+        dept_created:         "Created By Department"
+        resource_updated:     "Resource Updated"
+        description:          "Abstract or Summary"
+        batch_uid:            "In Batch"
+        language:             "Language"
+        publisher:            "Publisher"
+        rights_holder:        "Rights Holder"
+        tag:                  "Tag"
+        created_by:           "Created By"
+        compositing:          "Image Compositing"
+        light_type:           "Image Capture Light Type"
+        view:                 "Image View"
+        asset_capture_device: "Asset Capture Device"
+        digitization_source:  "Digitization Source"
+
     metadata_help:
       generic_file:
         resource_type_html: "Pre-defined categories to describe the type of asset content being uploaded, such as &quot;article&quot; or &quot;dataset.&quot;  More than one type may be selected."
         title: "A name for the asset to aid in identifying it. Defaults to the asset name, though a more descriptive title is encouraged. &lt;em&gt;This is a required field&lt;/em&gt;."
-        tag: "Words or phrases you select to describe what the asset is about. These are used to search for content. &lt;em&gt;This is a required field&lt;/em&gt;."
+        tag_ids: "Words or phrases you select to describe what the asset is about. These are used to search for content. &lt;em&gt;This is a required field&lt;/em&gt;."
         subject: "Headings or index terms describing what the asset is about; these &lt;em&gt;do&lt;/em&gt; need to conform to an existing vocabulary. Currently supports Library of Congress Subject Headings."
         creator_html: "The person or group responsible for the asset being uploaded. Usually this is the author of the content. Personal names should be entered with the last name first, e.g. &quot;Smith, John.&quot; &lt;em&gt;This is a required field&lt;/em&gt;."
         related_url: "A link to a website or other specific content (audio, video, PDF document) related to the asset. An example is the URL of a research project from which the asset was derived."

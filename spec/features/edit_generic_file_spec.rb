@@ -14,6 +14,46 @@ describe "Editing generic files" do
 
   before { sign_in user }
 
+  it "displays the correct labels" do
+    visit sufia.edit_generic_file_path(file)
+    match_edit_label(:document_type_ids, with: "Document Type")
+    match_edit_label(:title, with: "Title")
+    match_edit_label(:created_by, with: "Created By")
+    match_edit_label(:description, with: "Abstract or Summary")
+    match_edit_label(:language, with: "Language")
+    match_edit_label(:publisher, with: "Publisher")
+    match_edit_label(:rights_holder, with: "Rights Holder")
+    match_edit_label(:asset_capture_device, with: "Asset Capture Device")
+    match_edit_label(:status_id, with: "Status")
+    match_edit_label(:digitization_source_id, with: "Digitization Source")
+    match_edit_label(:compositing_id, with: "Image Compositing")
+    match_edit_label(:light_type_id, with: "Image Capture Light Type")
+    match_edit_label(:view_ids, with: "Image View")
+    match_edit_label(:tag_ids, with: "Tag")
+    visit sufia.generic_file_path(file)
+    within("dl.file-show-descriptions") do
+      expect(page).to have_content("UID")
+      expect(page).to have_content("Legacy UID")
+      expect(page).to have_content("Document Type")
+      expect(page).to have_content("Status")
+      expect(page).to have_content("Resource Created")
+      expect(page).to have_content("Created By Department")
+      expect(page).to have_content("Resource Updated")
+      expect(page).to have_content("Abstract or Summary")
+      expect(page).to have_content("In Batch")
+      expect(page).to have_content("Language")
+      expect(page).to have_content("Publisher")
+      expect(page).to have_content("Rights Holder")
+      expect(page).to have_content("Tag")
+      expect(page).to have_content("Created By")
+      expect(page).to have_content("Image Compositing")
+      expect(page).to have_content("Image Capture Light Type")
+      expect(page).to have_content("Image View")
+      expect(page).to have_content("Asset Capture Device")
+      expect(page).to have_content("Digitization Source")
+    end
+  end
+
   context "with comments" do
     let(:comment0) { "The first comment"  }
     let(:comment1) { "The second comment" }
