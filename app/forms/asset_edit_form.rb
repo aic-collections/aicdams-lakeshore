@@ -4,9 +4,9 @@ class AssetEditForm < AssetPresenter
   include NestedAttributes
 
   self.terms = [
-    :title, :created_by, :description, :language, :publisher, :rights_holder,
+    :document_type_ids, :title, :created_by, :description, :language, :publisher, :rights_holder,
     :asset_capture_device, :status_id, :digitization_source_id, :compositing_id,
-    :light_type_id, :view_ids, :document_type_ids, :tag_ids
+    :light_type_id, :view_ids, :tag_ids
   ]
 
   def status_id
