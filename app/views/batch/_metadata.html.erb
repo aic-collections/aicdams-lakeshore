@@ -27,19 +27,18 @@
     <div class="row">
       <div class="col-sm-6">
       <h3>Applies to all files just uploaded</h3>
-      <%= f.input :creator, as: :multi_value_with_help %>
-
-      <%= f.input :rights, as: :select_with_modal_help, collection: Sufia.config.cc_licenses,
-          input_html: { class: 'form-control', multiple: true } %>
 
       <%= f.input :document_type_ids, as: :select_with_help, label: "Document Types", collection: DocumentType.options,
           required: true, input_html: { class: 'form-control', multiple: true } %>
+      
+      <%= render_edit_field_partial(:created_by, f: f) %>
 
-      <%= f.input :representation_for, input_html: { value: params[:representation_for] } %>
-
-      <%= f.input :document_for, input_html: { value: params[:document_for] } %>
-
-      <%= render "generic_files/rights_modal" %>
+      <button id="show_addl_descriptions" class="btn btn-default" aria-label="reveal additional metadata description fields">
+        Show Additional Fields
+      </button>
+      <!-- hidden on initial load -->
+ 
+      <%= render 'more_metadata', f: f %>
 
       </div> <!-- /col-sm-8 -->
     </div> <!-- /row -->
