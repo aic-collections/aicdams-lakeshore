@@ -5,8 +5,8 @@ namespace :repo do
     on roles(:app) do
       execute "cd #{fetch(:base_dir)} && git clone #{fetch(:repo_url)}"
       execute "cd #{fetch(:base_dir)}/aicdams-lakeshore && HTTP_PROXY=#{fetch(:aic_proxy)} bundle install"
-      execute "cd #{fetch(:base_dir)}/aicdams-lakeshore && /usr/bin/env rake db:migrate"
-      execute "cd #{fetch(:base_dir)}/aicdams-lakeshore && /usr/bin/env rake rails:update:bin"
+      execute "cd #{fetch(:base_dir)}/aicdams-lakeshore && /usr/bin/env bundle exec rake db:migrate"
+      execute "cd #{fetch(:base_dir)}/aicdams-lakeshore && /usr/bin/env bundle exec rake rails:update:bin"
     end
   end
 
@@ -15,8 +15,8 @@ namespace :repo do
     on roles(:app) do
       execute "cd #{fetch(:base_dir)}/aicdams-lakeshore && git pull"
       execute "cd #{fetch(:base_dir)}/aicdams-lakeshore && HTTP_PROXY=#{fetch(:aic_proxy)} bundle install"
-      execute "cd #{fetch(:base_dir)}/aicdams-lakeshore && /usr/bin/env rake db:migrate"
-      execute "cd #{fetch(:base_dir)}/aicdams-lakeshore && /usr/bin/env rake rails:update:bin"
+      execute "cd #{fetch(:base_dir)}/aicdams-lakeshore && /usr/bin/env bundle exec rake db:migrate"
+      execute "cd #{fetch(:base_dir)}/aicdams-lakeshore && /usr/bin/env bundle exec rake rails:update:bin"
     end
   end  
 
@@ -25,7 +25,7 @@ namespace :repo do
     on roles(:app) do
       execute "cp #{fetch(:aic_config_dir)}/*.yml #{fetch(:base_dir)}/aicdams-lakeshore/config/"
       execute "cp #{fetch(:aic_config_dir)}/fedora-cert.pem #{fetch(:base_dir)}/aicdams-lakeshore/config/"
-      execute "cd #{fetch(:base_dir)}/aicdams-lakeshore && /usr/bin/env rake fedora:load_fixtures"
+      execute "cd #{fetch(:base_dir)}/aicdams-lakeshore && /usr/bin/env bundle exec rake fedora:load_fixtures"
     end
   end
 
@@ -39,8 +39,8 @@ namespace :repo do
   desc "Reinstall the database"
   task :db do
     on roles(:app) do
-      execute "cd #{fetch(:base_dir)}/aicdams-lakeshore && /usr/bin/env rake db:drop"
-      execute "cd #{fetch(:base_dir)}/aicdams-lakeshore && /usr/bin/env rake db:create"      
+      execute "cd #{fetch(:base_dir)}/aicdams-lakeshore && /usr/bin/env bundle exec rake db:drop"
+      execute "cd #{fetch(:base_dir)}/aicdams-lakeshore && /usr/bin/env bundle exec rake db:create"      
     end
   end
 
