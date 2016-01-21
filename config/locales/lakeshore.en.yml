@@ -1,0 +1,4 @@
+en:
+  lakeshore:
+    upload:
+      restrictions_html: "<h3>Maximum Upload Restrictions</h3><ul><li>Individual File Size: 1 GB</li></ul>"
