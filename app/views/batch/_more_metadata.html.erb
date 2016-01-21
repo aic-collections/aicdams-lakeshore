@@ -3,6 +3,6 @@
   <% (f.object.terms - [:document_type_ids, :title, :created_by]).each do |term| %>
     <%= render_edit_field_partial(term, f: f) %>
   <% end %>
-  <%= f.input :representation_for, input_html: { value: params[:representation_for] } %>
-  <%= f.input :document_for, input_html: { value: params[:document_for] } %>
+  <%= f.input :representation_for, as: :text_with_help, input_html: { value: params[:representation_for] } %>
+  <%= f.input :document_for, as: :text_with_help, input_html: { value: params[:document_for] } %>
 </div> <!-- /more_descriptions -->

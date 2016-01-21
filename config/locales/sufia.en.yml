@@ -80,6 +80,8 @@ en:
         view:                 "Image View"
         asset_capture_device: "Asset Capture Device"
         digitization_source:  "Digitization Source"
+        representation_for:   "Representation For"
+        document_for:         "Document For"
 
     metadata_help:
       generic_file:
@@ -97,3 +99,14 @@ en:
         language: "The language of the asset content."
         publisher: "The person or group making the asset available. Generally this is the institution."
         rights: "Licensing and distribution information governing access to the asset. Select from the provided drop-down list. &lt;em&gt;This is a required field&lt;/em&gt;."
+        document_type_ids: "Select one document type from the hierarchy."
+        created_by: "Person or corporate body who was primarily responsible for the creation of the resource."
+        rights_holder: "Name of rights holder or URL pointing to an actor resource."
+        asset_capture_device: "Capture device of original file."
+        status_id: "Status of the resource."
+        digitization_source_id: "Original document for non-born-digital assets."
+        compositing_id: "Compositing type."
+        light_type_id: "Light type used to capture the image."
+        view_ids: "Viewing angle, overall or detail, etc."
+        representation_for: "A CITI resource for which these assets serve as representations."
+        document_for: "A CITI resource for which these assets serve as documents."

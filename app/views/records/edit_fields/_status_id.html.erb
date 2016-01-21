@@ -1,2 +1,3 @@
-<%= f.input :status_id, as: :select_with_help, collection: StatusType.options, selected: @form.status_id,
+<%= f.input :status_id, as: :select_with_help, label: t('simple_form.labels.generic_file.status'),
+	collection: StatusType.options, selected: @form.status_id,
     input_html: { class: 'form-control', multiple: false } %>
