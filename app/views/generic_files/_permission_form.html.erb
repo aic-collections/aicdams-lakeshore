@@ -3,6 +3,7 @@
 <% public_perm = true if params[:controller] == 'batch' %>
 <% registered_perm = f.object.permissions.map { |perm| perm.access if perm.agent_name == "registered"}.compact.first %>
 <% available_roles = Role.pluck(:name) %>
+<% dept_created = f.object.dept_created %>
 
 <h2><% if params[:controller] == 'batch' %>Bulk <% end %>Permissions <% if params[:controller] == 'batch' %>
       <small>(applied to all files just uploaded)</small><% end %>
@@ -95,18 +96,18 @@
       <%= Sufia.config.owner_permission_levels.keys[0] %>
     </td>
   </tr>
-  <% if f.object.dept_created && registered_perm.blank? %>
+  <% if dept_created && registered_perm.blank? %>
     <tr>
       <td>
         <%= label_tag :owner_access, class: "control-label" do %>
-          Depositor department (<span ><%= f.object.dept_created %></span>)
+          Depositor department (<span ><%= dept_created %></span>)
         <% end %>
       </td>
       <td> Read </td>
     </tr>
   <% end %>
   <%= f.fields_for :permissions do |permission_fields| %>
-    <% next if ['admin', 'registered', depositor].include? permission_fields.object.agent_name.downcase %>
+    <% next if ['admin', 'registered', 'department', dept_created, depositor].include? permission_fields.object.agent_name.downcase %>
     <tr>
       <td><%= permission_fields.label :agent_name, class: "control-label" do %>
         <%= user_display_name_and_key(permission_fields.object.agent_name) %>
