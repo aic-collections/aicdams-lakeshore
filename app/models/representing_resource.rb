@@ -28,10 +28,7 @@ class RepresentingResource
   private
 
     def objects_with_predicate(solr_field)
-      if id.nil?
-        []
-      else
-        ActiveFedora::Base.where(solr_field => id)
-      end
+      return [] if id.nil?
+      ActiveFedora::Base.where(solr_field => id)
     end
 end

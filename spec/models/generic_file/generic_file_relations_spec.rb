@@ -12,6 +12,9 @@ describe "Resources that nest assets" do
     end
   end
 
+  let(:solr_representations) { asset.to_solr[Solrizer.solr_name("representation", :facetable)] }
+  let(:facets_for_representations) { facets_for(Solrizer.solr_name("representation", :facetable), asset.id) }
+
   shared_examples "a resource that can nest assets" do
     before do
       resource.representation_ids = [asset.id]
@@ -19,9 +22,13 @@ describe "Resources that nest assets" do
       resource.document_ids = [asset.id]
       resource.save
     end
-    specify { expect(resource.representations).to include(asset) }
-    specify { expect(resource.preferred_representations).to include(asset) }
-    specify { expect(resource.documents).to include(asset) }
+    it "contains the correct kind of representations" do
+      expect(resource.representations).to include(asset)
+      expect(resource.preferred_representations).to include(asset)
+      expect(resource.documents).to include(asset)
+      expect(solr_representations).to contain_exactly("Document", "Representation", "Preferred Representation")
+      expect(facets_for_representations).to contain_exactly("Document", 1, "Representation", 1, "Preferred Representation", 1)
+    end
     context "when removing the representation from the resource" do
       before do
         resource.representation_ids = []
@@ -30,6 +37,8 @@ describe "Resources that nest assets" do
       it "retains the preferred representation" do
         expect(resource.representations).to be_empty
         expect(resource.preferred_representations).to include(asset)
+        expect(solr_representations).to contain_exactly("Document", "Preferred Representation")
+        expect(facets_for_representations).to contain_exactly("Document", 1, "Preferred Representation", 1)
       end
     end
     context "when removing the asset" do
