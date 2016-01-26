@@ -4,6 +4,7 @@ require 'capistrano/setup'
 # Include default deployment tasks
 require 'capistrano/deploy'
 require 'capistrano/rails'
+require 'airbrussh/capistrano'
 
 # Include tasks from other gems included in your Gemfile
 #

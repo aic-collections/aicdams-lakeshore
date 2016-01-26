@@ -2,23 +2,13 @@ namespace :resque do
 
   desc "Start resque pool workers"
   task :start do
-    on roles(:app) do
-      execute "cd #{fetch(:current_release)} && bundle exec resque-pool --daemon --environment #{fetch(:rails_env)} start"
-    end
+    invoke "resque:restart"
   end
 
-  desc "Stop resque pool workers"
-  task :stop do
-    on roles(:app) do
-      execute "ps -ax | grep resque | awk '{ print $1 }' | xargs kill -9"
-    end
-  end
-
-  desc "Restart resque"
+  desc "Restart resque-pool"
   task :restart do
-    invoke "resque:stop"
-    sleep(5)
-    invoke "resque:start"
+    on roles(:app) do
+      execute "cd #{fetch(:current_release)} && ./script/restart_resque.sh #{fetch(:rails_env)}"
+    end
   end
-
 end

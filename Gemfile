@@ -29,6 +29,7 @@ group :development, :test do
 end
 
 group :development do
+  gem 'airbrussh', require: false
   gem 'capistrano-rails', require: false
   gem 'rubocop', require: false
   gem 'rubocop-rspec', require: false
