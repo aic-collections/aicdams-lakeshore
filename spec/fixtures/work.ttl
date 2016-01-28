@@ -39,7 +39,7 @@
 
 
 <> a aictype:Work ;
-  aic:citiUid "43523"^^<http://www.w3.org/2001/XMLSchema#integer> ;
+  aic:citiUid "43523"^^<http://www.w3.org/2001/XMLSchema#string> ;
   aic:galleryLocation "Gallery 1234"^^<http://www.w3.org/2001/XMLSchema#string> ;
   aic:dimensionsDisplay "1230 x 820 mm"^^<http://www.w3.org/2001/XMLSchema#string> ;
   aic:status <http://definitions.artic.edu/ontology/1.0/status/active> ;

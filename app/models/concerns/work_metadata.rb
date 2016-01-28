@@ -6,10 +6,6 @@ module WorkMetadata
       index.as :stored_searchable
     end
 
-    property :citi_uid, predicate: AIC.citiUid, multiple: false do |index|
-      index.as :stored_searchable
-    end
-
     property :creator_display, predicate: AIC.creatorDisplay, multiple: false do |index|
       index.as :stored_searchable
     end

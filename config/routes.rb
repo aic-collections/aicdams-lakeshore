@@ -34,6 +34,7 @@ Rails.application.routes.draw do
   end
 
   resources :generic_files, only: [:index]
+  resources :representations, only: [:index]
 
   # Lakeshore API
   scope "api" do
