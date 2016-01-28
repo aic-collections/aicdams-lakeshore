@@ -37,6 +37,7 @@ describe GenericFile do
     end
     describe "#to_solr" do
       before do
+        subject.tag_ids = [Tag.all.first.id]
         allow(subject).to receive(:file_size).and_return(["1234"])
         allow(subject).to receive(:width).and_return(["8"])
         allow(subject).to receive(:height).and_return(["12"])
@@ -46,6 +47,8 @@ describe GenericFile do
         expect(subject.to_solr[CatalogController.file_size_field]).to eq "1234"
         expect(subject.to_solr[Solrizer.solr_name("image_width", :searchable, type: :integer)]).to eq ["8"]
         expect(subject.to_solr[Solrizer.solr_name("image_height", :searchable, type: :integer)]).to eq ["12"]
+        expect(subject.to_solr[Solrizer.solr_name("tag", :facetable)]).to contain_exactly(Tag.all.first.pref_label)
+        expect(subject.to_solr[Solrizer.solr_name("tag", :stored_searchable)]).to contain_exactly(Tag.all.first.pref_label)
       end
     end
     describe "minting uids" do

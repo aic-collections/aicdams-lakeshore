@@ -9,6 +9,10 @@ class AssetIndexer < ActiveFedora::IndexingService
     end
   end
 
+  def rdf_service
+    RDFIndexingService
+  end
+
   private
 
     def aic_types(types)
