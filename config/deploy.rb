@@ -63,4 +63,5 @@ namespace :deploy do
       execute "cd #{fetch(:deploy_to)}/current && touch tmp/restart.txt"
     end
   end
+  after :finished, "resque:restart"
 end
