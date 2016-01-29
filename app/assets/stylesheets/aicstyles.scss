@@ -201,9 +201,13 @@ form.per_page.form-inline {
   }
   
 dd.assetview {
-    margin-bottom: 0px;
+  margin-bottom: 0px;
   }
   
 button.dropdown-toggle {
-	border-radius: 0;
+  border-radius: 0;
+}
+
+figure {
+  max-width: 100%;
 }
