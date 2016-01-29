@@ -68,7 +68,7 @@ class CatalogController < ApplicationController
     config.add_facet_field solr_name("file_format", :facetable), label: "File Format", limit: 5
     config.add_facet_field solr_name("image_width", :searchable, type: :integer), label: "Image Width", range: true
     config.add_facet_field solr_name("image_height", :searchable, type: :integer), label: "Image Height", range: true
-    config.add_facet_field solr_name("representation", :facetable), label: "Representations"
+    config.add_facet_field solr_name("representation", :facetable), label: "Relationship"
 
     # Have BL send all facet field names to Solr, which has been the default
     # previously. Simply remove these lines if you'd rather use Solr request

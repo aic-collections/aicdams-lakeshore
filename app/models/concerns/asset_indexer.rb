@@ -24,9 +24,9 @@ class AssetIndexer < ActiveFedora::IndexingService
     def representations(types = [])
       r = RepresentingResource.new(object.id)
       return types unless r.representing?
-      types << "Document" unless r.documents.empty?
-      types << "Representation" unless r.representations.empty?
-      types << "Preferred Representation" unless r.preferred_representations.empty?
+      types << "Is Document" unless r.documents.empty?
+      types << "Is Representation" unless r.representations.empty?
+      types << "Is Preferred Representation" unless r.preferred_representations.empty?
       types
     end
 end

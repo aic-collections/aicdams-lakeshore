@@ -26,8 +26,8 @@ describe "Resources that nest assets" do
       expect(resource.representations).to include(asset)
       expect(resource.preferred_representations).to include(asset)
       expect(resource.documents).to include(asset)
-      expect(solr_representations).to contain_exactly("Document", "Representation", "Preferred Representation")
-      expect(facets_for_representations).to contain_exactly("Document", 1, "Representation", 1, "Preferred Representation", 1)
+      expect(solr_representations).to contain_exactly("Is Document", "Is Representation", "Is Preferred Representation")
+      expect(facets_for_representations).to contain_exactly("Is Document", 1, "Is Representation", 1, "Is Preferred Representation", 1)
     end
     context "when removing the representation from the resource" do
       before do
@@ -37,8 +37,8 @@ describe "Resources that nest assets" do
       it "retains the preferred representation" do
         expect(resource.representations).to be_empty
         expect(resource.preferred_representations).to include(asset)
-        expect(solr_representations).to contain_exactly("Document", "Preferred Representation")
-        expect(facets_for_representations).to contain_exactly("Document", 1, "Preferred Representation", 1)
+        expect(solr_representations).to contain_exactly("Is Document", "Is Preferred Representation")
+        expect(facets_for_representations).to contain_exactly("Is Document", 1, "Is Preferred Representation", 1)
       end
     end
     context "when removing the asset" do
