@@ -9,11 +9,7 @@ module AssetMetadata
     property :digitization_source, predicate: AIC.digitizationSource, multiple: false, class_name: "ListItem"
 
     def digitization_source_id=(id)
-      if id.nil? || id.blank?
-        self.digitization_source = nil
-      else
-        self.digitization_source = ListItem.find(id)
-      end
+      self.digitization_source = (id.nil? || id.blank?) ? nil : ListItem.find(id)
     end
 
     property :document_type, predicate: AIC.documentType, multiple: true, class_name: "ListItem"

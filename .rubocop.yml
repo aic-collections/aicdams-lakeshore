@@ -1,7 +1,7 @@
 require: rubocop-rspec
 
 AllCops:
-  RunRailsCops: true
+  TargetRubyVersion: 2.2
   DisplayCopNames: true
   Include:
     - '**/Rakefile'
@@ -103,6 +103,9 @@ Style/VariableName:
 Style/GuardClause:
   Exclude:
     - 'app/controllers/generic_files_controller.rb'
+
+Rails:
+  Enabled: true
 
 Rails/Output:
   Exclude:

@@ -4,7 +4,7 @@ class UidTranslator
   # If the provided id doesn't conform to AIC minting specs, then use ActiveFedora's default.
   # @param [String] id
   def self.id_to_uri(id)
-    return original_uri(id) unless id.match(/^[A-Z]{2,2}/)
+    return original_uri(id) unless id =~ /^[A-Z]{2,2}/
     path = id.delete('-')
     (path.scan(/..?/).first(4) + [id]).join('/')
   end

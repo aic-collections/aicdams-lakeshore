@@ -48,7 +48,7 @@ class CommentSelectInput < MultiValueInput
 
     # TODO: not needed?
     def category_button(attribute_name, value)
-      class_name = attribute_name.to_s.match("aictags") ? "tags" : attribute_name.to_s
+      class_name = attribute_name.to_s =~ /aictags/ ? "tags" : attribute_name.to_s
       <<-EOF
 <span class="input-group-btn">
   <button class="btn btn-default category" data-id="#{value.id}" data-class="#{class_name}">

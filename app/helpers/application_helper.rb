@@ -36,14 +36,14 @@ module ApplicationHelper
   end
 
   def link_to_resource(resource)
-    link_to resource_image_tag, resource_path(resource), title: "#{resource.pref_label}", id: "show_resource", data: { label: resource.id }
+    link_to resource_image_tag, resource_path(resource), title: resource.pref_label.to_s, id: "show_resource", data: { label: resource.id }
   end
 
   def link_to_asset(asset)
     if asset.title.empty?
       link_to asset_image_tag(asset), sufia.generic_file_path(asset), title: "Download the document", id: "file_download", data: { label: asset.id }
     else
-      link_to asset_image_tag(asset), sufia.generic_file_path(asset), title: "#{asset.title.first}", id: "file_download", data: { label: asset.id }
+      link_to asset_image_tag(asset), sufia.generic_file_path(asset), title: asset.title.first.to_s, id: "file_download", data: { label: asset.id }
     end
   end
 
@@ -51,7 +51,7 @@ module ApplicationHelper
     if asset.title.empty?
       image_tag "default.png", alt: "No preview available", class: "media-object", width: "150"
     else
-      image_tag sufia.download_path(asset, file: 'thumbnail'), class: "media-object", width: "150", alt: "#{asset.title.first}"
+      image_tag sufia.download_path(asset, file: 'thumbnail'), class: "media-object", width: "150", alt: asset.title.first.to_s
     end
   end
 

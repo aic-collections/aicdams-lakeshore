@@ -5,7 +5,7 @@ class GenericFilesController < ApplicationController
     "image/png",
     "image/tiff",
     "image/vnd.adobe.photoshop"
-  ]
+  ].freeze
 
   TEXT_TYPES = [
     "application/msword",
@@ -21,7 +21,7 @@ class GenericFilesController < ApplicationController
     "text/html",
     "text/markdown",
     "text/plain"
-  ]
+  ].freeze
 
   include Sufia::Controller
   include Sufia::FilesControllerBehavior
@@ -42,18 +42,18 @@ class GenericFilesController < ApplicationController
   end
 
   def verify_asset_type
-    return json_error("Asset type must be either still_image or text") unless params[:asset_type].match(/still_image|text/)
+    return json_error("Asset type must be either still_image or text") unless params[:asset_type] =~ /still_image|text/
   end
 
   def update_metadata_from_upload_screen
     super
-    @generic_file.assert_still_image if params[:asset_type].match("still_image")
-    @generic_file.assert_text        if params[:asset_type].match("text")
+    @generic_file.assert_still_image if params[:asset_type] =~ /still_image/
+    @generic_file.assert_text        if params[:asset_type] =~ /text/
   end
 
   # TODO: Needs a refactor to remove any exclusions on this file from the Rubocop list
   def verify_mime_type
-    if params[:asset_type].match("still_image")
+    if params[:asset_type] =~ /still_image/
       params["files"].each do |file|
         if MIME::Types.of(file.original_filename).empty?
           return_unknown_mime_type
@@ -62,7 +62,7 @@ class GenericFilesController < ApplicationController
         end
       end
     end
-    if params[:asset_type].match("text")
+    if params[:asset_type] =~ /text/
       params["files"].each do |file|
         if MIME::Types.of(file.original_filename).empty?
           return_unknown_mime_type

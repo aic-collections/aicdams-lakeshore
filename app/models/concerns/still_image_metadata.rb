@@ -5,21 +5,13 @@ module StillImageMetadata
     property :compositing, predicate: AIC.compositing, multiple: false, class_name: "ListItem"
 
     def compositing_id=(id)
-      if id.nil? || id.blank?
-        self.compositing = nil
-      else
-        self.compositing = ListItem.find(id)
-      end
+      self.compositing = (id.nil? || id.blank?) ? nil : ListItem.find(id)
     end
 
     property :light_type, predicate: AIC.lightType, multiple: false, class_name: "ListItem"
 
     def light_type_id=(id)
-      if id.nil? || id.blank?
-        self.light_type = nil
-      else
-        self.light_type = ListItem.find(id)
-      end
+      self.light_type = (id.nil? || id.blank?) ? nil : ListItem.find(id)
     end
 
     property :view, predicate: AIC.view, multiple: true, class_name: "ListItem"
