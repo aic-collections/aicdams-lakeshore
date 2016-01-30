@@ -1,9 +1,9 @@
 source 'https://rubygems.org'
 
-gem 'rails', '4.2.4'
+gem 'rails', '4.2.5'
 
 # Hydra Gems
-gem 'sufia', '~> 6.5'
+gem 'sufia', '~> 6.6'
 gem 'kaminari', github: 'jcoyne/kaminari', branch: 'sufia'
 gem 'hydra-pcdm', '~> 0.3'
 
