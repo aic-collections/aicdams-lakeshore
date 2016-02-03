@@ -29,4 +29,14 @@ describe SolrDocument do
       its(:registered?) { is_expected.to be true }
     end
   end
+
+  describe "#uid" do
+    before { subject[Solrizer.solr_name("uid", :symbol)] = "UID" }
+    its(:uid) { is_expected.to eq("UID") }
+  end
+
+  describe "#main_ref_number" do
+    before { subject[Solrizer.solr_name("main_ref_number", :stored_searchable)] = "Main ref number" }
+    its(:main_ref_number) { is_expected.to eq("Main ref number") }
+  end
 end

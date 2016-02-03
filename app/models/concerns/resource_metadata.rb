@@ -23,7 +23,9 @@ module ResourceMetadata
       index.as :stored_searchable
     end
 
-    property :uid, predicate: AIC.uid, multiple: false
+    property :uid, predicate: AIC.uid, multiple: false do |index|
+      index.as :symbol
+    end
 
     property :resource_updated, predicate: AIC.updated, multiple: false do |index|
       index.type :date
