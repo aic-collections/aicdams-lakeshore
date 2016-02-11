@@ -1,14 +1,7 @@
 require 'rails_helper'
 
 describe BatchEditsController do
-  let(:user) { FactoryGirl.find_or_create(:jill) }
-
-  before do
-    allow(controller).to receive(:has_access?).and_return(true)
-    sign_in user
-    allow_any_instance_of(User).to receive(:groups).and_return([])
-    allow_any_instance_of(GenericFile).to receive(:characterize)
-  end
+  include_context "authenticated saml user"
 
   let(:image_asset) do
     GenericFile.create do |gf|

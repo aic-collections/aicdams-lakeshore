@@ -6,7 +6,6 @@ describe BatchController do
   end
 
   describe "#update" do
-    let(:user) { FactoryGirl.find_or_create(:jill) }
     let(:batch_update_message) { double('batch update message') }
     let(:batch) { Batch.create }
     let(:parameters) do
@@ -18,11 +17,7 @@ describe BatchController do
     end
 
     routes { Sufia::Engine.routes }
-
-    before do
-      sign_in user
-      allow_any_instance_of(User).to receive(:groups).and_return([])
-    end
+    include_context "authenticated saml user"
 
     context "en-queuing a batch job" do
       it "is successful" do

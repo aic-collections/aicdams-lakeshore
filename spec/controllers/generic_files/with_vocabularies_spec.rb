@@ -2,13 +2,7 @@ require 'rails_helper'
 
 describe GenericFilesController do
   routes { Sufia::Engine.routes }
-  let(:user) { FactoryGirl.find_or_create(:jill) }
-  before do
-    allow(controller).to receive(:has_access?).and_return(true)
-    sign_in user
-    allow_any_instance_of(User).to receive(:groups).and_return([])
-    allow_any_instance_of(GenericFile).to receive(:characterize)
-  end
+  include_context "authenticated saml user"
 
   let(:generic_file) do
     GenericFile.create do |gf|

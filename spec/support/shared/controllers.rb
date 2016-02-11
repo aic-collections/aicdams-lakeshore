@@ -1,10 +1,6 @@
 shared_examples "a controller for a Citi resource" do |resource_name|
   let(:user) { FactoryGirl.find_or_create(:jill) }
-  before do
-    allow(controller).to receive(:has_access?).and_return(true)
-    sign_in user
-    allow_any_instance_of(User).to receive(:groups).and_return([])
-  end
+  include_context "authenticated saml user"
 
   let(:resource) { resource_name.capitalize.constantize.create }
   let(:param_key) { resource_name.downcase }

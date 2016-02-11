@@ -1,0 +1,13 @@
+<h1>Unauthorized</h1>
+<p>
+  You do not have the required authorization to access this page. Please contact your administrator.
+</p>
+<h2>Shibboleth Information</h2>
+<table class="table table-condensed">
+<% ["HTTP_SAML_UID", "HTTP_SAML_PRIMARY_AFFILIATION", "HTTP_SAML_UNSCOPED_AFFILIATION"].each do |k| %>
+  <tr>
+    <td><strong><%= k %></strong></td>
+    <td><%= request.env.fetch(k, "nil") %></td>
+  </tr>
+<% end %>
+</table>

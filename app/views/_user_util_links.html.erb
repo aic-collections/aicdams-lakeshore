@@ -22,13 +22,6 @@
       <%= render partial: 'users/user_util_links_extra' %>
       <li class="divider"></li>
       <%= render partial: '/admin_links' if current_user.admin? %>
-      <li>
-        <%= link_to raw('<span class="glyphicon glyphicon-log-out"></span> log out'), destroy_user_session_path, id: 'logout_nav_link' %>
-      </li>
     </ul>
   </div><!-- /.btn-group -->
-<% else %>
-  <div class="btn-group login_button pull-right">
-    <%= link_to raw('<span class="glyphicon glyphicon-log-in" aria-hidden="true"></span> Login'), new_user_session_path, class: "btn btn-default btn-group", title: "Login" %>
-  </div>
 <% end %>

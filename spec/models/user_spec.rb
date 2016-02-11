@@ -30,4 +30,14 @@ describe User do
       its(:groups) { is_expected.to contain_exactly("registered") }
     end
   end
+
+  context "with batchuser" do
+    subject { described_class.batchuser }
+    it { is_expected.to be_kind_of(described_class) }
+  end
+
+  context "with audituser" do
+    subject { described_class.audituser }
+    it { is_expected.to be_kind_of(described_class) }
+  end
 end

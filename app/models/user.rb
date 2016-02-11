@@ -9,10 +9,17 @@ class User < ActiveRecord::Base
     attr_accessible :email, :password, :password_confirmation
   end
 
-  # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable and :omniauthable
-  # removed :registerable to prevent users from self-signup
-  devise :database_authenticatable, :recoverable, :rememberable, :trackable, :validatable
+  Devise.add_module(:saml_authenticatable,
+                    strategy: true,
+                    controller: :sessions,
+                    model: 'devise/models/saml_authenticatable')
+
+  devise :saml_authenticatable
+
+  # TODO: Add additional attributes from Shibboleth properties
+  def populate_attributes
+    self
+  end
 
   # Method added by Blacklight; Blacklight uses #to_s on your
   # user class to get a user-displayable login/identifier for
@@ -29,5 +36,23 @@ class User < ActiveRecord::Base
     groups = super
     groups += ["admin"] if admin?
     groups
+  end
+
+  class << self
+    def batchuser
+      User.find_by_user_key(batchuser_key) || User.create!(email: batchuser_key)
+    end
+
+    def batchuser_key
+      'batchuser'
+    end
+
+    def audituser
+      User.find_by_user_key(audituser_key) || User.create!(email: audituser_key)
+    end
+
+    def audituser_key
+      'audituser'
+    end
   end
 end

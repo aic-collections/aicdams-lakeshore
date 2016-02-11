@@ -1,8 +1,7 @@
 require 'rails_helper'
 
 describe ListsController do
-  let(:user) { FactoryGirl.find_or_create(:jill) }
-  before { sign_in user }
+  include_context "authenticated saml user"
 
   describe "#index" do
     before { get :index }

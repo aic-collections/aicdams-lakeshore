@@ -20,7 +20,7 @@ describe "Admininistrative" do
     context "without a user" do
       before { get "/admin/roles" }
       it "does not load the page" do
-        expect(response).to be_redirect
+        expect(response).to be_unauthorized
       end
     end
   end

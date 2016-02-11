@@ -4,7 +4,8 @@ describe "Editing generic files" do
   let(:user) { FactoryGirl.create(:user) }
 
   before do
-    sign_in user
+    sign_in_with_js user
+    visit("/dashboard")
     click_link "Upload"
   end
 
