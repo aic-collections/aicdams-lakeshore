@@ -3,6 +3,7 @@ lock '3.4.0'
 
 set :application, 'lakeshore'
 set :repo_url, 'https://github.com/aic-collections/aicdams-lakeshore.git'
+set :default_branch, 'develop'
 set :base_dir, "/usr/local/hydra"
 set :aic_config_dir, "#{fetch(:base_dir)}/config"
 set :user, 'awead'
@@ -27,7 +28,7 @@ set :resque_pid_file, "#{fetch(:current_release)}/tmp/pids/resque-pool.pid"
 
 set :rails_env, 'production'
 set :log_level, :debug
-set :branch, ENV["REVISION"] || ENV["BRANCH_NAME"] || "master"
+set :branch, ENV["REVISION"] || ENV["BRANCH_NAME"] || fetch(:default_branch).to_s
 
 set :linked_files, fetch(:linked_files, []).push(
   'config/admin.yml',
