@@ -7,7 +7,7 @@ class CitiResource < Resource
 
   around_save :reindex_relations
 
-  property :citi_uid, predicate: AIC.citiUid do |index|
+  property :citi_uid, predicate: AIC.citiUid, multiple: false do |index|
     index.as :stored_searchable
   end
 

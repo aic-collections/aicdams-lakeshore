@@ -7,9 +7,13 @@ describe CitiResource do
   end
 
   describe "terms" do
-    subject { described_class.new }
     CitiResourceTerms.all.each do |term|
       it { is_expected.to respond_to(term) }
     end
+  end
+
+  describe "#citi_uid" do
+    before { subject.citi_uid = "foo" }
+    its(:citi_uid) { is_expected.to eq("foo") }
   end
 end
