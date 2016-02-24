@@ -14,7 +14,6 @@
 //= require jquery_ujs
 //= require blacklight/blacklight
 //= require blacklight_range_limit
-//= require sufia
 //= require_tree .
 
 var ROOT_PATH = "/";

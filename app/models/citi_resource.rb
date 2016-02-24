@@ -1,4 +1,6 @@
 class CitiResource < Resource
+  include CitiResourceMetadata
+
   def self.aic_type
     super << AICType.CitiResource
   end
@@ -6,10 +8,6 @@ class CitiResource < Resource
   type aic_type
 
   around_save :reindex_relations
-
-  property :citi_uid, predicate: AIC.citiUid, multiple: false do |index|
-    index.as :stored_searchable
-  end
 
   # TODO: Placeholder value until CITI resources are imported using the correct Fedora
   # resource that denotes an active status. See #127

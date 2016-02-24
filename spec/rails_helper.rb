@@ -31,9 +31,9 @@ RSpec.configure do |config|
     loader.load_lists
   end
 
+  # Clean out Redis before each feature test
   config.before :each do |example|
-    unless example.metadata[:no_clean]
-      # Clear out Redis
+    if example.metadata[:type] == :feature
       begin
         $redis.keys('events:*').each { |key| $redis.del key }
         $redis.keys('User:*').each { |key| $redis.del key }
@@ -44,13 +44,9 @@ RSpec.configure do |config|
     end
   end
 
-  config.before :each do |example|
-    if example.metadata[:type] == :feature && Capybara.current_driver != :rack_test
-      DatabaseCleaner.strategy = :truncation
-    else
-      DatabaseCleaner.strategy = :transaction
-      DatabaseCleaner.start
-    end
+  config.before :each do |_example|
+    DatabaseCleaner.strategy = :truncation
+    DatabaseCleaner.start
   end
 
   config.after do

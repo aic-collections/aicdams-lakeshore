@@ -18,4 +18,11 @@ describe SufiaHelper do
       it { is_expected.to include(doc) }
     end
   end
+
+  describe "#user_display_name_and_key" do
+    context "with a group agent" do
+      subject { helper.user_display_name_and_key("citi-100") }
+      it { is_expected.to eq("Department 100") }
+    end
+  end
 end

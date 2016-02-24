@@ -22,4 +22,15 @@ module SufiaHelper
       content_tag :span, "Department", class: "label label-warning", title: t('sufia.visibility.open_title_attr')
     end
   end
+
+  def user_display_name_and_key(key)
+    user = ::User.find_by_user_key(key)
+    dept = Department.find_by_department_key(key)
+    return key unless user || dept
+    if user
+      user.respond_to?(:name) ? "#{user.name} (#{key})" : key
+    else
+      dept.pref_label
+    end
+  end
 end
