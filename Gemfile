@@ -25,6 +25,7 @@ group :development, :test do
   gem 'binding_of_caller'
   gem 'byebug'
   gem 'jettywrapper'
+  gem 'solr_wrapper'
   gem 'sqlite3'
 end
 
