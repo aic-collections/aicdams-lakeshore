@@ -65,18 +65,6 @@ RSpec.configure do |config|
   config.after(:each, type: :feature) { Warden.test_reset! }
 end
 
-FactoryGirl.define do
-  factory :user do
-    sequence(:email) { |n| "user#{n}@example.com" }
-    department '2'
-
-    factory :jill do
-      email 'jilluser@example.com'
-      department 'accounting'
-    end
-  end
-end
-
 module FactoryGirl
   def self.find_or_create(handle, by = :email)
     tmpl = FactoryGirl.build(handle)

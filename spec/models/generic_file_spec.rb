@@ -1,20 +1,13 @@
 require 'rails_helper'
 
 describe GenericFile do
-  let(:user) { FactoryGirl.find_or_create(:jill) }
-
-  let(:example_file) do
-    described_class.create.tap do |file|
-      file.apply_depositor_metadata(user)
-      file.assert_still_image
-      file.save
-    end
-  end
+  let(:user)         { create(:user1) }
+  let(:example_file) { create(:asset) }
 
   subject { described_class.new }
 
   context "without setting a type" do
-    before { subject.apply_depositor_metadata("user") }
+    subject { build(:asset_without_type) }
     it "raises and error" do
       expect(-> { subject.save }).to raise_error(ArgumentError, "Can't assign a prefix without a type")
     end
@@ -26,7 +19,7 @@ describe GenericFile do
   end
 
   describe "asserting StillImage" do
-    before  { subject.assert_still_image }
+    subject { build(:asset) }
     specify { expect(subject.type).to include(AICType.Asset, AICType.StillImage) }
     context "and re-asserting StillImage" do
       before  { subject.assert_still_image }
@@ -52,10 +45,7 @@ describe GenericFile do
       end
     end
     describe "minting uids" do
-      before do
-        subject.apply_depositor_metadata "user"
-        subject.save
-      end
+      before { subject.save }
       it "uses a UID for still images" do
         expect(subject.id).to start_with("SI")
         expect(subject.uri).not_to match(/\/-/)
@@ -65,7 +55,7 @@ describe GenericFile do
   end
 
   describe "setting type to Text" do
-    before  { subject.assert_text }
+    subject { build(:text_asset) }
     specify { expect(subject.type).to include(AICType.Asset, AICType.Text) }
     context "and re-asserting Text" do
       before  { subject.assert_text }
@@ -78,10 +68,7 @@ describe GenericFile do
       specify { expect(subject.to_solr[Solrizer.solr_name("aic_type", :facetable)]).to include("Asset", "Text") }
     end
     describe "minting uids" do
-      before do
-        subject.apply_depositor_metadata "user"
-        subject.save
-      end
+      before { subject.save }
       it "uses a UID for still images" do
         expect(subject.id).to start_with("TX")
         expect(subject.uri).not_to match(/\/-/)
@@ -126,20 +113,6 @@ describe GenericFile do
         example_file.errors
       end
       its(:full_messages) { is_expected.to include("Uid must match id") }
-    end
-  end
-
-  describe "#apply_depositor_metadata" do
-    context "when the user has a department" do
-      subject { example_file }
-      its(:dept_created) { is_expected.to eq("accounting") }
-    end
-    context "when the user has no assigned department" do
-      let(:file) { described_class.new }
-      before { file.apply_depositor_metadata("no department") }
-      it "defaults to a configured value" do
-        expect(file.dept_created).to eq("aic")
-      end
     end
   end
 end

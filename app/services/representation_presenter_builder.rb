@@ -27,7 +27,7 @@ class RepresentationPresenterBuilder
 
     def resource
       @resource = begin
-                    model_class.where("citi_uid_tesim:#{citi_uid}").first
+                    model_class.find_by_citi_uid(citi_uid)
                   rescue RSolr::Error::Http
                     nil
                   end

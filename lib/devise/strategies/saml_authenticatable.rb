@@ -10,7 +10,7 @@ module Devise
       end
 
       def authenticate!
-        return fail! unless valid? || authenticated_saml_user
+        return fail! unless valid?
         update_saml_department
         success!(authenticated_saml_user)
       end

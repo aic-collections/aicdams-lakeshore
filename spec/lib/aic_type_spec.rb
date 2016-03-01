@@ -31,6 +31,7 @@ describe AICType do
     expect(described_class.Tag).to be_kind_of RDF::Vocabulary::Term
     expect(described_class.Text).to be_kind_of RDF::Vocabulary::Term
     expect(described_class.Transaction).to be_kind_of RDF::Vocabulary::Term
+    expect(described_class.User).to be_kind_of RDF::Vocabulary::Term
     expect(described_class.ViewType).to be_kind_of RDF::Vocabulary::Term
     expect(described_class.Work).to be_kind_of RDF::Vocabulary::Term
   end

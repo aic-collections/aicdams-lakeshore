@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe "Visting the home page", type: :feature do
-  let(:user) { FactoryGirl.create(:user) }
+  let(:user) { create(:user1) }
   before do
     sign_in(user)
     visit(root_path)

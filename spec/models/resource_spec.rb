@@ -17,13 +17,7 @@ describe Resource do
     let(:resource) { described_class.new }
 
     context "with other assets" do
-      let(:asset) do
-        GenericFile.create.tap do |file|
-          file.apply_depositor_metadata "user"
-          file.assert_still_image
-          file.save
-        end
-      end
+      let(:asset) { create(:asset) }
 
       before do
         ResourceTerms.related_asset_ids.map { |rel| resource.send(rel.to_s + "=", [asset.id]) }

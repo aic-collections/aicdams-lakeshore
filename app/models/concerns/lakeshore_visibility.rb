@@ -49,6 +49,11 @@ module LakeshoreVisibility
     end
 
     def department_visibility_groups
-      [PERMISSION_TEXT_VALUE_DEPARTMENT, dept_created].compact
+      [PERMISSION_TEXT_VALUE_DEPARTMENT, department_uid].compact
+    end
+
+    def department_uid
+      return unless dept_created
+      dept_created.citi_uid
     end
 end

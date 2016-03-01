@@ -39,6 +39,10 @@ class User < ActiveRecord::Base
   end
 
   class << self
+    def find_by_email(query)
+      User.where(email: query).first
+    end
+
     def batchuser
       User.find_by_user_key(batchuser_key) || User.create!(email: batchuser_key)
     end

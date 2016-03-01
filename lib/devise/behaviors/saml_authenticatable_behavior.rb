@@ -1,6 +1,6 @@
 module Devise::Behaviors::SamlAuthenticatableBehavior
   def valid_saml_credentials?
-    saml_user.present? && saml_department.present?
+    saml_user.present? && saml_department.present? && aic_user.present? && department.present?
   end
 
   def saml_user
@@ -14,6 +14,14 @@ module Devise::Behaviors::SamlAuthenticatableBehavior
   def saml_groups
     return [] unless saml_unscoped_affiliation
     saml_unscoped_affiliation.split(";")
+  end
+
+  def aic_user
+    AICUser.find_by_nick(saml_user)
+  end
+
+  def department
+    Department.find_by_citi_uid(saml_department)
   end
 
   private

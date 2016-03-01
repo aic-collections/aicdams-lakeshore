@@ -5,13 +5,8 @@ describe GenericFile do
 
   describe "#comments_attributes" do
     let(:commented_resource) do
-      described_class.create.tap do |file|
-        file.title = ["Commented thing"]
-        file.apply_depositor_metadata "user"
-        file.comments_attributes = [{ content: "foo comment", category: ["bar category"] }]
-      end
+      build(:asset, comments_attributes: [{ content: "foo comment", category: ["bar category"] }])
     end
-
     subject { commented_resource.comments.first }
     it { is_expected.to be_kind_of Comment }
     specify "has content and a category" do
@@ -20,44 +15,25 @@ describe GenericFile do
     end
 
     context "without a category" do
-      let(:commented_resource) do
-        described_class.create.tap do |file|
-          file.title = ["Commented thing without a category"]
-          file.apply_depositor_metadata "user"
-          file.assert_still_image
-          file.comments_attributes = [{ content: "foo comment" }]
-        end
-      end
+      let(:commented_resource) { build(:asset, comments_attributes: [{ content: "foo comment" }]) }
       subject { commented_resource.save }
       it { is_expected.to be true }
     end
 
     context "without content" do
-      let(:commented_resource) do
-        described_class.create.tap do |file|
-          file.title = ["Commented thing without a category"]
-          file.apply_depositor_metadata "user"
-          file.comments_attributes = [{ content: nil }]
-        end
-      end
+      let(:commented_resource) { build(:asset, comments_attributes: [{ content: nil }]) }
       subject { commented_resource.save }
       it { is_expected.to be false }
     end
 
     context "with existing comments" do
-      let(:resource) do
-        described_class.create.tap do |file|
-          file.apply_depositor_metadata "user"
-          file.assert_still_image
-        end
-      end
+      let(:resource) { create(:asset) }
       let(:c1) { Comment.create(content: "First comment") }
       let(:c2) { Comment.create(content: "Second comment") }
       before do
         resource.comments = [c1, c2]
         resource.save
       end
-
       describe "#comments" do
         subject { resource.comments }
         it { is_expected.to include(c1, c2) }

@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe "Editing generic files" do
-  let(:user) { FactoryGirl.create(:user) }
+  let(:user) { create(:user1) }
 
   before do
     sign_in_with_js user

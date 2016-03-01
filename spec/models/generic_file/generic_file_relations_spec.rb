@@ -2,16 +2,7 @@ require 'rails_helper'
 
 describe "Resources that nest assets" do
   let(:resource) { described_class.new }
-
-  let(:asset) do
-    GenericFile.create.tap do |f|
-      f.title = ["Sample asset"]
-      f.apply_depositor_metadata "user"
-      f.assert_still_image
-      f.save
-    end
-  end
-
+  let(:asset) { create(:asset) }
   let(:solr_representations) { asset.to_solr[Solrizer.solr_name("representation", :facetable)] }
   let(:facets_for_representations) { facets_for(Solrizer.solr_name("representation", :facetable), asset.id) }
 

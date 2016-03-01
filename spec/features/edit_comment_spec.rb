@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe "Editing comments" do
-  let(:user) { FactoryGirl.create(:user) }
+  let(:user) { create(:user1) }
   before { sign_in_with_js user }
   let(:content) { "A comment" }
   let!(:comment) { Comment.create(content: content) }

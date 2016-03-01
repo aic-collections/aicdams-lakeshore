@@ -6,6 +6,7 @@ class AssetIndexer < ActiveFedora::IndexingService
       solr_doc[Solrizer.solr_name("file_size", :stored_sortable, type: :integer)] = object.file_size.first
       solr_doc[Solrizer.solr_name("image_height", :searchable, type: :integer)] = object.height
       solr_doc[Solrizer.solr_name("image_width", :searchable, type: :integer)] = object.width
+      solr_doc[Solrizer.solr_name("aic_depositor", :symbol)] = object.depositor
     end
   end
 

@@ -1,5 +1,5 @@
 shared_context "authenticated saml user" do
-  let(:user) { FactoryGirl.find_or_create(:jill) }
+  let(:user) { create(:user1) }
   before do
     allow(controller).to receive(:has_access?).and_return(true)
     allow(controller).to receive(:valid_saml_credentials?).and_return(true)

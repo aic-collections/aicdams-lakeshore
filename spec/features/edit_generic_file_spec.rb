@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe "Editing generic files" do
-  let(:user) { FactoryGirl.create(:user) }
+  let(:user) { create(:user1) }
   let(:title) { "Sample file to edit" }
   let(:file) do
     GenericFile.new.tap do |f|

@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe LakeshoreBatchUpdateJob do
-  let(:user) { FactoryGirl.find_or_create(:jill) }
+  let(:user) { create(:user1) }
   let(:batch) { Batch.create }
 
   let!(:file) do

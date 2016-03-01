@@ -6,6 +6,7 @@ class GenericFile < Resource
   include Status
   include LakeshorePermissions
   include LakeshoreVisibility
+  include WithAICDepositor
 
   def self.aic_type
     super << AICType.Asset
@@ -75,12 +76,6 @@ class GenericFile < Resource
     self.edit_groups += ["admin"]
   end
 
-  def apply_depositor_metadata(depositor)
-    super
-    self.dept_created = user_dept(depositor) || Sufia.config.default_department
-    true
-  end
-
   def asset_cannot_be_referenced
     if representing_resource.representing?
       errors[:representations] = "are assigned to this resource"
@@ -97,19 +92,5 @@ class GenericFile < Resource
 
     def representing_resource
       @representing_resource ||= RepresentingResource.new(id)
-    end
-
-    # TODO: Replace once departments are imported from CITI
-    def user_dept(depositor)
-      case depositor
-      when User
-        depositor.department
-      when Array
-        User.find(depositor.first).department
-      else
-        User.find(depositor).department
-      end
-    rescue
-      nil
     end
 end

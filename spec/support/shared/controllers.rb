@@ -1,5 +1,5 @@
 shared_examples "a controller for a Citi resource" do |resource_name|
-  let(:user) { FactoryGirl.find_or_create(:jill) }
+  let(:user) { create(:user1) }
   include_context "authenticated saml user"
 
   let(:resource) { resource_name.capitalize.constantize.create }

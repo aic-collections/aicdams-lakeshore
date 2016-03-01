@@ -6,38 +6,48 @@ describe Devise::Strategies::SamlAuthenticatable do
   describe "#valid?" do
     subject { described_class.new(nil) }
     context "without an id" do
-      let(:request) { double(env: { "HTTP_SAML_PRIMARY_AFFILIATION" => "1" }) }
-      let(:request) { double(env: {}) }
+      let(:request) { double(env: { "HTTP_SAML_PRIMARY_AFFILIATION" => "100" }) }
       it { is_expected.not_to be_valid }
     end
 
     context "without a primary affiliation" do
-      let(:request) { double(env: {}) }
-      let(:request) { double(env: { "HTTP_SAML_UID" => "dude" }) }
+      let(:request) { double(env: { "HTTP_SAML_UID" => "user1" }) }
       it { is_expected.not_to be_valid }
     end
 
-    context "with the correct SAML variables" do
-      let(:request) { double(env: { "HTTP_SAML_UID" => "dude", "HTTP_SAML_PRIMARY_AFFILIATION" => "1" }) }
+    context "when the id is not an AICUser" do
+      let(:request) { double(env: { "HTTP_SAML_UID" => "dude", "HTTP_SAML_PRIMARY_AFFILIATION" => "100" }) }
+      it { is_expected.not_to be_valid }
+    end
+
+    context "when the primary affiliation is not a Department" do
+      let(:request) { double(env: { "HTTP_SAML_UID" => "user1", "HTTP_SAML_PRIMARY_AFFILIATION" => "13" }) }
+      it { is_expected.not_to be_valid }
+    end
+
+    context "with the correct SAML variables and an AICUser" do
+      let(:request) { double(env: { "HTTP_SAML_UID" => "user1", "HTTP_SAML_PRIMARY_AFFILIATION" => "100" }) }
       it { is_expected.to be_valid }
     end
   end
 
   describe "#authenticate!" do
-    let(:user) { "new_person" }
-    let(:department) { "11" }
-    let(:request) { double(env: { "HTTP_SAML_UID" => user, "HTTP_SAML_PRIMARY_AFFILIATION" => department }) }
-    context "with a first-time user" do
-      it "creates new and updates their attributes" do
-        expect { described_class.new(nil).authenticate! }.to change { User.all.count }.by(1)
-        expect(User.find_by_user_key(user).department).to eq(department)
+    context "when the user is present in Lake" do
+      let(:user) { "user1" }
+      let(:department) { "100" }
+      let(:request) { double(env: { "HTTP_SAML_UID" => user, "HTTP_SAML_PRIMARY_AFFILIATION" => department }) }
+      context "logging in for the first time" do
+        it "creates a new record" do
+          expect { described_class.new(nil).authenticate! }.to change { User.all.count }.by(1)
+          expect(User.find_by_user_key(user).department).to eq(department)
+        end
       end
-    end
-    context "with a returning user" do
-      before { User.create!(email: user, department: department) }
-      it "users their existing record" do
-        expect(User.find_by_user_key(user)).not_to receive(:save!)
-        expect { described_class.new(nil).authenticate! }.to change { User.all.count }.by(0)
+      context "returning again" do
+        before { User.create!(email: user, department: department) }
+        it "uses their existing record" do
+          expect(User.find_by_user_key(user)).not_to receive(:save!)
+          expect { described_class.new(nil).authenticate! }.to change { User.all.count }.by(0)
+        end
       end
     end
   end

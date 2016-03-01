@@ -13,13 +13,12 @@ describe "generic_files/edit.html.erb" do
   let(:content) { double('content', mimeType: 'application/pdf') }
 
   let(:generic_file) do
-    stub_model(GenericFile, id: '123',
-                            depositor: 'bob',
-                            status: StatusType.active,
-                            digitization_source: DigitizationSource.all.first,
-                            compositing: Compositing.all.first,
-                            light_type: nil
-              )
+    build(:asset, id: '123',
+                  status: StatusType.active,
+                  digitization_source: DigitizationSource.all.first,
+                  compositing: Compositing.all.first,
+                  light_type: nil
+         )
   end
 
   let(:form) { AssetEditForm.new(generic_file) }

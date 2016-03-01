@@ -3,10 +3,9 @@ require 'rails_helper'
 describe 'batch/edit.html.erb' do
   let(:batch) { Batch.create }
   let(:generic_file) do
-    GenericFile.new(title: ['some title']).tap do |f|
-      f.apply_depositor_metadata("bob")
-      f.comments_attributes = [{ content: "foo comment", category: ["bar category"] }]
-    end
+    build(:asset,
+          comments_attributes: [{ content: "foo comment", category: ["bar category"] }]
+         )
   end
   let(:form) { AssetBatchEditForm.new(generic_file) }
 

@@ -1,25 +1,8 @@
 require 'rails_helper'
 
-describe "GenericFile" do
-  let(:user) { FactoryGirl.find_or_create(:jill) }
-
-  let(:department_file) do
-    GenericFile.create.tap do |f|
-      f.apply_depositor_metadata(user)
-      f.assert_still_image
-      f.visibility = LakeshoreVisibility::VISIBILITY_TEXT_VALUE_DEPARTMENT
-    end
-  end
-
-  let(:registered_file) do
-    GenericFile.create.tap do |f|
-      f.apply_depositor_metadata(user)
-      f.assert_still_image
-      f.visibility = Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_AUTHENTICATED
-    end
-  end
-
-  subject { GenericFile.new }
+describe GenericFile do
+  let(:department_file) { create(:department_file) }
+  let(:registered_file) { create(:registered_file) }
 
   describe "default permissions" do
     it { is_expected.not_to be_private }
@@ -75,8 +58,26 @@ describe "GenericFile" do
     context "when changing from registered to department" do
       subject { registered_file }
       before { registered_file.visibility = LakeshoreVisibility::VISIBILITY_TEXT_VALUE_DEPARTMENT }
-      its(:read_groups) { is_expected.to contain_exactly(LakeshoreVisibility::VISIBILITY_TEXT_VALUE_DEPARTMENT, "accounting") }
+      its(:read_groups) { is_expected.to contain_exactly(LakeshoreVisibility::VISIBILITY_TEXT_VALUE_DEPARTMENT, "100") }
       its(:visibility) { is_expected.to eq(LakeshoreVisibility::VISIBILITY_TEXT_VALUE_DEPARTMENT) }
+    end
+  end
+
+  describe "#apply_depositor_metadata" do
+    context "with an AIC depositor" do
+      subject { registered_file }
+      its(:depositor) { is_expected.to eq("user1") }
+      its(:aic_depositor) { is_expected.to be_kind_of(AICUser) }
+      its(:dept_created) { is_expected.to be_kind_of(Department) }
+      describe "#to_solr" do
+        subject { registered_file.to_solr }
+        it { is_expected.to include("aic_depositor_ssim" => "user1") }
+      end
+    end
+
+    context "without an AIC depositor" do
+      subject { build(:asset, user: "nobody") }
+      its(:save) { is_expected.to be false }
     end
   end
 end

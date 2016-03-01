@@ -38,13 +38,14 @@ Blacklight.onLoad(function() {
       $('#permissions_error').addClass('hidden');
 
       var user_name = $('#new_user_name_skel').val();
+      var user_display = $('#select2-chosen-1').text();
       var access = $('#new_user_permission_skel').val();
       var access_label = $('#new_user_permission_skel :selected').text();
       // clear out the elements to add more
       $('#new_user_name_skel').val('');
       $('#new_user_permission_skel').val('none');
 
-      addPerm(user_name, access, access_label, 'user');
+      addUserPerm(user_name, access, access_label, user_display);
       return false;
   });
 
@@ -88,12 +89,12 @@ Blacklight.onLoad(function() {
 
 	});
 
-  function addPerm(agent_name, access, access_label, agent_type)
+  function addUserPerm(agent_name, access, access_label, agent_display)
   {
       showPermissionNote();
 
-      var tr = createPermissionRow(agent_name, access_label);
-      addHiddenPermField(tr, agent_type, agent_name, access);
+      var tr = createPermissionRow(agent_display, access_label);
+      addHiddenPermField(tr, 'user', agent_name, access);
       $('#file_permissions').find('tbody:last').append(tr);
       tr.effect("highlight", {}, 3000);
   }

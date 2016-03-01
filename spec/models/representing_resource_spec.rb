@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe RepresentingResource do
-  let(:user) { FactoryGirl.find_or_create(:jill) }
+  let(:user) { create(:user1) }
   let(:example_file) do
     GenericFile.create.tap do |file|
       file.apply_depositor_metadata(user)

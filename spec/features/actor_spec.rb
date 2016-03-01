@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe "CITI actors", order: :defined do
-  let(:user) { FactoryGirl.create(:user) }
+  let(:user) { create(:user1) }
   before do
     sign_in(user)
     visit(catalog_index_path)

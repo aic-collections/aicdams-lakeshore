@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe ContentUpdateEventJob do
-  let(:user) { FactoryGirl.find_or_create(:jill) }
+  let(:user) { create(:user1) }
   let(:generic_file) do
     GenericFile.create.tap do |file|
       file.title = ["Event job file"]

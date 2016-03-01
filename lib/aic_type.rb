@@ -97,6 +97,10 @@ class AICType < RDF::StrictVocabulary("http://definitions.artic.edu/ontology/1.0
        subClassOf: "aictype:CitiResource".freeze,
        label: "Transaction".freeze,
        comment: "CITI Transaction".freeze
+  term :User,
+       subClassOf: "aictype:CitiResource".freeze,
+       label: "User".freeze,
+       comment: "CITI User".freeze
   term :ViewType,
        subClassOf: "aictype:ListItem".freeze,
        label: "View Type".freeze,
