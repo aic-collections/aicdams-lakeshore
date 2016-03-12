@@ -10,10 +10,10 @@ class Resource < ActiveFedora::Base
 
   private
 
-    # ActiveFedora casts values into DateTime objects
-    # However, when comming from CITI, these values are sometimes suspect, see issue #198
+    # Returns the correct type class for attributes when loading an object from Solr
+    # Catches malformed dates that will not parse into DateTime, see #198
     def adapt_single_attribute_value(value, attribute_name)
-      super
+      AttributeValueAdapter.call(value, attribute_name) || super
     rescue ArgumentError
       "#{value} is not a valid date"
     end

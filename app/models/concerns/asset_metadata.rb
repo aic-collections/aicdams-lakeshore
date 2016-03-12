@@ -64,31 +64,4 @@ module AssetMetadata
   rescue ActiveFedora::ObjectNotFoundError
     nil
   end
-
-  private
-
-    # Returns the correct type class for status when loading an object from Solr
-    # TODO: Should be refactored into a service to fix complexity issues, see #216
-    # rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
-    def adapt_single_attribute_value(value, attribute_name)
-      if ["digitization_source", "document_type", "tag"].include?(attribute_name)
-        return unless value.present?
-        id = value.fetch("id", nil)
-        return if id.nil?
-        ListItem.find(id)
-      elsif attribute_name == "aic_depositor"
-        return unless value.present?
-        id = value.fetch("id", nil)
-        return if id.nil?
-        AICUser.find(id)
-      elsif attribute_name == "dept_created"
-        return unless value.present?
-        id = value.fetch("id", nil)
-        return if id.nil?
-        Department.find(id)
-      else
-        super
-      end
-    end
-  # rubocop:enable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
 end

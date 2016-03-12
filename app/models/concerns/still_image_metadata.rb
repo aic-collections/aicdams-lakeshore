@@ -21,18 +21,4 @@ module StillImageMetadata
       self.view = ids.map { |id| ListItem.find(id) }
     end
   end
-
-  private
-
-    # Returns the correct type class for status when loading an object from Solr
-    def adapt_single_attribute_value(value, attribute_name)
-      if ["compositing", "light_type", "view"].include?(attribute_name)
-        return unless value.present?
-        id = value.fetch("id", nil)
-        return if id.nil?
-        ListItem.find(id)
-      else
-        super
-      end
-    end
 end
