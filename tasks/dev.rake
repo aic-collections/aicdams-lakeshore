@@ -83,6 +83,12 @@ namespace :fedora do
   task load_lists: :environment do
     DevelopmentLoader.new.load_lists
   end
+
+  desc "Create test users for AIC testing specifically, dependent on local Shibboleth settings"
+  task create_users: :environment do
+    AICUser.create(nick: "laketest", pref_label: "Laketest User", given_name: "Laketest", family_name: "User")
+    Department.create(citi_uid: "87", pref_label: "Laketest department")
+  end
 end
 
 namespace :solr do
