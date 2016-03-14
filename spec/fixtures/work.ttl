@@ -42,7 +42,6 @@
   aic:citiUid "43523"^^<http://www.w3.org/2001/XMLSchema#string> ;
   aic:galleryLocation "Gallery 1234"^^<http://www.w3.org/2001/XMLSchema#string> ;
   aic:dimensionsDisplay "1230 x 820 mm"^^<http://www.w3.org/2001/XMLSchema#string> ;
-  aic:status <http://definitions.artic.edu/ontology/1.0/status/active> ;
   aic:creditLine "Gift of Mr. Dummy Lee & Mrs. Parrot Funkaroo"^^<http://www.w3.org/2001/XMLSchema#string> ;
   aic:mediumDisplay "Oil Painting"^^<http://www.w3.org/2001/XMLSchema#string> ;
   aic:updated "2014-04-16T14:29Z"^^<http://www.w3.org/2001/XMLSchema#dateTime> ;

@@ -41,7 +41,6 @@
 <> a aictype:Exhibition , aictype:Activity , aictype:Event , aictype:NonInformationResource , aictype:Resource ;
 	aic:citiUid "2846"^^<http://www.w3.org/2001/XMLSchema#string> ;
 	aic:uid "EX-2846"^^<http://www.w3.org/2001/XMLSchema#string> ;
-	aic:status <http://definitions.artic.edu/ontology/1.0/status/active> ;
 	aic:updated "2004-01-01T00:00Z"^^<http://www.w3.org/2001/XMLSchema#dateTime> ;
 	fedorasystem:hasModel "Exhibition"^^<http://www.w3.org/2001/XMLSchema#string> ;
 	skos:prefLabel "EX-2846"^^<http://www.w3.org/2001/XMLSchema#string> ;

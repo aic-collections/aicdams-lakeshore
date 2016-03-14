@@ -9,6 +9,9 @@ shared_examples "a model for a Citi resource" do
     it "has an AIC type" do
       expect(solr_doc["aic_type_sim"]).to include(described_class.to_s)
     end
+    it "has a status" do
+      expect(solr_doc[Solrizer.solr_name("status", :symbol)]).to eq(["Active"])
+    end
   end
 
   describe "visibility" do
@@ -18,6 +21,11 @@ shared_examples "a model for a Citi resource" do
   describe "permissions" do
     it { is_expected.not_to be_department }
     it { is_expected.to be_registered }
+  end
+
+  describe "status" do
+    subject { described_class.all.first.status }
+    its(:pref_label) { is_expected.to eq("Active") }
   end
 end
 

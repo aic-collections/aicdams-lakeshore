@@ -1,7 +1,6 @@
 class WorkPresenter
   include Hydra::Presenter
   include RelatedAssetTerms
-  include CitiStatus
 
   self.model_class = Work
   self.terms = [

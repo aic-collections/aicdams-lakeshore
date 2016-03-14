@@ -1,7 +1,6 @@
 class ExhibitionPresenter
   include Hydra::Presenter
   include RelatedAssetTerms
-  include CitiStatus
 
   self.model_class = Exhibition
   self.terms = [

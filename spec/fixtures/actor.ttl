@@ -44,7 +44,6 @@
 	aic:deathYear "1973"^^<http://www.w3.org/2001/XMLSchema#int> ;
 	aic:deathDate "04-08-1973"^^<http://www.w3.org/2001/XMLSchema#date> ;
 	aic:uid "AC-19646"^^<http://www.w3.org/2001/XMLSchema#string> ;
-	aic:status <http://definitions.artic.edu/ontology/1.0/status/active> ;
 	aic:updated "2015-11-24T00:00Z"^^<http://www.w3.org/2001/XMLSchema#dateTime> ;
 	aic:birthYear "1881"^^<http://www.w3.org/2001/XMLSchema#int> ;
 	fedorasystem:hasModel "Actor"^^<http://www.w3.org/2001/XMLSchema#string> ;

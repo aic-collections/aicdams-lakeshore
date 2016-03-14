@@ -9,10 +9,9 @@ class CitiResource < Resource
 
   around_save :reindex_relations
 
-  # TODO: Placeholder value until CITI resources are imported using the correct Fedora
-  # resource that denotes an active status. See #127
+  # Status defaults to active if it is nil
   def status
-    StatusType.active
+    super || StatusType.active
   end
 
   # Re-indexes related objects, i.e. representations, preferred representations, and documents, including

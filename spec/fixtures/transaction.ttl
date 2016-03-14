@@ -41,7 +41,6 @@
 <> a aictype:Transaction , aictype:Activity , aictype:Event , aictype:NonInformationResource , aictype:Resource ;
 	aic:citiUid "123456"^^<http://www.w3.org/2001/XMLSchema#string> ;
 	aic:uid "TR-123456"^^<http://www.w3.org/2001/XMLSchema#string> ;
-	aic:status <http://definitions.artic.edu/ontology/1.0/status/active> ;
 	aic:updated "2010-01-01T00:00Z"^^<http://www.w3.org/2001/XMLSchema#dateTime> ;
 	fedorasystem:hasModel "Transaction"^^<http://www.w3.org/2001/XMLSchema#string> ;
 	skos:prefLabel "TR-123456"^^<http://www.w3.org/2001/XMLSchema#string> ;

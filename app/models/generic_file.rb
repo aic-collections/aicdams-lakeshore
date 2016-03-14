@@ -3,7 +3,6 @@ class GenericFile < Resource
   include StillImageMetadata
   include TextMetadata
   include AssetMetadata
-  include Status
   include LakeshorePermissions
   include LakeshoreVisibility
   include WithAICDepositor
