@@ -25,12 +25,10 @@ def solr_config
   File.join(Rails.root, 'solr', 'config')
 end
 
-unless Rails.env.production?
-  desc 'Run style checker'
-  RuboCop::RakeTask.new(:rubocop) do |task|
-    task.requires << 'rubocop-rspec'
-    task.fail_on_error = true
-  end
+desc 'Run style checker'
+RuboCop::RakeTask.new(:rubocop) do |task|
+  task.requires << 'rubocop-rspec'
+  task.fail_on_error = true
 end
 
 desc 'Run spec tests'

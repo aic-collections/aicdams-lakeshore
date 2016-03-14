@@ -5,5 +5,7 @@ require File.expand_path('../config/application', __FILE__)
 
 Rails.application.load_tasks
 
+load File.expand_path('../tasks/dev.rake', __FILE__) unless Rails.env.production?
+
 Rake::Task[:default].prerequisites.clear
 task default: :ci
