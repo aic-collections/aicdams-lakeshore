@@ -1,6 +1,7 @@
 development:
   - awead@aic.org
   - joe@aic.org
+  - admin
 
 test:
   - joe@aic.org

@@ -10,4 +10,25 @@ namespace :lakeshore do
   	end
   end
 
+  desc "Reindex all resources using existing Solr index"
+  task reindex_from_solr: :environment do
+    start = 0
+    total = Blacklight::Solr::Response.new(query, nil).total_count
+    while (start < total) do
+      response = Blacklight::Solr::Response.new(query(start), nil)
+      response.docs.map { |d| Sufia.queue.push(UpdateIndexJob.new(d.fetch("id"))) }
+      start = start + response.rows
+    end
+  end
+
+  def query(start=0)
+    Blacklight.default_index.connection.get('select', params: {   
+                                                                q: "*:*",
+                                                                qt: "document",
+                                                                fl: "id",
+                                                                start: start,
+                                                                rows: 1000
+                                                              })
+  end
+
 end
