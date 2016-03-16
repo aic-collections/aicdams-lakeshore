@@ -13,6 +13,7 @@ class Ability
 
     if current_user.admin?
       can [:create, :index, :edit, :update, :destroy, :show, :add_user, :remove_user], Role
+      can [:create, :edit, :update, :destroy, :show], List
     end
 
     can :read, GenericFile do |obj|

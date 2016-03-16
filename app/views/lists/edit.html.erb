@@ -1,0 +1,10 @@
+<%= render_breadcrumbs builder: Sufia::BootstrapBreadcrumbsBuilder %>
+<h1><%= @form.model.pref_label %></h1>
+
+<%= form_for @form.model, url: list_path(@form.model), 
+	html: {multipart: true, class: 'form-horizontal', id: 'permission'} do |f| %>
+  <%= render "permission_form", f: f %>
+  <div id="permissions_submit">
+    <%= button_tag "Update permissions", type: 'submit', class: 'btn btn-primary', id: "update_permissions" %>
+  </div>
+<% end %>

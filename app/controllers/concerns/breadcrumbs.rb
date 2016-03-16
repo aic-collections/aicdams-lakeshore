@@ -10,6 +10,7 @@ module Breadcrumbs
     edit_shipments
     show_list
     index_list
+    edit_list
   end
 
   private
@@ -53,5 +54,11 @@ module Breadcrumbs
     def index_list
       return unless /index/ =~ action_name && controller_name == "lists"
       add_breadcrumb "Lists"
+    end
+
+    def edit_list
+      return unless /edit/ =~ action_name && controller_name == "lists"
+      add_breadcrumb "Lists", lists_path
+      add_breadcrumb "Edit List"
     end
 end

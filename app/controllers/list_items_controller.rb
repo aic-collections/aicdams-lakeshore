@@ -1,5 +1,5 @@
 class ListItemsController < ApplicationController
-  before_action :find_list, only: [:create, :destroy]
+  before_action :load_and_authorize_list
 
   def new
     @item = ListItem.new
@@ -32,9 +32,9 @@ class ListItemsController < ApplicationController
   end
 
   def create
-    @list.add_item(ListItem.create(sanitized_attributes))
-    if @list.errors
-      flash[:error] = @list.errors.full_messages
+    list.add_item(ListItem.create(sanitized_attributes))
+    if list.errors
+      flash[:error] = list.errors.full_messages
     else
       flash[:notice] = "Successfully added item to list"
     end
@@ -46,23 +46,24 @@ class ListItemsController < ApplicationController
 
   def destroy
     item = ListItem.find(params[:id])
-    @list.members.delete(item)
+    list.members.delete(item)
     item.destroy
     redirect_to list_path(params[:list_id])
   end
 
   private
 
-    def find_list
-      if List.exists?(params[:list_id])
-        @list = List.find(params[:list_id])
-      else
-        flash[:error] = "Unable to find list with id #{params[:list_id]}"
-        redirect_to lists_path
-      end
+    def load_and_authorize_list
+      return if list.present? && current_user.can?(:edit, list)
+      flash[:error] = "You do not have permissions to edit the list"
+      redirect_to(lists_path)
     end
 
     def sanitized_attributes
       ListItemEditForm.model_attributes(params[:list_item])
+    end
+
+    def list
+      @list ||= List.where(id: params[:list_id]).first
     end
 end

@@ -1,6 +1,7 @@
 class List < ActiveFedora::Base
   include Hydra::PCDM::ObjectBehavior
   include ResourceMetadata
+  include Hydra::AccessControls::Permissions
 
   type [AICType.Resource, AICType.List]
 

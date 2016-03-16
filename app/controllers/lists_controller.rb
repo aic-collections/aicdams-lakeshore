@@ -1,27 +1,43 @@
 class ListsController < ApplicationController
   include Breadcrumbs
 
-  class_attribute :presenter_class
-  self.presenter_class = ListPresenter
   layout "sufia-one-column"
-  before_action :load_resource, only: [:show]
+  before_action :load_resource, except: [:index]
   before_action :build_breadcrumbs
 
   def index
-    @lists = List.all
+    @lists = List.all.map { |l| ListPresenter.new(l) }
   end
 
   def show
-    @presenter = presenter
+    @presenter = ListPresenter.new(resource)
+  end
+
+  def edit
+    @form = ListEditForm.new(resource)
+  end
+
+  def update
+    resource.attributes = sanitized_attributes
+    if resource.save
+      flash[:notice] = "The item was updated"
+    else
+      flash[:error] = "An error occurred and the list was not updated"
+    end
+    redirect_to edit_list_path(params[:id])
   end
 
   private
 
     def load_resource
-      @resource = List.find(params[:id])
+      redirect_to(lists_path) unless current_user.can?(:edit, resource)
     end
 
-    def presenter
-      presenter_class.new(@resource)
+    def resource
+      @resource ||= List.find(params[:id])
+    end
+
+    def sanitized_attributes
+      ListEditForm.model_attributes(params[:list])
     end
 end

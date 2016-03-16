@@ -6,6 +6,7 @@ development:
 test:
   - joe@aic.org
   - awead@aic.org
+  - admin
 
 production:
   - god@aic.org

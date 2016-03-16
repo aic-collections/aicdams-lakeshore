@@ -1,8 +1,10 @@
 require 'rails_helper'
 
 describe ListItemsController do
-  include_context "authenticated saml user"
-  let(:list) { List.create }
+  let(:list_item) { create(:list_item) }
+  let(:list) { create(:list, members: [list_item]) }
+
+  include_context "authenticated admin user"
 
   describe "#new" do
     context "with a html request" do
@@ -17,23 +19,25 @@ describe ListItemsController do
 
   describe "#create" do
     let(:new_list_item) { { pref_label: "New Thing", description: ["Description of new thing."] } }
-    before { xhr :post, :create, list_id: list, list_item: new_list_item }
-    it "adds a new list item to the list" do
-      list.reload
-      expect(list.members.first.pref_label).to eq("New Thing")
+    context "with a valid list id" do
+      before { xhr :post, :create, list_id: list, list_item: new_list_item }
+      it "adds a new list item to the list" do
+        list.reload
+        expect(list.members.last.pref_label).to eq("New Thing")
+      end
     end
     context "with a bogus list id" do
       before { xhr :post, :create, list_id: "bogus", list_item: new_list_item }
-      it "redirects to the list page" do
-        expect(response).to be_redirect
-        expect(flash[:error]).to eq("Unable to find list with id bogus")
-      end
+      its(:response) { is_expected.to be_redirect }
+    end
+    context "with a user without edit rights" do
+      include_context "authenticated saml user"
+      before { xhr :post, :create, list_id: list, list_item: new_list_item }
+      its(:response) { is_expected.to be_redirect }
     end
   end
 
   context "with an existing list and list item" do
-    before { list.members << ListItem.create(pref_label: "Foo") }
-
     describe "#edit" do
       context "with a html request" do
         before { get :edit, list_id: list, id: list.members.first }
@@ -52,7 +56,7 @@ describe ListItemsController do
     end
 
     context "when adding another item with the same label" do
-      let(:duplicate_item) { { pref_label: "Foo", description: ["Duplicate list item"] } }
+      let(:duplicate_item) { { pref_label: list_item.pref_label } }
       before { xhr :post, :create, list_id: list, list_item: duplicate_item }
       subject { flash[:error] }
       it { is_expected.to contain_exactly("Members must be unique") }
@@ -60,8 +64,6 @@ describe ListItemsController do
   end
 
   describe "#destroy" do
-    let(:list_item) { ListItem.create(pref_label: "Delete me") }
-    before { list.members << list_item }
     it "removes and deletes a member from the list" do
       delete :destroy, list_id: list, id: list_item
       expect(ListItem.exists?(list_item.id)).to be false

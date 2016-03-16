@@ -7,6 +7,10 @@ class ListPresenter
     model.pref_label
   end
 
+  def selector
+    "#{model.pref_label.parameterize}_list"
+  end
+
   delegate :members, to: :model
 
   def member_list
@@ -17,11 +21,15 @@ class ListPresenter
     list
   end
 
-  private
+  def description
+    model.description.empty? ? "No description available" : model.description
+  end
 
-    def model
-      @model ||= to_model
-    end
+  def editable_by(user)
+    user.can?(:edit, model)
+  end
+
+  private
 
     def member_description(item)
       return "No description available" if item.description.empty?

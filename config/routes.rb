@@ -29,7 +29,7 @@ Rails.application.routes.draw do
   resources :exhibitions, except: [:new, :create, :destroy]
   resources :transactions, except: [:new, :create, :destroy]
   resources :shipments, except: [:new, :create, :destroy]
-  resources :lists, only: [:index, :show] do
+  resources :lists, except: [:create, :destroy] do
     resources :list_items, except: [:index, :show]
   end
 
