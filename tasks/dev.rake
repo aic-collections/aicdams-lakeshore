@@ -86,8 +86,13 @@ namespace :fedora do
 
   desc "Create test users for AIC testing specifically, dependent on local Shibboleth settings"
   task create_users: :environment do
-    AICUser.create(nick: "laketest", pref_label: "Laketest User", given_name: "Laketest", family_name: "User")
-    Department.create(citi_uid: "87", pref_label: "Laketest department")
+    AICUser.create(nick: "laketest", pref_label: "US-1484", given_name: "lake", family_name: "test")
+    AICUser.create(nick: "scossu", pref_label: "US-1117", given_name: "Stefano", family_name: "Cossu")
+    AICUser.create(nick: "scossuadmin", pref_label: "US-758", given_name: "[admin] Stefano", family_name: "Cossu")
+    AICUser.create(nick: "awead", pref_label: "US-583", given_name: "Adam", family_name: "Wead")
+    AICUser.create(nick: "aweadadmin", pref_label: "US--32351", given_name: "[admin] Adam", family_name: "Wead")
+    Department.create(citi_uid: "87", pref_label: "Visitor Services")
+    Department.create(citi_uid: "112", pref_label: "Information Services")
   end
 end
 
