@@ -4,7 +4,7 @@ gem 'rails', '4.2.5.1'
 
 # Hydra Gems
 gem 'sufia', '~> 6.6'
-gem 'kaminari', github: 'jcoyne/kaminari', branch: 'sufia'
+gem 'kaminari_route_prefix'
 gem 'hydra-pcdm', '~> 0.3'
 
 gem 'blacklight_range_limit'

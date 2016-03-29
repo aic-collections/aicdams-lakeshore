@@ -1,12 +1,3 @@
-GIT
-  remote: git://github.com/jcoyne/kaminari.git
-  revision: 7f7108e12bdd64eb5a76177633768feb14df5453
-  branch: sufia
-  specs:
-    kaminari (1.0.0.alpha)
-      actionpack (>= 3.0.0)
-      activesupport (>= 3.0.0)
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -310,6 +301,11 @@ GEM
     json-schema (2.6.0)
       addressable (~> 2.3.8)
     jwt (1.5.3)
+    kaminari (0.16.3)
+      actionpack (>= 3.0.0)
+      activesupport (>= 3.0.0)
+    kaminari_route_prefix (0.0.1)
+      kaminari (>= 0.16, < 2)
     launchy (2.4.3)
       addressable (~> 2.3)
     ldp (0.4.1)
@@ -711,7 +707,7 @@ DEPENDENCIES
   jbuilder (~> 2.0)
   jettywrapper
   jquery-rails
-  kaminari!
+  kaminari_route_prefix
   passenger
   pg
   poltergeist
