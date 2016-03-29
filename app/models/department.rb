@@ -4,7 +4,7 @@ class Department < ListItem
   class << self
     def options(hash = {})
       all.map { |d| hash[d.pref_label] = d.citi_uid }
-      hash
+      hash.sort.to_h
     end
 
     def find_by_department_key(key)

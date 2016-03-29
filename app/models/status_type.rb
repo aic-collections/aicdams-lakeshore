@@ -28,6 +28,6 @@ class StatusType < ListItem
   def self.options
     options = {}
     StatusType.all.map { |t| options[t.pref_label] = t.id }
-    options
+    options.sort.to_h
   end
 end

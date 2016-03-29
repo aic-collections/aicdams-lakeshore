@@ -18,7 +18,7 @@ class ListPresenter
     members.each do |m|
       list << Struct::ListItemPresenter.new(m.pref_label, member_description(m), m.id, deletable?(m))
     end
-    list
+    list.sort { |a, b| a.pref_label <=> b.pref_label }
   end
 
   def description

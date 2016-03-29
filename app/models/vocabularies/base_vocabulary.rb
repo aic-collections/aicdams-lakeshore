@@ -7,6 +7,6 @@ class BaseVocabulary
   def self.options
     options = {}
     all.map { |t| options[t.pref_label] = t.id }
-    options
+    options.sort.to_h
   end
 end

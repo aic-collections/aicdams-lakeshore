@@ -6,7 +6,7 @@ class ListsController < ApplicationController
   before_action :build_breadcrumbs
 
   def index
-    @lists = List.all.map { |l| ListPresenter.new(l) }
+    @lists = sorted_lists.map { |l| ListPresenter.new(l) }
   end
 
   def show
@@ -39,5 +39,9 @@ class ListsController < ApplicationController
 
     def sanitized_attributes
       ListEditForm.model_attributes(params[:list])
+    end
+
+    def sorted_lists
+      List.all.sort { |a, b| a.pref_label <=> b.pref_label }
     end
 end

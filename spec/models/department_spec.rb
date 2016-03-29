@@ -8,7 +8,7 @@ describe Department do
 
   describe "::options" do
     subject { described_class.options }
-    its(:values) { is_expected.to contain_exactly("100", "200") }
+    it { is_expected.to eq("Department 100" => "100", "Department 200" => "200") }
   end
 
   describe "::find_by_department_key" do
