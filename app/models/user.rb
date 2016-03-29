@@ -34,7 +34,8 @@ class User < ActiveRecord::Base
 
   def groups
     groups = super
-    groups += ["admin"] if admin?
+    groups << "admin" if admin?
+    groups << department
     groups
   end
 

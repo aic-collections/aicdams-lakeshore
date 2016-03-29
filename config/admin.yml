@@ -4,8 +4,6 @@ development:
   - admin
 
 test:
-  - joe@aic.org
-  - awead@aic.org
   - admin
 
 production:

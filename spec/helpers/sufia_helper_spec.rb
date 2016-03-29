@@ -21,7 +21,7 @@ describe SufiaHelper do
 
   describe "#user_display_name_and_key" do
     context "with a group agent" do
-      subject { helper.user_display_name_and_key("citi-100") }
+      subject { helper.user_display_name_and_key("100") }
       it { is_expected.to eq("Department 100") }
     end
     context "with a user agent" do

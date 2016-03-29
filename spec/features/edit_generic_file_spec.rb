@@ -138,8 +138,8 @@ describe "Editing generic files" do
 
       # Verify the file's permissions
       file.reload
-      expect(file.read_groups).to include("citi-100")
-      expect(file.edit_groups).to include("citi-200")
+      expect(file.read_groups).to include("100")
+      expect(file.edit_groups).to include("200")
     end
   end
 end
