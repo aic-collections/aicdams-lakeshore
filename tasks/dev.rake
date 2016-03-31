@@ -31,11 +31,6 @@ RuboCop::RakeTask.new(:rubocop) do |task|
   task.fail_on_error = true
 end
 
-desc 'Run spec tests'
-task :spec do
-  RSpec::Core::RakeTask.new(:spec)
-end
-
 desc "Run continuous integration test"
 task ci: [:rubocop, 'aic:jetty:prep', 'db:migrate'] do
   jetty_params = Jettywrapper.load_config
