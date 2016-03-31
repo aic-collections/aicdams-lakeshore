@@ -10,7 +10,7 @@ describe UsersController do
       let(:json) { JSON.parse(response.body) }
       it "searches for AICUser resources" do
         get :index, uq: "use", format: :json
-        expect(json).to include("id" => "user1", "text" => "First User")
+        expect(json).to include("id" => "user1", "text" => "First User (user1)")
       end
     end
     context "when requesting HTML" do

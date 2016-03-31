@@ -25,7 +25,6 @@ module SufiaHelper
 
   def user_display_name_and_key(key)
     agent = AICUser.find_by_nick(key) || Department.find_by_department_key(key)
-    return unless agent
-    agent.pref_label
+    CitiResourcePresenter.new(agent).display_name
   end
 end

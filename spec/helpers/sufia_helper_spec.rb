@@ -26,7 +26,7 @@ describe SufiaHelper do
     end
     context "with a user agent" do
       subject { helper.user_display_name_and_key("user1") }
-      it { is_expected.to eq("First User") }
+      it { is_expected.to eq("First User (user1)") }
     end
   end
 end
