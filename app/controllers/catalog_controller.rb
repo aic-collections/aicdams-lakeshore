@@ -14,7 +14,11 @@ class CatalogController < ApplicationController
   # These before_filters apply the hydra access controls
   before_action :enforce_show_permissions, only: :show
   # This applies appropriate access controls to all solr queries
-  CatalogController.search_params_logic += [:add_access_controls_to_solr_params, :add_advanced_parse_q_to_solr]
+  CatalogController.search_params_logic += [
+    :add_access_controls_to_solr_params,
+    :add_advanced_parse_q_to_solr,
+    :exclude_lists
+  ]
 
   skip_before_action :default_html_head
 
