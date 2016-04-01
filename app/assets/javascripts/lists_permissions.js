@@ -44,7 +44,6 @@ Blacklight.onLoad(function() {
       var access_label = 'Edit';
       // clear out the elements to add more
       $('#new_list_user_name_skel').val('');
-      $('#new_list_user_permission_skel').val('none');
 
       addUserPerm(user_name, access, access_label, user_display);
       return false;
@@ -71,7 +70,6 @@ Blacklight.onLoad(function() {
       $('#permissions_error').addClass('hidden');
       // clear out the elements to add more
       $('#new_list_group_name_skel').val('');
-      $('#new_list_group_permission_skel').val('none');
 
       addGroupPerm(group_name, access, access_label, group_display);
       return false;
