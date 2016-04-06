@@ -41,7 +41,7 @@ shared_examples "an unfeatureable model" do
   end
 end
 
-shared_examples "a vocabulary term" do |first_label|
+shared_examples "a vocabulary term" do
   describe "::all" do
     subject { described_class.all }
     its(:first) { is_expected.to be_kind_of(ListItem) }
@@ -49,46 +49,6 @@ shared_examples "a vocabulary term" do |first_label|
 
   describe "::options" do
     subject { described_class.options }
-    its(:keys) { is_expected.to contain_exactly(first_label) }
-  end
-end
-
-shared_examples "a vocabulary term restricted to single values" do |term|
-  let(:resource) { described_class.new }
-  let(:vocab) { term.to_s.classify.constantize.all.first }
-  context "with a ListItem object" do
-    before { resource.send("#{term}=", vocab) }
-    subject { resource.send(term) }
-    its(:pref_label) { is_expected.to eq("Sample #{term.to_s.titleize} List Item") }
-  end
-  context "with an id" do
-    before { resource.send("#{term}_id=", vocab.id) }
-    subject { resource.send(term) }
-    its(:pref_label) { is_expected.to eq("Sample #{term.to_s.titleize} List Item") }
-    context "when removing" do
-      before { resource.send("#{term}_id=", nil) }
-      it { is_expected.to be_nil }
-    end
-  end
-end
-
-shared_examples "a vocabulary term that accepts multiple values" do |term|
-  let(:resource) { described_class.new }
-  if term == "category"
-    let(:vocab) { CommentCategory.all.first }
-    let(:label) { "Sample Comment Category List Item" }
-  else
-    let(:vocab) { term.to_s.classify.constantize.all.first }
-    let(:label) { "Sample #{term.to_s.titleize} List Item" }
-  end
-  context "with a ListItem object" do
-    before { resource.send("#{term}=", [vocab]) }
-    subject { resource.send(term).first }
-    its(:pref_label) { is_expected.to eq(label) }
-  end
-  context "with an id" do
-    before { resource.send("#{term}_ids=", [vocab.id]) }
-    subject { resource.send(term).first }
-    its(:pref_label) { is_expected.to eq(label) }
+    its(:keys) { is_expected.to contain_exactly("Item 1") }
   end
 end

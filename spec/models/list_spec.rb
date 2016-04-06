@@ -32,7 +32,7 @@ describe List do
     end
     it "does not add the duplicate member" do
       expect(list.errors.full_messages).to contain_exactly("Members must be unique")
-      expect(list.members.map(&:pref_label)).to contain_exactly("Used")
+      expect(list.members.map(&:pref_label)).to contain_exactly("Used", "Item 1")
     end
   end
 

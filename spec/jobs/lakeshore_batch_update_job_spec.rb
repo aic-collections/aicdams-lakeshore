@@ -4,31 +4,19 @@ describe LakeshoreBatchUpdateJob do
   let(:user) { create(:user1) }
   let(:batch) { Batch.create }
 
-  let!(:file) do
-    GenericFile.new(batch: batch) do |file|
-      file.apply_depositor_metadata(user)
-      file.assert_still_image
-      file.save!
-    end
-  end
+  let!(:file)  { create(:still_image_asset, user: user, batch: batch) }
+  let!(:file2) { create(:still_image_asset, user: user, batch: batch) }
 
-  let!(:file2) do
-    GenericFile.new(batch: batch) do |file|
-      file.apply_depositor_metadata(user)
-      file.assert_still_image
-      file.save!
-    end
-  end
-
-  let(:work) { Work.create }
+  let(:work)  { Work.create }
   let(:actor) { Actor.create }
+  let(:type)  { create(:list_item) }
 
   describe "#run" do
     let(:title) { { file.id => ['File One'], file2.id => ['File Two'] } }
     let(:metadata) do
       { read_groups_string: '', read_users_string: 'archivist1, archivist2',
         asset_capture_device: 'Sony camera',
-        document_type_ids: ["", DocumentType.all.first.id],
+        document_type_ids: ["", type.id],
         representation_for: work.id,
         document_for: actor.id
       }.with_indifferent_access
@@ -52,8 +40,8 @@ describe LakeshoreBatchUpdateJob do
       expect(file2.title).to eq(['File Two'])
       expect(file.pref_label).to eq(file.id)
       expect(file2.pref_label).to eq(file2.id)
-      expect(file.document_type).to eq(DocumentType.all)
-      expect(file2.document_type).to eq(DocumentType.all)
+      expect(file.document_type).to contain_exactly(type)
+      expect(file2.document_type).to contain_exactly(type)
       expect(file.asset_capture_device).to eq("Sony camera")
       expect(file2.asset_capture_device).to eq("Sony camera")
       expect(work.representation_ids).to contain_exactly(file.id, file2.id)

@@ -8,7 +8,7 @@ describe AssetBatchEditForm do
 
   describe ".model_attributes" do
     let(:params) do
-      ActionController::Parameters.new(document_type_ids: DocumentType.all.map(&:id),
+      ActionController::Parameters.new(document_type_ids: ["1234"],
                                        representation_for: "xxxx",
                                        document_for:  "yyyyy")
     end

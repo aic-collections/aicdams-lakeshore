@@ -21,6 +21,13 @@ namespace :lakeshore do
     end
   end
 
+  desc "Load lists"
+  task load_lists: :environment do
+    Dir.glob("config/lists/*.yml").each do |list|
+      ListManager.new(list).create!
+    end
+  end
+
   def query(start=0)
     Blacklight.default_index.connection.get('select', params: {   
                                                                 q: "*:*",

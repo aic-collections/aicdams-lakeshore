@@ -29,8 +29,9 @@ describe GenericFile do
       specify { expect(subject.assert_text).to be false }
     end
     describe "#to_solr" do
+      let(:tag) { create(:list_item) }
       before do
-        subject.tag_ids = [Tag.all.first.id]
+        subject.tag_ids = [tag.id]
         allow(subject).to receive(:file_size).and_return(["1234"])
         allow(subject).to receive(:width).and_return(["8"])
         allow(subject).to receive(:height).and_return(["12"])
@@ -40,8 +41,8 @@ describe GenericFile do
         expect(subject.to_solr[CatalogController.file_size_field]).to eq "1234"
         expect(subject.to_solr[Solrizer.solr_name("image_width", :searchable, type: :integer)]).to eq ["8"]
         expect(subject.to_solr[Solrizer.solr_name("image_height", :searchable, type: :integer)]).to eq ["12"]
-        expect(subject.to_solr[Solrizer.solr_name("tag", :facetable)]).to contain_exactly(Tag.all.first.pref_label)
-        expect(subject.to_solr[Solrizer.solr_name("tag", :stored_searchable)]).to contain_exactly(Tag.all.first.pref_label)
+        expect(subject.to_solr[Solrizer.solr_name("tag", :facetable)]).to contain_exactly(tag.pref_label)
+        expect(subject.to_solr[Solrizer.solr_name("tag", :stored_searchable)]).to contain_exactly(tag.pref_label)
       end
     end
     describe "minting uids" do
@@ -85,9 +86,8 @@ describe GenericFile do
   end
 
   describe "cardinality" do
-    [:asset_capture_device, :digitization_source, :document_type].each do |term|
+    [:asset_capture_device, :digitization_source, :compositing, :light_type].each do |term|
       it "limits #{term} to a single value" do
-        pending "Can't enforce singular AT resources" if term == :document_type
         subject.send(term.to_s + "=", "foo")
         expect(subject.send(term.to_s)).to eql "foo"
       end

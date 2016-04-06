@@ -8,15 +8,19 @@ describe "generic_files/edit.html.erb" do
       v.created = '2014-12-09T02:03:18.296Z'
     end
   end
-  let(:version_list) { Sufia::VersionListPresenter.new([resource_version]) }
-  let(:versions_graph) { double(all: [version1]) }
-  let(:content) { double('content', mimeType: 'application/pdf') }
+  let(:version_list)     { Sufia::VersionListPresenter.new([resource_version]) }
+  let(:versions_graph)   { double(all: [version1]) }
+  let(:content)          { double('content', mimeType: 'application/pdf') }
+
+  let(:source_item)      { create(:list_item, pref_label: 'Sample Digitization Source List Item') }
+  let(:compositing_item) { create(:list_item, pref_label: 'Sample Compositing List Item') }
+  let(:light_item)       { create(:list_item, pref_label: 'Sample Light Type List Item') }
 
   let(:generic_file) do
     build(:asset, id: '123',
                   status: StatusType.active,
-                  digitization_source: DigitizationSource.all.first,
-                  compositing: Compositing.all.first,
+                  digitization_source: source_item,
+                  compositing: compositing_item,
                   light_type: nil
          )
   end
@@ -31,6 +35,9 @@ describe "generic_files/edit.html.erb" do
   before do
     allow(generic_file).to receive(:content).and_return(content)
     allow(controller).to receive(:current_user).and_return(stub_model(User))
+    allow(DigitizationSource).to receive(:all).and_return([source_item])
+    allow(Compositing).to receive(:all).and_return([compositing_item])
+    allow(LightType).to receive(:all).and_return([light_item])
     assign(:generic_file, generic_file)
     assign(:form, form)
     assign(:version_list, version_list)

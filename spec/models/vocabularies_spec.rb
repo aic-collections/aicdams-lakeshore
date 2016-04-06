@@ -2,38 +2,47 @@ require 'rails_helper'
 
 describe "Vocabulary terms" do
   describe DigitizationSource do
-    it_behaves_like "a vocabulary term", "Sample Digitization Source List Item"
+    before { create(:list, pref_label: "Digitization Source") }
+    it_behaves_like "a vocabulary term"
   end
 
   describe DocumentType do
-    it_behaves_like "a vocabulary term", "Sample Document Type List Item"
+    before { create(:list, pref_label: "Document Type") }
+    it_behaves_like "a vocabulary term"
   end
 
   describe Tag do
-    it_behaves_like "a vocabulary term", "Sample Tag List Item"
+    before { create(:list, pref_label: "Tag") }
+    it_behaves_like "a vocabulary term"
   end
 
   describe CommentCategory do
-    it_behaves_like "a vocabulary term", "Sample Comment Category List Item"
+    before { create(:list, pref_label: "Comment Category") }
+    it_behaves_like "a vocabulary term"
   end
 
   describe ConservationDocumentType do
-    it_behaves_like "a vocabulary term", "Sample Conservation Document Type List Item"
+    before { create(:list, pref_label: "Conservation Document Type") }
+    it_behaves_like "a vocabulary term"
   end
 
   describe ConservationImageType do
-    it_behaves_like "a vocabulary term", "Sample Conservation Image Type List Item"
+    before { create(:list, pref_label: "Conservation Image Type") }
+    it_behaves_like "a vocabulary term"
   end
 
   describe Compositing do
-    it_behaves_like "a vocabulary term", "Sample Compositing List Item"
+    before { create(:list, pref_label: "Compositing") }
+    it_behaves_like "a vocabulary term"
   end
 
   describe LightType do
-    it_behaves_like "a vocabulary term", "Sample Light Type List Item"
+    before { create(:list, pref_label: "Light Type") }
+    it_behaves_like "a vocabulary term"
   end
 
   describe View do
-    it_behaves_like "a vocabulary term", "Sample View List Item"
+    before { create(:list, pref_label: "View") }
+    it_behaves_like "a vocabulary term"
   end
 end

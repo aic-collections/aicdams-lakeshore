@@ -1,0 +1,7 @@
+pref_label: "Digitization Source"
+description: "Original document for non-born-digital assets."
+members:
+ - pref_label: "Color Transparency"
+   description: ""
+ - pref_label: "Back and White"
+   description: ""

@@ -8,9 +8,11 @@ describe BatchController do
   describe "#update" do
     let(:batch_update_message) { double('batch update message') }
     let(:batch) { Batch.create }
+    let(:type) { create(:list_item) }
+
     let(:parameters) do
       {
-        document_type_ids: DocumentType.all.map(&:id),
+        document_type_ids: [type.id],
         representation_for: "xxxx",
         document_for: "yyyyy"
       }

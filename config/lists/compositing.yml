@@ -1,0 +1,11 @@
+pref_label: "Compositing"
+description: "How an image is composed (single image, stitched, overlay, etc.)"
+members:
+ - pref_label: "Overlay"
+   description: ""
+ - pref_label: "Pre-Flat"
+   description: ""
+ - pref_label: "Composite"
+   description: ""
+ - pref_label: "Mosaic"
+   description: ""

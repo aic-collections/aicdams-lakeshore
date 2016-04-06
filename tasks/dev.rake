@@ -71,7 +71,6 @@ namespace :fedora do
     Dir.glob("spec/fixtures/*.ttl").each do |f|
       loader.load_fedora_fixture(f, true)
     end
-    loader.load_lists
   end
 
   desc "Load lists into Fedora"

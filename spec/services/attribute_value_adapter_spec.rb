@@ -3,6 +3,8 @@ require 'rails_helper'
 describe AttributeValueAdapter do
   subject { described_class.call(value, attribute_name) }
 
+  let(:list_item) { create(:list_item) }
+
   context "when no value is present" do
     let(:value) { nil }
     let(:attribute_name) { "something" }
@@ -22,19 +24,19 @@ describe AttributeValueAdapter do
   end
 
   context "with a digitization_source" do
-    let(:value) { { "id" => DigitizationSource.all.first.id } }
+    let(:value) { { "id" => list_item.id } }
     let(:attribute_name) { "digitization_source" }
     it { is_expected.to be_kind_of(ListItem) }
   end
 
   context "with a document_type" do
-    let(:value) { { "id" => DocumentType.all.first.id } }
+    let(:value) { { "id" => list_item.id } }
     let(:attribute_name) { "document_type" }
     it { is_expected.to be_kind_of(ListItem) }
   end
 
   context "with a tag" do
-    let(:value) { { "id" => Tag.all.first.id } }
+    let(:value) { { "id" => list_item.id } }
     let(:attribute_name) { "tag" }
     it { is_expected.to be_kind_of(ListItem) }
   end
