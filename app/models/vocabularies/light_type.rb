@@ -1,5 +1,5 @@
 class LightType < BaseVocabulary
   def self.query
-    List.where(pref_label: "Light Type").map { |l| l if l.pref_label == "Light Type" }.compact
+    List.find_by_label("Light Type")
   end
 end

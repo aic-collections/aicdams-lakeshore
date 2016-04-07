@@ -1,5 +1,5 @@
 class View < BaseVocabulary
   def self.query
-    List.where(pref_label: "View")
+    List.find_by_label("View")
   end
 end

@@ -1,5 +1,5 @@
 class Compositing < BaseVocabulary
   def self.query
-    List.where(pref_label: "Compositing")
+    List.find_by_label("Compositing")
   end
 end

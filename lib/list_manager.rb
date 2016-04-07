@@ -10,7 +10,7 @@ class ListManager
   end
 
   def exists?
-    !List.where(pref_label: pref_label).empty?
+    !List.find_by_label(pref_label).nil?
   end
 
   def create!
@@ -53,7 +53,7 @@ class ListManager
 
     def list
       @list ||= if exists?
-                  List.where(pref_label: pref_label).first
+                  List.find_by_label(pref_label)
                 else
                   List.create(pref_label: pref_label, description: [description])
                 end

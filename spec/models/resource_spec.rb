@@ -64,4 +64,18 @@ describe Resource do
       its(:resource_created) { is_expected.to eq("bad date is not a valid date") }
     end
   end
+
+  describe "::find_by_label" do
+    let!(:list1) { create(:list, pref_label: "Foo List") }
+    let!(:list2) { create(:list, pref_label: "A Foo List") }
+    subject { List.find_by_label(label) }
+    context "with an exact search" do
+      let(:label) { "Foo List" }
+      its(:pref_label) { is_expected.to eq(label) }
+    end
+    context "with a fuzzy search" do
+      let(:label) { "List" }
+      it { is_expected.to be_nil }
+    end
+  end
 end

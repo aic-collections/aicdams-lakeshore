@@ -1,7 +1,7 @@
 class BaseVocabulary
   def self.all
-    return [] if query.empty?
-    query.first.members
+    return [] unless query
+    query.members
   end
 
   def self.options

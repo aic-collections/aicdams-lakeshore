@@ -1,6 +1,15 @@
 module ResourceMetadata
   extend ActiveSupport::Concern
 
+  class_methods do
+    # Searches a resource's pref_label for an exact match
+    # @param [String] label
+    # @return [Class, nil]
+    def find_by_label(label)
+      where(Solrizer.solr_name("pref_label", :symbol).to_sym => label).first
+    end
+  end
+
   included do
     property :batch_uid, predicate: AIC.batchUid, multiple: false do |index|
       index.as :stored_searchable
@@ -57,7 +66,7 @@ module ResourceMetadata
     end
 
     property :pref_label, predicate: ::RDF::SKOS.prefLabel, multiple: false do |index|
-      index.as :stored_searchable
+      index.as :stored_searchable, :symbol
     end
 
     property :resource_label, predicate: ::RDF::RDFS.label do |index|
