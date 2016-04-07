@@ -4,7 +4,7 @@ namespace :repo do
   task :install do
     on roles(:app) do
       execute "cd #{fetch(:base_dir)} && git clone #{fetch(:repo_url)}"
-      execute "cd #{fetch(:base_dir)}/aicdams-lakeshore && git checkout #{fetch(:default_branch)}"
+      execute "cd #{fetch(:base_dir)}/aicdams-lakeshore && git checkout #{fetch(:branch)}"
       execute "cd #{fetch(:base_dir)}/aicdams-lakeshore && HTTP_PROXY=#{fetch(:aic_proxy)} bundle install"
       execute "cd #{fetch(:base_dir)}/aicdams-lakeshore && /usr/bin/env bundle exec rake db:migrate"
       execute "cd #{fetch(:base_dir)}/aicdams-lakeshore && /usr/bin/env bundle exec rake rails:update:bin"
@@ -17,7 +17,7 @@ namespace :repo do
       execute "cd #{fetch(:base_dir)}/aicdams-lakeshore && git reset --hard origin"
       execute "cd #{fetch(:base_dir)}/aicdams-lakeshore && git clean -df"
       execute "cd #{fetch(:base_dir)}/aicdams-lakeshore && git pull"
-      execute "cd #{fetch(:base_dir)}/aicdams-lakeshore && git checkout #{fetch(:default_branch)}"
+      execute "cd #{fetch(:base_dir)}/aicdams-lakeshore && git checkout #{fetch(:branch)}"
       execute "cd #{fetch(:base_dir)}/aicdams-lakeshore && git pull"
       execute "cd #{fetch(:base_dir)}/aicdams-lakeshore && HTTP_PROXY=#{fetch(:aic_proxy)} bundle install"
       execute "cd #{fetch(:base_dir)}/aicdams-lakeshore && /usr/bin/env bundle exec rake db:migrate"
