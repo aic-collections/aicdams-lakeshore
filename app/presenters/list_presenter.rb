@@ -1,8 +1,6 @@
 class ListPresenter
   include Hydra::Presenter
 
-  Struct.new("ListItemPresenter", :pref_label, :description, :id, :deletable?)
-
   def to_s
     model.pref_label
   end
@@ -16,7 +14,7 @@ class ListPresenter
   def member_list
     list = []
     members.each do |m|
-      list << Struct::ListItemPresenter.new(m.pref_label, member_description(m), m.id, deletable?(m))
+      list << ListItemPresenter.new(m)
     end
     list.sort { |a, b| a.pref_label <=> b.pref_label }
   end
@@ -29,14 +27,21 @@ class ListPresenter
     user.can?(:edit, model)
   end
 
-  private
+  class ListItemPresenter
+    include Hydra::Presenter
 
-    def member_description(item)
-      return "No description available" if item.description.empty?
-      item.description.join("<br />")
+    delegate :pref_label, :id, to: :model
+
+    def to_s
+      pref_label
     end
 
-    def deletable?(item)
-      StatusType.active.id != item.id
+    def description
+      model.description.empty? ? "No description available" : model.description
     end
+
+    def deletable?
+      StatusType.active.id != id
+    end
+  end
 end

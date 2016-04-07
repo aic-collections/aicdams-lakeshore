@@ -9,26 +9,6 @@ describe "GenericFile" do
     context "by default" do
       it { is_expected.to be_active }
     end
-
-    context "invalid" do
-      before { example_file.status = StatusType.invalid }
-      it { is_expected.to be_invalid }
-    end
-
-    context "disabled" do
-      before { example_file.status = StatusType.disabled }
-      it { is_expected.to be_disabled }
-    end
-
-    context "deleted" do
-      before { example_file.status = StatusType.deleted }
-      it { is_expected.to be_deleted }
-    end
-
-    context "archived" do
-      before { example_file.status = StatusType.archived }
-      it { is_expected.to be_archived }
-    end
   end
 
   describe "loading from solr" do
@@ -37,11 +17,9 @@ describe "GenericFile" do
   end
 
   describe "#status_id" do
-    before do
-      example_file.status_id = StatusType.deleted.id
-      example_file.save
-      example_file.reload
-    end
-    it { is_expected.to be_deleted }
+    let(:new_status) { create(:status_type, pref_label: "New") }
+    before { example_file.status_id = new_status.id }
+    its(:status) { is_expected.to eq(new_status) }
+    it { is_expected.not_to be_active }
   end
 end

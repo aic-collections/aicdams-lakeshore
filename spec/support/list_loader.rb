@@ -1,6 +1,5 @@
 module ListLoader
   def load_lists
-    ListManager.new("config/lists/status.yml").create!
     department
   end
 

@@ -1,28 +1,40 @@
 require 'rails_helper'
 
 describe ListPresenter do
-  subject { described_class.new(List.where(pref_label: "Status").first) }
+  let(:list) { create(:list, pref_label: "Sample List") }
+  let(:presenter) { described_class.new(list) }
 
   describe "#to_s" do
-    its(:to_s) { is_expected.to eq("Status") }
+    subject { presenter }
+    its(:to_s) { is_expected.to eq("Sample List") }
+    its(:description) { is_expected.to eq("No description available") }
   end
 
   describe "#member_list" do
-    let(:member_list) { described_class.new(List.where(pref_label: "Status").first).member_list }
+    let(:member_list) { presenter.member_list }
     subject { member_list }
-    it { is_expected.to include(Struct::ListItemPresenter) }
-    context "when an item as no description" do
-      before { allow_any_instance_of(ListItem).to receive(:description).and_return([]) }
-      subject { member_list.first }
+    it { is_expected.to include(ListPresenter::ListItemPresenter) }
+  end
+
+  describe ListPresenter::ListItemPresenter do
+    let(:item) { create(:list_item, pref_label: "Sample List Item") }
+    let(:presenter) { described_class.new(item) }
+
+    describe "#to_s" do
+      subject { presenter }
+      its(:to_s) { is_expected.to eq("Sample List Item") }
       its(:description) { is_expected.to eq("No description available") }
     end
-    context "with StatusType.active" do
-      subject { member_list.map { |m| m if m.id == StatusType.active.id }.compact.first }
-      it { is_expected.not_to be_deletable }
-    end
-    context "with any other StatusType" do
-      subject { member_list.map { |m| m if m.id != StatusType.active.id }.compact.first }
-      it { is_expected.to be_deletable }
+
+    describe "deletable?" do
+      subject { presenter }
+      context "when the item is not the active status" do
+        it { is_expected.to be_deletable }
+      end
+      context "when the item is the active status" do
+        before { allow(subject).to receive(:model).and_return(StatusType.active) }
+        it { is_expected.not_to be_deletable }
+      end
     end
   end
 end

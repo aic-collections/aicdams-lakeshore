@@ -1,3 +1,4 @@
+# Class used to query different kinds of List resources
 class BaseVocabulary
   def self.all
     return [] unless query

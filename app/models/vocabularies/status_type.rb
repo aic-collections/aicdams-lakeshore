@@ -1,3 +1,4 @@
+# A specific kind of ListItem that is only a member of the Status list
 class StatusType < ListItem
   type [AICType.Resource, AICType.ListItem, AICType.StatusType]
 
@@ -5,24 +6,8 @@ class StatusType < ListItem
     index.type :integer
   end
 
-  def self.invalid
-    where(pref_label: "Invalid").first
-  end
-
-  def self.disabled
-    where(pref_label: "Disabled").first
-  end
-
-  def self.deleted
-    where(pref_label: "Deleted").first
-  end
-
   def self.active
-    where(pref_label: "Active").first
-  end
-
-  def self.archived
-    where(pref_label: "Archived").first
+    find_by_label("Active")
   end
 
   def self.options

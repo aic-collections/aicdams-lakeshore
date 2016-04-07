@@ -4,19 +4,15 @@ describe GenericFilesController do
   routes { Sufia::Engine.routes }
   include_context "authenticated saml user"
 
-  let(:generic_file) do
-    GenericFile.create do |gf|
-      gf.apply_depositor_metadata(user)
-      gf.assert_still_image
-    end
-  end
+  let(:generic_file) { create(:still_image_asset, user: user) }
 
   describe "setting the status to disabled" do
+    let(:status) { create(:status_type, pref_label: "disabled") }
     let(:attributes) do
-      { status_id: StatusType.disabled.id }
+      { status_id: status.id }
     end
     before { post :update, id: generic_file, generic_file: attributes }
     subject { generic_file.reload }
-    it { is_expected.to be_disabled }
+    its(:status) { is_expected.to eq(status) }
   end
 end

@@ -28,6 +28,7 @@ RSpec.configure do |config|
     Dir.glob("spec/fixtures/*.ttl").each do |f|
       loader.load_fedora_fixture(f)
     end
+    FactoryGirl.create(:status)
     loader.load_lists
   end
 

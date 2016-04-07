@@ -1,4 +1,4 @@
-module Status
+module WithStatus
   extend ActiveSupport::Concern
 
   included do
@@ -6,22 +6,6 @@ module Status
 
     def active?
       status == StatusType.active
-    end
-
-    def invalid?
-      status == StatusType.invalid
-    end
-
-    def archived?
-      status == StatusType.archived
-    end
-
-    def disabled?
-      status == StatusType.disabled
-    end
-
-    def deleted?
-      status == StatusType.deleted
     end
 
     def status_id=(id)

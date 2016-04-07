@@ -1,7 +1,7 @@
 class Resource < ActiveFedora::Base
   include ResourceMetadata
   include Validations
-  include Status
+  include WithStatus
 
   def self.aic_type
     [AICType.Resource]
