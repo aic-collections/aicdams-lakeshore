@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # Deploy using Rails development environment to enable local development on the server directly
 set :rails_env, 'development'
 server 'aicdamsdev01.artic.edu', user: 'awead', roles: %w(web app db)

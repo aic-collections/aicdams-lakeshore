@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'rails_helper'
 
 describe "Editing permissions for lists" do
@@ -6,6 +7,7 @@ describe "Editing permissions for lists" do
   let(:list) { create(:private_list, pref_label: 'user2 items') }
 
   it "adds department permissions" do
+    skip
     sign_in_with_js(admin)
     visit edit_list_path(list)
     select("Department 200", from: "new_list_group_name_skel")

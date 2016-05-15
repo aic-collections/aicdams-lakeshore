@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+# TODO: Delete
 class FieldMap < ActiveFedora::RDF::FieldMap
   def insert(name, index_field_config, object)
     self[index_field_config.key.to_s] ||= ActiveFedora::RDF::FieldMapEntry.new

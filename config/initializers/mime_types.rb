@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # Custom Mime types
 
 # Add custom mime types

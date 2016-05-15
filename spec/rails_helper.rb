@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 ENV['RAILS_ENV'] ||= 'test'
 require 'spec_helper'
 require File.expand_path('../../config/environment', __FILE__)
@@ -18,18 +19,15 @@ RSpec.configure do |config|
   config.use_transactional_fixtures = false
   config.infer_spec_type_from_file_location!
 
+  # Clean out everything and create required fixtures
   config.before :suite do
     ActiveFedora::Cleaner.clean!
-    class TestLoader
-      include FixtureLoader
-      include ListLoader
-    end
-    loader = TestLoader.new
-    Dir.glob("spec/fixtures/*.ttl").each do |f|
-      loader.load_fedora_fixture(f)
-    end
     FactoryGirl.create(:status)
-    loader.load_lists
+    FactoryGirl.create(:department100)
+    FactoryGirl.create(:department200)
+    FactoryGirl.create(:aic_user1)
+    FactoryGirl.create(:aic_user2)
+    FactoryGirl.create(:aic_admin)
   end
 
   # Clean out Redis before each feature test
@@ -64,6 +62,13 @@ RSpec.configure do |config|
 
   config.include Warden::Test::Helpers, type: :feature
   config.after(:each, type: :feature) { Warden.test_reset! }
+end
+
+Shoulda::Matchers.configure do |config|
+  config.integrate do |with|
+    with.test_framework :rspec
+    with.library :rails
+  end
 end
 
 module FactoryGirl

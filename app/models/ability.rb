@@ -1,22 +1,17 @@
+# frozen_string_literal: true
 class Ability
   include Hydra::Ability
+  include CurationConcerns::Ability
   include Sufia::Ability
 
-  def custom_permissions
-    if registered_user?
-      can [:create, :edit], Work
-      can [:create, :edit], Actor
-      can [:create, :edit], Exhibition
-      can [:create, :edit], Transaction
-      can [:create, :edit], Shipment
-    end
+  self.ability_logic += [:everyone_can_create_curation_concerns, :admins_can_manage_lists, :departments_can_read_assets]
 
-    if current_user.admin?
-      can [:create, :index, :edit, :update, :destroy, :show, :add_user, :remove_user], Role
-      can [:create, :edit, :update, :destroy, :show], List
-    end
+  def admins_can_manage_lists
+    can :manage, List if admin?
+  end
 
-    can :read, GenericFile do |obj|
+  def departments_can_read_assets
+    can :read, GenericWork do |obj|
       !obj.department?
     end
   end

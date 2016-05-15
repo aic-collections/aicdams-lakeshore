@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'rails_helper'
 require 'cancan/matchers'
 
@@ -6,6 +7,13 @@ describe Sufia::Ability do
   let(:user2) { create(:user2) }
   let(:admin) { create(:admin) }
   let(:file)  { create(:asset) }
+
+  context "with curation concerns" do
+    subject { Ability.new(user1) }
+    it { is_expected.to be_able_to(:create, GenericWork) }
+    it { is_expected.to be_able_to(:edit, Work) }
+    it { is_expected.to be_able_to(:edit, Exhibition) }
+  end
 
   context "with department visibility" do
     context "registered users cannot read a GenericFile" do
@@ -16,11 +24,11 @@ describe Sufia::Ability do
 
   describe "List resources" do
     let(:list) { create(:list) }
-    context "with a who does not have edit access" do
+    context "with a user who does not have edit access" do
       subject { Ability.new(user1) }
       it { is_expected.not_to be_able_to(:edit, list) }
     end
-    context "with a who does have edit access" do
+    context "with a user who does have edit access" do
       subject { Ability.new(user2) }
       it { is_expected.to be_able_to(:edit, list) }
     end

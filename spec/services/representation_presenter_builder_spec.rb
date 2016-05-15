@@ -1,9 +1,11 @@
+# frozen_string_literal: true
 require 'rails_helper'
 
 describe RepresentationPresenterBuilder do
+  let(:work) { create(:work, citi_uid: "WO-1234") }
   subject { described_class.new(params).call }
   context "with valid input" do
-    let(:params) { { model: "work", citi_uid: Work.all.first.citi_uid } }
+    let(:params) { { model: "work", citi_uid: work.citi_uid } }
     it { is_expected.to be_kind_of(WorkPresenter) }
   end
   context "with an invalid model" do
@@ -15,7 +17,7 @@ describe RepresentationPresenterBuilder do
     it { is_expected.to be_nil }
   end
   context "with missing model" do
-    let(:params) { { citi_uid: Work.all.first.citi_uid } }
+    let(:params) { { citi_uid: work.citi_uid } }
     it { is_expected.to be_nil }
   end
   context "with missing citi_uid" do

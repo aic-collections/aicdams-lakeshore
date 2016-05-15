@@ -1,9 +1,10 @@
+# frozen_string_literal: true
 require 'rails_helper'
 
 describe Shipment do
   describe "RDF type" do
     subject { described_class.new.type }
-    it { is_expected.to contain_exactly(AICType.Shipment, AICType.Resource, AICType.CitiResource) }
+    it { is_expected.to include(AICType.Shipment) }
   end
 
   describe "terms" do

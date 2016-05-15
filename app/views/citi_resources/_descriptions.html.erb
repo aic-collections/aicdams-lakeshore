@@ -1,6 +1,0 @@
-<%= simple_form_for @form do |f| %>
-  <% f.object.terms.each do |term| %>
-    <%= render_edit_field_partial(term, f: f) %>
-  <% end %>
-  <%= f.button :submit %>
-<% end %>

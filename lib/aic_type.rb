@@ -1,112 +1,113 @@
+# frozen_string_literal: true
 class AICType < RDF::StrictVocabulary("http://definitions.artic.edu/ontology/1.0/type/")
-  term :Actor,
-       subClassOf: "aictype:CitiResource".freeze,
-       label: "Actor".freeze,
-       comment: "Actor (CITI Agent): a person or corporate body".freeze
+  term :Agent,
+       subClassOf: "aictype:CitiResource",
+       label: "Actor",
+       comment: "A person, group of people or corporate body involved in some way in the lifecycle of a physical or digital resource."
+  term :AICUser,
+       subClassOf: "aictype:CitiResource",
+       label: "AIC User",
+       comment: "AIC User"
   term :Annotation,
-       subClassOf: "aictype:Resource".freeze,
-       label: "Annotation".freeze,
-       comment: "Annotation".freeze
+       subClassOf: "aictype:Resource",
+       label: "Annotation",
+       comment: "Annotation"
   term :Asset,
-       subClassOf: "aictype:Resource".freeze,
-       label: "Asset".freeze
+       subClassOf: "aictype:Resource",
+       label: "Asset"
   term :CitiResource,
-       subClassOf: "aictype:Resource".freeze,
-       label: "CITI Resource".freeze,
-       comment: "Resource imported from CITI".freeze
+       subClassOf: "aictype:Resource",
+       label: "CITI Resource",
+       comment: "Resource imported from CITI"
   term :Comment,
-       subClassOf: "aictype:Annotation".freeze,
-       label: "Comment".freeze,
-       comment: "Comment".freeze
+       subClassOf: "aictype:Annotation",
+       label: "Comment",
+       comment: "Comment"
   term :CommentCategory,
-       subClassOf: "aictype:ListItem".freeze,
-       label: "Comment category".freeze,
-       comment: "Comment category".freeze
+       subClassOf: "aictype:ListItem",
+       label: "Comment category",
+       comment: "Comment category"
   term :CompositingType,
-       subClassOf: "aictype:ListItem".freeze,
-       label: "Compositing".freeze,
-       comment: "Compositing type".freeze
+       subClassOf: "aictype:ListItem",
+       label: "Compositing",
+       comment: "Compositing type"
   term :ConservationDocumentType,
-       subClassOf: "aictype:ListItem".freeze,
-       label: "Conservation document type".freeze,
-       comment: "Conservation document type".freeze
+       subClassOf: "aictype:ListItem",
+       label: "Conservation document type",
+       comment: "Conservation document type"
   term :ConservationImageType,
-       subClassOf: "aictype:ListItem".freeze,
-       label: "Conservation image type".freeze,
-       comment: "Conservation image type".freeze
+       subClassOf: "aictype:ListItem",
+       label: "Conservation image type",
+       comment: "Conservation image type"
   term :ConservationMetadata,
-       subClassOf: "aictype:MetadataSet".freeze,
-       label: "Conservation Metadata".freeze,
-       comment: "Conservation metadata".freeze
+       subClassOf: "aictype:MetadataSet",
+       label: "Conservation Metadata",
+       comment: "Conservation metadata"
   term :Department,
-       subClassOf: "aictype:ListItem".freeze,
-       label: "Department".freeze,
-       comment: "Department".freeze
+       subClassOf: "aictype:ListItem",
+       label: "Department",
+       comment: "Department"
   term :DigitizationSource,
-       subClassOf: "aictype:ListItem".freeze,
-       label: "Digitization source".freeze,
-       comment: "Digitization source".freeze
+       subClassOf: "aictype:ListItem",
+       label: "Digitization source",
+       comment: "Digitization source"
   term :DocumentType,
-       subClassOf: "aictype:ListItem".freeze,
-       label: "Document type".freeze,
-       comment: "Document type".freeze
+       subClassOf: "aictype:ListItem",
+       label: "Document type",
+       comment: "Document type"
   term :Exhibition,
-       subClassOf: "aictype:CitiResource".freeze,
-       label: "Exhibition".freeze,
-       comment: "CITI Exhibition".freeze
+       subClassOf: "aictype:CitiResource",
+       label: "Exhibition",
+       comment: "CITI Exhibition"
   term :LightType,
-       subClassOf: "aictype:ListItem".freeze,
-       label: "Light type".freeze,
-       comment: "Light type".freeze
+       subClassOf: "aictype:ListItem",
+       label: "Light type",
+       comment: "Light type"
   term :List,
-       subClassOf: "aictype:Resource".freeze,
-       label: "List".freeze,
-       comment: "List of options".freeze
+       subClassOf: "aictype:Resource",
+       label: "List",
+       comment: "List of options"
   term :ListItem,
-       subClassOf: "aictype:Resource".freeze,
-       label: "List Item".freeze,
-       comment: "Item (option) in a list".freeze
-  term :MetadataSet,
-       subClassOf: "aictype:Resource".freeze,
-       label: "Metadata Set".freeze,
-       comment: "Metadata set".freeze
+       subClassOf: "aictype:Resource",
+       label: "List Item",
+       comment: "Item (option) in a list"
+  term :Place,
+       subClassOf: "aictype:CitiResource",
+       label: "Place",
+       comment: "Place"
   term :Resource,
-       label: "Resource".freeze,
-       comment: "LAKE base resource".freeze
+       label: "Resource",
+       comment: "LAKE base resource"
   term :Shipment,
-       subClassOf: "aictype:CitiResource".freeze,
-       label: "Shipment".freeze,
-       comment: "CITI Shipment".freeze
+       subClassOf: "aictype:CitiResource",
+       label: "Shipment",
+       comment: "CITI Shipment"
   term :StatusType,
-       subClassOf: "aictype:ListItem".freeze,
-       label: "Status".freeze,
-       comment: "The status of a resource".freeze
+       subClassOf: "aictype:ListItem",
+       label: "Status",
+       comment: "The status of a resource"
   term :StillImage,
-       subClassOf: "aictype:Asset".freeze,
-       label: "Still Image".freeze,
-       comment: "Still image".freeze
+       subClassOf: "aictype:Asset",
+       label: "Still Image",
+       comment: "Still image"
   term :Tag,
-       subClassOf: "aictype:ListItem".freeze,
-       label: "Tag".freeze,
-       comment: "Tag".freeze
+       subClassOf: "aictype:ListItem",
+       label: "Tag",
+       comment: "Tag"
   term :Text,
-       subClassOf: "aictype:Asset".freeze,
-       label: "Text Document".freeze,
-       comment: "Text document".freeze
+       subClassOf: "aictype:Asset",
+       label: "Text Document",
+       comment: "Text document"
   term :Transaction,
-       subClassOf: "aictype:CitiResource".freeze,
-       label: "Transaction".freeze,
-       comment: "CITI Transaction".freeze
-  term :User,
-       subClassOf: "aictype:CitiResource".freeze,
-       label: "User".freeze,
-       comment: "CITI User".freeze
+       subClassOf: "aictype:CitiResource",
+       label: "Transaction",
+       comment: "CITI Transaction"
   term :ViewType,
-       subClassOf: "aictype:ListItem".freeze,
-       label: "View Type".freeze,
-       comment: "View type".freeze
+       subClassOf: "aictype:ListItem",
+       label: "View Type",
+       comment: "View type"
   term :Work,
-       subClassOf: "aictype:CitiResource".freeze,
-       label: "Work".freeze,
-       comment: "CITI Object".freeze
+       subClassOf: "aictype:CitiResource",
+       label: "Work",
+       comment: "CITI Object"
 end

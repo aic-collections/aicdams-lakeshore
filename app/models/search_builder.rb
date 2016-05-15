@@ -1,7 +1,8 @@
+# frozen_string_literal: true
 class SearchBuilder < Blacklight::SearchBuilder
   include Blacklight::Solr::SearchBuilderBehavior
   include Hydra::AccessControlsEnforcement
-  include Sufia::SearchBuilder
+  include CurationConcerns::SearchFilters
 
   def exclude_lists(solr_parameters)
     solr_parameters[:fq] ||= []

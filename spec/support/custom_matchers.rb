@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module CustomMatchers
   def match_edit_label(label, opts)
     within('div.generic_file_'.+label.to_s) do

@@ -1,24 +1,21 @@
 source 'https://rubygems.org'
 
-gem 'rails', '4.2.5.1'
+gem 'rails', '4.2.6'
 
 # Hydra Gems
-gem 'sufia', '~> 6.6'
-gem 'kaminari_route_prefix'
-gem 'hydra-pcdm', '~> 0.3'
+gem 'sufia', github: 'projecthydra/sufia', branch: 'master'
 
 gem 'blacklight_range_limit'
-gem 'coffee-rails', '~> 4.1.0'
-gem 'devise'
-gem 'devise-guests', '~> 0.3'
-gem 'hydra-role-management'
-gem 'jbuilder', '~> 2.0'
+gem 'coffee-rails', '~> 4.1'
+gem 'devise', '~> 3.5'
+gem 'devise-guests', '~> 0.5'
+gem 'jbuilder', '~> 2.4'
 gem 'jquery-rails'
 gem 'resque-pool'
-gem 'rsolr', '~> 1.0.6'
+gem 'rsolr', '~> 1.1'
 gem 'sass-rails', '~> 5.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
-gem 'uglifier', '>= 1.3.0'
+gem 'uglifier', '~> 3.0'
 
 group :development, :test do
   gem 'better_errors'
@@ -30,20 +27,20 @@ group :development, :test do
 end
 
 group :development do
-  gem 'airbrussh', require: false
   gem 'capistrano-rails', require: false
-  gem 'rubocop', require: false
-  gem 'rubocop-rspec', require: false
+  gem 'rubocop', '~> 0.39.0', require: false
+  gem 'rubocop-rspec', '~> 1.4.1', require: false
 end
 
 group :test do
-  gem 'capybara', '~> 2.0'
+  gem 'capybara', '~> 2.7'
   gem 'database_cleaner'
   gem 'factory_girl_rails'
   gem 'poltergeist'
   gem 'rspec-activemodel-mocks'
   gem 'rspec-its'
-  gem 'rspec-rails', '~> 3.0'
+  gem 'rspec-rails', '~> 3.4'
+  gem 'shoulda-matchers', '~> 3.1'
 end
 
 group :production do

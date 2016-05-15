@@ -1,27 +1,37 @@
-class AssetPresenter < Sufia::GenericFilePresenter
+# frozen_string_literal: true
+class AssetPresenter < Sufia::WorkShowPresenter
   delegate :documents, :representations, :preferred_representations, :assets, :representing?, to: :representing_resource
 
-  self.terms = [
-    :uid,
-    :legacy_uid,
-    :document_type,
-    :status,
-    :resource_created,
-    :dept_created,
-    :resource_updated,
-    :description,
-    :batch_uid,
-    :language,
-    :publisher,
-    :rights_holder,
-    :tag,
-    :created_by,
-    :compositing,
-    :light_type,
-    :view,
-    :asset_capture_device,
-    :digitization_source
-  ]
+  def self.terms
+    [
+      :uid,
+      :legacy_uid,
+      :document_type,
+      :status,
+      :created,
+      :dept_created,
+      :updated,
+      :description,
+      :batch_uid,
+      :language,
+      :publisher,
+      :pref_label,
+      :rights_holder,
+      :keyword,
+      :created_by,
+      :compositing,
+      :light_type,
+      :view,
+      :capture_device,
+      :digitization_source
+    ]
+  end
+
+  delegate(*terms, to: :solr_document)
+
+  def title
+    [pref_label]
+  end
 
   # TODO: needs to show either representation, preferred representation, or document
   def brief_terms
@@ -36,18 +46,6 @@ class AssetPresenter < Sufia::GenericFilePresenter
   def asset_type
     return "Image" if model.still_image?
     return "Text Document" if model.text?
-  end
-
-  def views
-    model.view.map(&:pref_label).join(", ")
-  end
-
-  def document_types
-    model.document_type.map(&:pref_label).join(", ")
-  end
-
-  def tags
-    model.tag.map(&:pref_label).join(", ")
   end
 
   private

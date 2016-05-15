@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class UidMinter
   attr_reader :prefix
 

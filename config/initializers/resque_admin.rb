@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class ResqueAdmin
   def self.matches?(request)
     # TODO: restrict to a group (see issue #4)

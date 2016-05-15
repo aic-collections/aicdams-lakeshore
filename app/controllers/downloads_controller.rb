@@ -1,5 +1,6 @@
+# frozen_string_literal: true
 class DownloadsController < ApplicationController
-  include Sufia::DownloadsControllerBehavior
+  include CurationConcerns::DownloadBehavior
 
   # Overrides Hydra::Controller::DownloadBehavior due to an issue with self-signed certificates, see issue #113
   # Uses Rails' ActionController::DataSteaming

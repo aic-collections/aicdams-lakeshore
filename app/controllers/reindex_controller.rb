@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class ReindexController < ActionController::Base
   before_action :parse_json, only: [:update]
 
@@ -19,7 +20,7 @@ class ReindexController < ActionController::Base
     def reindex_submitted_ids
       return false if @json.empty? || !@json.is_a?(Array)
       @json.each do |id|
-        Sufia.queue.push(UpdateIndexJob.new(id)) unless deleted_from_solr?(id)
+        UpdateIndexJob.perform_later(id) unless deleted_from_solr?(id)
       end
     end
 

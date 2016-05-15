@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # Class used to query different kinds of List resources
 class BaseVocabulary
   def self.all
@@ -7,7 +8,7 @@ class BaseVocabulary
 
   def self.options
     options = {}
-    all.map { |t| options[t.pref_label] = t.id }
+    all.map { |t| options[t.pref_label] = t.uri }
     options.sort.to_h
   end
 end

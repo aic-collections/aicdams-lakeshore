@@ -1,8 +1,11 @@
+# frozen_string_literal: true
 class ApplicationController < ActionController::Base
   helper Openseadragon::OpenseadragonHelper
   include Blacklight::Controller
-  include Sufia::Controller
   include Hydra::Controller::ControllerBehavior
+  include CurationConcerns::ApplicationControllerBehavior
+  include Sufia::Controller
+  include CurationConcerns::ThemedLayoutController
   include Devise::Behaviors::SamlAuthenticatableBehavior
 
   layout 'sufia-one-column'
@@ -25,6 +28,10 @@ class ApplicationController < ActionController::Base
   end
 
   def render_401
-    render template: '/error/401', layout: "error", formats: [:html], status: 401
+    render template: '/error/401',
+           layout: "error",
+           formats: [:html],
+           status: 401,
+           locals: { aic_user: aic_user, department: department }
   end
 end

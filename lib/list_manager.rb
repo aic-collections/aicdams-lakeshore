@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # Manages the membership and types of lists that are used in Lakeshore.
 # Using yaml files in the config directory, one list will be created per file.
 # If the list or any of its members already exist, then it will not be altered.

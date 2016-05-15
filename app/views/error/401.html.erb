@@ -11,3 +11,21 @@
   </tr>
 <% end %>
 </table>
+
+<h2>Lake Information</h2>
+<table class="table table-condensed">
+  <tr><td><strong>AICUser</strong></td><td><%= (aic_user.nil? ? "Not found" : aic_user.id) %></td></tr>
+  <tr><td><strong>Department</strong></td><td><%= (department.nil? ? "Not found" : department.id) %></td></tr>
+</table>
+
+<h2>Environment</h2>
+<table class="table table-condensed">
+<% request.env.each do |k, v| %>
+  <% if k =~ /^HTTP/ %>
+    <tr>
+      <td><strong><%= k %></strong></td>
+      <td><%= v %></td>
+    </tr>
+  <% end %>
+<% end %>
+</table>

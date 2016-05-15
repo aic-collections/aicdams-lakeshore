@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # When loading objects from Solr, we need to instantiate attributes into
 # their corresponding classes. This service does so by examining the
 # attribute name and returning its resulting class using the supplied id.

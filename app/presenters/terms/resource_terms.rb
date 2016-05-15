@@ -1,29 +1,27 @@
+# frozen_string_literal: true
 class ResourceTerms
   def self.all
-    properties + related_asset_ids
-  end
-
-  def self.properties
     [
       :batch_uid,
-      :contributor,
-      :resource_created,
+      :citi_icon,
+      :contributors,
+      :created,
       :created_by,
-      :dept_created,
-      :described_by,
-      :description,
-      :resource_label,
-      :language,
-      :legacy_uid,
-      :pref_label,
-      :publisher,
-      :rights,
-      :rights_holder,
-      :same_as,
+      :documents,
+      :preferred_representation,
+      :representations,
+      :icon,
       :status,
       :uid,
-      :resource_updated,
-      :icon
+      :updated,
+      :description,
+      :language,
+      :publisher,
+      :rights,
+      :rights_statement,
+      :rights_holder,
+      :pref_label,
+      :alt_label
     ]
   end
 

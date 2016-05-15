@@ -1,5 +1,43 @@
+# frozen_string_literal: true
+require 'resque/server'
+
 Rails.application.routes.draw do
-  blacklight_for :catalog
+  mount BrowseEverything::Engine => '/browse'
+  mount Blacklight::Engine => '/'
+
+  concern :searchable, Blacklight::Routes::Searchable.new
+
+  resource :catalog, only: [:index], as: 'catalog', path: '/catalog', controller: 'catalog' do
+    concerns :searchable
+  end
+
+  Hydra::BatchEdit.add_routes(self)
+  mount CurationConcerns::Engine, at: '/'
+  resources :welcome, only: 'index'
+  root 'sufia/homepage#index'
+  curation_concerns_collections
+  curation_concerns_basic_routes
+  curation_concerns_embargo_management
+
+  # :index action is not added to concerns, so we're adding it here
+  namespace :curation_concerns, path: :concern do
+    resources :agents, :exhibitions, :places, :shipments, :transactions, :works, only: [:index]
+  end
+
+  curation_concerns_embargo_management
+  concern :exportable, Blacklight::Routes::Exportable.new
+
+  resources :solr_documents, only: [:show], path: '/catalog', controller: 'catalog' do
+    concerns :exportable
+  end
+
+  resources :bookmarks do
+    concerns :exportable
+
+    collection do
+      delete 'clear'
+    end
+  end
 
   # Devise settings
   devise_for :users, skip: [:registrations]
@@ -8,12 +46,7 @@ Rails.application.routes.draw do
     patch 'users/:id' => 'devise/registrations#update', :as => 'user_registration'
   end
 
-  Hydra::BatchEdit.add_routes(self)
-
-  root to: 'homepage#index'
-
   # Administrative URLs
-  mount Hydra::RoleManagement::Engine => '/admin'
   namespace :admin do
     # Job monitoring
     constraints ResqueAdmin do
@@ -21,19 +54,11 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :comments
-  resources :tags
-  resources :tag_cats
-  resources :works, except: [:new, :create, :destroy]
-  resources :actors, except: [:new, :create, :destroy]
-  resources :exhibitions, except: [:new, :create, :destroy]
-  resources :transactions, except: [:new, :create, :destroy]
-  resources :shipments, except: [:new, :create, :destroy]
   resources :lists, except: [:create, :destroy] do
     resources :list_items, except: [:index, :show]
   end
 
-  resources :generic_files, only: [:index]
+  # resources :generic_files, only: [:index]
   resources :representations, only: [:index]
 
   # Lakeshore API

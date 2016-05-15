@@ -1,8 +1,11 @@
 # -*- encoding : utf-8 -*-
+# frozen_string_literal: true
 class SolrDocument
   include Blacklight::Solr::Document
   include Blacklight::Gallery::OpenseadragonSolrDocument
 
+  # Adds CurationConcerns behaviors to the SolrDocument.
+  include CurationConcerns::SolrDocumentBehavior
   # Adds Sufia behaviors to the SolrDocument.
   include Sufia::SolrDocumentBehavior
 
@@ -22,4 +25,7 @@ class SolrDocument
   # and Blacklight::Document::SemanticFields#to_semantic_values
   # Recommendation: Use field names from Dublin Core
   use_extension(Blacklight::Document::DublinCore)
+
+  # Do content negotiation for AF models.
+  use_extension(Hydra::ContentNegotiation)
 end

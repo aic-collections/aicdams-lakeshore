@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 shared_examples "a presenter with terms for a Citi resource" do
   describe "::terms" do
     specify { expect(described_class.terms).to include(*CitiResourceTerms.all) }

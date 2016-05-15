@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class RepresentationPresenterBuilder
   attr_reader :model, :citi_uid
 

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # Returns an array containing the vhost 'CoSign service' value and URL
 Sufia.config do |config|
   config.fits_to_desc_mapping = {
@@ -79,7 +80,7 @@ Sufia.config do |config|
     "Edit" => "edit"
   }
 
-  config.queue = Sufia::Resque::Queue
+  # config.queue = Sufia::Resque::Queue
 
   # Enable displaying usage statistics in the UI
   # Defaults to FALSE

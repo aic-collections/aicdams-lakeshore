@@ -1,6 +1,7 @@
+# frozen_string_literal: true
 class BatchEditsController < ApplicationController
   include Hydra::BatchEditBehavior
-  include GenericFileHelper
+  include FileSetHelper
   include Sufia::BatchEditsControllerBehavior
 
   def destroy_collection
@@ -16,8 +17,8 @@ class BatchEditsController < ApplicationController
 
     def destroy_batch
       batch.each do |doc_id|
-        gf = ::GenericFile.find(doc_id)
-        report_delete_error unless gf.destroy
+        gw = ::GenericWork.find(doc_id)
+        report_delete_error unless gw.destroy
       end
       after_update
     end

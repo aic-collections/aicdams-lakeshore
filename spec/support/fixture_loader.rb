@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module FixtureLoader
   def load_fedora_fixture(ttl, index = true)
     data = File.read(ttl)

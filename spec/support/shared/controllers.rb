@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 shared_examples "a controller for a Citi resource" do |resource_name|
   let(:user) { create(:user1) }
   include_context "authenticated saml user"
@@ -66,10 +67,10 @@ shared_examples "a controller for a Citi resource" do |resource_name|
     subject { response }
     it { is_expected.to be_successful }
   end
+end
 
-  describe "#index" do
-    before { get :index }
-    subject { response }
-    it { is_expected.to redirect_to("http://test.host/catalog?f%5Baic_type_sim%5D%5B%5D=#{resource_name.capitalize}") }
-  end
+shared_examples "#index redirects to catalog facet search" do
+  before { get :index }
+  subject { response }
+  it { is_expected.to redirect_to("http://test.host/catalog?f%5Baic_type_sim%5D%5B%5D=#{described_class.curation_concern_type}") }
 end

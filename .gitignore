@@ -15,3 +15,5 @@
 /bin
 dump.rdb
 .byebug_history
+public/uploads
+public/protected

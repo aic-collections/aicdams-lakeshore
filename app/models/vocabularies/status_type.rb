@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # A specific kind of ListItem that is only a member of the Status list
 class StatusType < ListItem
   type [AICType.Resource, AICType.ListItem, AICType.StatusType]

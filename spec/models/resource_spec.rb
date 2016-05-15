@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'rails_helper'
 
 describe Resource do
@@ -13,69 +14,46 @@ describe Resource do
     end
   end
 
-  describe "nested resources" do
-    let(:resource) { described_class.new }
-
-    context "with other assets" do
-      let(:asset) { create(:asset) }
-
-      before do
-        ResourceTerms.related_asset_ids.map { |rel| resource.send(rel.to_s + "=", [asset.id]) }
-        resource.save
-        resource.reload
-      end
-
-      specify "are types of GenericFile objects" do
-        expect(resource.documents).to include(GenericFile)
-        expect(resource.representations).to include(GenericFile)
-        expect(resource.preferred_representations).to include(GenericFile)
-      end
-    end
-
-    context "with a MetadataSet" do
-      let(:metadata) do
-        MetadataSet.create.tap(&:save)
-      end
-
-      before do
-        resource.described_by = [metadata]
-        resource.save
-        resource.reload
-      end
-
-      subject { resource.described_by }
-      it { is_expected.to include(MetadataSet) }
-    end
-  end
-
   describe "cardinality" do
-    [:batch_uid, :resource_created, :dept_created, :resource_updated, :status, :pref_label, :uid, :icon].each do |term|
+    [:batch_uid, :citi_icon, :created, :created_by, :preferred_representation, :icon, :status, :uid, :updated, :pref_label].each do |term|
       it "limits #{term} to a single value" do
-        subject.send(term.to_s + "=", "foo")
-        expect(subject.send(term.to_s)).to eql "foo"
+        expect(described_class.properties[term.to_s].multiple?).to be false
       end
     end
   end
 
-  describe "#resource_created" do
+  describe "#created" do
     context "with a bad date" do
-      let(:bad_resource) { described_class.create(resource_created: "bad date") }
+      let(:bad_resource) { described_class.create(created: "bad date") }
       subject { ActiveFedora::Base.load_instance_from_solr(bad_resource.id) }
-      its(:resource_created) { is_expected.to eq("bad date is not a valid date") }
+      its(:created) { is_expected.to eq("bad date is not a valid date") }
     end
   end
 
   describe "::find_by_label" do
-    let!(:list1) { create(:list, pref_label: "Foo List") }
-    let!(:list2) { create(:list, pref_label: "A Foo List") }
-    subject { List.find_by_label(label) }
+    let!(:resource) { described_class.create(pref_label: "A Foos List") }
+    subject { described_class.find_by_label(label) }
     context "with an exact search" do
-      let(:label) { "Foo List" }
+      let(:label) { "A Foos List" }
       its(:pref_label) { is_expected.to eq(label) }
     end
     context "with a fuzzy search" do
-      let(:label) { "List" }
+      let(:label) { "Foos List" }
       it { is_expected.to be_nil }
     end
+  end
+
+  describe "::accepts_uris_for" do
+    subject { described_class.new }
+    it { is_expected.to respond_to(:citi_icon_uri=) }
+    it { is_expected.to respond_to(:created_by_uri=) }
+    it { is_expected.to respond_to(:preferred_representation_uri=) }
+    it { is_expected.to respond_to(:icon_uri=) }
+    it { is_expected.to respond_to(:contributors_uris=) }
+    it { is_expected.to respond_to(:documents_uris=) }
+    it { is_expected.to respond_to(:representations_uris=) }
+    it { is_expected.to respond_to(:publisher_uris=) }
+    it { is_expected.to respond_to(:rights_statement_uris=) }
+    it { is_expected.to respond_to(:rights_holder_uris=) }
   end
 end

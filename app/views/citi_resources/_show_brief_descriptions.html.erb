@@ -1,7 +1,0 @@
-<dl id="show_brief_descriptions" class="dl-horizontal file-show-term file-show-descriptions">
-  <% present_terms(@presenter,@presenter.summary_terms - [:title]) do |r, term| %>
-  <dt><%= r.label(term) %></dt>
-      <dd><%= r.value(term) %></dd>
-  <% end %>
-</dl>
-<p><%= link_to_citi(controller_name, @presenter.citi_uid) %></p>

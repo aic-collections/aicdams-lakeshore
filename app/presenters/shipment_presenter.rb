@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class ShipmentPresenter
   include Hydra::Presenter
   include RelatedAssetTerms

@@ -1,25 +1,12 @@
-# -*- coding: utf-8 -*-
-# -*- encoding : utf-8 -*-
-require 'blacklight/catalog'
-require 'blacklight_advanced_search'
-
-# bl_advanced_search 1.2.4 is doing unitialized constant on these because we're calling ParseBasicQ directly
-require 'parslet'
-require 'parsing_nesting/tree'
-
+# frozen_string_literal: true
 class CatalogController < ApplicationController
   include Hydra::Catalog
   include Hydra::Controller::ControllerBehavior
+  include Sufia::Catalog
+  include BlacklightAdvancedSearch::Controller
 
   # These before_filters apply the hydra access controls
   before_action :enforce_show_permissions, only: :show
-  # This applies appropriate access controls to all solr queries
-  CatalogController.search_params_logic += [
-    :add_access_controls_to_solr_params,
-    :add_advanced_parse_q_to_solr,
-    :exclude_lists
-  ]
-
   skip_before_action :default_html_head
 
   def self.uploaded_field
@@ -38,12 +25,17 @@ class CatalogController < ApplicationController
     config.view.gallery.partials = [:index_header, :index]
     config.view.masonry.partials = [:index]
     config.view.slideshow.partials = [:index]
+
     config.show.tile_source_field = :content_metadata_image_iiif_info_ssm
     config.show.partials.insert(1, :openseadragon)
+    # default advanced config values
+    config.advanced_search ||= Blacklight::OpenStructWithHashAccess.new
+    # config.advanced_search[:qt] ||= 'advanced'
+    config.advanced_search[:url_key] ||= 'advanced'
+    config.advanced_search[:query_parser] ||= 'dismax'
+    config.advanced_search[:form_solr_parameters] ||= {}
 
-    # Show gallery view
-    config.view.gallery.partials = [:index_header, :index]
-    config.view.slideshow.partials = [:index]
+    config.search_builder_class = Sufia::SearchBuilder
 
     ## Default parameters to send to solr for all search-like requests. See also SolrHelper#solr_search_params
     config.default_solr_params = {
@@ -51,14 +43,10 @@ class CatalogController < ApplicationController
       rows: 10
     }
 
-    # Specify which field to use in the tag cloud on the homepage.
-    # To disable the tag cloud, comment out this line.
-    config.tag_cloud_field_name = Solrizer.solr_name("tag", :facetable)
-
     # solr field configuration for document/show views
     config.index.title_field = solr_name("title", :stored_searchable)
     config.index.display_type_field = solr_name("has_model", :symbol)
-    config.index.thumbnail_method = :sufia_thumbnail_tag
+    config.index.thumbnail_field = 'thumbnail_path_ss'
 
     # solr fields that will be treated as facets by the blacklight application
     #   The ordering of the field names is the order of the display
@@ -108,14 +96,13 @@ class CatalogController < ApplicationController
     config.add_show_field solr_name("description", :stored_searchable),   label: ::RDF::DC.description.label
     config.add_show_field solr_name("label", :stored_searchable),         label: ::RDF::RDFS.label.label
     config.add_show_field solr_name("language", :stored_searchable),      label: ::RDF::DC.language.label
-    config.add_show_field solr_name("pref_label", :stored_searchable),    label: ::RDF::SKOS.prefLabel.label
+    config.add_show_field solr_name("pref_label", :stored_searchable),    label: ::RDF::Vocab::SKOS.prefLabel.label
     config.add_show_field solr_name("publisher", :stored_searchable),     label: ::RDF::DC.publisher.label
     config.add_show_field solr_name("rights", :stored_searchable),        label: ::RDF::DC.rights.label
     config.add_show_field solr_name("rights_holder", :stored_searchable), label: ::RDF::DC.rightsHolder.label
     config.add_show_field solr_name("same_as", :stored_searchable),       label: ::RDF::OWL.sameAs.label
 
     # Work fields
-    config.add_show_field solr_name("artist_uid", :stored_searchable),          label: AIC.artistUid.label
     config.add_show_field solr_name("citi_uid", :stored_searchable),            label: AIC.citiUid.label
     config.add_show_field solr_name("creator_display", :stored_searchable),     label: AIC.creatorDisplay.label
     config.add_show_field solr_name("credit_line", :stored_searchable),         label: AIC.creditLine.label
@@ -129,7 +116,6 @@ class CatalogController < ApplicationController
     config.add_show_field solr_name("main_ref_number", :stored_searchable),     label: AIC.mainRefNumber.label
     config.add_show_field solr_name("medium_display", :stored_searchable),      label: AIC.mediumDisplay.label
     config.add_show_field solr_name("object_type", :stored_searchable),         label: AIC.objectType.label
-    config.add_show_field solr_name("place_of_origin_uid", :stored_searchable), label: AIC.placeOfOriginUid.label
     config.add_show_field solr_name("provenance_text", :stored_searchable),     label: AIC.provenanceText.label
     config.add_show_field solr_name("publ_ver_level", :stored_searchable),      label: AIC.publVerLevel.label
     config.add_show_field solr_name("publication_history", :stored_searchable), label: AIC.publicationHistory.label
@@ -367,5 +353,12 @@ class CatalogController < ApplicationController
     # If there are more than this many search results, no spelling ("did you
     # mean") suggestion is offered.
     config.spell_max = 5
+  end
+
+  # disable the bookmark control from displaying in gallery view
+  # Sufia doesn't show any of the default controls on the list view, so
+  # this method is not called in that context.
+  def render_bookmarks_control?
+    false
   end
 end

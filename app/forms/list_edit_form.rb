@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class ListEditForm
   include HydraEditor::Form
   include HydraEditor::Form::Permissions

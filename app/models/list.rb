@@ -1,6 +1,7 @@
+# frozen_string_literal: true
 class List < ActiveFedora::Base
   include Hydra::PCDM::ObjectBehavior
-  include ResourceMetadata
+  include BasicMetadata
   include Hydra::AccessControls::Permissions
 
   type [AICType.Resource, AICType.List]

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class RepresentingResource
   attr_reader :id
 
@@ -6,23 +7,19 @@ class RepresentingResource
   end
 
   def representing?
-    !(documents.empty? && preferred_representations.empty? && representations.empty? && assets.empty?)
+    !(documents.empty? && preferred_representations.empty? && representations.empty?)
   end
 
   def documents
-    @documents ||= objects_with_predicate(:hasDocument_ssim)
+    @documents ||= objects_with_predicate(:documents_ssim)
   end
 
   def preferred_representations
-    @preferred_representations ||= objects_with_predicate(:hasPreferredRepresentation_ssim)
+    @preferred_representations ||= objects_with_predicate(:preferred_representation_ssim)
   end
 
   def representations
-    @representations ||= objects_with_predicate(:hasRepresentation_ssim)
-  end
-
-  def assets
-    @assets ||= objects_with_predicate(:hasConstituent_ssim)
+    @representations ||= objects_with_predicate(:representations_ssim)
   end
 
   private

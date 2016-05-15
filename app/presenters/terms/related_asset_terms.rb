@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module RelatedAssetTerms
   delegate :documents, to: :to_model
 

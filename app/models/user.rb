@@ -1,9 +1,9 @@
+# frozen_string_literal: true
 class User < ActiveRecord::Base
-  include Blacklight::User
   include Hydra::User
+  include CurationConcerns::User
   include Sufia::User
   include Sufia::UserUsageStats
-  include Hydra::RoleManagement::UserRoles
 
   if Blacklight::Utils.needs_attr_accessible?
     attr_accessible :email, :password, :password_confirmation

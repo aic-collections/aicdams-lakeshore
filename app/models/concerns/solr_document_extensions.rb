@@ -1,21 +1,10 @@
+# frozen_string_literal: true
 module SolrDocumentExtensions
   extend ActiveSupport::Concern
-  include LakeshorePermissions
-
-  def title_or_label
-    title || pref_label
-  end
+  include Permissions::Readable
 
   def pref_label
     Array(self[Solrizer.solr_name('pref_label', :stored_searchable)]).first
-  end
-
-  def title
-    if Array(self[Solrizer.solr_name('title')]).empty?
-      pref_label
-    else
-      Array(self[Solrizer.solr_name('title')]).first
-    end
   end
 
   def uid

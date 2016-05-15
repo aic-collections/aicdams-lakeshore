@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module Devise::Behaviors::SamlAuthenticatableBehavior
   def valid_saml_credentials?
     saml_user.present? && saml_department.present? && aic_user.present? && department.present?

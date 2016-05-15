@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module ListLoader
   def load_lists
     department

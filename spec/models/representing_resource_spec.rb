@@ -1,18 +1,11 @@
+# frozen_string_literal: true
 require 'rails_helper'
 
 describe RepresentingResource do
-  let(:user) { create(:user1) }
-  let(:example_file) do
-    GenericFile.create.tap do |file|
-      file.apply_depositor_metadata(user)
-      file.assert_still_image
-      file.save
-    end
-  end
-
-  subject { described_class.new(example_file.id) }
+  let(:example_file) { build(:asset) }
 
   context "with an asset that is not any kind of representation" do
+    subject { described_class.new(example_file.id) }
     it { is_expected.not_to be_representing }
   end
 
@@ -21,6 +14,5 @@ describe RepresentingResource do
     its(:documents) { is_expected.to be_empty }
     its(:representations) { is_expected.to be_empty }
     its(:preferred_representations) { is_expected.to be_empty }
-    its(:assets) { is_expected.to be_empty }
   end
 end

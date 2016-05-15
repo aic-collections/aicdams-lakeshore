@@ -1,8 +1,0 @@
-<div id="more_descriptions">
-  <button id="hide_addl_descriptions" class="btn btn-default" aria-label="hide additional metadata description fields">Hide Additional Fields</button>
-  <% (f.object.terms - [:document_type_ids, :title, :created_by, :status_id]).each do |term| %>
-    <%= render_edit_field_partial(term, f: f) %>
-  <% end %>
-  <%= f.input :representation_for, as: :hidden, input_html: { value: params[:representation_for] } %>
-  <%= f.input :document_for, as: :hidden, input_html: { value: params[:document_for] } %>
-</div> <!-- /more_descriptions -->

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class UidTranslator
   # Given an AIC-minted uid, translate it to an appropriately treeified uri for Fedora.
   # Example: TX-123456 becomes TX/12/34/56/TX-123456

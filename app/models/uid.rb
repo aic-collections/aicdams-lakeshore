@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # Allows us to access the database responsible for minting uids. Although we never query the table directly,
 # we define an AR::Base instance that corresponds to an existing table and call the stored procedure from there.
 class Uid < ActiveRecord::Base

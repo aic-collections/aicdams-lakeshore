@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+# TODO: Delete
 class RDFIndexingService < ActiveFedora::RDF::IndexingService
   protected
 

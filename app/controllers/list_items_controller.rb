@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class ListItemsController < ApplicationController
   before_action :load_and_authorize_list
 

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'devise/strategies/saml_authenticatable'
 module Devise
   module Models

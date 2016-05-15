@@ -1,15 +1,13 @@
+# frozen_string_literal: true
 require 'rails_helper'
 
 describe "The API" do
   describe "reindexing resources" do
     context "with correct input" do
       let(:body) { '["res1"]' }
-      before do
-        allow(ActiveFedora::Base).to receive(:exists?).and_return(true)
-        allow(UpdateIndexJob).to receive(:new).with("res1")
-      end
+      before { allow(ActiveFedora::Base).to receive(:exists?).and_return(true) }
       it "returns a successful response" do
-        expect(Sufia.queue).to receive(:push)
+        expect(UpdateIndexJob).to receive(:perform_later).with("res1")
         post "/api/reindex", body
         expect(response.status).to eql 204
       end

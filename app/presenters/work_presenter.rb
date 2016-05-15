@@ -1,36 +1,34 @@
+# frozen_string_literal: true
 class WorkPresenter
   include Hydra::Presenter
-  include RelatedAssetTerms
+
+  def self.model_terms
+    [
+      :artist,
+      :creator_display,
+      :credit_line,
+      :date_display,
+      :department,
+      :dimensions_display,
+      :earliest_year,
+      :exhibition_history,
+      :gallery_location,
+      :inscriptions,
+      :latest_year,
+      :main_ref_number,
+      :medium_display,
+      :object_type,
+      :place_of_origin,
+      :provenance_text,
+      :publication_history,
+      :publ_ver_level
+    ]
+  end
 
   self.model_class = Work
-  self.terms = [
-    :artist_uid,
-    :citi_uid,
-    :creator_display,
-    :credit_line,
-    :date_display,
-    :department,
-    :dimensions_display,
-    :earliest_date,
-    :earliest_year,
-    :exhibition_history,
-    :gallery_location,
-    :asset_ids,
-    :inscriptions,
-    :latest_date,
-    :latest_year,
-    :main_ref_number,
-    :medium_display,
-    :object_type,
-    :place_of_origin_uid,
-    :provenance_text,
-    :publ_ver_level,
-    :publication_history
-  ] + CitiResourceTerms.all
+  self.terms = model_terms + CitiResourceTerms.all
 
   def summary_terms
     [:uid, :main_ref_number, :created_by, :resource_created, :resource_updated]
   end
-
-  delegate :assets, to: :to_model
 end

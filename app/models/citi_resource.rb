@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class CitiResource < Resource
   include CitiResourceMetadata
 
@@ -14,7 +15,7 @@ class CitiResource < Resource
     super || StatusType.active
   end
 
-  # Re-indexes related objects, i.e. representations, preferred representations, and documents, including
+  # Re-indexes related objects, i.e. representations, preferred representation, and documents, including
   # those of relations that have just been removed. To do so, we need to query for these relationships
   # in solr, which still exist prior to calling #save.
   def reindex_relations
@@ -26,14 +27,16 @@ class CitiResource < Resource
   private
 
     def relation_ids
-      [document_ids, representation_ids, preferred_representation_ids].flatten
+      ids = [documents.map(&:id), representations.map(&:id)].flatten
+      ids << preferred_representation.id if preferred_representation
+      ids
     end
 
     def solr_relation_ids
       return [] if id.nil?
       ActiveFedora::SolrService.query(
         "id:#{id}",
-        fl: "hasDocument_ssim, hasPreferredRepresentation_ssim, hasRepresentation_ssim"
+        fl: "documents_ssim, preferred_representation_ssim, representations_ssim"
       ).first.values.flatten
     end
 end
