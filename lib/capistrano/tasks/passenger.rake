@@ -1,7 +1,14 @@
 namespace :passenger do
-  
-  desc "Install Passenger Apache module"
+
+  desc "Install passenger gem"
   task :install do
+    on roles(:app) do
+      execute "HTTP_PROXY=#{fetch(:aic_proxy)} gem install passenger -v '#{fetch(:passenger_version)}'"
+    end    
+  end
+  
+  desc "Build Passenger Apache module"
+  task :build do
     on roles(:app) do
       execute "passenger-install-apache2-module --auto"
     end

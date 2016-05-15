@@ -48,5 +48,4 @@ end
 
 group :production do
   gem 'pg'
-  gem 'passenger'
 end

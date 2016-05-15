@@ -25,6 +25,11 @@ set :solr_prod_core, 'aic_production'
 # Resque
 set :resque_pid_file, "#{fetch(:current_release)}/tmp/pids/resque-pool.pid"
 
+# Passenger
+# Version 5.0.22 does not work with Shibboleth due to server variables being ignored.
+# See https://github.com/phusion/passenger/issues/1707
+set :passenger_version, "5.0.21"
+
 set :rails_env, 'production'
 set :log_level, :debug
 set :branch, ENV["REVISION"] || ENV["BRANCH_NAME"] || fetch(:default_branch).to_s

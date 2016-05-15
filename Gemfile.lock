@@ -396,9 +396,6 @@ GEM
       ast (~> 2.2)
     parslet (1.7.1)
       blankslate (>= 2.0, <= 4.0)
-    passenger (5.0.25)
-      rack
-      rake (>= 0.8.1)
     pg (0.18.4)
     poltergeist (1.9.0)
       capybara (~> 2.1)
@@ -708,7 +705,6 @@ DEPENDENCIES
   jettywrapper
   jquery-rails
   kaminari_route_prefix
-  passenger
   pg
   poltergeist
   rails (= 4.2.5.1)
