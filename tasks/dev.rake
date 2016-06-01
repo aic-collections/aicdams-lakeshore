@@ -1,15 +1,7 @@
-SolrWrapper.default_instance_options = {
-  port: '8984',
-  instance_dir: 'tmp/solr',
-  download_dir: 'tmp',
-  version: "5.5.0"
-}
-
 require 'rspec/core'
 require 'rspec/core/rake_task'
 require 'active_fedora/cleaner'
 require 'jettywrapper'
-require 'solr_wrapper'
 require './spec/support/fixture_loader'
 require './spec/support/list_loader'
 require 'rubocop/rake_task' unless Rails.env.production?
@@ -21,10 +13,6 @@ end
 
 Jettywrapper.hydra_jetty_version = "v8.5.0"
 
-def solr_config
-  File.join(Rails.root, 'solr', 'config')
-end
-
 desc 'Run style checker'
 RuboCop::RakeTask.new(:rubocop) do |task|
   task.requires << 'rubocop-rspec'
@@ -35,8 +23,8 @@ desc "Run continuous integration test"
 task ci: [:rubocop, 'aic:jetty:prep', 'db:migrate'] do
   jetty_params = Jettywrapper.load_config
 
-  SolrWrapper.wrap do |solr|
-    solr.with_collection(name: 'aic_test', dir: solr_config) do
+  SolrWrapper.wrap({ config: '.solr_wrapper' }) do |solr|
+    solr.with_collection(name: 'aic_test', dir: File.join(Rails.root, 'solr', 'config')) do
       error = Jettywrapper.wrap(jetty_params) do
         Rake::Task['spec'].invoke
       end
@@ -89,19 +77,6 @@ namespace :fedora do
     Department.create(citi_uid: "87", pref_label: "Visitor Services")
     Department.create(citi_uid: "112", pref_label: "Information Services")
   end
-end
-
-namespace :solr do
-
-  desc 'Starts a configured solr instance for local development and testing'
-  task start: :environment do
-    solr = SolrWrapper.default_instance
-    solr.extract_and_configure
-    solr.start
-    solr.create(name: 'aic_development', dir: solr_config)
-    solr.create(name: 'aic_test', dir: solr_config)
-  end
-
 end
 
 namespace :aic do

@@ -1,0 +1,7 @@
+port: 8984
+version: 5.5.1
+instance_dir: tmp/solr
+collection:
+  persist: false
+  dir: solr/config/
+  name: aic_test
