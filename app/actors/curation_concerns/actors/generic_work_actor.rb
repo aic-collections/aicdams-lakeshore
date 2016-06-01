@@ -5,9 +5,16 @@ module CurationConcerns
   module Actors
     class GenericWorkActor < CurationConcerns::Actors::BaseActor
       def create(attributes)
-        attributes.delete("asset_type")
-        curation_concern.assert_still_image
+        assert_asset_type(attributes.delete("asset_type"))
         super
+      end
+
+      def assert_asset_type(type)
+        if type == "text"
+          curation_concern.assert_text
+        else
+          curation_concern.assert_still_image
+        end
       end
     end
   end
