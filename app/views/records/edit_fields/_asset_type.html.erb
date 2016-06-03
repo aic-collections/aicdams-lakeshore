@@ -1,2 +1,4 @@
-<%= f.input :asset_type, as: :select, collection: [['Still Image','still_image'], ['Text', 'text']],
-    input_html: { class: 'form-control', multiple: false }, required: f.object.required?(key) %>
+<% if action_name == 'new' %>
+  <%= f.input :asset_type, as: :select, collection: [['Still Image','still_image'], ['Text', 'text']],
+      input_html: { class: 'form-control', multiple: false }, required: f.object.required?(key) %>
+<% end %>

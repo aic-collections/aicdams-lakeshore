@@ -24,4 +24,16 @@ describe CurationConcerns::GenericWorkForm do
       it { is_expected.to eq("collection_ids" => [], "document_type_uris" => []) }
     end
   end
+
+  describe "#uris_for" do
+    subject { form.uris_for(:document_type) }
+    context "with no items" do
+      it { is_expected.to be_empty }
+    end
+    context "with an array of RDF::URI items" do
+      let(:term) { create(:list_item) }
+      before { allow(work).to receive(:document_type).and_return([term]) }
+      it { is_expected.to eq([term.uri.to_s]) }
+    end
+  end
 end
