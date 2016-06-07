@@ -32,17 +32,9 @@ task ci: [:rubocop, 'aic:jetty:prep', 'db:migrate'] do
   end
 end
 
-desc "Clean out development environment"
-task clean: ['jetty:empty', 'db:drop', 'db:migrate']
-
-namespace :jetty do
-
-  desc "Empty out jetty of all its records"
-  task empty: :environment do
-    raise "You can't do this in production" if Rails.env.match("production")
-    ActiveFedora::Cleaner.clean!
-  end
-
+namespace :dev do
+  desc "Prep dev environment"
+  task prep: ['db:migrate', 'fedora:load_fixtures', 'lakeshore:load_lists', 'fedora:create_users']
 end
 
 namespace :fedora do
@@ -80,7 +72,6 @@ namespace :fedora do
 end
 
 namespace :aic do
-
   namespace :jetty do
     desc "Clean and prepare jetty"
     task prep: ['jetty:clean'] do
@@ -88,5 +79,4 @@ namespace :aic do
       `cp jetty_config/keystore jetty/etc/`
     end
   end
-
 end
