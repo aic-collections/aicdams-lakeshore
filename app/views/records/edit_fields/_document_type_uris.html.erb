@@ -1,4 +1,2 @@
-<%# There's a bug with :select_with_help using :multiple, so we're using :select_with_modal_help but
-    with no modal %>
-<%= f.input key, as: :select_with_modal_help, collection: DocumentType.options, include_blank: true,
+<%= f.input key, as: :multi_value_select, collection: DocumentType.options, include_blank: true,
     input_html: { class: 'form-control', multiple: true }, required: f.object.required?(key) %>

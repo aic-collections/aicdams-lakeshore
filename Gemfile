@@ -3,7 +3,7 @@ source 'https://rubygems.org'
 gem 'rails', '4.2.6'
 
 # Hydra Gems
-gem 'sufia', github: 'projecthydra/sufia', branch: 'master'
+gem 'sufia', '~> 7.0.0.beta1'
 
 gem 'blacklight_range_limit'
 gem 'coffee-rails', '~> 4.1'

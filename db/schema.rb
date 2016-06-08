@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160519174274) do
+ActiveRecord::Schema.define(version: 20160607173139) do
 
   create_table "bookmarks", force: :cascade do |t|
     t.integer  "user_id",       null: false
@@ -318,6 +318,10 @@ ActiveRecord::Schema.define(version: 20160519174274) do
     t.datetime "avatar_updated_at"
     t.string   "linkedin_handle"
     t.string   "orcid"
+    t.string   "arkivo_token"
+    t.string   "arkivo_subscription"
+    t.binary   "zotero_token"
+    t.string   "zotero_userid"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true
