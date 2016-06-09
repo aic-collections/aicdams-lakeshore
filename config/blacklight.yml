@@ -1,9 +1,9 @@
 development:
   adapter: solr
-  url: <%= ENV['SOLR_URL'] || "http://127.0.0.1:8984/solr/aic_development" %>
+  url: http://localhost:<%= ENV['SOLR_DEVELOPMENT_PORT'] || 8983 %>/solr/hydra-development
 test: &test
   adapter: solr
-  url: <%= "http://127.0.0.1:#{ENV['TEST_JETTY_PORT'] || 8985}/solr/aic_test" %>
+  url: http://localhost:<%= ENV['SOLR_TEST_PORT'] || 8985 %>/solr/hydra-test
 production:
   adapter: solr
   url: <%= ENV['SOLR_URL'] || "http://127.0.0.1:8983/solr/blacklight-core" %>

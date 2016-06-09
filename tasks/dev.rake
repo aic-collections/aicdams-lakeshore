@@ -1,7 +1,9 @@
 require 'rspec/core'
 require 'rspec/core/rake_task'
+require 'solr_wrapper'
+require 'fcrepo_wrapper'
 require 'active_fedora/cleaner'
-require 'jettywrapper'
+require 'active_fedora/rake_support'
 require './spec/support/fixture_loader'
 require './spec/support/list_loader'
 require 'rubocop/rake_task' unless Rails.env.production?
@@ -11,8 +13,6 @@ class DevelopmentLoader
   include ListLoader
 end
 
-Jettywrapper.hydra_jetty_version = "v8.5.0"
-
 desc 'Run style checker'
 RuboCop::RakeTask.new(:rubocop) do |task|
   task.requires << 'rubocop-rspec'
@@ -20,15 +20,9 @@ RuboCop::RakeTask.new(:rubocop) do |task|
 end
 
 desc "Run continuous integration test"
-task ci: [:rubocop, 'aic:jetty:prep', 'db:migrate'] do
-  jetty_params = Jettywrapper.load_config
-
-  SolrWrapper.wrap({ config: '.solr_wrapper' }) do |solr|
-    solr.with_collection(name: 'aic_test', dir: File.join(Rails.root, 'solr', 'config')) do
-      error = Jettywrapper.wrap(jetty_params) do
-        Rake::Task['spec'].invoke
-      end
-    end
+task ci: [:rubocop, 'db:migrate'] do
+  with_test_server do
+    Rake::Task['spec'].invoke
   end
 end
 
@@ -68,15 +62,5 @@ namespace :fedora do
     AICUser.create(nick: "tshah", pref_label: "US-1305", given_name: "Tina", family_name: "Shah")
     Department.create(citi_uid: "87", pref_label: "Visitor Services")
     Department.create(citi_uid: "112", pref_label: "Information Services")
-  end
-end
-
-namespace :aic do
-  namespace :jetty do
-    desc "Clean and prepare jetty"
-    task prep: ['jetty:clean'] do
-      `cp jetty_config/jetty.xml jetty/etc/`
-      `cp jetty_config/keystore jetty/etc/`
-    end
   end
 end
