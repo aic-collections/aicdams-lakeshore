@@ -67,7 +67,6 @@ Style/Documentation:
 Style/GlobalVars:
   Exclude:
     - 'spec/**/*'
-    - 'config/initializers/redis_config.rb'
 
 Style/SingleLineBlockParams:
   Enabled: false
