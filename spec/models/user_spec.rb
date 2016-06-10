@@ -2,12 +2,6 @@
 require 'rails_helper'
 
 describe User do
-  describe "ADMINS" do
-    subject { ADMINS }
-    it { is_expected.to include("admin") }
-    it { is_expected.to be_kind_of(Array) }
-  end
-
   context "with an admin" do
     let(:user) { create(:admin) }
     describe "#admin?" do

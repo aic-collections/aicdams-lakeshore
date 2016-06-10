@@ -29,12 +29,11 @@ class User < ActiveRecord::Base
   end
 
   def admin?
-    ADMINS.include?(email)
+    groups.include?('admin')
   end
 
   def groups
     groups = super
-    groups << "admin" if admin?
     groups << department
     groups
   end
