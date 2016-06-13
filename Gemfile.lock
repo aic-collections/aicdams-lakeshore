@@ -308,6 +308,12 @@ GEM
       hydra-file_characterization (~> 0.3, >= 0.3.3)
       hydra-pcdm (>= 0.8)
     i18n (0.7.0)
+    jasmine (2.4.0)
+      jasmine-core (~> 2.4)
+      phantomjs
+      rack (>= 1.2.1)
+      rake
+    jasmine-core (2.4.1)
     jbuilder (2.5.0)
       activesupport (>= 3.0.0, < 5.1)
       multi_json (~> 1.2)
@@ -424,6 +430,7 @@ GEM
     parslet (1.7.1)
       blankslate (>= 2.0, <= 4.0)
     pg (0.18.4)
+    phantomjs (2.1.1.0)
     pkg-config (1.1.7)
     poltergeist (1.9.0)
       capybara (~> 2.1)
@@ -687,6 +694,8 @@ GEM
     tinymce-rails-imageupload (4.0.16.beta)
       railties (>= 3.2, < 5)
       tinymce-rails (~> 4.0)
+    turbolinks (2.5.3)
+      coffee-rails
     twitter-typeahead-rails (0.11.1)
       actionpack (>= 3.1)
       jquery-rails
@@ -728,6 +737,7 @@ DEPENDENCIES
   devise-guests (~> 0.5)
   factory_girl_rails
   fcrepo_wrapper
+  jasmine
   jbuilder (~> 2.4)
   jquery-rails
   pg
@@ -746,6 +756,7 @@ DEPENDENCIES
   solr_wrapper
   sqlite3
   sufia (~> 7.0.0.beta1)
+  turbolinks
   uglifier (~> 3.0)
 
 BUNDLED WITH

@@ -19,7 +19,7 @@ describe CurationConcerns::Actors::GenericWorkActor do
 
     context "with a still image and full metadata" do
       let(:parameters) do
-        { "asset_type" => "still_image",
+        { "asset_type" => AICType.StillImage,
           "document_type_uris" => [doc_type.uri],
           "pref_label" => "",
           "created" => "",
@@ -46,7 +46,7 @@ describe CurationConcerns::Actors::GenericWorkActor do
       its(:type) { is_expected.to include(AICType.StillImage) }
     end
     context "with a text type" do
-      let(:parameters) { { "asset_type" => "text", "document_type_uris" => [doc_type.uri] } }
+      let(:parameters) { { "asset_type" => AICType.Text, "document_type_uris" => [doc_type.uri] } }
       its(:type) { is_expected.to include(AICType.Text) }
     end
   end

@@ -15,6 +15,7 @@ gem 'resque-pool'
 gem 'rsolr', '~> 1.1'
 gem 'sass-rails', '~> 5.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
+gem 'turbolinks'
 gem 'uglifier', '~> 3.0'
 
 group :development, :test do
@@ -22,6 +23,7 @@ group :development, :test do
   gem 'binding_of_caller'
   gem 'byebug'
   gem 'fcrepo_wrapper'
+  gem 'jasmine'
   gem 'solr_wrapper'
   gem 'sqlite3'
 end
