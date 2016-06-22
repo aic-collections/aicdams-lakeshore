@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 # Deploy using Rails development environment to enable local development on the server directly
 set :rails_env, 'development'
-server 'aicdamsdev01.artic.edu', user: 'awead', roles: %w(web app db)
+set :user, 'rbrun'
+server 'aicdamsdev01.artic.edu', user: 'rbrun', roles: %w(web app db)
 
 # An inelegant hack: delete the precompiled assets because we're in development mode and don't need them
 namespace :deploy do

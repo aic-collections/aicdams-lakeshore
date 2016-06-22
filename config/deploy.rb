@@ -54,6 +54,9 @@ set :linked_dirs, fetch(:linked_dirs, []).push(
 )
 set :keep_releases, 10
 
+# Airbrussh options
+set :format_options, command_output: false
+
 namespace :deploy do
   # Create a symlink in the shared directory to the config directory
   # This keeps the configuration files separate from Capistratno's managed deploy directory.
