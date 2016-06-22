@@ -6,7 +6,7 @@ namespace :lakeshore do
   	puts "Parsing #{args.file} ..."
   	contains = File.open(args.file).map { |line| line if line =~ /ldp\:contains/ }
   	contains.compact.first.split(/\s+/).find_all { |u| u.match(/<(.*)>/) }.each do |pid|
-      Sufia.queue.push(UpdateIndexJob.new(pid.split(/\//).last.chop))
+      UpdateIndexJob.perform_later(pid.split(/\//).last.chop)
   	end
   end
 
@@ -16,7 +16,7 @@ namespace :lakeshore do
     total = Blacklight::Solr::Response.new(query, nil).total_count
     while (start < total) do
       response = Blacklight::Solr::Response.new(query(start), nil)
-      response.docs.map { |d| Sufia.queue.push(UpdateIndexJob.new(d.fetch("id"))) }
+      response.docs.map { |d| UpdateIndexJob.perform_later(d.fetch("id")) }
       start = start + response.rows
     end
   end
