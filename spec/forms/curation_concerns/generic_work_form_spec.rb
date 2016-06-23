@@ -36,4 +36,16 @@ describe CurationConcerns::GenericWorkForm do
       it { is_expected.to eq([term.uri.to_s]) }
     end
   end
+
+  describe "#uri_for" do
+    subject { form.uri_for(:compositing) }
+    context "with no items" do
+      it { is_expected.to be_nil }
+    end
+    context "with a RDF::URI item" do
+      let(:term) { create(:list_item) }
+      before { allow(work).to receive(:compositing).and_return(term) }
+      it { is_expected.to eq(term.uri.to_s) }
+    end
+  end
 end

@@ -153,6 +153,14 @@ describe GenericWork do
         before { work.keyword_uris = [] }
         it { is_expected.to be_empty }
       end
+      context "with existing values" do
+        before { work.keyword_uris = [item.uri.to_s] }
+        it "uses a null set to remote them" do
+          expect(subject).not_to be_empty
+          work.keyword_uris = []
+          expect(subject).to be_empty
+        end
+      end
     end
     context "using a single-valued term" do
       subject { work.digitization_source }
@@ -167,6 +175,15 @@ describe GenericWork do
       context "with an empty string" do
         before { work.digitization_source_uri = "" }
         it { is_expected.to be_nil }
+      end
+      context "with an existing value" do
+        before { work.digitization_source_uri = item.uri }
+        it "uses nil to remove it" do
+          expect { work.digitization_source_uri = nil }.to change { work.digitization_source }.to(nil)
+        end
+        it "uses an empty string to remove it" do
+          expect { work.digitization_source_uri = "" }.to change { work.digitization_source }.to(nil)
+        end
       end
     end
     context "with remaining terms" do

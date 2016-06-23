@@ -27,6 +27,11 @@ module CurationConcerns
       model.send(term).map(&:uri).map(&:to_s)
     end
 
+    def uri_for(term)
+      return unless model.send(term)
+      model.send(term).uri.to_s
+    end
+
     def self.build_permitted_params
       super + [
         { document_type_uris: [] },
