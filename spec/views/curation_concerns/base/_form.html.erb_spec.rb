@@ -20,13 +20,19 @@ describe 'curation_concerns/base/_form.html.erb' do
       expect(rendered).to include("<option value=\"#{AICType.StillImage}\">Still Image</option>")
       expect(rendered).to include("<option value=\"#{AICType.Text}\">Text</option>")
     end
+    it "does not show the status select input" do
+      expect(rendered).not_to include("generic_work_status_uri")
+    end
   end
 
   context "when editing an existing asset" do
-    let(:work) { build(:asset) }
+    let(:work) { create(:asset) }
     before { render }
     it "does not allow changing the asset type" do
       expect(rendered).not_to include("generic_work[asset_type]")
+    end
+    it "renders the existing status selected" do
+      expect(rendered).to include("<option selected=\"selected\" value=\"#{StatusType.active.uri}\">Active</option>")
     end
   end
 end
