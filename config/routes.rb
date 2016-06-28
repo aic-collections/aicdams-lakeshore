@@ -21,7 +21,7 @@ Rails.application.routes.draw do
 
   # :index action is not added to concerns, so we're adding it here
   namespace :curation_concerns, path: :concern do
-    resources :agents, :exhibitions, :places, :shipments, :transactions, :works, only: [:index]
+    resources :agents, :exhibitions, :places, :shipments, :transactions, :works, :generic_works, only: [:index]
   end
 
   curation_concerns_embargo_management

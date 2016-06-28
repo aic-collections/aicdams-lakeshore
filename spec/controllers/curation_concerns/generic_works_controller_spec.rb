@@ -2,7 +2,7 @@
 require 'rails_helper'
 
 describe CurationConcerns::GenericWorksController do
-  routes { Sufia::Engine.routes }
+  routes { Rails.application.routes }
   include_context "authenticated saml user"
   it_behaves_like "#index redirects to catalog facet search"
 

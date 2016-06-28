@@ -70,11 +70,17 @@ class GenericWork < Resource
     return false unless errors.empty?
   end
 
-  # CurationConcerns requires a title
-  # TODO: Only needed in solr_document and/or presenter?
+  # CurationConcerns' title is required, and is multivalued
+  # We will allow it be empty, or return the pref. label as an array
   def title
     return [] unless pref_label
     [pref_label]
+  end
+
+  # Used by Sufia::WorkIndexer, although may not be required
+  # Aliased to document_type
+  def resource_type
+    document_type
   end
 
   private
