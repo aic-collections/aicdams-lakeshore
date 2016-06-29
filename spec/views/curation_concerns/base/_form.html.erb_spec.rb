@@ -3,7 +3,8 @@ require 'rails_helper'
 
 describe 'curation_concerns/base/_form.html.erb' do
   let(:ability) { double }
-  let(:form) { CurationConcerns::GenericWorkForm.new(work, ability) }
+  let(:form)    { CurationConcerns::GenericWorkForm.new(work, ability) }
+  let(:page)    { Capybara::Node::Simple.new(rendered) }
 
   before do
     allow(controller).to receive(:current_user).and_return(stub_model(User))
@@ -22,6 +23,9 @@ describe 'curation_concerns/base/_form.html.erb' do
     end
     it "does not show the status select input" do
       expect(rendered).not_to include("generic_work_status_uri")
+    end
+    it "displays the correct visibility options" do
+      expect(page).to have_checked_field('generic_work_visibility_department')
     end
   end
 

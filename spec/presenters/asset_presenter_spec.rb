@@ -43,4 +43,6 @@ describe AssetPresenter do
   it { is_expected.to delegate_method(:digitization_source).to(:solr_document) }
 
   its(:title) { is_expected.to eq(["Sample Label"]) }
+
+  its(:permission_badge_class) { is_expected.to eq(PermissionBadge) }
 end

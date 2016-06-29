@@ -48,6 +48,10 @@ class AssetPresenter < Sufia::WorkShowPresenter
     return "Text Document" if model.text?
   end
 
+  def permission_badge_class
+    PermissionBadge
+  end
+
   private
 
     def representing_resource
