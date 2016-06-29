@@ -1,5 +1,5 @@
 port: 8985
-version: 5.5.1
+version: 5.5.2
 instance_dir: tmp/solr-test
 collection:
   persist: false
