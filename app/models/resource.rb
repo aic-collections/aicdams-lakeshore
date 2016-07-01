@@ -18,7 +18,8 @@ class Resource < ActiveFedora::Base
       else
         class_eval <<-CODE, __FILE__, __LINE__ + 1
           def #{field}_uri=(uri)
-            self.send("#{field}=", ::RDF::URI(uri))
+            resource = uri.present? ? ::RDF::URI(uri) : nil
+            self.send("#{field}=", resource)
           end
         CODE
       end
