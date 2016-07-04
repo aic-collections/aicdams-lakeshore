@@ -2,12 +2,13 @@
 require 'rails_helper'
 
 describe 'curation_concerns/base/_form.html.erb' do
+  let(:user)    { create(:user1) }
   let(:ability) { double }
   let(:form)    { CurationConcerns::GenericWorkForm.new(work, ability) }
   let(:page)    { Capybara::Node::Simple.new(rendered) }
 
   before do
-    allow(controller).to receive(:current_user).and_return(stub_model(User))
+    allow(controller).to receive(:current_user).and_return(user)
     assign(:form, form)
   end
 

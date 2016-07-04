@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 module CurationConcerns
   class GenericWorkForm < Sufia::Forms::WorkForm
+    delegate :dept_created, to: :model
+
     def self.aic_terms
       [
         :asset_type, :document_type_uris, :pref_label, :created, :description, :language,

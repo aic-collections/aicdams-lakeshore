@@ -7,6 +7,11 @@ describe CurationConcerns::GenericWorkForm do
   let(:ability) { Ability.new(user1) }
   let(:form)    { described_class.new(work, ability) }
 
+  describe "delegates" do
+    subject { form }
+    it { is_expected.to delegate_method(:dept_created).to(:model) }
+  end
+
   describe "#required_fields" do
     subject { form.required_fields }
     it { is_expected.to contain_exactly(:asset_type, :document_type_uris) }

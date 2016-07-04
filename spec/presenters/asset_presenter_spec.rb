@@ -45,4 +45,5 @@ describe AssetPresenter do
   its(:title) { is_expected.to eq(["Sample Label"]) }
 
   its(:permission_badge_class) { is_expected.to eq(PermissionBadge) }
+  its(:file_presenter_class)   { is_expected.to eq(FileSetPresenter) }
 end

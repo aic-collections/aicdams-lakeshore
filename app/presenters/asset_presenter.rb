@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 class AssetPresenter < Sufia::WorkShowPresenter
+  self.file_presenter_class = FileSetPresenter
+
   delegate :documents, :representations, :preferred_representation, :assets, :representing?, to: :representing_resource
 
   def self.terms

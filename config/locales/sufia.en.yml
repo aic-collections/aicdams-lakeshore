@@ -159,6 +159,7 @@ en:
   curation_concerns:
     institution:
       name: "AIC"
+    institution_name: "AIC"
     visibility:
       authenticated:
         text: "AIC"

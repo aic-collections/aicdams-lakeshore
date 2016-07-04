@@ -2,7 +2,6 @@
 require 'rails_helper'
 
 describe 'curation_concerns/base/show.html.erb' do
-  let(:asset)         { build(:department_asset, id: '999', pref_label: 'Department Asset') }
   let(:solr_document) { SolrDocument.new(asset.to_solr) }
   let(:ability)       { double }
   let(:presenter)     { AssetPresenter.new(solr_document, ability) }
@@ -20,7 +19,17 @@ describe 'curation_concerns/base/show.html.erb' do
     render
   end
 
-  specify do
-    expect(page).to have_selector('span.label-warning', text: "Department")
+  context "with a department asset" do
+    let(:asset) { build(:department_asset, id: '999', pref_label: 'Department Asset') }
+    specify do
+      expect(page).to have_selector('span.label-warning', text: "Department")
+    end
+  end
+
+  context "with a department asset" do
+    let(:asset) { build(:registered_asset, id: '999', pref_label: 'Department Asset') }
+    specify do
+      expect(page).to have_selector('span.label-info', text: "AIC")
+    end
   end
 end
