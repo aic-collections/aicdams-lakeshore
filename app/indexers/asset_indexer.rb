@@ -22,7 +22,7 @@ class AssetIndexer < Sufia::WorkIndexer
       return types unless r.representing?
       types << "Is Document" unless r.documents.empty?
       types << "Is Representation" unless r.representations.empty?
-      types << "Is Preferred Representation" unless r.preferred_representations.empty?
+      types << "Is Preferred Representation" unless r.preferred_representation.nil?
       types
     end
 end

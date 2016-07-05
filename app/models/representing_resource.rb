@@ -7,15 +7,15 @@ class RepresentingResource
   end
 
   def representing?
-    !(documents.empty? && preferred_representations.empty? && representations.empty?)
+    !(documents.empty? && preferred_representation.nil? && representations.empty?)
   end
 
   def documents
     @documents ||= objects_with_predicate(:documents_ssim)
   end
 
-  def preferred_representations
-    @preferred_representations ||= objects_with_predicate(:preferred_representation_ssim)
+  def preferred_representation
+    @preferred_representation ||= object_with_predicate(:preferred_representation_ssim)
   end
 
   def representations
@@ -27,5 +27,10 @@ class RepresentingResource
     def objects_with_predicate(solr_field)
       return [] if id.nil?
       ActiveFedora::Base.where(solr_field => id)
+    end
+
+    def object_with_predicate(solr_field)
+      return if id.nil?
+      ActiveFedora::Base.where(solr_field => id).first
     end
 end

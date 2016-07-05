@@ -5,6 +5,7 @@ describe AttributeValueAdapter do
   subject { described_class.call(value, attribute_name) }
 
   let(:list_item) { create(:list_item) }
+  let(:asset)     { create(:asset) }
 
   context "when no value is present" do
     let(:value) { nil }
@@ -52,5 +53,11 @@ describe AttributeValueAdapter do
     let(:value) { { "id" => Department.all.first.id } }
     let(:attribute_name) { "dept_created" }
     it { is_expected.to be_kind_of(Department) }
+  end
+
+  context "with a preferred_representation" do
+    let(:value) { { "id" => asset.id } }
+    let(:attribute_name) { "preferred_representation" }
+    it { is_expected.to be_kind_of(GenericWork) }
   end
 end

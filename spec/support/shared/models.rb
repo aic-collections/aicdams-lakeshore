@@ -95,4 +95,9 @@ shared_examples "a resource that assign representations" do
       expect(asset).to be_persisted
     end
   end
+  context "when reloading as a solr document" do
+    let(:solr_doc) { SolrDocument.new(resource.to_solr, nil) }
+    subject { solr_doc.to_model }
+    its(:preferred_representation) { is_expected.to eq(asset) }
+  end
 end

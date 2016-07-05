@@ -13,6 +13,6 @@ describe RepresentingResource do
     subject { described_class.new(nil) }
     its(:documents) { is_expected.to be_empty }
     its(:representations) { is_expected.to be_empty }
-    its(:preferred_representations) { is_expected.to be_empty }
+    its(:preferred_representation) { is_expected.to be_nil }
   end
 end

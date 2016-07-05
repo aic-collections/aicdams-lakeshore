@@ -8,7 +8,7 @@ class CitiIndexer < ActiveFedora::IndexingService
       solr_doc[Solrizer.solr_name("status", :symbol)] = [object.status.pref_label] if object.status
       solr_doc[Solrizer.solr_name("documents", :symbol)] = object.documents.map(&:uid)
       solr_doc[Solrizer.solr_name("representations", :symbol)] = object.representations.map(&:uid)
-      solr_doc[Solrizer.solr_name("preferred_representation", :symbol)] = [object.preferred_representation.uid] if object.preferred_representation
+      solr_doc[Solrizer.solr_name("preferred_representation", :symbol)] = object.preferred_representation.uid if object.preferred_representation
     end
   end
 end

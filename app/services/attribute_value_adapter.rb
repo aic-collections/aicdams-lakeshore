@@ -16,15 +16,16 @@ class AttributeValueAdapter
 
   def self.class_mapper
     {
-      "digitization_source" => ListItem,
-      "document_type"       => ListItem,
-      "tag"                 => ListItem,
-      "compositing"         => ListItem,
-      "light_type"          => ListItem,
-      "view"                => ListItem,
-      "aic_depositor"       => AICUser,
-      "dept_created"        => Department,
-      "status"              => StatusType
+      "digitization_source"      => ListItem,
+      "document_type"            => ListItem,
+      "tag"                      => ListItem,
+      "compositing"              => ListItem,
+      "light_type"               => ListItem,
+      "view"                     => ListItem,
+      "aic_depositor"            => AICUser,
+      "dept_created"             => Department,
+      "status"                   => StatusType,
+      "preferred_representation" => GenericWork
     }
   end
 end

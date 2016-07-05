@@ -19,8 +19,8 @@ shared_examples "a presenter with related assets" do
     specify { expect(presenter.representations).to contain_exactly(sample_asset) }
   end
 
-  describe "#preferred_representations" do
-    before { allow_any_instance_of(described_class.model_class).to receive(:preferred_representations).and_return([sample_asset]) }
-    specify { expect(presenter.preferred_representations).to contain_exactly(sample_asset) }
+  describe "#preferred_representation" do
+    before { allow_any_instance_of(described_class.model_class).to receive(:preferred_representation).and_return([sample_asset]) }
+    specify { expect(presenter.preferred_representation).to contain_exactly(sample_asset) }
   end
 end
