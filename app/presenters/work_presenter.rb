@@ -1,7 +1,5 @@
 # frozen_string_literal: true
-class WorkPresenter
-  include Hydra::Presenter
-
+class WorkPresenter < Sufia::WorkShowPresenter
   def self.model_terms
     [
       :artist,
@@ -25,8 +23,19 @@ class WorkPresenter
     ]
   end
 
-  self.model_class = Work
-  self.terms = model_terms + CitiResourceTerms.all
+  def self.terms
+    model_terms + CitiResourceTerms.all
+  end
+
+  delegate(*terms, to: :solr_document)
+
+  def title
+    [pref_label]
+  end
+
+  def deleteable?
+    current_ability.can?(:delete, Work)
+  end
 
   def summary_terms
     [:uid, :main_ref_number, :created_by, :resource_created, :resource_updated]

@@ -3,11 +3,20 @@ module SolrDocumentExtensions
   extend ActiveSupport::Concern
   include Permissions::Readable
 
+  include SolrDocumentExtensions::Agent
+  include SolrDocumentExtensions::Work
+  include SolrDocumentExtensions::Exhibition
+  include SolrDocumentExtensions::Place
+
   def pref_label
     Array(self[Solrizer.solr_name('pref_label', :stored_searchable)]).first
   end
 
   def uid
+    Array(self[Solrizer.solr_name('uid', :symbol)]).first
+  end
+
+  def citi_uid
     Array(self[Solrizer.solr_name('uid', :symbol)]).first
   end
 
@@ -21,5 +30,10 @@ module SolrDocumentExtensions
                     else
                       Permissions::LakeshoreVisibility::VISIBILITY_TEXT_VALUE_DEPARTMENT
                     end
+  end
+
+  # Overrides CurationConcerns::SolrDocumentBehavior
+  def title_or_label
+    pref_label
   end
 end

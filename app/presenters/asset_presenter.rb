@@ -35,6 +35,10 @@ class AssetPresenter < Sufia::WorkShowPresenter
     [pref_label]
   end
 
+  def deleteable?
+    current_ability.can?(:delete, GenericWork)
+  end
+
   # TODO: needs to show either representation, preferred representation, or document
   def brief_terms
     [

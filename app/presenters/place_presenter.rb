@@ -1,20 +1,20 @@
 # frozen_string_literal: true
-class PlacePresenter
-  include Hydra::Presenter
-  include RelatedAssetTerms
-
-  def self.model_terms
+class PlacePresenter < Sufia::WorkShowPresenter
+  def self.terms
     [
       :location_type,
       :lat,
       :long
-    ]
+    ] + CitiResourceTerms.all
   end
 
-  self.model_class = Place
-  self.terms = model_terms + CitiResourceTerms.all
+  delegate(*terms, to: :solr_document)
 
-  def summary_terms
-    [:uid, :name_official, :created_by, :resource_created, :resource_updated]
+  def title
+    [pref_label]
+  end
+
+  def deleteable?
+    current_ability.can?(:delete, Place)
   end
 end

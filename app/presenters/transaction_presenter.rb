@@ -1,12 +1,16 @@
 # frozen_string_literal: true
-class TransactionPresenter
-  include Hydra::Presenter
-  include RelatedAssetTerms
+class TransactionPresenter < Sufia::WorkShowPresenter
+  def self.terms
+    CitiResourceTerms.all
+  end
 
-  self.model_class = Transaction
-  self.terms = [:exhibition] + CitiResourceTerms.all
+  delegate(*terms, to: :solr_document)
 
-  def summary_terms
-    [:uid, :created_by, :resource_created, :resource_updated]
+  def title
+    [pref_label]
+  end
+
+  def deleteable?
+    current_ability.can?(:delete, Transaction)
   end
 end
