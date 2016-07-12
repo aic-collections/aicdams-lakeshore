@@ -9,7 +9,7 @@ class Resource < ActiveFedora::Base
     fields.each do |field|
       if multiple?(field)
         class_eval <<-CODE, __FILE__, __LINE__ + 1
-          def #{field}_uris=(uris)
+          def #{field.to_s.singularize}_uris=(uris)
             raise(ArgumentError, "argument must be an array") unless uris.kind_of?(Array)
             uris.keep_if(&:present?)
             self.send("#{field}=", uris.map { |x| ::RDF::URI(x) })
