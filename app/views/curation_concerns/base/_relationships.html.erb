@@ -1,0 +1,8 @@
+<h2>Relationships</h2>
+<% if presenter.has_representations? %>
+  <%= render_documents(presenter) %>
+  <%= render_representations(presenter) %>
+  <%= render_preferred_representation(presenter) %>
+<% else %>
+  <p>No relationships found for this <%= presenter.human_readable_type %></p>
+<% end %>

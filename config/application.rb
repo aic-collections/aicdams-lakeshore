@@ -15,6 +15,7 @@ module Lakeshore
 
     config.autoload_paths << Rails.root.join('lib')
     config.autoload_paths << Rails.root.join('app', 'presenters', 'terms')
+    config.autoload_paths << Rails.root.join('app', 'presenters', 'concerns')
     config.autoload_paths << Rails.root.join('app', 'models', 'vocabularies')
     config.autoload_paths << Rails.root.join('app', 'forms', 'concerns')
 

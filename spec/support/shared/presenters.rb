@@ -1,26 +1,39 @@
 # frozen_string_literal: true
-shared_examples "a presenter with terms for a Citi resource" do
-  describe "::terms" do
-    specify { expect(described_class.terms).to include(*CitiResourceTerms.all) }
-  end
+shared_examples "a citi presenter" do
+  it { is_expected.to delegate_method(:uid).to(:solr_document) }
+  it { is_expected.not_to be_deleteable }
+  its(:id) { is_expected.to eq('1234') }
 end
 
-shared_examples "a presenter with related assets" do
-  let(:presenter) { described_class.new(described_class.model_class.new) }
-  let(:sample_asset) { mock_model(GenericFile) }
-
-  describe "#documents" do
-    before { allow_any_instance_of(described_class.model_class).to receive(:documents).and_return([sample_asset]) }
-    specify { expect(presenter.documents).to contain_exactly(sample_asset) }
+shared_examples "a citi presenter with related assets" do
+  describe "#document_presenters" do
+    before do
+      allow(solr_doc).to receive(:document_ids).and_return(["asset-id"])
+      allow(CurationConcerns::PresenterFactory).to receive(:build_presenters).with(
+        ["asset-id"], AssetPresenter, ability, nil).and_return([asset_presenter])
+    end
+    its(:document_presenters) { is_expected.to contain_exactly(asset_presenter) }
   end
 
-  describe "#representations" do
-    before { allow_any_instance_of(described_class.model_class).to receive(:representations).and_return([sample_asset]) }
-    specify { expect(presenter.representations).to contain_exactly(sample_asset) }
+  describe "#representation_presenters" do
+    before do
+      allow(solr_doc).to receive(:representation_ids).and_return(["asset-id"])
+      allow(CurationConcerns::PresenterFactory).to receive(:build_presenters).with(
+        ["asset-id"], AssetPresenter, ability, nil).and_return([asset_presenter])
+    end
+    its(:representation_presenters) { is_expected.to contain_exactly(asset_presenter) }
   end
 
-  describe "#preferred_representation" do
-    before { allow_any_instance_of(described_class.model_class).to receive(:preferred_representation).and_return([sample_asset]) }
-    specify { expect(presenter.preferred_representation).to contain_exactly(sample_asset) }
+  describe "#preferred_representation_presenter" do
+    before do
+      allow(solr_doc).to receive(:preferred_representation_id).and_return("asset-id")
+      allow(CurationConcerns::PresenterFactory).to receive(:build_presenters).with(
+        ["asset-id"], AssetPresenter, ability, nil).and_return([asset_presenter])
+    end
+    its(:preferred_representation_presenter) { is_expected.to eq(asset_presenter) }
+  end
+
+  describe "#has_representations?" do
+    it { is_expected.not_to have_representations }
   end
 end

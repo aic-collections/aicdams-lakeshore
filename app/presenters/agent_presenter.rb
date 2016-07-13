@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 class AgentPresenter < Sufia::WorkShowPresenter
-  include RelatedAssetTerms
-
   def self.terms
     [
       :birth_date,
@@ -12,15 +10,7 @@ class AgentPresenter < Sufia::WorkShowPresenter
     ] + CitiResourceTerms.all
   end
 
-  delegate(*terms, to: :solr_document)
-
-  def title
-    [pref_label]
-  end
-
-  def summary_terms
-    [:uid, :created_by, :resource_created, :resource_updated]
-  end
+  include CitiPresenterBehaviors
 
   def deleteable?
     current_ability.can?(:delete, Agent)

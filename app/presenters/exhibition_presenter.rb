@@ -10,17 +10,9 @@ class ExhibitionPresenter < Sufia::WorkShowPresenter
     ] + CitiResourceTerms.all
   end
 
-  delegate(*terms, to: :solr_document)
-
-  def title
-    [pref_label]
-  end
+  include CitiPresenterBehaviors
 
   def deleteable?
     current_ability.can?(:delete, Exhibition)
-  end
-
-  def summary_terms
-    [:uid, :name_official, :created_by, :resource_created, :resource_updated]
   end
 end

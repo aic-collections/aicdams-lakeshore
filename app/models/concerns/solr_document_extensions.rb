@@ -28,6 +28,18 @@ module SolrDocumentExtensions
     Array(self[Solrizer.solr_name('main_ref_number', :stored_searchable)]).first
   end
 
+  def document_ids
+    Array(self[Solrizer.solr_name('documents', :symbol)])
+  end
+
+  def representation_ids
+    Array(self[Solrizer.solr_name('representations', :symbol)])
+  end
+
+  def preferred_representation_id
+    Array(self[Solrizer.solr_name('preferred_representation', :symbol)]).first
+  end
+
   def visibility
     @visibility ||= if read_groups.include? Hydra::AccessControls::AccessRight::PERMISSION_TEXT_VALUE_AUTHENTICATED
                       Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_AUTHENTICATED

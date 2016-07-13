@@ -1,0 +1,47 @@
+# frozen_string_literal: true
+require 'rails_helper'
+
+describe 'curation_concerns/base/_relationships.html.erb' do
+  let(:asset)           { build(:asset, id: '1234') }
+  let(:asset_doc)       { SolrDocument.new(asset.to_solr) }
+  let(:solr_document)   { SolrDocument.new(citi_resource.to_solr) }
+  let(:asset_presenter) { AssetPresenter.new(asset_doc, ability) }
+  let(:ability)         { double }
+  let(:page)            { Capybara::Node::Simple.new(rendered) }
+
+  subject { page }
+
+  describe "an exhibition" do
+    let(:citi_resource)  { build(:exhibition, id: '999') }
+    let(:citi_presenter) { ExhibitionPresenter.new(solr_document, ability) }
+
+    context "with no relationships" do
+      before { render 'curation_concerns/base/relationships.html.erb', presenter: citi_presenter }
+      it { is_expected.to have_content("No relationships found for this Exhibition") }
+    end
+
+    context "with representations" do
+      before do
+        allow(citi_presenter).to receive(:representation_presenters).and_return([asset_presenter])
+        render 'curation_concerns/base/relationships.html.erb', presenter: citi_presenter
+      end
+      it { is_expected.to have_content("Relationships") }
+    end
+
+    context "with documents" do
+      before do
+        allow(citi_presenter).to receive(:document_presenters).and_return([asset_presenter])
+        render 'curation_concerns/base/relationships.html.erb', presenter: citi_presenter
+      end
+      it { is_expected.to have_content("Documents") }
+    end
+
+    context "with preferred representations" do
+      before do
+        allow(citi_presenter).to receive(:preferred_representation_presenter).and_return(asset_presenter)
+        render 'curation_concerns/base/relationships.html.erb', presenter: citi_presenter
+      end
+      it { is_expected.to have_content("Preferred Representation") }
+    end
+  end
+end

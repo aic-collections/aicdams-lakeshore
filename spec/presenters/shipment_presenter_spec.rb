@@ -2,11 +2,14 @@
 require 'rails_helper'
 
 describe ShipmentPresenter do
-  let(:shipment) { build(:shipment, id: '1234') }
-  let(:ability)    { Ability.new(nil) }
+  let(:resource)        { build(:shipment, id: '1234') }
+  let(:ability)         { Ability.new(nil) }
+  let(:solr_doc)        { SolrDocument.new(resource.to_solr) }
+  let(:presenter)       { described_class.new(solr_doc, ability) }
+  let(:asset_presenter) { double }
 
-  subject { described_class.new(shipment.to_solr, ability) }
+  subject { presenter }
 
-  it { is_expected.to delegate_method(:uid).to(:solr_document) }
-  it { is_expected.not_to be_deleteable }
+  it_behaves_like "a citi presenter"
+  it_behaves_like "a citi presenter with related assets"
 end

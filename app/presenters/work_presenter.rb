@@ -27,17 +27,9 @@ class WorkPresenter < Sufia::WorkShowPresenter
     model_terms + CitiResourceTerms.all
   end
 
-  delegate(*terms, to: :solr_document)
-
-  def title
-    [pref_label]
-  end
+  include CitiPresenterBehaviors
 
   def deleteable?
     current_ability.can?(:delete, Work)
-  end
-
-  def summary_terms
-    [:uid, :main_ref_number, :created_by, :resource_created, :resource_updated]
   end
 end

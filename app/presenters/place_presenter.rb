@@ -8,11 +8,7 @@ class PlacePresenter < Sufia::WorkShowPresenter
     ] + CitiResourceTerms.all
   end
 
-  delegate(*terms, to: :solr_document)
-
-  def title
-    [pref_label]
-  end
+  include CitiPresenterBehaviors
 
   def deleteable?
     current_ability.can?(:delete, Place)

@@ -46,4 +46,8 @@ describe AssetPresenter do
 
   its(:permission_badge_class) { is_expected.to eq(PermissionBadge) }
   its(:file_presenter_class)   { is_expected.to eq(FileSetPresenter) }
+
+  describe "#has_representations?" do
+    it { is_expected.not_to have_representations }
+  end
 end
