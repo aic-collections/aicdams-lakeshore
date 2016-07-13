@@ -29,7 +29,11 @@ class AssetPresenter < Sufia::WorkShowPresenter
     ]
   end
 
-  delegate(*terms, to: :solr_document)
+  def self.presenter_terms
+    terms + [:fedora_uri]
+  end
+
+  delegate(*presenter_terms, to: :solr_document)
 
   def title
     [pref_label]

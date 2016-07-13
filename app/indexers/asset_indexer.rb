@@ -6,6 +6,7 @@ class AssetIndexer < Sufia::WorkIndexer
       solr_doc[Solrizer.solr_name("representation", :facetable)] = representations
       solr_doc[Solrizer.solr_name("aic_depositor", :symbol)] = object.depositor
       solr_doc[Solrizer.solr_name("document_type", :symbol)] = object.document_type.map(&:pref_label)
+      solr_doc[Solrizer.solr_name("fedora_uri", :symbol)] = object.uri.to_s
     end
   end
 
