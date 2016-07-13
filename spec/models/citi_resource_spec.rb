@@ -35,4 +35,9 @@ describe CitiResource do
       it { is_expected.to be_nil }
     end
   end
+
+  describe "with events" do
+    subject { described_class.new }
+    its(:events) { is_expected.to be_empty }
+  end
 end
