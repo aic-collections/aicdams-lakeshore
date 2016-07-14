@@ -131,14 +131,16 @@ describe GenericWork do
     let(:work) { build(:asset) }
     let(:item) { create(:list_item) }
     context "using a multi-valued term" do
-      subject { work.keyword }
+      subject { work }
       context "with a string" do
         before { work.keyword_uris = [item.uri.to_s] }
-        it { is_expected.to contain_exactly(item) }
+        its(:keyword) { is_expected.to contain_exactly(item) }
+        its(:keyword_uris) { is_expected.to contain_exactly(item.uri.to_s) }
       end
       context "with a RDF::URI" do
         before { work.keyword_uris = [item.uri] }
-        it { is_expected.to contain_exactly(item) }
+        its(:keyword) { is_expected.to contain_exactly(item) }
+        its(:keyword_uris) { is_expected.to contain_exactly(item.uri.to_s) }
       end
       context "with a singular value" do
         it "raises an ArgumentError" do
@@ -147,34 +149,39 @@ describe GenericWork do
       end
       context "with empty strings" do
         before { work.keyword_uris = [""] }
-        it { is_expected.to be_empty }
+        its(:keyword) { is_expected.to be_empty }
+        its(:keyword_uris) { is_expected.to be_empty }
       end
       context "with empty arrays" do
         before { work.keyword_uris = [] }
-        it { is_expected.to be_empty }
+        its(:keyword) { is_expected.to be_empty }
+        its(:keyword_uris) { is_expected.to be_empty }
       end
       context "with existing values" do
         before { work.keyword_uris = [item.uri.to_s] }
         it "uses a null set to remote them" do
-          expect(subject).not_to be_empty
+          expect(subject.keyword).not_to be_empty
           work.keyword_uris = []
-          expect(subject).to be_empty
+          expect(subject.keyword).to be_empty
         end
       end
     end
     context "using a single-valued term" do
-      subject { work.digitization_source }
+      subject { work }
       context "with a string" do
         before { work.digitization_source_uri = item.uri.to_s }
-        it { is_expected.to eq(item) }
+        its(:digitization_source) { is_expected.to eq(item) }
+        its(:digitization_source_uri) { is_expected.to eq(item.uri.to_s) }
       end
       context "with a RDF::URI" do
         before { work.digitization_source_uri = item.uri }
-        it { is_expected.to eq(item) }
+        its(:digitization_source) { is_expected.to eq(item) }
+        its(:digitization_source_uri) { is_expected.to eq(item.uri.to_s) }
       end
       context "with an empty string" do
         before { work.digitization_source_uri = "" }
-        it { is_expected.to be_nil }
+        its(:digitization_source) { is_expected.to be_nil }
+        its(:digitization_source_uri) { is_expected.to be_nil }
       end
       context "with an existing value" do
         before { work.digitization_source_uri = item.uri }
@@ -191,6 +198,10 @@ describe GenericWork do
       it { is_expected.to respond_to(:compositing_uri=) }
       it { is_expected.to respond_to(:light_type_uri=) }
       it { is_expected.to respond_to(:view_uris=) }
+      it { is_expected.to respond_to(:document_type_uris) }
+      it { is_expected.to respond_to(:compositing_uri) }
+      it { is_expected.to respond_to(:light_type_uri) }
+      it { is_expected.to respond_to(:view_uris) }
     end
   end
 end
