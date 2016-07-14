@@ -17,6 +17,12 @@ describe CurationConcerns::AgentForm do
   its(:representation_uris) { is_expected.to be_empty }
   its(:preferred_representation_uri) { is_expected.to be_nil }
 
+  it "responds to hash arguments" do
+    expect(subject[:document_uris]).to be_empty
+    expect(subject[:representation_uris]).to be_empty
+    expect(subject[:preferred_representation_uri]).to be_empty
+  end
+
   describe "::multiple?" do
     it "returns true for multiple representations" do
       expect(described_class.multiple?(:document_uris)).to be true

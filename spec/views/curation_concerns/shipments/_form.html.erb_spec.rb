@@ -12,13 +12,34 @@ describe 'curation_concerns/shipments/_form.html.erb' do
     assign(:form, form)
   end
 
-  context "when editing an shipment" do
-    let(:resource) { create(:shipment) }
+  context "when editing without existing representations" do
+    let(:resource) { build(:shipment) }
     before { render }
     it "renders fields for representations" do
       expect(page).to have_selector('input#shipment_document_uris')
       expect(page).to have_selector('input#shipment_representation_uris')
       expect(page).to have_selector('input#shipment_preferred_representation_uri')
+    end
+  end
+
+  context "when editing with existing representations" do
+    let(:asset) { build(:asset) }
+    let(:resource) do
+      build(:shipment, documents: [asset], representations: [asset], preferred_representation: asset)
+    end
+
+    before { render }
+
+    it "displays the existing uris" do
+      within("div.shipment_document_uris") do
+        expect(page).to have_selector("input[value='#{asset.uri}']")
+      end
+      within("div.shipment_representation_uris") do
+        expect(page).to have_selector("input[value='#{asset.uri}']")
+      end
+      within("div.shipment_preferred_representation_uri") do
+        expect(page).to have_selector("input[value='#{asset.uri}']")
+      end
     end
   end
 end
