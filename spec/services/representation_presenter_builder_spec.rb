@@ -2,27 +2,22 @@
 require 'rails_helper'
 
 describe RepresentationPresenterBuilder do
-  # Dead code?
-  let(:work) { create(:work, citi_uid: "WO-1234") }
-  subject { described_class.new(params).call }
+  let(:user)    { create(:user1) }
+  let(:ability) { Ability.new(user) }
+  let(:request) { double }
+
+  subject { described_class.new(work.citi_uid, ability, request).call }
+
   context "with valid input" do
-    let(:params) { { model: "work", citi_uid: work.citi_uid } }
-    xit { is_expected.to be_kind_of(WorkPresenter) }
+    let(:work) { create(:work, citi_uid: "WO-1234") }
+    it { is_expected.to be_kind_of(WorkPresenter) }
   end
-  context "with an invalid model" do
-    let(:params) { { model: "fake", citi_uid: "1324" } }
-    xit { is_expected.to be_nil }
+  context "with a non-existent resource" do
+    let(:work) { build(:work, citi_uid: "absent") }
+    it { is_expected.to be_nil }
   end
-  context "with an invalid citi_uid" do
-    let(:params) { { model: "work", citi_uid: "asdf" } }
-    xit { is_expected.to be_nil }
-  end
-  context "with missing model" do
-    let(:params) { { citi_uid: work.citi_uid } }
-    xit { is_expected.to be_nil }
-  end
-  context "with missing citi_uid" do
-    let(:params) { { model: "work" } }
-    xit { is_expected.to be_nil }
+  context "with a nil citi_uid" do
+    let(:work) { build(:work) }
+    it { is_expected.to be_nil }
   end
 end

@@ -1,36 +1,26 @@
 # frozen_string_literal: true
 class RepresentationPresenterBuilder
-  attr_reader :model, :citi_uid
+  attr_reader :citi_uid, :ability, :request
 
-  def initialize(params)
-    @model = params.fetch(:model, nil)
-    @citi_uid = params.fetch(:citi_uid, nil)
+  def initialize(citi_uid, ability, request)
+    @citi_uid = citi_uid
+    @ability = ability
+    @request = request
   end
 
   def call
-    return unless model && citi_uid && model_class && presenter && resource
-    presenter.new(resource)
+    return unless resource
+    presenter.new(SolrDocument.new(resource), ability, request)
   end
 
   private
 
-    def model_class
-      model.capitalize.constantize
-    rescue NameError
-      nil
-    end
-
     def presenter
-      "#{model.capitalize}Presenter".constantize
-    rescue NameError
-      nil
+      "#{resource.model}Presenter".constantize
     end
 
     def resource
-      @resource = begin
-                    model_class.find_by_citi_uid(citi_uid)
-                  rescue RSolr::Error::Http
-                    nil
-                  end
+      return unless citi_uid
+      @resource ||= ActiveFedora::SolrService.query("citi_uid_ssim:#{citi_uid}").first
     end
 end

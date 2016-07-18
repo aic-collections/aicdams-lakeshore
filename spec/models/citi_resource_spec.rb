@@ -34,6 +34,10 @@ describe CitiResource do
       let(:id) { "AB-1" }
       it { is_expected.to be_nil }
     end
+    context "with a nil id" do
+      let(:id) { nil }
+      it { is_expected.to be_nil }
+    end
   end
 
   describe "with events" do
