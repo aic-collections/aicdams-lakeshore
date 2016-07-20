@@ -58,7 +58,7 @@ Rails.application.routes.draw do
     resources :list_items, except: [:index, :show]
   end
 
-  resources :representations, only: [:show]
+  get 'relationships/:model/:id', to: 'relationships#show', as: 'relationship_model'
 
   # Lakeshore API
   scope "api" do

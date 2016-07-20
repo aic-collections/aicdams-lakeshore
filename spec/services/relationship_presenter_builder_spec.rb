@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 require 'rails_helper'
 
-describe RepresentationPresenterBuilder do
+describe RelationshipPresenterBuilder do
   let(:user)    { create(:user1) }
   let(:ability) { Ability.new(user) }
   let(:request) { double }
 
-  subject { described_class.new(work.citi_uid, ability, request).call }
+  subject { described_class.new(work.citi_uid, "work", ability, request).call }
 
   context "with valid input" do
     let(:work) { create(:work, citi_uid: "WO-1234") }

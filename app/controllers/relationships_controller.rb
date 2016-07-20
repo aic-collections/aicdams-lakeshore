@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-class RepresentationsController < ApplicationController
+class RelationshipsController < ApplicationController
   layout "bare"
 
   def show
@@ -18,6 +18,6 @@ class RepresentationsController < ApplicationController
   private
 
     def presenter
-      @presenter ||= RepresentationPresenterBuilder.new(params[:id], current_ability, request).call
+      @presenter ||= RelationshipPresenterBuilder.new(params[:id], params[:model], current_ability, request).call
     end
 end
