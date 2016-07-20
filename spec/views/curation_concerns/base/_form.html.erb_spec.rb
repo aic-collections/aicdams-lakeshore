@@ -33,8 +33,8 @@ describe 'curation_concerns/base/_form.html.erb' do
   context "when editing an existing asset" do
     let(:work) { create(:asset) }
     before { render }
-    it "does not allow changing the asset type" do
-      expect(rendered).not_to include("generic_work[asset_type]")
+    it "renders the asset type as a hidden field with the current value" do
+      expect(rendered).to include("type=\"hidden\" value=\"#{AICType.StillImage}\"")
     end
     it "renders the existing status selected" do
       expect(rendered).to include("<option selected=\"selected\" value=\"#{StatusType.active.uri}\">Active</option>")

@@ -25,6 +25,11 @@ module CurationConcerns
       []
     end
 
+    def asset_type
+      return AICType.StillImage if model.still_image?
+      return AICType.Text if model.text?
+    end
+
     def uris_for(term)
       model.send(term).map(&:uri).map(&:to_s)
     end

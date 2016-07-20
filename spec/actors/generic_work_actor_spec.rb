@@ -50,4 +50,13 @@ describe CurationConcerns::Actors::GenericWorkActor do
       its(:type) { is_expected.to include(AICType.Text) }
     end
   end
+
+  describe "#update" do
+    let(:work) { create(:asset) }
+    let(:parameters) do
+      { "asset_type" => AICType.StillImage, "pref_label" => "New Label" }
+    end
+    before { actor.update(parameters) }
+    its(:pref_label) { is_expected.to eq("New Label") }
+  end
 end

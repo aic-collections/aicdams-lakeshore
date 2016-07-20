@@ -5,4 +5,6 @@
               input_html: { class: 'form-control', multiple: false, id: 'asset_type_select' },
               required: f.object.required?(key) %>
   <%= f.input :asset_type, as: :hidden %>
+<% else %>
+  <%= f.input :asset_type, as: :hidden, value: f.object.asset_type %>
 <% end %>
