@@ -5,7 +5,8 @@ module CurationConcerns
 
     def self.aic_terms
       [
-        :asset_type, :document_type_uris, :pref_label, :created, :description, :language,
+        :asset_type, :document_type_uri, :first_document_sub_type_uri, :second_document_sub_type_uri,
+        :pref_label, :created, :description, :language,
         :publisher, :rights_holder_uris, :capture_device, :status_uri, :digitization_source_uri,
         :compositing_uri, :light_type_uri, :view_uris, :keyword_uris
       ]
@@ -15,7 +16,7 @@ module CurationConcerns
     # We must inherit from terms even if we aren't using them because Sufia will pass
     # some of them to the controller and they need to be sanitized properly.
     self.terms += aic_terms
-    self.required_fields = [:asset_type, :document_type_uris]
+    self.required_fields = [:asset_type, :document_type_uri]
 
     def primary_terms
       self.class.aic_terms
@@ -58,12 +59,14 @@ module CurationConcerns
 
     def self.build_permitted_params
       super + [
-        { document_type_uris: [] },
         { rights_holder_uris: [] },
         { view_uris: [] },
         { keyword_uris: [] },
         { representations_for: [] },
         { documents_for: [] },
+        :document_type_uri,
+        :first_document_sub_type_uri,
+        :second_document_sub_type_uri,
         :digitization_source_uri,
         :compositing_uri,
         :light_type_uri,

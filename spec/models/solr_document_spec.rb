@@ -92,4 +92,14 @@ describe SolrDocument do
     it { is_expected.to respond_to(:lat) }
     it { is_expected.to respond_to(:long) }
   end
+
+  describe "Asset terms" do
+    it { is_expected.to respond_to(:capture_device) }
+    it { is_expected.to respond_to(:digitization_source) }
+    it { is_expected.to respond_to(:document_type) }
+    it { is_expected.to respond_to(:first_document_sub_type) }
+    it { is_expected.to respond_to(:second_document_sub_type) }
+    it { is_expected.to respond_to(:legacy_uid) }
+    it { is_expected.to respond_to(:keyword) }
+  end
 end

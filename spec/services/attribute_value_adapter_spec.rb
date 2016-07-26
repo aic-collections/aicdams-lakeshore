@@ -37,6 +37,18 @@ describe AttributeValueAdapter do
     it { is_expected.to be_kind_of(ListItem) }
   end
 
+  context "with a first_document_sub_type" do
+    let(:value) { { "id" => list_item.id } }
+    let(:attribute_name) { "first_document_sub_type" }
+    it { is_expected.to be_kind_of(ListItem) }
+  end
+
+  context "with a second_document_sub_type" do
+    let(:value) { { "id" => list_item.id } }
+    let(:attribute_name) { "second_document_sub_type" }
+    it { is_expected.to be_kind_of(ListItem) }
+  end
+
   context "with a tag" do
     let(:value) { { "id" => list_item.id } }
     let(:attribute_name) { "tag" }

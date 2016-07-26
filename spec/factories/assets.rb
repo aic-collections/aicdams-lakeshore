@@ -24,5 +24,14 @@ FactoryGirl.define do
     factory :text_asset do
       after(:build, &:assert_text)
     end
+
+    trait :with_metadata do
+      pref_label "Asset with metadata"
+      description ["A sample asset with a complete listing of metadata"]
+      document_type { create(:list_item, pref_label: "Document type") }
+      first_document_sub_type { create(:list_item, pref_label: "First sub-type") }
+      second_document_sub_type { create(:list_item, pref_label: "Second sub-type") }
+      keyword { [create(:list_item, pref_label: "sample")] }
+    end
   end
 end

@@ -5,8 +5,10 @@ class AssetIndexer < Sufia::WorkIndexer
       solr_doc[Solrizer.solr_name("aic_type", :facetable)] = aic_types(["Asset"])
       solr_doc[Solrizer.solr_name("representation", :facetable)] = representations
       solr_doc[Solrizer.solr_name("aic_depositor", :symbol)] = object.depositor
-      solr_doc[Solrizer.solr_name("document_type", :symbol)] = object.document_type.map(&:pref_label)
       solr_doc[Solrizer.solr_name("fedora_uri", :symbol)] = object.uri.to_s
+      solr_doc.merge!(pref_label_for(:document_type, as: :symbol))
+      solr_doc.merge!(pref_label_for(:first_document_sub_type, as: :symbol))
+      solr_doc.merge!(pref_label_for(:second_document_sub_type, as: :symbol))
     end
   end
 
@@ -25,5 +27,10 @@ class AssetIndexer < Sufia::WorkIndexer
       types << "Is Representation" unless r.representations.empty?
       types << "Is Preferred Representation" unless r.preferred_representation.nil?
       types
+    end
+
+    def pref_label_for(term, opts)
+      return {} unless object.send(term)
+      { Solrizer.solr_name(term.to_s, opts.fetch(:as, :symbol)) => object.send(term).pref_label }
     end
 end

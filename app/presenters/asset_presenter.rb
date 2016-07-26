@@ -7,6 +7,8 @@ class AssetPresenter < Sufia::WorkShowPresenter
       :uid,
       :legacy_uid,
       :document_type,
+      :first_document_sub_type,
+      :second_document_sub_type,
       :status,
       :created,
       :dept_created,

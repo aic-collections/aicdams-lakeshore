@@ -1,0 +1,3 @@
+<%= f.input key, as: :select, collection: DocumentType.options, include_blank: true,
+    selected: f.object.uri_for(:document_type),
+    input_html: { class: 'form-control', multiple: false }, required: f.object.required?(key) %>

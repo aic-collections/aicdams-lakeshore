@@ -18,6 +18,8 @@ class AttributeValueAdapter
     {
       "digitization_source"      => ListItem,
       "document_type"            => ListItem,
+      "first_document_sub_type"  => ListItem,
+      "second_document_sub_type" => ListItem,
       "tag"                      => ListItem,
       "compositing"              => ListItem,
       "light_type"               => ListItem,

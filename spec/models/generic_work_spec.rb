@@ -194,11 +194,15 @@ describe GenericWork do
       end
     end
     context "with remaining terms" do
-      it { is_expected.to respond_to(:document_type_uris=) }
+      it { is_expected.to respond_to(:document_type_uri=) }
+      it { is_expected.to respond_to(:first_document_sub_type_uri=) }
+      it { is_expected.to respond_to(:second_document_sub_type_uri=) }
       it { is_expected.to respond_to(:compositing_uri=) }
       it { is_expected.to respond_to(:light_type_uri=) }
       it { is_expected.to respond_to(:view_uris=) }
-      it { is_expected.to respond_to(:document_type_uris) }
+      it { is_expected.to respond_to(:document_type_uri) }
+      it { is_expected.to respond_to(:first_document_sub_type_uri) }
+      it { is_expected.to respond_to(:second_document_sub_type_uri) }
       it { is_expected.to respond_to(:compositing_uri) }
       it { is_expected.to respond_to(:light_type_uri) }
       it { is_expected.to respond_to(:view_uris) }

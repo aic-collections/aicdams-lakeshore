@@ -14,7 +14,7 @@ describe CurationConcerns::GenericWorkForm do
   end
 
   describe "#required_fields" do
-    its(:required_fields) { is_expected.to contain_exactly(:asset_type, :document_type_uris) }
+    its(:required_fields) { is_expected.to contain_exactly(:asset_type, :document_type_uri) }
   end
 
   describe "#secondary_terms" do
@@ -28,8 +28,8 @@ describe CurationConcerns::GenericWorkForm do
   describe "::model_attributes" do
     subject { described_class.model_attributes(attributes) }
     context "with arrays of empty strings" do
-      let(:attributes) { ActionController::Parameters.new(collection_ids: [""], document_type_uris: [""]) }
-      it { is_expected.to eq("collection_ids" => [], "document_type_uris" => []) }
+      let(:attributes) { ActionController::Parameters.new(collection_ids: [""], document_type_uri: "") }
+      it { is_expected.to eq("collection_ids" => [], "document_type_uri" => "") }
     end
   end
 
@@ -39,13 +39,13 @@ describe CurationConcerns::GenericWorkForm do
   end
 
   describe "#uris_for" do
-    subject { form.uris_for(:document_type) }
+    subject { form.uris_for(:keyword) }
     context "with no items" do
       it { is_expected.to be_empty }
     end
     context "with an array of RDF::URI items" do
       let(:term) { create(:list_item) }
-      before { allow(asset).to receive(:document_type).and_return([term]) }
+      before { allow(asset).to receive(:keyword).and_return([term]) }
       it { is_expected.to eq([term.uri.to_s]) }
     end
   end

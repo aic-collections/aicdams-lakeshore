@@ -7,6 +7,7 @@ module SolrDocumentExtensions
   include SolrDocumentExtensions::Work
   include SolrDocumentExtensions::Exhibition
   include SolrDocumentExtensions::Place
+  include SolrDocumentExtensions::Asset
 
   def pref_label
     Array(self[Solrizer.solr_name('pref_label', :stored_searchable)]).first
