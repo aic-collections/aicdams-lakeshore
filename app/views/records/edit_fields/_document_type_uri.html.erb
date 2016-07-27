@@ -1,3 +1,7 @@
-<%= f.input key, as: :select, collection: DocumentType.options, include_blank: true,
-    selected: f.object.uri_for(:document_type),
-    input_html: { class: 'form-control', multiple: false }, required: f.object.required?(key) %>
+<div class="form-group select required generic_work_document_type_uri">
+  	<label class="multi_value required control-label" for="generic_work_document_type_uri">Document type <span class="label label-info required-tag">required</span></label>    
+	
+	<select class="select required form-control form-control" required="required" aria-required="true" name="generic_work[document_type_uri]" id="generic_work_document_type_uri">
+		<option selected value="base">Please select asset type first</option>
+	</select>
+</div>
