@@ -5,8 +5,4 @@ class ShipmentPresenter < Sufia::WorkShowPresenter
   end
 
   include CitiPresenterBehaviors
-
-  def deleteable?
-    current_ability.can?(:delete, Shipment)
-  end
 end

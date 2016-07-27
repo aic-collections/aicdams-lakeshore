@@ -37,6 +37,16 @@ module CitiPresenterBehaviors
     true
   end
 
+  # Because Citi resources do not have a full compliment of permissions,
+  # we allow anyone to edit
+  def editor?
+    true
+  end
+
+  def deleteable?
+    false
+  end
+
   private
 
     def ids_for_representation(solr_field)

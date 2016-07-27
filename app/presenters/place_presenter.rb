@@ -9,8 +9,4 @@ class PlacePresenter < Sufia::WorkShowPresenter
   end
 
   include CitiPresenterBehaviors
-
-  def deleteable?
-    current_ability.can?(:delete, Place)
-  end
 end

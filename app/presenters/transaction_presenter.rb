@@ -5,8 +5,4 @@ class TransactionPresenter < Sufia::WorkShowPresenter
   end
 
   include CitiPresenterBehaviors
-
-  def deleteable?
-    current_ability.can?(:delete, Transaction)
-  end
 end

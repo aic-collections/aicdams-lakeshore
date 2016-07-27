@@ -40,6 +40,7 @@ class AssetPresenter < Sufia::WorkShowPresenter
     [pref_label]
   end
 
+  # TODO: Does this cause a load from Fedora? Use solr_document instead?
   def deleteable?
     current_ability.can?(:delete, GenericWork)
   end

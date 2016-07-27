@@ -19,4 +19,8 @@ class CitiResourcePresenter < Sufia::WorkShowPresenter
   def deleteable?
     false
   end
+
+  def editor?
+    true
+  end
 end

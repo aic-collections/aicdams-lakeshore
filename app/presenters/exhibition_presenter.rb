@@ -11,8 +11,4 @@ class ExhibitionPresenter < Sufia::WorkShowPresenter
   end
 
   include CitiPresenterBehaviors
-
-  def deleteable?
-    current_ability.can?(:delete, Exhibition)
-  end
 end
