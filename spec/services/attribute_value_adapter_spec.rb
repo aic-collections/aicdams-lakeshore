@@ -5,6 +5,7 @@ describe AttributeValueAdapter do
   subject { described_class.call(value, attribute_name) }
 
   let(:list_item) { create(:list_item) }
+  let(:uri)       { "http://something/term" }
   let(:asset)     { create(:asset) }
 
   context "when no value is present" do
@@ -32,21 +33,21 @@ describe AttributeValueAdapter do
   end
 
   context "with a document_type" do
-    let(:value) { { "id" => list_item.id } }
+    let(:value) { { "id" => uri } }
     let(:attribute_name) { "document_type" }
-    it { is_expected.to be_kind_of(ListItem) }
+    it { is_expected.to be_kind_of(Definition) }
   end
 
   context "with a first_document_sub_type" do
-    let(:value) { { "id" => list_item.id } }
+    let(:value) { { "id" => uri } }
     let(:attribute_name) { "first_document_sub_type" }
-    it { is_expected.to be_kind_of(ListItem) }
+    it { is_expected.to be_kind_of(Definition) }
   end
 
   context "with a second_document_sub_type" do
-    let(:value) { { "id" => list_item.id } }
+    let(:value) { { "id" => uri } }
     let(:attribute_name) { "second_document_sub_type" }
-    it { is_expected.to be_kind_of(ListItem) }
+    it { is_expected.to be_kind_of(Definition) }
   end
 
   context "with a tag" do

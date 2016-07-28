@@ -28,16 +28,18 @@ describe 'curation_concerns/base/_form.html.erb' do
     it "displays the correct visibility options" do
       expect(page).to have_checked_field('generic_work_visibility_department')
     end
-    it "displays document type selection options" do
+    it "displays the first document type selection option" do
       expect(page).to have_select('generic_work_document_type_uri')
-      expect(page).to have_select('generic_work_first_document_sub_type_uri')
-      expect(page).to have_select('generic_work_second_document_sub_type_uri')
+      expect(page).not_to have_select('generic_work_first_document_sub_type_uri')
+      expect(page).not_to have_select('generic_work_second_document_sub_type_uri')
     end
   end
 
   context "when editing an existing asset" do
     let(:work) { create(:asset) }
-    before { render }
+    before do
+      render
+    end
     it "renders the asset type as a hidden field with the current value" do
       expect(rendered).to include("type=\"hidden\" value=\"#{AICType.StillImage}\"")
     end

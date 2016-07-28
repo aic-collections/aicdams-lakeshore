@@ -17,9 +17,9 @@ class AttributeValueAdapter
   def self.class_mapper
     {
       "digitization_source"      => ListItem,
-      "document_type"            => ListItem,
-      "first_document_sub_type"  => ListItem,
-      "second_document_sub_type" => ListItem,
+      "document_type"            => Definition,
+      "first_document_sub_type"  => Definition,
+      "second_document_sub_type" => Definition,
       "tag"                      => ListItem,
       "compositing"              => ListItem,
       "light_type"               => ListItem,

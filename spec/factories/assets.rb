@@ -28,9 +28,9 @@ FactoryGirl.define do
     trait :with_metadata do
       pref_label "Asset with metadata"
       description ["A sample asset with a complete listing of metadata"]
-      document_type { create(:list_item, pref_label: "Document type") }
-      first_document_sub_type { create(:list_item, pref_label: "First sub-type") }
-      second_document_sub_type { create(:list_item, pref_label: "Second sub-type") }
+      document_type_uri "http://definitions.example.com/Term"
+      first_document_sub_type_uri "http://definitions.example.com/Term"
+      second_document_sub_type_uri "http://definitions.example.com/Term"
       keyword { [create(:list_item, pref_label: "sample")] }
     end
   end
