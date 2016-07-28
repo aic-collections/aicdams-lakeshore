@@ -29,4 +29,24 @@ module SolrDocumentExtensions::Asset
   def keyword
     Array(self[Solrizer.solr_name('keyword', :stored_searchable)])
   end
+
+  def compositing
+    Array(self[Solrizer.solr_name('compositing', :stored_searchable)]).first
+  end
+
+  def imaging_uid
+    Array(self[Solrizer.solr_name('imaging_uid', :symbol)])
+  end
+
+  def light_type
+    Array(self[Solrizer.solr_name('light_type', :stored_searchable)]).first
+  end
+
+  def view
+    Array(self[Solrizer.solr_name('view', :stored_searchable)])
+  end
+
+  def transcript
+    Array(self[Solrizer.solr_name('transcript', :stored_searchable)]).first
+  end
 end

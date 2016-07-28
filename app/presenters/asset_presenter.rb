@@ -10,8 +10,8 @@ class AssetPresenter < Sufia::WorkShowPresenter
       :first_document_sub_type,
       :second_document_sub_type,
       :status,
-      :created,
       :dept_created,
+      :aic_depositor,
       :updated,
       :description,
       :batch_uid,
@@ -25,7 +25,11 @@ class AssetPresenter < Sufia::WorkShowPresenter
       :light_type,
       :view,
       :capture_device,
-      :digitization_source
+      :digitization_source,
+      :imaging_uid,
+      :transcript,
+      :modified_date,
+      :create_date
     ]
   end
 

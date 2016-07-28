@@ -33,6 +33,13 @@ describe 'curation_concerns/base/_form.html.erb' do
       expect(page).not_to have_select('generic_work_first_document_sub_type_uri')
       expect(page).not_to have_select('generic_work_second_document_sub_type_uri')
     end
+    it "displays the correct field labels" do
+      expect(page).to have_selector("label", text: "Original Source")
+      expect(page).to have_selector("label", text: "Image View")
+      expect(page).to have_selector("label", text: "Image Capture Light Type")
+      expect(page).to have_selector("label", text: "Image Compositing")
+      expect(page).to have_selector("label", text: "Description")
+    end
   end
 
   context "when editing an existing asset" do

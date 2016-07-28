@@ -105,7 +105,7 @@ en:
 
   simple_form:
     labels:
-      generic_file:
+      generic_work:
         uid:                  "UID"
         legacy_uid:           "Legacy UID"
         document_type:        "Document Type"
@@ -113,7 +113,7 @@ en:
         resource_created:     "Resource Created"
         dept_created:         "Created By Department"
         resource_updated:     "Resource Updated"
-        description:          "Abstract or Summary"
+        description:          "Description"
         batch_uid:            "In Batch"
         language:             "Language"
         publisher:            "Publisher"
@@ -124,7 +124,7 @@ en:
         light_type:           "Image Capture Light Type"
         view:                 "Image View"
         asset_capture_device: "Asset Capture Device"
-        digitization_source:  "Digitization Source"
+        digitization_source:  "Original Source"
         representation_for:   "Representation For"
         document_for:         "Document For"
 

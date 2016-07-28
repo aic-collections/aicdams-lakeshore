@@ -26,12 +26,22 @@ FactoryGirl.define do
     end
 
     trait :with_metadata do
-      pref_label "Asset with metadata"
-      description ["A sample asset with a complete listing of metadata"]
-      document_type_uri "http://definitions.example.com/Term"
-      first_document_sub_type_uri "http://definitions.example.com/Term"
+      pref_label                   "Asset with metadata"
+      description                  ["A sample asset with a complete listing of metadata"]
+      document_type_uri            "http://definitions.example.com/Term"
+      first_document_sub_type_uri  "http://definitions.example.com/Term"
       second_document_sub_type_uri "http://definitions.example.com/Term"
-      keyword { [create(:list_item, pref_label: "sample")] }
+      keyword                      { [create(:list_item, pref_label: "sample keyword")] }
+      view                         { [create(:list_item, pref_label: "sample view")] }
+      capture_device               "capture device"
+      digitization_source          { create(:list_item, pref_label: "digitizaton source") }
+      legacy_uid                   ["legacy_uid1", "legacy_uid2"]
+      compositing                  { create(:list_item, pref_label: "compositing") }
+      imaging_uid                  ["imaging_uid"]
+      light_type                   { create(:list_item, pref_label: "light type") }
+      transcript                   "a transcript"
+      batch_uid                    "batch_uid"
+      language                     ["English"]
     end
   end
 end
