@@ -68,7 +68,17 @@ class CatalogController < ApplicationController
     config.add_facet_fields_to_solr_request!
 
     # Index view fields
-    config.add_index_field solr_name("pref_label", :stored_searchable), label: ::RDF::Vocab::SKOS.prefLabel.label
+    config.add_index_field solr_name("pref_label", :stored_searchable),      label: "Title"
+    config.add_index_field solr_name("uid", :symbol),                        label: AIC.uid.label
+    config.add_index_field solr_name("main_ref_number", :stored_searchable), label: AIC.mainRefNumber.label
+    config.add_index_field solr_name("document_type", :symbol),              label: AIC.documentType.label
+    config.add_index_field solr_name("first_document_sub_type", :symbol),    label: AIC.documentSubType1.label
+    config.add_index_field solr_name("second_document_sub_type", :symbol),   label: AIC.documentSubType2.label
+    config.add_index_field solr_name("resource_type", :stored_searchable),   label: "Resource Type"
+    config.add_index_field solr_name('credit_line', :stored_searchable),     label: AIC.creditLine.label
+    config.add_index_field solr_name('dept_created', :stored_searchable),    label: AIC.department.label
+
+    config.add_index_field solr_name("relationships", :stored_searchable, type: :integer), label: "Related Assets"
 
     # Resource fields
     config.add_show_field solr_name("contributor", :stored_searchable),   label: AIC.contributor.label
