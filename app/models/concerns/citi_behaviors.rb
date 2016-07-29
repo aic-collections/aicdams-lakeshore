@@ -30,4 +30,9 @@ module CitiBehaviors
   def paranoid_permissions
     true
   end
+
+  # All registered users can edit Citi resources
+  def edit_groups
+    super << "registered"
+  end
 end

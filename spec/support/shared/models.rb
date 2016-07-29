@@ -31,6 +31,10 @@ shared_examples "a model for a Citi resource" do
                                 Hydra::PCDM::Vocab::PCDMTerms.Object,
                                 Hydra::Works::Vocab::WorksTerms.Work) }
   end
+
+  describe "#edit_groups" do
+    its(:edit_groups) { is_expected.to include("registered") }
+  end
 end
 
 shared_examples "a featureable model" do
