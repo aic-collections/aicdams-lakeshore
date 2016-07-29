@@ -102,6 +102,11 @@ en:
           transfer:                "Transfer Ownership of Work"
           work_confirmation:       "Deleting a work from %{application_name} is permanent. Click OK to delete this asset from %{application_name}, or Cancel to cancel this operation"
           collection_confirmation: "Deleting a collection from %{application_name} is permanent. Click OK to delete this collection from %{application_name}, or Cancel to cancel this operation"
+    works:
+      new:
+        header: "Add New Asset"
+      edit:
+        header: "Edit Asset"
 
   simple_form:
     labels:
@@ -110,6 +115,7 @@ en:
         legacy_uid:           "Legacy UID"
         document_type:        "Document Type"
         status:               "Status"
+        pref_label:           "Preferred Title"
         resource_created:     "Resource Created"
         dept_created:         "Created By Department"
         resource_updated:     "Resource Updated"
@@ -125,9 +131,14 @@ en:
         view:                 "Image View"
         asset_capture_device: "Asset Capture Device"
         digitization_source:  "Original Source"
-        representation_for:   "Representation For"
-        document_for:         "Document For"
+        representation_for:   "Representation Of"
+        representations_for:   "Representation Of"
+        document_for:         "Documentation For"
+        documents_for:         "Documentation For"
 
+    hints:
+      generic_work:
+        description: "Free-text notes about the Asset, e.g. description of the subject of an image or abstract of a text document. This text can be used for an ADA-compliant description about an image or document."
     metadata_help:
       generic_file:
         resource_type_html: "Pre-defined categories to describe the type of asset content being uploaded, such as &quot;article&quot; or &quot;dataset.&quot;  More than one type may be selected."
