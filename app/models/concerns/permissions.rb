@@ -5,4 +5,9 @@ module Permissions
   include Readable
   include LakeshoreVisibility
   include WithAICDepositor
+
+  # Any authenticated user can discover assets
+  def discover_groups
+    super << Hydra::AccessControls::AccessRight::PERMISSION_TEXT_VALUE_AUTHENTICATED
+  end
 end

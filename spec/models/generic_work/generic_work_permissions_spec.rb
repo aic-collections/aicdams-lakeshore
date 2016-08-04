@@ -8,6 +8,7 @@ describe GenericWork do
   describe "default permissions" do
     it { is_expected.not_to be_private }
     it { is_expected.to be_department }
+    its(:discover_groups) { is_expected.to contain_exactly(Hydra::AccessControls::AccessRight::PERMISSION_TEXT_VALUE_AUTHENTICATED) }
   end
 
   describe "visibility" do

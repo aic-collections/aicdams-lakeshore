@@ -31,8 +31,8 @@ module CitiBehaviors
     true
   end
 
-  # All registered users can edit Citi resources
+  # All authenticated users can edit Citi resources
   def edit_groups
-    super << "registered"
+    super << Hydra::AccessControls::AccessRight::PERMISSION_TEXT_VALUE_AUTHENTICATED
   end
 end
