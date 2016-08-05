@@ -35,10 +35,6 @@
                                 {
                                     "label" : "Committee Meeting",
                                     "value" : "http://definitions.artic.edu/doctypes/CommitteeMeeting"
-                                },
-                                {
-                                    "label" : "Lecture",
-                                    "value" : "http://definitions.artic.edu/doctypes/Lecture"
                                 }
                             ]
                         }
