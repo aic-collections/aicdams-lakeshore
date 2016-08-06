@@ -58,6 +58,7 @@ RSpec.configure do |config|
   config.include FactoryGirl::Syntax::Methods
   config.include SessionSupport, type: :feature
   config.include CustomMatchers
+  config.include RakeHelper
 
   config.include Warden::Test::Helpers, type: :feature
   config.after(:each, type: :feature) { Warden.test_reset! }

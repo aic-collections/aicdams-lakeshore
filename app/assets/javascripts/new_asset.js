@@ -2,12 +2,16 @@
 
 function disableFilesTab() {
   var tab = $('ul[role="tablist"] li')[1]
+  var buttonbar = $('.fileupload-buttonbar');
   $(tab).addClass("disabled");
+  $(buttonbar).hide();
 }
 
 function enableFilesTab() {
   var tab = $('ul[role="tablist"] li')[1]
+  var buttonbar = $('.fileupload-buttonbar');
   $(tab).removeClass("disabled");
+  $(buttonbar).show();
 }
 
 Blacklight.onLoad(function() {
@@ -31,11 +35,11 @@ Blacklight.onLoad(function() {
   $('select#asset_type_select').change(function(evt) {
     if (evt.target.selectedIndex > 0) {
       enableFilesTab();
-      $('#generic_work_asset_type').val($(evt.target.selectedOptions).val());
+      $('#hidden_asset_type').val($(evt.target.selectedOptions).val());
     }
     else {
       disableFilesTab();	
-      $('#generic_work_asset_type').val("");
+      $('#hidden_asset_type').val("");
     }
   });  
 

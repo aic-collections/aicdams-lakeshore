@@ -26,7 +26,7 @@ module Sufia
       end
 
       def asset_type
-        params.fetch(:generic_work).fetch(:asset_type)
+        asset_attributes.fetch(:asset_type)
       end
 
       # AICType.find_term(asset_type).label ought to work here, but doesn't
@@ -36,6 +36,12 @@ module Sufia
 
       def error_message
         "Incorrect asset type. #{uploaded_file.original_filename} is not a type of #{type_label}"
+      end
+
+      # We use this controller with both the single upload and batch upload form
+      # so it needs to work with both kinds of parameter hashes.
+      def asset_attributes
+        params.fetch(:generic_work, nil) || params.fetch(:batch_upload_item, nil)
       end
   end
 end

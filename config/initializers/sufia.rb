@@ -95,10 +95,10 @@ Sufia.config do |config|
   # config.always_display_share_button = true
 
   # The user who runs batch jobs. Update this if you aren't using emails
-  # config.batch_user_key = 'batchuser@example.com'
+  config.batch_user_key = 'batchuser'
 
   # The user who runs audit jobs. Update this if you aren't using emails
-  # config.audit_user_key = 'audituser@example.com'
+  config.audit_user_key = 'audituser'
 
   # Temporary path to hold uploads before they are ingested into FCrepo.
   # This must be a lambda that returns a Pathname
