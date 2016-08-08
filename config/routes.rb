@@ -65,8 +65,9 @@ Rails.application.routes.draw do
     post "reindex", to: "reindex#update"
   end
 
+  get "/login_confirm", to: "dummy#login_confirm"
+
   # Sufia should come last because in production it will 404 any unknown routes
   mount Sufia::Engine => '/'
 
-  get "/login_confirm" => "dummy#login_confirm"
 end
