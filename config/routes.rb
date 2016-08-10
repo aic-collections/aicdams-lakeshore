@@ -69,5 +69,4 @@ Rails.application.routes.draw do
 
   # Sufia should come last because in production it will 404 any unknown routes
   mount Sufia::Engine => '/'
-
 end
