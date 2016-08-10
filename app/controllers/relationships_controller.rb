@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 class RelationshipsController < ApplicationController
+  include Blacklight::Catalog
+
   layout "bare"
 
   def show

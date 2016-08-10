@@ -22,6 +22,7 @@ describe 'curation_concerns/base/_relationships.html.erb' do
 
     context "with representations" do
       before do
+        allow(view).to receive(:render_thumbnail_tag)
         allow(citi_presenter).to receive(:representation_presenters).and_return([asset_presenter])
         render 'curation_concerns/base/relationships.html.erb', presenter: citi_presenter
       end
@@ -30,6 +31,7 @@ describe 'curation_concerns/base/_relationships.html.erb' do
 
     context "with documents" do
       before do
+        allow(view).to receive(:render_thumbnail_tag)
         allow(citi_presenter).to receive(:document_presenters).and_return([asset_presenter])
         render 'curation_concerns/base/relationships.html.erb', presenter: citi_presenter
       end
@@ -38,6 +40,7 @@ describe 'curation_concerns/base/_relationships.html.erb' do
 
     context "with preferred representations" do
       before do
+        allow(view).to receive(:render_thumbnail_tag)
         allow(citi_presenter).to receive(:preferred_representation_presenters).and_return([asset_presenter])
         render 'curation_concerns/base/relationships.html.erb', presenter: citi_presenter
       end
