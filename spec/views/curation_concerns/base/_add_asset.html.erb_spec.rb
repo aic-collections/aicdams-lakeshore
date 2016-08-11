@@ -10,8 +10,8 @@ describe 'curation_concerns/base/_add_asset.html.erb' do
   end
 
   it "renders links for creating new assets from CITI resources" do
-    expect(page).to include("/concern/generic_works/new?representation_for=asset-id")
-    expect(page).to include("/concern/generic_works/new?document_for=asset-id")
+    expect(page).not_to include("/concern/generic_works/new?representation_for=asset-id")
+    expect(page).not_to include("/concern/generic_works/new?document_for=asset-id")
     expect(page).to include("/batch_uploads/new?representation_for=asset-id")
     expect(page).to include("/batch_uploads/new?document_for=asset-id")
   end

@@ -9,7 +9,7 @@ module CurationConcerns
     # @option options [Array<String>] :models the options to display, defaults to everything.
     def initialize(user, options = {})
       # override and force only GenericWork models to be returned
-      options[:models] = ["GenericWork"]
+      options[:models] = []
       @user = user
       @concern_name_normalizer = options.fetch(:concern_name_normalizer, ClassifyConcern.method(:to_class))
       @models = options.fetch(:models, CurationConcerns.config.registered_curation_concern_types)

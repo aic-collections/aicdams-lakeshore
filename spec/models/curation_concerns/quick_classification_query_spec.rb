@@ -6,5 +6,5 @@ describe CurationConcerns::QuickClassificationQuery do
 
   subject { described_class.new(user) }
 
-  its(:models) { is_expected.to eq(["GenericWork"]) }
+  its(:models) { is_expected.to be_empty }
 end
