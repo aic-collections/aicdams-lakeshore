@@ -26,10 +26,18 @@ describe("Selecting document types", function() {
   });
 
   describe("getFormModel", function() {
-    it("returns the parameterized name of a GenericWork form model", function() {
+    it("returns the parameterized model name with the new asset form", function() {
       var form = $('<form class="simple_form new_generic_work" id="new_generic_work"></form>')
       expect(select_doctype.getFormModel(form)).toEqual("generic_work")
     });
+    it("returns the parameterized model name with the edit asset form", function() {
+      var form = $('<form class="simple_form edit_generic_work" id="edit_generic_work_SI-378144"></form>')
+      expect(select_doctype.getFormModel(form)).toEqual("generic_work")
+    });
+    it("returns the parameterized model name with the batch create form", function() {
+      var form = $('<form class="simple_form new_batch_upload_item" id="new_batch_upload_item"></form>')
+      expect(select_doctype.getFormModel(form)).toEqual("batch_upload_item")
+    });  
   });
 
 });

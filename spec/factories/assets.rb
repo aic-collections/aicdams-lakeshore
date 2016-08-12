@@ -28,9 +28,9 @@ FactoryGirl.define do
     trait :with_metadata do
       pref_label                   "Asset with metadata"
       description                  ["A sample asset with a complete listing of metadata"]
-      document_type_uri            "http://definitions.example.com/Term"
-      first_document_sub_type_uri  "http://definitions.example.com/Term"
-      second_document_sub_type_uri "http://definitions.example.com/Term"
+      document_type_uri            "http://definitions.artic.edu/doctypes/Imaging"
+      first_document_sub_type_uri  "http://definitions.artic.edu/doctypes/EventPhotography"
+      second_document_sub_type_uri "http://definitions.artic.edu/doctypes/Lecture"
       keyword                      { [create(:list_item, pref_label: "sample keyword")] }
       view                         { [create(:list_item, pref_label: "sample view")] }
       capture_device               "capture device"

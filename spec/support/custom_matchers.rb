@@ -26,4 +26,20 @@ module CustomMatchers
   def hidden_asset_type
     find("input#hidden_asset_type", visible: false)
   end
+
+  def generic_work_hidden_asset_type
+    find("input#generic_work_asset_type", visible: false)
+  end
+
+  def selected_document_type
+    find("#generic_work_document_type_uri")[:value]
+  end
+
+  def selected_first_document_sub_type
+    find("#generic_work_first_document_sub_type_uri")[:value]
+  end
+
+  def selected_second_document_sub_type
+    find("#generic_work_second_document_sub_type_uri")[:value]
+  end
 end

@@ -56,11 +56,11 @@
 			},
 
 			getFormModel: function(form) {
-        if (form.attr('id') == "new_generic_work") {
-        	return "generic_work"
+        if (form.attr('id') == "new_batch_upload_item") {
+        	return "batch_upload_item"
         }
         else {
-        	return "batch_upload_item"
+        	return "generic_work"
         }
 			}
 		};
