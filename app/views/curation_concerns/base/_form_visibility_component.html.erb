@@ -30,7 +30,7 @@
         </li>
         <li class="radio">
           <label>
-            <%= f.radio_button :visibility, Permissions::LakeshoreVisibility::VISIBILITY_TEXT_VALUE_DEPARTMENT, data: { 'target': '#collapseDepartment' } %>
+            <%= f.radio_button :visibility, Permissions::LakeshoreVisibility::VISIBILITY_TEXT_VALUE_DEPARTMENT, data: { 'target': '#collapseDepartment' }, :checked => true %>
             <%= t('curation_concerns.visibility.department.label_html') %>
             <div class="collapse" id="collapseDepartment">
               <p>
