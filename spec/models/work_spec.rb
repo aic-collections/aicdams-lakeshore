@@ -4,7 +4,11 @@ require 'rails_helper'
 describe Work do
   describe "intial RDF types" do
     subject { described_class.new.type }
-    it { is_expected.to include(AICType.Work) }
+    it { is_expected.to include(AICType.Work,
+                                AICType.Resource,
+                                AICType.CitiResource,
+                                Hydra::PCDM::Vocab::PCDMTerms.Object,
+                                Hydra::Works::Vocab::WorksTerms.Work) }
   end
 
   describe "metadata" do
@@ -23,8 +27,4 @@ describe Work do
       end
     end
   end
-
-  it_behaves_like "a model for a Citi resource"
-  it_behaves_like "an unfeatureable model"
-  it_behaves_like "a resource that assign representations"
 end

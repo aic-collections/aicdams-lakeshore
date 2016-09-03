@@ -4,7 +4,11 @@ require 'rails_helper'
 describe Exhibition do
   describe "RDF type" do
     subject { described_class.new.type }
-    it { is_expected.to include(AICType.Exhibition) }
+    it { is_expected.to include(AICType.Exhibition,
+                                AICType.Resource,
+                                AICType.CitiResource,
+                                Hydra::PCDM::Vocab::PCDMTerms.Object,
+                                Hydra::Works::Vocab::WorksTerms.Work) }
   end
 
   describe "terms" do
@@ -33,7 +37,4 @@ describe Exhibition do
       it { is_expected.to eq(exhibition.name_official) }
     end
   end
-
-  it_behaves_like "a model for a Citi resource"
-  it_behaves_like "an unfeatureable model"
 end

@@ -4,7 +4,12 @@ require 'rails_helper'
 describe Agent do
   describe "RDF type" do
     subject { described_class.new.type }
-    it { is_expected.to include(AICType.Agent, ::RDF::Vocab::FOAF.Agent) }
+    it { is_expected.to include(AICType.Agent,
+                                ::RDF::Vocab::FOAF.Agent,
+                                AICType.Resource,
+                                AICType.CitiResource,
+                                Hydra::PCDM::Vocab::PCDMTerms.Object,
+                                Hydra::Works::Vocab::WorksTerms.Work) }
   end
 
   describe "terms" do
@@ -19,7 +24,4 @@ describe Agent do
       expect(described_class.properties["agent_type"].multiple?).to be false
     end
   end
-
-  it_behaves_like "a model for a Citi resource"
-  it_behaves_like "an unfeatureable model"
 end

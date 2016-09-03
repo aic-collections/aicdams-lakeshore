@@ -5,6 +5,7 @@
 module CitiBehaviors
   extend ActiveSupport::Concern
   include Permissions::Readable
+  include Permissions::Writable
 
   included do
     self.indexer = CitiIndexer
@@ -33,6 +34,6 @@ module CitiBehaviors
 
   # All authenticated users can edit Citi resources
   def edit_groups
-    super << Hydra::AccessControls::AccessRight::PERMISSION_TEXT_VALUE_AUTHENTICATED
+    [Hydra::AccessControls::AccessRight::PERMISSION_TEXT_VALUE_AUTHENTICATED]
   end
 end
