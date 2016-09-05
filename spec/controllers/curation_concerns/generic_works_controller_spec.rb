@@ -4,7 +4,12 @@ require 'rails_helper'
 describe CurationConcerns::GenericWorksController do
   routes { Rails.application.routes }
   include_context "authenticated saml user"
-  it_behaves_like "#index redirects to catalog facet search"
+
+  describe "#index" do
+    before { get :index }
+    subject { response }
+    it { is_expected.to redirect_to("http://test.host/catalog?f%5Baic_type_sim%5D%5B%5D=Asset") }
+  end
 
   describe "::show_presenter" do
     subject { described_class.show_presenter }
