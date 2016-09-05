@@ -1,5 +1,5 @@
-pref_label: "Tag"
-description: "Tag attached to the resource."
+pref_label: "Keyword"
+description: "Keyword attached to the resource."
 members:
   - pref_label: "After Dark"
     description: ""

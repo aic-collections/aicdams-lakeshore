@@ -50,9 +50,9 @@ describe AttributeValueAdapter do
     it { is_expected.to be_kind_of(Definition) }
   end
 
-  context "with a tag" do
+  context "with a keyword" do
     let(:value) { { "id" => list_item.id } }
-    let(:attribute_name) { "tag" }
+    let(:attribute_name) { "keyword" }
     it { is_expected.to be_kind_of(ListItem) }
   end
 

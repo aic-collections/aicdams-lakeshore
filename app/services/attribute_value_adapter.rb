@@ -20,7 +20,7 @@ class AttributeValueAdapter
       "document_type"            => Definition,
       "first_document_sub_type"  => Definition,
       "second_document_sub_type" => Definition,
-      "tag"                      => ListItem,
+      "keyword"                  => ListItem,
       "compositing"              => ListItem,
       "light_type"               => ListItem,
       "view"                     => ListItem,

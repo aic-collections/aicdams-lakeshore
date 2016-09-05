@@ -1,1 +1,3 @@
-<%# TBD Need to create keyword list%>
+<%= f.input :keyword_uris, as: :select, label: t('simple_form.labels.generic_work.keyword'),
+    collection: Keyword.options, selected: @form.uris_for(:keyword),
+    input_html: { class: 'form-control', multiple: true } %>
