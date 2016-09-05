@@ -31,9 +31,4 @@ class Exhibition < CitiResource
     index.type :integer
     index.as :stored_searchable
   end
-
-  # We don't need to override the writer because these resources are imported from CITI
-  def pref_label
-    name_official || name_working
-  end
 end

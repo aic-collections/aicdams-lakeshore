@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 FactoryGirl.define do
   factory :exhibition do
-    name_official "Sample Exhibition"
+    pref_label "Sample Exhibition"
 
     trait :with_sample_metadata do
-      description ["This is a very awesome show featuring the very much best artist ever lived."]
+      description   ["This is a very awesome show featuring the very much best artist ever lived."]
       end_date      "2015-10-12"
       name_official "My Very Much Awesome Show"
       name_working  "[WORKING TITLE] My Awesome Show"

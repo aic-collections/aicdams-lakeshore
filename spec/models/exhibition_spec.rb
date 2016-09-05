@@ -27,14 +27,7 @@ describe Exhibition do
   end
 
   describe "#pref_label" do
-    subject { exhibition.pref_label }
-    context "by default" do
-      let(:exhibition) { build(:exhibition, name_working: "working name", name_official: nil) }
-      it { is_expected.to eq(exhibition.name_working) }
-    end
-    context "with an official name" do
-      let(:exhibition) { build(:exhibition, name_official: "official name", name_working: "working name") }
-      it { is_expected.to eq(exhibition.name_official) }
-    end
+    subject { build(:exhibition, :with_sample_metadata) }
+    its(:pref_label) { is_expected.to eq("EX-2846") }
   end
 end
