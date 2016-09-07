@@ -10,7 +10,7 @@ end
 
 def build_method(hash, aic_type=nil, parent=nil)
   str = "  term :#{uri_to_term(hash)},\n       label: \"#{hash['label']}\""
-  str = str + ",\n       :\"skos:broader\" => \"#{aic_type}:#{uri_to_term(parent)}\"" if parent
+  str = str + ",\n       \"skos:broader\": \"#{aic_type}:#{uri_to_term(parent)}\"" if parent
   File.open(@output, 'a') { |f| f.write(str) }
   File.open(@output, 'a') { |f| f.write("\n") }
 end
@@ -21,7 +21,8 @@ end
 
 
 @output = File.open("lib/aic_doc_type.rb")
-File.open(@output, "w") { |f| f.write("class AICDocType < RDF::StrictVocabulary(\"http://definitions.artic.edu/doctypes/\")\n") }
+
+File.open(@output, "w") { |f| f.write("# frozen_string_literal: true\nclass AICDocType < RDF::StrictVocabulary(\"http://definitions.artic.edu/doctypes/\")\n") }
 data = JSON.parse(File.read("public/lake_doctypes.json"))
 image = data["asset_types"]["StillImage"]["doctypes"]
 image.map { |h| nested(h, "aicdoctype") }
