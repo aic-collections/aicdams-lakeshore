@@ -6,9 +6,9 @@ describe "Displaying an asset" do
   let(:asset) { create(:department_asset, :with_metadata) }
 
   before do
-    create(:exhibition, preferred_representation: asset)
-    create(:work, representations: [asset])
-    create(:shipment, documents: [asset])
+    create(:exhibition, preferred_representation: asset.uri)
+    create(:work, representations: [asset.uri])
+    create(:shipment, documents: [asset.uri])
     sign_in(user)
   end
 

@@ -6,7 +6,7 @@ describe "Searching" do
   let!(:user2)            { create(:user2) }
   let!(:department_asset) { create(:department_asset, pref_label: "Department Asset") }
   let!(:registered_asset) { create(:registered_asset, pref_label: "Registered Asset") }
-  let!(:work)             { create(:work, :with_sample_metadata, department: [Department.find_by_citi_uid("100")]) }
+  let!(:work)             { create(:work, :with_sample_metadata, department: [Department.find_by_citi_uid("100").uri]) }
 
   before do
     sign_in(user2)

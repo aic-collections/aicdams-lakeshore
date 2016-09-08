@@ -77,10 +77,10 @@ describe 'curation_concerns/base/_form.html.erb' do
   context "with singular terms using list items" do
     let(:item) { create(:list_item) }
     let(:addl) { create(:list_item, pref_label: "Additional Item") }
-    let(:work) { create(:asset, compositing: item,
-                                light_type: item,
-                                digitization_source: item,
-                                view: [item, addl]) }
+    let(:work) { create(:asset, compositing: item.uri,
+                                light_type: item.uri,
+                                digitization_source: item.uri,
+                                view: [item.uri, addl.uri]) }
 
     before do
       allow(BaseVocabulary).to receive(:all).and_return([item, addl])

@@ -21,7 +21,7 @@ describe CitiIndexer do
 
     context "with relationships" do
       let!(:asset) { create(:asset) }
-      let!(:work)  { create(:work, representations: [asset]) }
+      let!(:work)  { create(:work, representations: [asset.uri]) }
 
       it "indexes the correct number of relationships" do
         expect(solr_doc["relationships_isim"]).to eq(1)

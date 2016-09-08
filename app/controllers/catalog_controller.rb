@@ -83,13 +83,13 @@ class CatalogController < ApplicationController
     # Resource fields
     config.add_show_field solr_name("contributor", :stored_searchable),   label: AIC.contributor.label
     config.add_show_field solr_name("created_by", :stored_searchable),    label: AIC.createdBy.label
-    config.add_show_field solr_name("description", :stored_searchable),   label: ::RDF::DC.description.label
+    config.add_show_field solr_name("description", :stored_searchable),   label: ::RDF::Vocab::DC.description.label
     config.add_show_field solr_name("label", :stored_searchable),         label: ::RDF::RDFS.label.label
-    config.add_show_field solr_name("language", :stored_searchable),      label: ::RDF::DC.language.label
+    config.add_show_field solr_name("language", :stored_searchable),      label: ::RDF::Vocab::DC.language.label
     config.add_show_field solr_name("pref_label", :stored_searchable),    label: ::RDF::Vocab::SKOS.prefLabel.label
-    config.add_show_field solr_name("publisher", :stored_searchable),     label: ::RDF::DC.publisher.label
-    config.add_show_field solr_name("rights", :stored_searchable),        label: ::RDF::DC.rights.label
-    config.add_show_field solr_name("rights_holder", :stored_searchable), label: ::RDF::DC.rightsHolder.label
+    config.add_show_field solr_name("publisher", :stored_searchable),     label: ::RDF::Vocab::DC.publisher.label
+    config.add_show_field solr_name("rights", :stored_searchable),        label: ::RDF::Vocab::DC.rights.label
+    config.add_show_field solr_name("rights_holder", :stored_searchable), label: ::RDF::Vocab::DC.rightsHolder.label
     config.add_show_field solr_name("same_as", :stored_searchable),       label: ::RDF::OWL.sameAs.label
     config.add_show_field solr_name("uid", :stored_searchable),           label: AIC.uid.label
 
