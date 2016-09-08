@@ -30,6 +30,10 @@ class BatchUploadForm < Sufia::Forms::BatchUploadForm
     []
   end
 
+  def visibility
+    ::Permissions::LakeshoreVisibility::VISIBILITY_TEXT_VALUE_DEPARTMENT
+  end
+
   def self.build_permitted_params
     super + [
       { rights_holder_uris: [] },
