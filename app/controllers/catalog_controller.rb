@@ -75,7 +75,8 @@ class CatalogController < ApplicationController
     config.add_index_field solr_name("document_types", :stored_searchable),  label: AIC.documentType.label
     config.add_index_field solr_name("resource_type", :stored_searchable),   label: "Resource Type"
     config.add_index_field solr_name('credit_line', :stored_searchable),     label: AIC.creditLine.label
-    config.add_index_field solr_name('dept_created', :stored_searchable),    label: AIC.department.label
+    config.add_index_field solr_name('dept_created', :stored_searchable),    label: AIC.deptCreated.label
+    config.add_index_field solr_name('department', :stored_searchable),      label: AIC.department.label
 
     config.add_index_field solr_name("relationships", :stored_searchable, type: :integer), label: "Related Assets"
 

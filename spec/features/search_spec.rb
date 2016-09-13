@@ -2,11 +2,11 @@
 require 'rails_helper'
 
 describe "Searching" do
-  let!(:user1)            { create(:user1) }
+  let!(:user1) { create(:user1) }
   let!(:user2)            { create(:user2) }
   let!(:department_asset) { create(:department_asset, pref_label: "Department Asset") }
   let!(:registered_asset) { create(:registered_asset, pref_label: "Registered Asset") }
-  let!(:work)             { create(:work, :with_sample_metadata) }
+  let!(:work)             { create(:work, :with_sample_metadata, department: [Department.find_by_citi_uid("100")]) }
 
   before do
     sign_in(user2)
@@ -22,5 +22,14 @@ describe "Searching" do
     end
     visit(polymorphic_path(department_asset))
     expect(page).to have_content("The page you have tried to access is private")
+  end
+
+  it "displays search results for non-assets" do
+    visit(root_path)
+    fill_in(:q, with: "Great Sidewalk Gum")
+    click_button("Go")
+    within("div#search-results") do
+      expect(page).to have_selector("td", text: "Department 100")
+    end
   end
 end

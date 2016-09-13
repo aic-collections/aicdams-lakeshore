@@ -28,7 +28,7 @@ describe "Displaying an asset" do
       expect(page).to have_selector("td", text: asset.pref_label)
       expect(page).to have_selector("th", text: AIC.uid.label)
       expect(page).to have_selector("td", text: asset.uid)
-      expect(page).to have_selector("th", text: AIC.department.label)
+      expect(page).to have_selector("th", text: AIC.deptCreated.label)
       expect(page).to have_selector("td", text: asset.dept_created.pref_label)
       expect(page).to have_selector("th", text: AIC.documentType.label)
       expect(page).to have_selector("td", text: "Imaging > Event Photography > Lecture")
