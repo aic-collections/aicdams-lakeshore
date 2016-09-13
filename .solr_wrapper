@@ -1,5 +1,5 @@
 port: 8983
-version: 5.5.2
+version: 5.5.3
 instance_dir: tmp/solr-development
 collection:
   persist: true
