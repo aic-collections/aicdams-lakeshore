@@ -19,7 +19,6 @@
 // Load Javascript < ES6
 //= require batch_edit
 //= require blacklight_gallery
-//= require new_asset
 //= require openseadragon
 //= require select_doctype
 
@@ -30,3 +29,4 @@
 //= require lakeshore/asset_type_control
 //= require lakeshore/autocomplete
 //= require lakeshore/deleted_files
+//= require lakeshore/asset_workflow
