@@ -18,7 +18,7 @@ class AutocompleteController < ActionController::Base
       {
         qt: "search",
         q:  "*" + (query || '') + "*",
-        qf: ["uid_tesim", "pref_label_tesim", "main_ref_number_tesim"],
+        qf: ["uid_tesim", "pref_label_tesim", "main_ref_number_tesim", "uid_ssim"],
         fl: "pref_label_tesim, uid_ssim, fedora_uri_ssim, main_ref_number_tesim, thumbnail_path_ss, id",
         fq: "human_readable_type_tesim:#{aic_type}"
       }
