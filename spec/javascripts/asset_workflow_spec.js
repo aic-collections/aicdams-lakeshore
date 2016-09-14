@@ -16,4 +16,12 @@ describe("Asset workflow", function() {
     })
   })
 
+  describe("assetTypeSelector", function() {
+    it("returns the css class for the type of asset", function() {
+      asset_workflow.type = "http://definitions.artic.edu/ontology/1.0/type/StillImage"
+      expect(asset_workflow.assetTypeSelector).toEqual(".asset-image")
+      asset_workflow.type = "http://definitions.artic.edu/ontology/1.0/type/Text"
+      expect(asset_workflow.assetTypeSelector).toEqual(".asset-text")
+    })
+  })
 })
