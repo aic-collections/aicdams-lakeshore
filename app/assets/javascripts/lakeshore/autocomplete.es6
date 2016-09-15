@@ -4,7 +4,7 @@ export class AutocompleteControl {
   // initialize the provide HTMLElement with the jQuery select2 module
   initialize(el, length, endpoint) {
     $(el).select2({
-      placeholder: "Search for a Resource by title, ID or main ref. number...",
+      placeholder: 'Search for a Resource by title, ID or main ref. number...',
       minimumInputLength: length,
       ajax: { // instead of writing the function to execute the request we use Select2's convenient helper
         url: endpoint,
@@ -27,7 +27,7 @@ export class AutocompleteControl {
       },
       formatResult: this.formatAssetResult,
       formatSelection: this.formatAssetSelection,
-      dropdownCssClass: "bigdrop",
+      dropdownCssClass: 'bigdrop',
       allowClear: true,
       escapeMarkup: function (m) { return m }
     })
@@ -45,7 +45,7 @@ export class AutocompleteControl {
                  '    <h4 class="media-heading">' + asset.uid + '</h4>' + asset.label +
                  main_ref_number_tag +
                  '  </div>' +
-                 '</div>'; 
+                 '</div>' 
     return markup
   }
 
