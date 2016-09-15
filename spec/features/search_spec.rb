@@ -13,6 +13,7 @@ describe "Searching" do
   end
 
   it "displays search results for all assets" do
+    # Search returns links to available assets only
     visit(root_path)
     fill_in(:q, with: "Asset")
     click_button("Go")
@@ -22,6 +23,14 @@ describe "Searching" do
     end
     visit(polymorphic_path(department_asset))
     expect(page).to have_content("The page you have tried to access is private")
+
+    # Searching on uid
+    visit(root_path)
+    fill_in(:q, with: registered_asset.uid.split(/-/).last)
+    click_button("Go")
+    within("div#search-results") do
+      expect(page).to have_link(registered_asset)
+    end
   end
 
   it "displays search results for non-assets" do
