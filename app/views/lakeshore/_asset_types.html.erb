@@ -1,6 +1,5 @@
-<p><%= t('lakeshore.upload.asset_types') %></p>
 <div class="asset asset-text">
-  <h2>Text Types</h2>
+  <p><%= t('lakeshore.upload.asset_types', type: "text") %></p>
   <ul>
     <% AssetType::Text.types.each do |type| %>
       <% if type.friendly %>
@@ -11,7 +10,7 @@
 </div>
 
 <div class="asset asset-image">
-  <h2>Image Types</h2>
+  <p><%= t('lakeshore.upload.asset_types', type: "image") %></p>
   <ul>
     <% AssetType::Image.types.each do |type| %>
       <% if type.friendly %>
