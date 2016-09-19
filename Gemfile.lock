@@ -1,4 +1,17 @@
 GIT
+  remote: git://github.com/projecthydra/hydra-editor.git
+  revision: fc20b8d4c0cf1fcd847208e330c2203a03ed073f
+  ref: fc20b8d4c0cf1fcd847208e330c2203a03ed073f
+  specs:
+    hydra-editor (3.1.1)
+      active-fedora (>= 9.0.0)
+      almond-rails (~> 0.0.3)
+      cancancan (~> 1.8)
+      rails (>= 4.2.0, < 6)
+      simple_form (~> 3.2)
+      sprockets-es6
+
+GIT
   remote: git://github.com/projecthydra/sufia.git
   revision: 818cb4ca53d81fdb37835a0cd7c753d66eacd679
   ref: 818cb4ca53d81fdb37835a0cd7c753d66eacd679
@@ -326,13 +339,6 @@ GEM
       deprecation
       mime-types (> 2.0, < 4.0)
       mini_magick (>= 3.2, < 5)
-    hydra-editor (3.1.1)
-      active-fedora (>= 9.0.0)
-      almond-rails (~> 0.0.3)
-      cancancan (~> 1.8)
-      rails (>= 4.2.0, < 6)
-      simple_form (~> 3.2)
-      sprockets-es6
     hydra-file_characterization (0.3.3)
       activesupport (>= 3.0.0)
     hydra-head (10.3.0)
@@ -693,6 +699,7 @@ DEPENDENCIES
   factory_girl_rails
   fcrepo_wrapper
   flipflop!
+  hydra-editor!
   jasmine
   jbuilder (~> 2.6)
   jquery-rails
