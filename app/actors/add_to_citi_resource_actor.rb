@@ -93,6 +93,6 @@ class AddToCitiResourceActor < CurationConcerns::Actors::AbstractActor
     end
 
     def representing_resource
-      @representing_resource ||= RepresentingResource.new(curation_concern)
+      @representing_resource ||= InboundRelationships.new(curation_concern)
     end
 end

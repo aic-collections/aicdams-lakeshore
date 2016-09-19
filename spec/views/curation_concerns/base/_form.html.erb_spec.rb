@@ -15,7 +15,7 @@ describe 'curation_concerns/base/_form.html.erb' do
   context "with a new asset" do
     let(:work) { GenericWork.new }
     before do
-      view.stub(:action_name).and_return('new')
+      allow(view).to receive(:action_name).and_return('new')
       render
     end
     it "includes select options for asset type" do
@@ -63,7 +63,7 @@ describe 'curation_concerns/base/_form.html.erb' do
             )
     end
     before do
-      view.stub(:action_name).and_return('edit')
+      allow(view).to receive(:action_name).and_return('edit')
       render
     end
 
