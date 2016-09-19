@@ -11,7 +11,7 @@ describe("Asset workflow", function() {
     it("marks the description tab disabled", function() {
       expect(asset_workflow.tab).toHaveClass("disabled")
     })
-    it("hides the files button", function() {
+    it("hides the files button and dropzone", function() {
       expect(asset_workflow.buttonbar).toBeHidden()
     })
   })

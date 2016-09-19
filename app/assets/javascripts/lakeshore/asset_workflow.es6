@@ -6,7 +6,7 @@ export class AssetWorkflow {
   
   constructor () {
     this.tab = $('ul[role="tablist"] li')[1]
-    this.buttonbar = $('.fileupload-buttonbar')
+    this.buttonbar = $('div#fileupload')
     this.type = null
   }
 
