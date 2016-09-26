@@ -36,11 +36,11 @@ set :log_level, :debug
 set :branch, ENV["REVISION"] || ENV["BRANCH_NAME"] || fetch(:default_branch).to_s
 
 set :linked_files, fetch(:linked_files, []).push(
-  'config/admin.yml',
   'config/blacklight.yml',
   'config/database.yml',
   'config/fedora.yml',
   'config/redis.yml',
+  'config/role_map.yml',
   'config/secrets.yml',
   'config/solr.yml'
 )
