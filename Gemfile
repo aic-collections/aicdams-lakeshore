@@ -32,6 +32,7 @@ group :development, :test do
   gem 'jasmine'
   gem 'solr_wrapper'
   gem 'sqlite3'
+  gem 'xray-rails'
 end
 
 group :development do

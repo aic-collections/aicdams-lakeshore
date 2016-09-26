@@ -678,6 +678,9 @@ GEM
     xml-simple (1.1.5)
     xpath (2.0.0)
       nokogiri (~> 1.3)
+    xray-rails (0.1.22)
+      coffee-rails
+      rails (>= 3.1.0)
     yaml_db (0.4.0)
       rails (>= 3.0, < 5.1)
       rake (>= 0.8.7)
@@ -722,6 +725,7 @@ DEPENDENCIES
   sufia!
   turbolinks
   uglifier (~> 3.0)
+  xray-rails
 
 BUNDLED WITH
    1.12.5
