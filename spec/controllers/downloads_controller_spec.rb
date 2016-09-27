@@ -38,6 +38,11 @@ describe DownloadsController do
       it "denies access" do
         expect { subject }.to raise_error(CanCan::AccessDenied)
       end
+
+      context "when I am an administrator" do
+        include_context "authenticated admin user"
+        it { is_expected.to eq(other_file.id) }
+      end
     end
 
     context "with a thumbnail for a file I do not have read access to" do

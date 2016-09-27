@@ -10,6 +10,7 @@ class DownloadsController < ApplicationController
   protected
 
     def authorize_download!
+      return params[:id] if current_user.admin?
       authorize! rights_for_file, params[asset_param_key]
     end
 
