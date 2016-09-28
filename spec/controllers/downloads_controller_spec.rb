@@ -50,4 +50,14 @@ describe DownloadsController do
       it { is_expected.to eq(other_file.id) }
     end
   end
+
+  describe "#load_file" do
+    context "with an access file" do
+      before do
+        allow(controller).to receive(:access_file).and_return(file.path)
+        get :show, id: my_file.id, file: "access"
+      end
+      its(:response) { is_expected.to be_success }
+    end
+  end
 end

@@ -24,5 +24,15 @@ class LakeshoreTesting
     rescue => e
       Logger.new(STDOUT).warn "WARNING -- Redis might be down: #{e}"
     end
+
+    def continuous_integration?
+      ENV.fetch("TRAVIS", false)
+    end
+
+    def reset_derivatives
+      FileUtils.rm_rf("#{Rails.root}/tmp/test/derivatives")
+      FileUtils.mkdir_p("#{Rails.root}/tmp/test/derivatives")
+      Sufia.config.derivatives_path = "#{Rails.root}/tmp/test/derivatives"
+    end
   end
 end

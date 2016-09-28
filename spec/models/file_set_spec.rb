@@ -2,7 +2,7 @@
 require 'rails_helper'
 
 describe FileSet do
-  let(:file) { build(:department_file) }
+  let(:file) { build(:department_file, id: '1234') }
 
   describe "#to_solr" do
     subject { file }
