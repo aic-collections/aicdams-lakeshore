@@ -9,6 +9,15 @@ class DownloadsController < ApplicationController
 
   protected
 
+    # Supply a filename when downloading the access file
+    def derivative_download_options
+      if access_master?
+        super.merge!(filename: access_filename)
+      else
+        super
+      end
+    end
+
     def authorize_download!
       return params[:id] if current_user.admin?
       authorize! rights_for_file, params[asset_param_key]
@@ -34,16 +43,20 @@ class DownloadsController < ApplicationController
     end
 
     def access_master?
-      params.fetch(:file, nil) == "access"
+      params.fetch(:file, nil) == "accessMaster"
     end
 
     # We'll use the default CurationConcerns::DerivativePath to look at all the existing derivatives and return the
-    # first one with "access" in the name. If there are more derivative types later, we'll want to create out own
+    # first one with "access" in the name. If there are more derivative types later, we'll want to create our own
     # service to return the exact path for a given derivative type and set that using derivative_path_factory.
     def access_file
       CurationConcerns::DerivativePath.derivatives_for_reference(params[asset_param_key]).each do |file|
         filename = File.basename(file, ".*")
         return file if filename =~ /access/ && File.exist?(file)
       end
+    end
+
+    def access_filename
+      "#{asset.parent.uid}#{File.extname(file)}"
     end
 end

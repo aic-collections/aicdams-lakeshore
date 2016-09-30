@@ -20,7 +20,7 @@ FactoryGirl.define do
       visibility Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_AUTHENTICATED
     end
 
-    factory :file_with_work do
+    factory :file_set_with_file do
       after(:build) do |file, _evaluator|
         file.title = ['testfile']
       end

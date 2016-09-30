@@ -33,7 +33,7 @@ class FileSet < ActiveFedora::Base
     def image_outputs
       [
         { label: :thumbnail, format: 'jpg', size: '200x150>', url: derivative_url('thumbnail') },
-        { label: :access, format: 'jp2', url: access_url('jp2') }
+        { label: :access, format: 'jp2[512x512]', url: access_url('jp2') }
       ]
     end
 

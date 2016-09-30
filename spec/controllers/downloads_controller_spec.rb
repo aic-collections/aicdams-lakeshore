@@ -5,8 +5,8 @@ describe DownloadsController do
   include_context "authenticated saml user"
   let(:user2)      { create(:user2) }
   let(:file)       { File.open(File.join(fixture_path, 'sun.png')) }
-  let(:my_file)    { create(:file_with_work, user: user, content: file) }
-  let(:other_file) { create(:file_with_work, user: user2, content: file) }
+  let(:my_file)    { create(:file_set_with_file, user: user, content: file) }
+  let(:other_file) { create(:file_set_with_file, user: user2, content: file) }
 
   describe "#rights_for_file" do
     subject { controller.rights_for_file }
@@ -55,9 +55,10 @@ describe DownloadsController do
     context "with an access file" do
       before do
         allow(controller).to receive(:access_file).and_return(file.path)
-        get :show, id: my_file.id, file: "access"
+        allow(controller).to receive(:access_filename).and_return("blah.jp2")
+        get :show, id: my_file.id, file: "accessMaster"
       end
-      its(:response) { is_expected.to be_success }
+      its(:headers) { is_expected.to include("Content-Disposition" => "inline; filename=\"blah.jp2\"") }
     end
   end
 end

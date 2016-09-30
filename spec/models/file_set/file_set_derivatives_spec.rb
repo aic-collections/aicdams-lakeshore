@@ -21,7 +21,7 @@ describe FileSet do
           },
           {
             label:  :access,
-            format: "jp2",
+            format: "jp2[512x512]",
             url:    "file:#{Rails.root}/tmp/test/derivatives/12/34-access.jp2"
           }
         ]
@@ -34,8 +34,10 @@ describe FileSet do
         file.create_derivatives(image_file)
       end
 
-      it "converts a file to J2K", skip: LakeshoreTesting.continuous_integration? do
-        file.create_derivatives(image_file)
+      describe "the derivatives", skip: LakeshoreTesting.continuous_integration? do
+        subject { derivatives }
+        before  { file.create_derivatives(image_file) }
+        it { is_expected.to contain_exactly(end_with("34-access.jp2"), end_with("34-thumbnail.jpeg")) }
       end
     end
 
@@ -65,11 +67,13 @@ describe FileSet do
         file.create_derivatives(pdf_file)
       end
 
-      describe "generating thumbnails" do
-        before { allow(Hydra::Derivatives::FullTextExtract).to receive(:create) }
-        it "creates an image from a pdf", skip: LakeshoreTesting.continuous_integration? do
+      describe "the derivatives", skip: LakeshoreTesting.continuous_integration? do
+        subject { derivatives }
+        before do
+          allow(Hydra::Derivatives::FullTextExtract).to receive(:create)
           file.create_derivatives(pdf_file)
         end
+        it { is_expected.to contain_exactly(end_with("34-thumbnail.jpeg")) }
       end
     end
 
@@ -99,12 +103,13 @@ describe FileSet do
         file.create_derivatives(document)
       end
 
-      describe "generating thumbnails" do
-        before { allow(Hydra::Derivatives::FullTextExtract).to receive(:create) }
-        it "creates an image from a pdf", skip: LakeshoreTesting.continuous_integration? do
+      describe "the derivatives", skip: LakeshoreTesting.continuous_integration? do
+        subject { derivatives }
+        before do
+          allow(Hydra::Derivatives::FullTextExtract).to receive(:create)
           file.create_derivatives(document)
-          expect(derivatives).to contain_exactly(end_with("34-access.pdf"), end_with("34-thumbnail.jpeg"))
         end
+        it { is_expected.to contain_exactly(end_with("34-access.pdf"), end_with("34-thumbnail.jpeg")) }
       end
     end
   end
