@@ -34,6 +34,8 @@ class AssetPresenter < Sufia::WorkShowPresenter
     terms + [:document_types]
   end
 
+  include ResourcePresenterBehaviors
+
   delegate(*presenter_terms, to: :solr_document)
   delegate :document_ids, :representation_ids, :preferred_representation_ids, to: :relationships
 
