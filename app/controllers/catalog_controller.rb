@@ -69,6 +69,7 @@ class CatalogController < ApplicationController
     config.add_facet_fields_to_solr_request!
 
     # Index view fields
+    config.add_index_field solr_name("depositor", :stored_searchable), label: "Depositor"
     config.add_index_field solr_name("pref_label", :stored_searchable),      label: "Title"
     config.add_index_field solr_name("uid", :symbol),                        label: AIC.uid.label
     config.add_index_field solr_name("main_ref_number", :stored_searchable), label: AIC.mainRefNumber.label
@@ -77,8 +78,9 @@ class CatalogController < ApplicationController
     config.add_index_field solr_name('credit_line', :stored_searchable),     label: AIC.creditLine.label
     config.add_index_field solr_name('dept_created', :stored_searchable),    label: AIC.deptCreated.label
     config.add_index_field solr_name('department', :stored_searchable),      label: AIC.department.label
-
     config.add_index_field solr_name("relationships", :stored_searchable, type: :integer), label: "Related Assets"
+    config.add_index_field solr_name("date_uploaded", :stored_sortable, type: :date), label: "Date Uploaded", itemprop: 'datePublished', helper_method: :human_readable_date
+    config.add_index_field solr_name("date_modified", :stored_sortable, type: :date), label: "Date Modified", itemprop: 'dateModified', helper_method: :human_readable_date
 
     # Resource fields
     config.add_show_field solr_name("contributor", :stored_searchable),   label: AIC.contributor.label
