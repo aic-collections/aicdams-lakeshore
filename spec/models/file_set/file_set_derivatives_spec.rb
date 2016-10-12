@@ -14,15 +14,22 @@ describe FileSet do
       let(:outputs) do
         [
           {
-            label:  :thumbnail,
-            format: "jpg",
-            size:   "200x150>",
-            url:    "file:#{Rails.root}/tmp/test/derivatives/12/34-thumbnail.jpeg"
+            label:    :thumbnail,
+            format:   "jpg",
+            size:     "200x150>",
+            url:      "file:#{Rails.root}/tmp/test/derivatives/12/34-thumbnail.jpeg"
           },
           {
-            label:  :access,
-            format: "jp2[512x512]",
-            url:    "file:#{Rails.root}/tmp/test/derivatives/12/34-access.jp2"
+            label:    :access,
+            format:   "jp2[512x512]",
+            url:      "file:#{Rails.root}/tmp/test/derivatives/12/34-access.jp2"
+          },
+          {
+            label:    :citi,
+            format:   "jpg",
+            size:     "96x96>",
+            quality:  "90",
+            url:      "file:#{Rails.root}/tmp/test/derivatives/12/34-citi.jpg"
           }
         ]
       end
@@ -37,7 +44,7 @@ describe FileSet do
       describe "the derivatives", skip: LakeshoreTesting.continuous_integration? do
         subject { derivatives }
         before  { file.create_derivatives(image_file) }
-        it { is_expected.to contain_exactly(end_with("34-access.jp2"), end_with("34-thumbnail.jpeg")) }
+        it { is_expected.to contain_exactly(end_with("34-access.jp2"), end_with("34-thumbnail.jpeg"), end_with("34-citi.jpg")) }
       end
     end
 
@@ -47,10 +54,17 @@ describe FileSet do
       let(:outputs) do
         [
           {
-            label:  :thumbnail,
-            format: "jpg",
-            size:   "200x150>",
-            url:    "file:#{Rails.root}/tmp/test/derivatives/12/34-thumbnail.jpeg"
+            label:    :thumbnail,
+            format:   "jpg",
+            size:     "200x150>",
+            url:      "file:#{Rails.root}/tmp/test/derivatives/12/34-thumbnail.jpeg"
+          },
+          {
+            label:    :citi,
+            format:   "jpg",
+            size:     "96x96>",
+            quality:  "90",
+            url:      "file:#{Rails.root}/tmp/test/derivatives/12/34-citi.jpg"
           }
         ]
       end
@@ -73,7 +87,7 @@ describe FileSet do
           allow(Hydra::Derivatives::FullTextExtract).to receive(:create)
           file.create_derivatives(pdf_file)
         end
-        it { is_expected.to contain_exactly(end_with("34-thumbnail.jpeg")) }
+        it { is_expected.to contain_exactly(end_with("34-thumbnail.jpeg"), end_with("34-citi.jpg")) }
       end
     end
 
@@ -86,7 +100,8 @@ describe FileSet do
             label:     :access,
             format:    "pdf",
             thumbnail: "file:#{Rails.root}/tmp/test/derivatives/12/34-thumbnail.jpeg",
-            access:    "file:#{Rails.root}/tmp/test/derivatives/12/34-access.pdf"
+            access:    "file:#{Rails.root}/tmp/test/derivatives/12/34-access.pdf",
+            citi:      "file:#{Rails.root}/tmp/test/derivatives/12/34-citi.jpg"
           }
         ]
       end
@@ -109,7 +124,7 @@ describe FileSet do
           allow(Hydra::Derivatives::FullTextExtract).to receive(:create)
           file.create_derivatives(document)
         end
-        it { is_expected.to contain_exactly(end_with("34-access.pdf"), end_with("34-thumbnail.jpeg")) }
+        it { is_expected.to contain_exactly(end_with("34-access.pdf"), end_with("34-thumbnail.jpeg"), end_with("34-citi.jpg")) }
       end
     end
   end

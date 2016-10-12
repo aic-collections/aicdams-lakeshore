@@ -64,7 +64,8 @@ Rails.application.routes.draw do
 
   # Lakeshore API
   namespace :lakeshore, path: "api" do
-    resources :reindex, only: [:create]
+    resources :reindex, only: [:create], defaults: { format: :json }
+    resources :downloads, only: [:show], defaults: { format: :json }
   end
 
   get "/login_confirm", to: "dummy#login_confirm"

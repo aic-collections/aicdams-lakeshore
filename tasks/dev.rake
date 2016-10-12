@@ -49,9 +49,9 @@ namespace :fedora do
     Department.create(citi_uid: "87", pref_label: "Visitor Services")
     Department.create(citi_uid: "112", pref_label: "Information Services")
     Department.create(citi_uid: "6", pref_label: "European Decorative Arts")
-    User.create(email: "citi", password: "password")
-    User.create(email: "combine", password: "password")
-    User.create(email: "geneva", password: "password")
+    User.create(email: "citi", password: "password") unless User.find_by_user_key("citi")
+    User.create(email: "combine", password: "password") unless User.find_by_user_key("combine")
+    User.create(email: "geneva", password: "password") unless User.find_by_user_key("geneva")
   end
 
   desc "Create sample CITI resources"

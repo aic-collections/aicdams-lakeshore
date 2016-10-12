@@ -39,7 +39,7 @@ describe User do
   context "with an API user" do
     let(:user) { create(:apiuser) }
     subject { user }
-    its(:groups) { is_expected.to contain_exactly("api", "registered") }
+    its(:groups) { is_expected.to contain_exactly("api", "registered", "admin") }
     it { is_expected.to be_api }
   end
 end

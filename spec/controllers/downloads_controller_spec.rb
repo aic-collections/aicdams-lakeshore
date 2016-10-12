@@ -18,6 +18,11 @@ describe DownloadsController do
       before { allow(controller).to receive(:thumbnail?).and_return(true) }
       it { is_expected.to eq(:discover) }
     end
+
+    context "with a CITI thumbnail" do
+      before { allow(controller).to receive(:citi_thumbnail?).and_return(true) }
+      it { is_expected.to eq(:discover) }
+    end
   end
 
   describe "#authorize_download!" do
@@ -59,6 +64,14 @@ describe DownloadsController do
         get :show, id: my_file.id, file: "accessMaster"
       end
       its(:headers) { is_expected.to include("Content-Disposition" => "inline; filename=\"blah.jp2\"") }
+    end
+
+    context "with a CITI thumbnail" do
+      before do
+        allow(controller).to receive(:citi_thumbnail).and_return(file.path)
+        get :show, id: my_file.id, file: "citiThumbnail"
+      end
+      its(:response) { is_expected.to be_successful }
     end
   end
 end
