@@ -19,7 +19,7 @@ $linkcolor: #9d9d9d;
 		text-decoration: none;
   	}
 }
-	
+
 #search-form-header, .navbar-header {
     margin-top: 15px;
 	margin-bottom: 15px;
@@ -74,8 +74,12 @@ a.institution_name, a:link.institution_name, a:visited.institution_name, a:hover
 	padding-top: 0px;
 }
 
-.navbar-text { 
+.navbar-text {
 	margin-bottom: 0px;
+}
+
+div.facets h3 {
+    font-size: 1.3em;
 }
 
 #footer .navbar {

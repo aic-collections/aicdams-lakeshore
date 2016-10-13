@@ -28,6 +28,8 @@ FactoryGirl.define do
     trait :with_metadata do
       pref_label                   "Asset with metadata"
       description                  ["A sample asset with a complete listing of metadata"]
+      date_modified                 Date.parse("October 31, 2016")
+      date_uploaded                 Date.parse("October 30, 2016")
       document_type_uri            "http://definitions.artic.edu/doctypes/Imaging"
       first_document_sub_type_uri  "http://definitions.artic.edu/doctypes/EventPhotography"
       second_document_sub_type_uri "http://definitions.artic.edu/doctypes/Lecture"
