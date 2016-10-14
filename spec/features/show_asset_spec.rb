@@ -32,8 +32,19 @@ describe "Displaying an asset" do
       expect(page).to have_selector("td", text: asset.dept_created.pref_label)
       expect(page).to have_selector("th", text: AIC.documentType.label)
       expect(page).to have_selector("td", text: "Imaging > Event Photography > Lecture")
-      click_link(asset.pref_label)
+      expect(page).to have_selector("td", text: "10/31/2016")
+      expect(page).to have_selector("td", text: "10/30/2016")
+      expect(page).to have_link(asset.depositor)
     end
+
+    # Check that our facets are displayed
+    within("#facets") do
+      expect(page).to have_selector("h3", text: AIC.deptCreated.label)
+      expect(page).to have_selector("h3", text: AIC.documentType.label)
+      expect(page).to have_selector("h3", text: "Resource Type")
+    end
+
+    click_link(asset.pref_label)
 
     # Show page view
     expect(page).to have_selector("h3", text: "Preferred Representation Of")

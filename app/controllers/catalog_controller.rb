@@ -62,6 +62,7 @@ class CatalogController < ApplicationController
     config.add_facet_field solr_name("image_height", :searchable, type: :integer), label: "Image Height", range: true
     config.add_facet_field solr_name("representation", :facetable), label: "Relationship"
     config.add_facet_field solr_name("document_types", :facetable), label: AIC.documentType.label
+    config.add_facet_field solr_name("dept_created", :facetable), label: AIC.deptCreated.label
 
     # Have BL send all facet field names to Solr, which has been the default
     # previously. Simply remove these lines if you'd rather use Solr request
@@ -69,18 +70,18 @@ class CatalogController < ApplicationController
     config.add_facet_fields_to_solr_request!
 
     # Index view fields
-    config.add_index_field solr_name("depositor", :stored_searchable), label: "Depositor"
+    config.add_index_field solr_name("depositor", :stored_searchable),       label: "Depositor", link_to_search: true
     config.add_index_field solr_name("pref_label", :stored_searchable),      label: "Title"
     config.add_index_field solr_name("uid", :symbol),                        label: AIC.uid.label
     config.add_index_field solr_name("main_ref_number", :stored_searchable), label: AIC.mainRefNumber.label
     config.add_index_field solr_name("document_types", :stored_searchable),  label: AIC.documentType.label
     config.add_index_field solr_name("resource_type", :stored_searchable),   label: "Resource Type"
     config.add_index_field solr_name('credit_line', :stored_searchable),     label: AIC.creditLine.label
-    config.add_index_field solr_name('dept_created', :stored_searchable),    label: AIC.deptCreated.label
+    config.add_index_field solr_name('dept_created', :stored_searchable),    label: AIC.deptCreated.label, link_to_search: solr_name("dept_created", :facetable).to_sym
     config.add_index_field solr_name('department', :stored_searchable),      label: AIC.department.label
     config.add_index_field solr_name("relationships", :stored_searchable, type: :integer), label: "Related Assets"
-    config.add_index_field solr_name("date_uploaded", :stored_sortable, type: :date), label: "Date Uploaded", itemprop: 'datePublished', helper_method: :human_readable_date
-    config.add_index_field solr_name("date_modified", :stored_sortable, type: :date), label: "Date Modified", itemprop: 'dateModified', helper_method: :human_readable_date
+    config.add_index_field solr_name("date_uploaded", :stored_sortable, type: :date),      label: "Date Uploaded", itemprop: 'datePublished', helper_method: :human_readable_date
+    config.add_index_field solr_name("date_modified", :stored_sortable, type: :date),      label: "Date Modified", itemprop: 'dateModified', helper_method: :human_readable_date
 
     # Resource fields
     config.add_show_field solr_name("contributor", :stored_searchable),   label: AIC.contributor.label
