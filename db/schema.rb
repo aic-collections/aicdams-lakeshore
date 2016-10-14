@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160607173139) do
+ActiveRecord::Schema.define(version: 20161014023842) do
 
   create_table "bookmarks", force: :cascade do |t|
     t.integer  "user_id",       null: false
@@ -118,19 +118,6 @@ ActiveRecord::Schema.define(version: 20160607173139) do
   add_index "file_view_stats", ["file_id"], name: "index_file_view_stats_on_file_id"
   add_index "file_view_stats", ["user_id"], name: "index_file_view_stats_on_user_id"
 
-  create_table "follows", force: :cascade do |t|
-    t.integer  "followable_id",                   null: false
-    t.string   "followable_type",                 null: false
-    t.integer  "follower_id",                     null: false
-    t.string   "follower_type",                   null: false
-    t.boolean  "blocked",         default: false, null: false
-    t.datetime "created_at",                      null: false
-    t.datetime "updated_at",                      null: false
-  end
-
-  add_index "follows", ["followable_id", "followable_type"], name: "fk_followables"
-  add_index "follows", ["follower_id", "follower_type"], name: "fk_follows"
-
   create_table "local_authorities", force: :cascade do |t|
     t.string "name"
   end
@@ -192,6 +179,9 @@ ActiveRecord::Schema.define(version: 20160607173139) do
     t.string   "mailbox_type",    limit: 25
     t.datetime "created_at",                                 null: false
     t.datetime "updated_at",                                 null: false
+    t.boolean  "is_delivered",               default: false
+    t.string   "delivery_method"
+    t.string   "message_id"
   end
 
   add_index "mailboxer_receipts", ["notification_id"], name: "index_mailboxer_receipts_on_notification_id"
@@ -248,6 +238,13 @@ ActiveRecord::Schema.define(version: 20160607173139) do
   end
 
   add_index "subject_local_authority_entries", ["lowerLabel"], name: "entries_by_lower_label"
+
+  create_table "sufia_features", force: :cascade do |t|
+    t.string   "key",                        null: false
+    t.boolean  "enabled",    default: false, null: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+  end
 
   create_table "tinymce_assets", force: :cascade do |t|
     t.string   "file"

@@ -3,11 +3,8 @@ source 'https://rubygems.org'
 gem 'rails', '4.2.7.1'
 
 # Hydra Gems
-gem 'sufia', github: 'projecthydra/sufia', ref: '818cb4ca53d81fdb37835a0cd7c753d66eacd679'
+gem 'sufia', '~> 7.2'
 gem 'flipflop', git: 'https://github.com/jcoyne/flipflop.git', branch: 'hydra'
-
-# remove when hydra-editor 3.1.2 is released
-gem 'hydra-editor', github: 'projecthydra/hydra-editor', ref: 'fc20b8d4c0cf1fcd847208e330c2203a03ed073f'
 
 gem 'blacklight_range_limit'
 gem 'coffee-rails', '~> 4.2'
