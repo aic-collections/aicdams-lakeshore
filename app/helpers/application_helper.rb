@@ -31,4 +31,14 @@ module ApplicationHelper
     citi_tbl_id = citi_tbl_ids[model.to_sym]
     link_to "View this #{model} in CITI", "http://citiworker10.artic.edu:8080/edit/?tableID=" + citi_tbl_id.to_s + "&uid=" + citi_uid.to_s, target: "_blank", class: "btn btn-default citi-btn"
   end
+
+  def link_to_each_facet_field(options)
+    raise ArgumentError unless options[:config] && options[:value] && options[:config][:helper_facet]
+    facet_search = options[:config][:helper_facet]
+    facet_fields = options[:value].first.split(">").each(&:strip!)
+    facet_links = facet_fields.map do |type|
+      link_to(type, main_app.search_catalog_path(f: { facet_search => [type] }))
+    end
+    safe_join(facet_links, " > ")
+  end
 end
