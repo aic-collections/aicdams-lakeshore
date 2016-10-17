@@ -53,6 +53,10 @@ class AssetPresenter < Sufia::WorkShowPresenter
     current_ability.can?(:delete, GenericWork)
   end
 
+  def viewable?
+    current_ability.can?(:read, solr_document)
+  end
+
   def asset_type
     return "Image" if model.still_image?
     return "Text Document" if model.text?

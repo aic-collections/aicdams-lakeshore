@@ -55,4 +55,22 @@ describe AssetPresenter do
       it { is_expected.to be_nil }
     end
   end
+
+  describe "#viewable?" do
+    context "when the user can view the asset" do
+      let(:user)    { create(:user1) }
+      let(:ability) { Ability.new(user) }
+      it { is_expected.to be_viewable }
+    end
+
+    context "when the user cannot view the asset" do
+      it { is_expected.not_to be_viewable }
+    end
+
+    context "when other dept user, cannot view the asset" do
+      let(:user)    { create(:user2) }
+      let(:ability) { Ability.new(user) }
+      it { is_expected.not_to be_viewable }
+    end
+  end
 end
