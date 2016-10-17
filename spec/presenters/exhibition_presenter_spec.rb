@@ -16,4 +16,7 @@ describe ExhibitionPresenter do
   it "will return a formatted preferred_label and uid" do
     expect(presenter.display_pref_label_and_uid).to eq("Fine Art (1234)")
   end
+  it "returns the pref_label from the to_s method" do
+    expect(resource.to_s).to eql("Fine Art")
+  end
 end
