@@ -36,4 +36,14 @@ module CitiBehaviors
   def edit_groups
     [Hydra::AccessControls::AccessRight::PERMISSION_TEXT_VALUE_AUTHENTICATED]
   end
+
+  def to_s
+    if title.present?
+      title.join(' | ')
+    elsif pref_label.present?
+      pref_label
+    else
+      'No Title'
+    end
+  end
 end
