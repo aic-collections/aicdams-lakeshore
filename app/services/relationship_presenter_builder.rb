@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 class RelationshipPresenterBuilder
   attr_reader :citi_uid, :model, :ability, :request
-
+  include ResourcePresenterBehaviors
   # @param citi_uid [String] from the parameters hash
   # @param model [String] from the parameters hash
   # @param ability [Ability] available from the calling controller
