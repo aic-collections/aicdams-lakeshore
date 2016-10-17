@@ -32,10 +32,21 @@ describe "Displaying an asset" do
       expect(page).to have_selector("td", text: asset.dept_created.pref_label)
       expect(page).to have_selector("th", text: AIC.documentType.label)
       expect(page).to have_selector("td", text: "Imaging > Event Photography > Lecture")
+      doc_type_td = page.find(:xpath, '//td[contains(., "Imaging > Event Photography > Lecture")]')
+      expect(doc_type_td).to have_link("Imaging")
+      expect(doc_type_td).to have_link("Event Photography")
+      expect(doc_type_td).to have_link("Lecture")
       expect(page).to have_selector("td", text: "10/31/2016")
       expect(page).to have_selector("td", text: "10/30/2016")
       expect(page).to have_link(asset.depositor)
+
+      click_link("Imaging")
     end
+
+    # Check faceted search from results list content,
+    # accessed from "Imaging" link
+    expect(page).to have_content('1 entry found')
+    expect(page).to have_content('You searched for: Document Type Imaging')
 
     # Check that our facets are displayed
     within("#facets") do
