@@ -63,8 +63,8 @@ Rails.application.routes.draw do
   get 'relationships/:model/:id', to: 'relationships#show', as: 'relationship_model'
 
   # Lakeshore API
-  scope "api" do
-    post "reindex", to: "reindex#update"
+  namespace :lakeshore, path: "api" do
+    resources :reindex, only: [:create]
   end
 
   get "/login_confirm", to: "dummy#login_confirm"

@@ -16,6 +16,11 @@ FactoryGirl.define do
       email 'admin'
       department '99'
     end
+
+    factory :apiuser do
+      email 'apiuser'
+      password 'password'
+    end
   end
 
   factory :department do

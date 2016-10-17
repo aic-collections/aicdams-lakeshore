@@ -35,4 +35,11 @@ describe User do
     subject { described_class.audit_user }
     it { is_expected.to be_kind_of(described_class) }
   end
+
+  context "with an API user" do
+    let(:user) { create(:apiuser) }
+    subject { user }
+    its(:groups) { is_expected.to contain_exactly("api", "registered") }
+    it { is_expected.to be_api }
+  end
 end

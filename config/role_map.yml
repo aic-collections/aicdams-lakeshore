@@ -2,10 +2,19 @@ development:
   admin:
     - aweadadmin
     - scossuadmin
+    - citi
+  api:
+    - citi
+    - combine
+    - geneva
 test:
   admin:
     - admin
+  api:
+    - apiuser
 production:
   admin:
     - aweadadmin
     - scossuadmin
+  api:
+    - apiuser

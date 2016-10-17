@@ -14,7 +14,7 @@ class User < ActiveRecord::Base
                     controller: :sessions,
                     model: 'devise/models/saml_authenticatable')
 
-  devise :saml_authenticatable
+  devise :saml_authenticatable, :database_authenticatable
 
   # TODO: Add additional attributes from Shibboleth properties
   def populate_attributes
@@ -32,10 +32,14 @@ class User < ActiveRecord::Base
     groups.include?('admin')
   end
 
+  def api?
+    groups.include?('api')
+  end
+
   def groups
     groups = super
     groups << department
-    groups
+    groups.compact
   end
 
   def self.find_by_email(query)
