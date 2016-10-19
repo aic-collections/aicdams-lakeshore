@@ -1,4 +1,5 @@
 <% if presenters.first.citi_presenter? %>
+
   <h3><%= rel_term_asset %></h3>
 <% else %>
   <h3><%= rel_term %></h3>
@@ -27,7 +28,14 @@
           <td><%= rel.document_types %></td>
         <% end %>
         <!--<td><%= rel.pref_label %></td>-->
-        <td><%= link_to rel.to_s, polymorphic_path([main_app, rel]) %></td>
+
+        <td>
+          <% if rel.viewable? %>
+          <%= link_to rel.to_s, polymorphic_path([main_app, rel]) %>
+          <% else %>
+            <%= rel.to_s %>
+          <% end %>
+        </td>
         <td><%= rel.uid %></td>
       </tr>
     <% end %>

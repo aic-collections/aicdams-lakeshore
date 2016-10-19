@@ -16,7 +16,9 @@ describe 'curation_concerns/base/_relationships.html.erb' do
     let(:citi_presenter) { ExhibitionPresenter.new(solr_document, ability) }
 
     context "with no relationships" do
-      before { render 'curation_concerns/base/relationships.html.erb', presenter: citi_presenter }
+      before {
+        render 'curation_concerns/base/relationships.html.erb', presenter: citi_presenter
+        allow(ability).to receive(:can?).with(:read, SolrDocument).and_return(true) }
       specify do
         is_expected.to have_content("No relationships found for this Exhibition")
 
@@ -30,6 +32,7 @@ describe 'curation_concerns/base/_relationships.html.erb' do
     context "with representations" do
       before do
         allow(view).to receive(:render_thumbnail_tag)
+        allow(ability).to receive(:can?).with(:read, SolrDocument).and_return(true)
         allow(citi_presenter).to receive(:representation_presenters).and_return([asset_presenter])
         render 'curation_concerns/base/relationships.html.erb', presenter: citi_presenter
       end
@@ -39,6 +42,7 @@ describe 'curation_concerns/base/_relationships.html.erb' do
     context "with documents" do
       before do
         allow(view).to receive(:render_thumbnail_tag)
+        allow(ability).to receive(:can?).with(:read, SolrDocument).and_return(true)
         allow(citi_presenter).to receive(:document_presenters).and_return([asset_presenter])
         render 'curation_concerns/base/relationships.html.erb', presenter: citi_presenter
       end
@@ -48,6 +52,7 @@ describe 'curation_concerns/base/_relationships.html.erb' do
     context "with preferred representations" do
       before do
         allow(view).to receive(:render_thumbnail_tag)
+        allow(ability).to receive(:can?).with(:read, SolrDocument).and_return(true)
         allow(citi_presenter).to receive(:preferred_representation_presenters).and_return([asset_presenter])
         render 'curation_concerns/base/relationships.html.erb', presenter: citi_presenter
       end
@@ -60,7 +65,9 @@ describe 'curation_concerns/base/_relationships.html.erb' do
     let(:citi_presenter) { CitiResourcePresenter.new(solr_document, ability) }
 
     context "with no relationships" do
-      before { render 'curation_concerns/base/relationships.html.erb', presenter: asset_presenter }
+      before {
+        render 'curation_concerns/base/relationships.html.erb', presenter: asset_presenter
+        allow(ability).to receive(:can?).with(:read, SolrDocument).and_return(true) }
       it { is_expected.to have_content("No relationships found for this Asset") }
     end
 
@@ -68,6 +75,7 @@ describe 'curation_concerns/base/_relationships.html.erb' do
       before do
         allow(asset_presenter).to receive(:has_relationships?).and_return(true)
         allow(asset_presenter).to receive(:representation_presenters).and_return([citi_presenter])
+        allow(ability).to receive(:can?).with(:read, SolrDocument).and_return(true)
         render 'curation_concerns/base/relationships.html.erb', presenter: asset_presenter
       end
       it { is_expected.to have_content("Relationships") }
@@ -77,6 +85,7 @@ describe 'curation_concerns/base/_relationships.html.erb' do
       before do
         allow(asset_presenter).to receive(:has_relationships?).and_return(true)
         allow(asset_presenter).to receive(:document_presenters).and_return([citi_presenter])
+        allow(ability).to receive(:can?).with(:read, SolrDocument).and_return(true)
         render 'curation_concerns/base/relationships.html.erb', presenter: asset_presenter
       end
       it { is_expected.to have_content("Documentation") }
@@ -86,6 +95,7 @@ describe 'curation_concerns/base/_relationships.html.erb' do
       before do
         allow(asset_presenter).to receive(:has_relationships?).and_return(true)
         allow(asset_presenter).to receive(:preferred_representation_presenters).and_return([citi_presenter])
+        allow(ability).to receive(:can?).with(:read, SolrDocument).and_return(true)
         render 'curation_concerns/base/relationships.html.erb', presenter: asset_presenter
       end
       it { is_expected.to have_content("Preferred Representation") }

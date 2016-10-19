@@ -24,4 +24,8 @@ class CitiResourcePresenter < Sufia::WorkShowPresenter
   def editor?
     true
   end
+
+  def viewable?
+    true
+  end
 end
