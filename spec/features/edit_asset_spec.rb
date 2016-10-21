@@ -18,7 +18,7 @@ describe "Editing assets" do
     expect(generic_work_hidden_asset_type.value).to eq("http://definitions.artic.edu/ontology/1.0/type/StillImage")
     click_link "Files"
     expect(page).to have_selector("li", text: "Adobe Portable Document Format")
-    expect(page).to have_selector('.asset-image')
+    expect(page).to have_selector('.asset-stillimage')
     expect(page).not_to have_selector('.asset-text')
   end
 end

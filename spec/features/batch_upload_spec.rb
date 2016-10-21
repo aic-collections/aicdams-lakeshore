@@ -14,7 +14,7 @@ describe "Batch upload" do
     expect(tabs[1][:class]).to eq("disabled")
     expect(page).to have_select("asset_type_select", selected: '')
     expect(page).not_to have_selector(".fileupload-buttonbar")
-    expect(page).not_to have_selector(".asset-image")
+    expect(page).not_to have_selector(".asset-stillimage")
     expect(page).not_to have_selector(".asset-text")
 
     # Choosing the asset type enables the files tab and displays mime types
@@ -22,7 +22,7 @@ describe "Batch upload" do
     expect(tabs[1][:class]).not_to eq("disabled")
     expect(hidden_asset_type.value).to eq(AICType.StillImage)
     expect(page).to have_selector(".fileupload-buttonbar")
-    expect(page).to have_selector(".asset-image")
+    expect(page).to have_selector(".asset-stillimage")
     expect(page).to have_selector("li", text: "Adobe Portable Document Format")
     expect(page).not_to have_selector(".asset-text")
     click_link("Descriptions")
