@@ -63,7 +63,7 @@ module SolrDocumentExtensions
 
   # Overrides CurationConcerns::SolrDocumentBehavior
   def title_or_label
-    pref_label
+    pref_label || title.join(', ')
   end
 
   def thumbnail_path
