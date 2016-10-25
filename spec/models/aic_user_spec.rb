@@ -19,11 +19,11 @@ describe AICUser do
     subject { described_class.search(params).map { |r| r.fetch(:id) } }
     context "with a fuzzy search" do
       let(:params) { "bron" }
-      it { is_expected.to contain_exactly("theking") }
+      it { is_expected.to include("theking") }
     end
     context "with an exact search" do
       let(:params) { "theking" }
-      it { is_expected.to contain_exactly("theking") }
+      it { is_expected.to include("theking") }
     end
     context "with a null search" do
       let(:params) { "asdf" }
