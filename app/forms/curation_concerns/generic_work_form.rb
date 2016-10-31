@@ -72,7 +72,8 @@ module CurationConcerns
         :status_uri,
         :asset_type,
         :additional_representation,
-        :additional_document
+        :additional_document,
+        :uid
       ]
     end
 

@@ -59,6 +59,10 @@ class AICType < RDF::StrictVocabulary("http://definitions.artic.edu/ontology/1.0
        subClassOf: "aictype:CitiResource",
        label: "Exhibition",
        comment: "CITI Exhibition"
+  term :IntermediateFileSet,
+       subClassOf: Hydra::Works::Vocab::WorksTerms.FileSet,
+       label: "Intermediate File Set",
+       comment: "Intermediate file set"
   term :LightType,
        subClassOf: "aictype:ListItem",
        label: "Light type",
@@ -71,10 +75,18 @@ class AICType < RDF::StrictVocabulary("http://definitions.artic.edu/ontology/1.0
        subClassOf: "aictype:Resource",
        label: "List Item",
        comment: "Item (option) in a list"
+  term :OriginalFileSet,
+       subClassOf: Hydra::Works::Vocab::WorksTerms.FileSet,
+       label: "Original File Set",
+       comment: "Original file set"
   term :Place,
        subClassOf: "aictype:CitiResource",
        label: "Place",
        comment: "Place"
+  term :PreservationMasterFileSet,
+       subClassOf: Hydra::Works::Vocab::WorksTerms.FileSet,
+       label: "Preservation File Set",
+       comment: "Preservation file set"
   term :Resource,
        label: "Resource",
        comment: "LAKE base resource"

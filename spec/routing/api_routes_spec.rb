@@ -13,5 +13,19 @@ describe Rails.application.routes do
                                                           format: :json,
                                                           id: "filesetid")
     end
+
+    it "routes to creating an image asset" do
+      expect(post: "/api/ingest/StillImage").to route_to(controller: "lakeshore/ingest",
+                                                         action: "create",
+                                                         format: :json,
+                                                         asset_type: "StillImage")
+    end
+
+    it "routes to creating a text asset" do
+      expect(post: "/api/ingest/Text").to route_to(controller: "lakeshore/ingest",
+                                                   action: "create",
+                                                   format: :json,
+                                                   asset_type: "Text")
+    end
   end
 end

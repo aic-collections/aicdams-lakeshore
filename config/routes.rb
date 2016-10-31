@@ -66,6 +66,7 @@ Rails.application.routes.draw do
   namespace :lakeshore, path: "api" do
     resources :reindex, only: [:create], defaults: { format: :json }
     resources :downloads, only: [:show], defaults: { format: :json }
+    post "ingest/:asset_type", to: "ingest#create",  defaults: { format: :json }
   end
 
   get "/login_confirm", to: "dummy#login_confirm"
