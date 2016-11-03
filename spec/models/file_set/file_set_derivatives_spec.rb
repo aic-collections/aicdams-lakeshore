@@ -17,19 +17,19 @@ describe FileSet do
             label:    :thumbnail,
             format:   "jpg",
             size:     "200x150>",
-            url:      "file:#{Rails.root}/tmp/test/derivatives/12/34-thumbnail.jpeg"
+            url:      "file:#{Rails.root}/tmp/test-derivatives/12/34-thumbnail.jpeg"
           },
           {
             label:    :access,
             format:   "jp2[512x512]",
-            url:      "file:#{Rails.root}/tmp/test/derivatives/12/34-access.jp2"
+            url:      "file:#{Rails.root}/tmp/test-derivatives/12/34-access.jp2"
           },
           {
             label:    :citi,
             format:   "jpg",
             size:     "96x96>",
             quality:  "90",
-            url:      "file:#{Rails.root}/tmp/test/derivatives/12/34-citi.jpg"
+            url:      "file:#{Rails.root}/tmp/test-derivatives/12/34-citi.jpg"
           }
         ]
       end
@@ -57,14 +57,14 @@ describe FileSet do
             label:    :thumbnail,
             format:   "jpg",
             size:     "200x150>",
-            url:      "file:#{Rails.root}/tmp/test/derivatives/12/34-thumbnail.jpeg"
+            url:      "file:#{Rails.root}/tmp/test-derivatives/12/34-thumbnail.jpeg"
           },
           {
             label:    :citi,
             format:   "jpg",
             size:     "96x96>",
             quality:  "90",
-            url:      "file:#{Rails.root}/tmp/test/derivatives/12/34-citi.jpg"
+            url:      "file:#{Rails.root}/tmp/test-derivatives/12/34-citi.jpg"
           }
         ]
       end
@@ -99,9 +99,9 @@ describe FileSet do
           {
             label:     :access,
             format:    "pdf",
-            thumbnail: "file:#{Rails.root}/tmp/test/derivatives/12/34-thumbnail.jpeg",
-            access:    "file:#{Rails.root}/tmp/test/derivatives/12/34-access.pdf",
-            citi:      "file:#{Rails.root}/tmp/test/derivatives/12/34-citi.jpg"
+            thumbnail: "file:#{Rails.root}/tmp/test-derivatives/12/34-thumbnail.jpeg",
+            access:    "file:#{Rails.root}/tmp/test-derivatives/12/34-access.pdf",
+            citi:      "file:#{Rails.root}/tmp/test-derivatives/12/34-citi.jpg"
           }
         ]
       end

@@ -6,6 +6,8 @@ class LakeshoreTesting
     def restore
       ActiveFedora::Cleaner.clean!
       cleanout_redis
+      reset_derivatives
+      reset_uploads
       create_minimal_resources
     end
 
@@ -31,9 +33,15 @@ class LakeshoreTesting
     end
 
     def reset_derivatives
-      FileUtils.rm_rf("#{Rails.root}/tmp/test/derivatives")
-      FileUtils.mkdir_p("#{Rails.root}/tmp/test/derivatives")
-      Sufia.config.derivatives_path = "#{Rails.root}/tmp/test/derivatives"
+      FileUtils.rm_rf("#{Rails.root}/tmp/test-derivatives")
+      FileUtils.mkdir_p("#{Rails.root}/tmp/test-derivatives")
+      Sufia.config.derivatives_path = "#{Rails.root}/tmp/test-derivatives"
+    end
+
+    def reset_uploads
+      FileUtils.rm_rf("#{Rails.root}/tmp/test-uploads")
+      FileUtils.mkdir_p("#{Rails.root}/tmp/test-uploads")
+      Sufia.config.upload_path = ->() { Rails.root + 'tmp' + 'test-uploads' }
     end
   end
 end

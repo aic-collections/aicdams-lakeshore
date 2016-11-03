@@ -21,9 +21,11 @@ task ci: [:rubocop, 'db:migrate'] do
 end
 
 namespace :dev do
-  desc "Clean out Solr and Fedora"
+  desc "Clean out all resources"
   task clean: :environment do
     ActiveFedora::Cleaner.clean!
+    cleanout_redis
+    clear_directories
   end
 
   desc "Prep dev environment"
@@ -79,5 +81,18 @@ namespace :fedora do
     work.artist_uris = [Agent.first.uri]
     work.current_location_uris = [Place.first.uri]
     work.save!
+  end
+
+  def cleanout_redis
+    Redis.current.keys.map { |key| Redis.current.del(key) }
+  rescue => e
+    Logger.new(STDOUT).warn "WARNING -- Redis might be down: #{e}"
+  end
+
+  def clear_directories
+    FileUtils.rm_rf(Sufia.config.derivatives_path)
+    FileUtils.mkdir_p(Sufia.config.derivatives_path)
+    FileUtils.rm_rf(Sufia.config.upload_path.call)
+    FileUtils.mkdir_p(Sufia.config.upload_path.call)
   end
 end
