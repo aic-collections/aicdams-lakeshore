@@ -111,6 +111,14 @@ describe GenericWork do
       end
       its(:full_messages) { is_expected.to include("Uid must match checksum") }
     end
+
+    context "when overriding" do
+      let(:custom_uid) { build(:asset, uid: "SI-101010") }
+      let(:hash)       { UidMinter.new("SI").hash("SI-101010") }
+      before { custom_uid.save }
+      subject { custom_uid }
+      its(:id) { is_expected.to eq(hash) }
+    end
   end
 
   describe "#title" do

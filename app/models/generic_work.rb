@@ -52,7 +52,7 @@ class GenericWork < Resource
 
   # Overrides CurationConcerns::Noid to set #id to be a MD5 checksum of #uid.
   def assign_id
-    self.uid = service.mint
+    self.uid = service.mint unless new_record? && uid.present?
     self.id = service.hash(uid)
   end
 
