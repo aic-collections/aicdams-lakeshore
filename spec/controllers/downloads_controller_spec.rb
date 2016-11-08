@@ -73,5 +73,13 @@ describe DownloadsController do
       end
       its(:response) { is_expected.to be_successful }
     end
+
+    context "with a large CITI file" do
+      before do
+        allow(controller).to receive(:citi_large).and_return(file.path)
+        get :show, id: my_file.id, file: "citiLarge"
+      end
+      its(:response) { is_expected.to be_successful }
+    end
   end
 end

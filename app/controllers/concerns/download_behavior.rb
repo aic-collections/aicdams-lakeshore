@@ -32,6 +32,7 @@ module DownloadBehavior
       return default_file unless file_reference
       return access_file if access_master?
       return citi_thumbnail if citi_thumbnail?
+      return citi_large if citi_large?
 
       file_path = CurationConcerns::DerivativePath.derivative_path_for_reference(params[asset_param_key], file_reference)
       File.exist?(file_path) ? file_path : nil
@@ -51,22 +52,22 @@ module DownloadBehavior
       params.fetch(:file, nil) == "citiThumbnail"
     end
 
-    # We'll use the default CurationConcerns::DerivativePath to look at all the existing derivatives and return the
-    # first one with "access" in the name. If there are more derivative types later, we'll want to create our own
-    # service to return the exact path for a given derivative type and set that using derivative_path_factory.
-    def access_file
-      CurationConcerns::DerivativePath.derivatives_for_reference(params[asset_param_key]).each do |file|
-        filename = File.basename(file, ".*")
-        return file if filename =~ /access/ && File.exist?(file)
-      end
+    def citi_large?
+      params.fetch(:file, nil) == "citiLarge"
     end
 
-    # If you have to do this again, don't.
+    def access_file
+      ::DerivativePath.access_path(params[asset_param_key])
+    end
+
     def citi_thumbnail
-      CurationConcerns::DerivativePath.derivatives_for_reference(params[asset_param_key]).each do |file|
-        filename = File.basename(file, ".*")
-        return file if filename =~ /citi/ && File.exist?(file)
-      end
+      file = ::DerivativePath.derivative_path_for_reference(params[asset_param_key], "citi")
+      return file if File.exist?(file)
+    end
+
+    def citi_large
+      file = ::DerivativePath.derivative_path_for_reference(params[asset_param_key], "large")
+      return file if File.exist?(file)
     end
 
     def access_filename

@@ -37,15 +37,16 @@ class FileSet < ActiveFedora::Base
     def image_outputs
       [
         { label: :thumbnail, format: 'jpg', size: '200x150>', url: derivative_url('thumbnail') },
-        { label: :access, format: 'jp2[512x512]', url: access_url('jp2') },
-        { label: :citi, format: 'jpg', size: '96x96>', quality: "90", url: citi_url }
+        { label: :access, format: 'jp2[512x512]', url: derivative_url('access') },
+        { label: :citi, format: 'jpg', size: '96x96>', quality: "90", url: derivative_url('citi') },
+        { label: :large, format: 'jpg', size: '1024x1024>', quality: "85", url: derivative_url('large') }
       ]
     end
 
     def pdf_outputs
       [
         { label: :thumbnail, format: 'jpg', size: '200x150>', url: derivative_url('thumbnail') },
-        { label: :citi, format: 'jpg', size: '96x96>', quality: "90", url: citi_url }
+        { label: :citi, format: 'jpg', size: '96x96>', quality: "90", url: derivative_url('citi') }
       ]
     end
 
@@ -54,8 +55,8 @@ class FileSet < ActiveFedora::Base
         label: :access,
         format: "pdf",
         thumbnail: derivative_url('thumbnail'),
-        access: access_url('pdf'),
-        citi: citi_url
+        access: derivative_url('document'),
+        citi: derivative_url('citi')
       }
     end
 
@@ -63,19 +64,7 @@ class FileSet < ActiveFedora::Base
       self.class.office_document_mime_types + ["text/plain"]
     end
 
-    # Duplicates #derivative_url but changes the file extension
-    def access_url(extension)
-      path = derivative_path_factory.derivative_path_for_reference(self, "access")
-      URI("file://#{path.gsub(/\.access$/, ".#{extension}")}").to_s
-    end
-
-    # Duplicates #derivative_url but changes the file
-    #
-    # Note to self:
-    # If you write another method like this again, stop. Instead, remove these methods and
-    # write a new derivative_path_factory service that creates all the urls for you.
-    def citi_url
-      path = derivative_path_factory.derivative_path_for_reference(self, "thumbnail")
-      URI("file://#{path.gsub(/thumbnail\.jpeg$/, 'citi.jpg')}").to_s
+    def derivative_path_factory
+      ::DerivativePath
     end
 end

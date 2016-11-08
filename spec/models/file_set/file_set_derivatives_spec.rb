@@ -30,6 +30,13 @@ describe FileSet do
             size:     "96x96>",
             quality:  "90",
             url:      "file:#{Rails.root}/tmp/test-derivatives/12/34-citi.jpg"
+          },
+          {
+            label:    :large,
+            format:   "jpg",
+            size:     "1024x1024>",
+            quality:  "85",
+            url:      "file:#{Rails.root}/tmp/test-derivatives/12/34-large.jpg"
           }
         ]
       end
@@ -42,9 +49,17 @@ describe FileSet do
       end
 
       describe "the derivatives", skip: LakeshoreTesting.continuous_integration? do
+        let(:files) do
+          [
+            end_with("34-access.jp2"),
+            end_with("34-thumbnail.jpeg"),
+            end_with("34-citi.jpg"),
+            end_with("34-large.jpg")
+          ]
+        end
         subject { derivatives }
         before  { file.create_derivatives(image_file) }
-        it { is_expected.to contain_exactly(end_with("34-access.jp2"), end_with("34-thumbnail.jpeg"), end_with("34-citi.jpg")) }
+        it { is_expected.to contain_exactly(*files) }
       end
     end
 
