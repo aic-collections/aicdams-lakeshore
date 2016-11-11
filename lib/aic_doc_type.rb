@@ -347,12 +347,6 @@ class AICDocType < RDF::StrictVocabulary("http://definitions.artic.edu/doctypes/
   term :OldObjectCard,
        label: "Old Object Card",
        "skos:broader": "aicdoctype:CuratorialDocument"
-  term :LoanApprovalLetter,
-       label: "Loan Approval Letter",
-       "skos:broader": "aicdoctype:CuratorialDocument"
-  term :LoanDeclineLetter,
-       label: "Loan Decline Letter",
-       "skos:broader": "aicdoctype:CuratorialDocument"
   term :FrameDocumentation,
        label: "Frame Documentation",
        "skos:broader": "aicdoctype:CuratorialDocument"
