@@ -540,14 +540,6 @@
                             "value" : "http://definitions.artic.edu/doctypes/OldObjectCard"
                         },
                         {
-                            "label" : "Loan Approval Letter",
-                            "value" : "http://definitions.artic.edu/doctypes/LoanApprovalLetter"
-                        },
-                        {
-                            "label" : "Loan Decline Letter",
-                            "value" : "http://definitions.artic.edu/doctypes/LoanDeclineLetter"
-                        },
-                        {
                             "label" : "Frame Documentation",
                             "value" : "http://definitions.artic.edu/doctypes/FrameDocumentation"
                         },
@@ -592,8 +584,8 @@
                                     "value" : "http://definitions.artic.edu/doctypes/LoanApprovalLetter"
                                 },
                                 {
-                                    "label" : "Loan Request Letter",
-                                    "value" : "http://definitions.artic.edu/doctypes/LoanRequestLetter"
+                                    "label" : "Loan Decline Letter",
+                                    "value" : "http://definitions.artic.edu/doctypes/LoanDeclineLetter"
                                 },
                                 {
                                     "label" : "Loan Request Form",
