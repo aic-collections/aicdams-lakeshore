@@ -39,6 +39,6 @@ module SolrDocumentExtensions::Resource
   end
 
   def alt_label
-    Array(self[Solrizer.solr_name('alt_label', :symbol)])
+    Array(self[Solrizer.solr_name('alt_label', :stored_searchable)])
   end
 end

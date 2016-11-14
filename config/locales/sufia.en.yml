@@ -141,7 +141,7 @@ en:
       edit:
         header: "Edit Work"
     Batch Upload Item:
-      header: "Add New Asset"       
+      header: "Add New Asset"
     collection:
       actions:
         add_works:
@@ -149,6 +149,8 @@ en:
           desc: "Add assets to this Collection"
   simple_form:
     labels:
+      defaults:
+        alt_label:            "Alternative label"
       generic_work:
         uid:                  "UID"
         legacy_uid:           "Legacy UID"
@@ -176,8 +178,9 @@ en:
         documents_for:         "Documentation For"
 
     hints:
-      generic_work:
+      defaults:
         description: "Free-text notes about the Asset, e.g. description of the subject of an image or abstract of a text document."
+        alt_label: "Optional titles or names for the resource. These fields will be added to the 'alt' tag of Web images. For longer text, please use the 'description' field."
     metadata_help:
       generic_file:
         resource_type_html: "Pre-defined categories to describe the type of asset content being uploaded, such as &quot;article&quot; or &quot;dataset.&quot;  More than one type may be selected."
