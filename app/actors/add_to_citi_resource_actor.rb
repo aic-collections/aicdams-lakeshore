@@ -11,6 +11,8 @@
 # @attr_reader documents [Array<String>] specified in the form
 # @attr_reader additional_document [String] taken from the url parameters of the referring resource
 class AddToCitiResourceActor < CurationConcerns::Actors::AbstractActor
+  include CurationConcerns::Lockable
+
   attr_reader :representations, :additional_representation, :documents, :additional_document
 
   def create(attributes)
@@ -56,19 +58,21 @@ class AddToCitiResourceActor < CurationConcerns::Actors::AbstractActor
     def add_representations
       # remove representations
       (representing_resource.representations.map(&:id) - representation_ids).each do |old_id|
-        resource = ActiveFedora::Base.find(old_id)
-        new_list = resource.representations.map { |r| r unless r.id == curation_concern.id }.compact
-        resource.representation_uris = new_list.map(&:uri)
-        resource.save
-        resource.reload
+        acquire_lock_for(old_id) do
+          resource = ActiveFedora::Base.find(old_id)
+          new_list = resource.representations.map { |r| r unless r.id == curation_concern.id }.compact
+          resource.representation_uris = new_list.map(&:uri)
+          resource.save
+        end
       end
 
       # add new ones
       representation_ids.each do |id|
-        resource = ActiveFedora::Base.find(id)
-        resource.representation_uris += [curation_concern.uri]
-        resource.save
-        resource.reload
+        acquire_lock_for(id) do
+          resource = ActiveFedora::Base.find(id)
+          resource.representation_uris += [curation_concern.uri]
+          resource.save
+        end
       end
     end
 
@@ -76,19 +80,21 @@ class AddToCitiResourceActor < CurationConcerns::Actors::AbstractActor
     def add_documents
       # remove documents
       (representing_resource.documents.map(&:id) - document_ids).each do |old_id|
-        resource = ActiveFedora::Base.find(old_id)
-        new_list = resource.documents.map { |r| r unless r.id == curation_concern.id }.compact
-        resource.document_uris = new_list.map(&:uri)
-        resource.save
-        resource.reload
+        acquire_lock_for(old_id) do
+          resource = ActiveFedora::Base.find(old_id)
+          new_list = resource.documents.map { |r| r unless r.id == curation_concern.id }.compact
+          resource.document_uris = new_list.map(&:uri)
+          resource.save
+        end
       end
 
       # add new ones
       document_ids.each do |id|
-        resource = ActiveFedora::Base.find(id)
-        resource.document_uris += [curation_concern.uri]
-        resource.save
-        resource.reload
+        acquire_lock_for(id) do
+          resource = ActiveFedora::Base.find(id)
+          resource.document_uris += [curation_concern.uri]
+          resource.save
+        end
       end
     end
 
