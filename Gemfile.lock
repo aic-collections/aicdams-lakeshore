@@ -403,7 +403,7 @@ GEM
       activesupport
       nokogiri (>= 1.4.2)
       solrizer (~> 3.3)
-    openseadragon (0.3.1)
+    openseadragon (0.3.0)
       rails (> 3.2.0)
     orm_adapter (0.5.0)
     os (0.9.6)
@@ -691,7 +691,7 @@ DEPENDENCIES
   jasmine
   jbuilder (~> 2.6)
   jquery-rails
-  openseadragon (~> 0.3)
+  openseadragon (= 0.3.0)
   pg
   poltergeist
   rails (= 4.2.7.1)

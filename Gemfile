@@ -18,7 +18,7 @@ gem 'sass-rails', '~> 5.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'turbolinks'
 gem 'uglifier', '~> 3.0'
-gem 'openseadragon', '~> 0.3'
+gem 'openseadragon', '0.3.0'
 
 group :development, :test do
   gem 'better_errors'
