@@ -72,12 +72,14 @@ describe FileSet do
             label:    :thumbnail,
             format:   "jpg",
             size:     "200x150>",
+            layer:    0,
             url:      "file:#{Rails.root}/tmp/test-derivatives/12/34-thumbnail.jpeg"
           },
           {
             label:    :citi,
             format:   "jpg",
             size:     "96x96>",
+            layer:    0,
             quality:  "90",
             url:      "file:#{Rails.root}/tmp/test-derivatives/12/34-citi.jpg"
           }

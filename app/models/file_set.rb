@@ -45,8 +45,8 @@ class FileSet < ActiveFedora::Base
 
     def pdf_outputs
       [
-        { label: :thumbnail, format: 'jpg', size: '200x150>', url: derivative_url('thumbnail') },
-        { label: :citi, format: 'jpg', size: '96x96>', quality: "90", url: derivative_url('citi') }
+        { label: :thumbnail, format: 'jpg', size: '200x150>', layer: 0, url: derivative_url('thumbnail') },
+        { label: :citi, format: 'jpg', size: '96x96>', layer: 0, quality: "90", url: derivative_url('citi') }
       ]
     end
 
