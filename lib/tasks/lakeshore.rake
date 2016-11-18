@@ -28,6 +28,13 @@ namespace :lakeshore do
     end
   end
 
+  desc "Regenerate thumbnails for all assets"
+  task regenerate: :environment do
+    FileSet.all.each do |fs|
+      CreateDerivativesJob.perform_later(fs, fs.original_file.id)
+    end
+  end
+
   def query(start=0)
     Blacklight.default_index.connection.get('select', params: {   
                                                                 q: "*:*",
