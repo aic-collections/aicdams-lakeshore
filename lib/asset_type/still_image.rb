@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 module AssetType
-  class Image < Base
+  class StillImage < Base
     def self.all
       ["application/pdf",
        "image/jpeg",

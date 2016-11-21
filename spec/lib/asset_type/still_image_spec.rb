@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 require 'rails_helper'
 
-describe AssetType::Image do
+describe AssetType::StillImage do
   subject { described_class }
 
   describe "::all" do
