@@ -40,7 +40,7 @@ describe CurationConcerns::GenericWorkForm do
 
   describe "::build_permitted_params" do
     subject { described_class.build_permitted_params }
-    it { is_expected.to include(:additional_representation, :additional_document) }
+    it { is_expected.to include(:additional_representation, :additional_document, :uid, :dept_created) }
   end
 
   describe "#uris_for" do

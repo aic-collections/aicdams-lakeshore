@@ -18,33 +18,24 @@ describe CurationConcerns::Actors::GenericWorkActor do
     before { actor.create(parameters) }
 
     context "with a still image and full metadata" do
+      let(:deparment) { Department.find_by_citi_uid("100") }
       let(:parameters) do
-        { "asset_type" => AICType.StillImage,
-          "document_type_uri" => doc_type.uri,
-          "pref_label" => "",
-          "created" => "",
-          "description" => [""],
-          "language" => [""],
-          "publisher" => [""],
-          "rights_holder_uris" => [""],
-          "capture_device" => "",
-          "status" => "",
-          "digitization_source_uri" => "",
-          "compositing_uri" => "",
-          "light_type_uri" => "",
-          "view_uris" => [""],
-          "keyword_uris" => [""],
-          "visibility_during_embargo" => "restricted",
-          "embargo_release_date" => "2016-05-19",
-          "visibility_after_embargo" => "open",
-          "visibility_during_lease" => "open",
-          "lease_expiration_date" => "2016-05-19",
-          "visibility_after_lease" => "restricted",
-          "visibility" => "restricted"
-        }
+        { "asset_type" => AICType.StillImage, "document_type_uri" => doc_type.uri }
       end
-      its(:type) { is_expected.to include(AICType.StillImage) }
+      it "creates the asset" do
+        expect(subject.type).to include(AICType.StillImage)
+        expect(subject.dept_created).to eq(deparment)
+      end
     end
+
+    context "when overriding dept_created" do
+      let(:deparment) { Department.find_by_citi_uid("200") }
+      let(:parameters) do
+        { "asset_type" => AICType.StillImage, "document_type_uri" => doc_type.uri, "dept_created" => "200" }
+      end
+      its(:dept_created) { is_expected.to eq(deparment) }
+    end
+
     context "with a text type" do
       let(:parameters) { { "asset_type" => AICType.Text, "document_type_uri" => doc_type.uri } }
       its(:type) { is_expected.to include(AICType.Text) }

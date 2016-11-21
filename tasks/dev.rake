@@ -26,6 +26,7 @@ namespace :dev do
     ActiveFedora::Cleaner.clean!
     cleanout_redis
     clear_directories
+    User.destroy_all
   end
 
   desc "Prep dev environment"

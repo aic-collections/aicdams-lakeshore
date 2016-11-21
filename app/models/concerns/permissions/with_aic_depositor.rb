@@ -29,8 +29,9 @@ module Permissions::WithAICDepositor
 
       def apply_aic_user_metadata(user)
         self.aic_depositor = AICUser.find_by_nick(user.email).uri
-        self.dept_created = Department.find_by_citi_uid(user.department).uri
         self.edit_users += [user.email]
+        return unless user.department.present?
+        self.dept_created = Department.find_by_citi_uid(user.department).uri unless dept_created.present?
       end
   end
 end

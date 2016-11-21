@@ -4,12 +4,13 @@ module Lakeshore
     include ActiveModel::Validations
 
     attr_reader :ingestor, :submitted_asset_type, :document_type_uri, :original_file,
-                :intermediate_file, :presevation_master_file, :additional_files
+                :intermediate_file, :presevation_master_file, :additional_files, :params
 
     validates :ingestor, :asset_type, :document_type_uri, :intermediate_file, presence: true
 
     # @param [ActionController::Parameters] params from the controller
     def initialize(params)
+      @params = params
       @submitted_asset_type = params.fetch(:asset_type)
       register_files(params.fetch(:content, {}))
       register_terms(params.fetch(:metadata, {}))
@@ -25,12 +26,24 @@ module Lakeshore
       [original_upload, intermediate_upload, presevation_master_upload].compact + additional_uploads
     end
 
+    def attributes_for_actor
+      attributes = CurationConcerns::GenericWorkForm.model_attributes(params.fetch("metadata"))
+      attributes[:uploaded_files] = files
+      attributes[:permissions_attributes] = JSON.parse(params.fetch(:sharing, "[]"))
+      attributes.merge!(asset_type: asset_type)
+    end
+
     private
 
       def register_terms(metadata)
         return unless metadata.present?
         @document_type_uri = metadata.fetch(:document_type_uri, nil)
-        @ingestor = User.find_by_email(metadata.fetch(:depositor, nil))
+        @ingestor = find_or_create_user(metadata.fetch(:depositor, nil))
+      end
+
+      def find_or_create_user(key)
+        return unless key
+        User.find_by_user_key(key) || User.create!(email: key)
       end
 
       def register_files(content)

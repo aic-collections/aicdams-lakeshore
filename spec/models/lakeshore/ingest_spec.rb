@@ -76,4 +76,42 @@ describe Lakeshore::Ingest do
       it { is_expected.to contain_exactly(AICType.IntermediateFileSet, nil, nil, nil) }
     end
   end
+
+  describe "#attributes_for_actor" do
+    subject { ingest.attributes_for_actor }
+
+    context "without additional sharing permissions" do
+      let(:params) do
+        {
+          asset_type: "StillImage",
+          content: { intermediate: "asset" },
+          metadata: { document_type_uri: "doc_type", depositor: user.email }
+        }
+      end
+
+      it { is_expected.to include(asset_type: AICType.StillImage,
+                                  document_type_uri: "doc_type",
+                                  permissions_attributes: [],
+                                  uploaded_files: ["1"])}
+    end
+
+    context "with custom sharing permissions" do
+      let(:params) do
+        {
+          asset_type: "StillImage",
+          content: { intermediate: "asset" },
+          metadata: { document_type_uri: "doc_type", depositor: user.email },
+          sharing: '[{ "type" : "group", "name" : "112", "access" : "read" }, {"type" : "person", "name" : "jdoe99", "access" : "edit"}]'
+        }
+      end
+
+      it { is_expected.to include(asset_type: AICType.StillImage,
+                                  document_type_uri: "doc_type",
+                                  permissions_attributes: [
+                                    { type: "group",  name: "112",    access: "read" },
+                                    { type: "person", name: "jdoe99", access: "edit" }
+                                  ],
+                                  uploaded_files: ["1"])}
+    end
+  end
 end

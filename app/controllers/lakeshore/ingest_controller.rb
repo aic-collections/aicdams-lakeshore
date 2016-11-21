@@ -4,7 +4,7 @@ module Lakeshore
     # TODO
     # load_and_authorize_resource :curation_concern, class: 'GenericWork'
 
-    delegate :intermediate_file, :asset_type, :ingestor, :files, to: :ingest
+    delegate :intermediate_file, :asset_type, :ingestor, :attributes_for_actor, to: :ingest
     before_action :validate_ingest, :validate_asset_type
 
     def create
@@ -26,12 +26,6 @@ module Lakeshore
         return if AssetTypeVerificationService.call(intermediate_file, asset_type)
         ingest.errors.add(:intermediate_file, "is not the correct asset type")
         render json: ingest.errors.full_messages, status: :bad_request
-      end
-
-      def attributes_for_actor
-        attributes = CurationConcerns::GenericWorkForm.model_attributes(params.delete("metadata"))
-        attributes[:uploaded_files] = files
-        attributes.merge!(asset_type: asset_type)
       end
 
     private

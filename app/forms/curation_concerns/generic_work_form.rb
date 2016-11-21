@@ -73,7 +73,8 @@ module CurationConcerns
         :asset_type,
         :additional_representation,
         :additional_document,
-        :uid
+        :uid,
+        :dept_created
       ]
     end
 
