@@ -63,6 +63,7 @@ class CatalogController < ApplicationController
     config.add_facet_field solr_name("representation", :facetable), label: "Relationship"
     config.add_facet_field solr_name("document_types", :facetable), label: AIC.documentType.label
     config.add_facet_field solr_name("dept_created", :facetable), label: AIC.deptCreated.label
+    config.add_facet_field solr_name("publish_channels", :facetable), label: AIC.publishChannel.label
 
     # Have BL send all facet field names to Solr, which has been the default
     # previously. Simply remove these lines if you'd rather use Solr request

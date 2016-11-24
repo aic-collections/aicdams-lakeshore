@@ -16,6 +16,7 @@ describe "Editing assets" do
     expect(selected_first_document_sub_type).to eq("http://definitions.artic.edu/doctypes/EventPhotography")
     expect(selected_second_document_sub_type).to eq("http://definitions.artic.edu/doctypes/Lecture")
     expect(generic_work_hidden_asset_type.value).to eq("http://definitions.artic.edu/ontology/1.0/type/StillImage")
+    expect(selected_publish_channel).to eq("http://definitions.artic.edu/publish_channel/Web")
     click_link "Files"
     expect(page).to have_selector("li", text: "Adobe Portable Document Format")
     expect(page).to have_selector('.asset-stillimage')

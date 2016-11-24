@@ -52,6 +52,7 @@ describe "Displaying an asset" do
     within("#facets") do
       expect(page).to have_selector("h3", text: AIC.deptCreated.label)
       expect(page).to have_selector("h3", text: AIC.documentType.label)
+      expect(page).to have_selector("h3", text: AIC.publishChannel.label)
       expect(page).to have_selector("h3", text: "Resource Type")
     end
 
@@ -92,6 +93,7 @@ describe "Displaying an asset" do
       expect(page).to have_selector("li.create_date", text: asset.create_date.strftime("%m/%d/%Y"))
       expect(page).to have_selector("li.modified_date", text: asset.modified_date.strftime("%m/%d/%Y"))
       expect(page).to have_selector("li.language", text: asset.language.first)
+      expect(page).to have_selector("li.publish_channels", text: asset.publish_channels.first.pref_label)
     end
   end
 end

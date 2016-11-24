@@ -46,6 +46,9 @@ module AssetMetadata
       index.as :stored_searchable, :facetable, using: :pref_label
     end
 
-    accepts_uris_for :keyword, :digitization_source, :document_type, :first_document_sub_type, :second_document_sub_type
+    property :publish_channels, predicate: AIC.publishChannel, class_name: "PublishChannel"
+
+    accepts_uris_for :keyword, :digitization_source, :document_type, :first_document_sub_type,
+                     :second_document_sub_type, :publish_channels
   end
 end

@@ -112,6 +112,7 @@ describe SolrDocument do
     it { is_expected.to respond_to(:light_type) }
     it { is_expected.to respond_to(:view) }
     it { is_expected.to respond_to(:transcript) }
+    it { is_expected.to respond_to(:publish_channels) }
   end
 
   describe "Resource terms" do

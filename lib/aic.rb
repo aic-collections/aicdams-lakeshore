@@ -174,6 +174,9 @@ class AIC < RDF::StrictVocabulary("http://definitions.artic.edu/ontology/1.0/")
   term :publicationHistory,
        label: "Publication History",
        comment: "Publication history text"
+  term :publishChannel,
+       label: "Publish Channel",
+       comment: "Channel(s) that this asset is published in. The asset must have 'open access' visibility in order for this to have effect."
   term :publVerLevel,
        label: "Publish Verification Level",
        comment: "Publish verification level"

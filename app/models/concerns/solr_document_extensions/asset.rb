@@ -41,4 +41,8 @@ module SolrDocumentExtensions::Asset
   def transcript
     Array(self[Solrizer.solr_name('transcript', :stored_searchable)]).first
   end
+
+  def publish_channels
+    Array(self[Solrizer.solr_name('publish_channels', :symbol)])
+  end
 end

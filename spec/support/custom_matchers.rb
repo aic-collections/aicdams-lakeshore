@@ -42,4 +42,8 @@ module CustomMatchers
   def selected_second_document_sub_type
     find("#generic_work_second_document_sub_type_uri")[:value]
   end
+
+  def selected_publish_channel
+    find("#generic_work_publish_channel_uris")[:value]
+  end
 end

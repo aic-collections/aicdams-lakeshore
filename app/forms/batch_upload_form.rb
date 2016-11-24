@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 class BatchUploadForm < Sufia::Forms::BatchUploadForm
+  include AssetFormBehaviors
+
   self.terms = CurationConcerns::GenericWorkForm.terms
 
   def primary_terms
@@ -32,25 +34,5 @@ class BatchUploadForm < Sufia::Forms::BatchUploadForm
 
   def visibility
     ::Permissions::LakeshoreVisibility::VISIBILITY_TEXT_VALUE_DEPARTMENT
-  end
-
-  def self.build_permitted_params
-    super + [
-      { rights_holder_uris: [] },
-      { view_uris: [] },
-      { keyword_uris: [] },
-      { representations_for: [] },
-      { documents_for: [] },
-      :document_type_uri,
-      :first_document_sub_type_uri,
-      :second_document_sub_type_uri,
-      :digitization_source_uri,
-      :compositing_uri,
-      :light_type_uri,
-      :status_uri,
-      :asset_type,
-      :additional_representation,
-      :additional_document
-    ]
   end
 end

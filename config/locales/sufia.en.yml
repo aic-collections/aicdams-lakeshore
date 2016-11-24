@@ -173,9 +173,10 @@ en:
         asset_capture_device: "Asset Capture Device"
         digitization_source:  "Original Source"
         representation_for:   "Representation Of"
-        representations_for:   "Representation Of"
+        representations_for:  "Representation Of"
         document_for:         "Documentation For"
-        documents_for:         "Documentation For"
+        documents_for:        "Documentation For"
+        publish_channels:     "Publish Channels" 
 
     hints:
       defaults:

@@ -1,13 +1,16 @@
 # frozen_string_literal: true
 module CurationConcerns
   class GenericWorkForm < Sufia::Forms::WorkForm
+    include AssetFormBehaviors
+
     delegate :dept_created, to: :model
 
     def self.aic_terms
       [
         :asset_type, :document_type_uri, :first_document_sub_type_uri, :second_document_sub_type_uri,
         :pref_label, :alt_label, :description, :language, :publisher, :capture_device,
-        :status_uri, :digitization_source_uri, :compositing_uri, :light_type_uri, :view_uris, :keyword_uris
+        :status_uri, :digitization_source_uri, :compositing_uri, :light_type_uri, :view_uris,
+        :keyword_uris, :publish_channel_uris
       ]
     end
 
@@ -54,28 +57,6 @@ module CurationConcerns
       else
         super
       end
-    end
-
-    def self.build_permitted_params
-      super + [
-        { rights_holder_uris: [] },
-        { view_uris: [] },
-        { keyword_uris: [] },
-        { representations_for: [] },
-        { documents_for: [] },
-        :document_type_uri,
-        :first_document_sub_type_uri,
-        :second_document_sub_type_uri,
-        :digitization_source_uri,
-        :compositing_uri,
-        :light_type_uri,
-        :status_uri,
-        :asset_type,
-        :additional_representation,
-        :additional_document,
-        :uid,
-        :dept_created
-      ]
     end
 
     private
