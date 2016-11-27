@@ -176,7 +176,10 @@ en:
         representations_for:  "Representation Of"
         document_for:         "Documentation For"
         documents_for:        "Documentation For"
-        publish_channels:     "Publish Channels" 
+        publish_channels:     "Publish Channels"
+        imaging_uid:          "Imaging UID"
+        view_notes:           "View Notes"
+        visual_surrogate:     "Visual Surrogate"
 
     hints:
       defaults:

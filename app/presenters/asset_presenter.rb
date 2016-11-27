@@ -28,7 +28,9 @@ class AssetPresenter < Sufia::WorkShowPresenter
       :transcript,
       :modified_date,
       :create_date,
-      :publish_channels
+      :publish_channels,
+      :view_notes,
+      :visual_surrogate
     ]
   end
 

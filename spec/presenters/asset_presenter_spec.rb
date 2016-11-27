@@ -29,6 +29,9 @@ describe AssetPresenter do
   it { is_expected.to delegate_method(:capture_device).to(:solr_document) }
   it { is_expected.to delegate_method(:digitization_source).to(:solr_document) }
   it { is_expected.to delegate_method(:publish_channels).to(:solr_document) }
+  it { is_expected.to delegate_method(:imaging_uid).to(:solr_document) }
+  it { is_expected.to delegate_method(:view_notes).to(:solr_document) }
+  it { is_expected.to delegate_method(:visual_surrogate).to(:solr_document) }
 
   its(:title) { is_expected.to eq(["Sample Label"]) }
 

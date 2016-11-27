@@ -15,6 +15,14 @@ module StillImageMetadata
       index.as :stored_searchable, :facetable, using: :pref_label
     end
 
+    property :view_notes, predicate: AIC.viewNotes do |index|
+      index.as :stored_searchable
+    end
+
+    property :visual_surrogate, predicate: AIC.visualSurrogate, multiple: false do |index|
+      index.as :stored_searchable
+    end
+
     accepts_uris_for :compositing, :light_type, :view
   end
 end

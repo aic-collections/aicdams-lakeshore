@@ -46,6 +46,8 @@ FactoryGirl.define do
       alt_label                    ["Alternative labels"]
       language                     ["English"]
       publish_channel_uris         ["http://definitions.artic.edu/publish_channel/Web"]
+      view_notes                   ["view note 1", "view note 2"]
+      visual_surrogate             "a visual surrogate"
     end
   end
 end

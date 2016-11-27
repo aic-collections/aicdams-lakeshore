@@ -204,4 +204,10 @@ class AIC < RDF::StrictVocabulary("http://definitions.artic.edu/ontology/1.0/")
   term :view,
        label: "View",
        comment: "Viewing angle, overall or detail, etc"
+  term :viewNotes,
+       label: "View Notes",
+       comment: "Additional notes related to view. Please use the 'view' field first and only add here what is not already available as an option in the drop-down menu."
+  term :visualSurrogate,
+       label: "Visual Surrogate",
+       comment: "Description of an image meant to be used as a reference for visually impaired users."
 end

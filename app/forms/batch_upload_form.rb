@@ -32,6 +32,15 @@ class BatchUploadForm < Sufia::Forms::BatchUploadForm
     []
   end
 
+  # Overrides hydra-editor MultiValueInput#collection
+  def [](term)
+    if [:imaging_uid, :view_notes].include? term
+      []
+    else
+      super
+    end
+  end
+
   def visibility
     ::Permissions::LakeshoreVisibility::VISIBILITY_TEXT_VALUE_DEPARTMENT
   end

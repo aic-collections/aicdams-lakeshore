@@ -45,4 +45,12 @@ module SolrDocumentExtensions::Asset
   def publish_channels
     Array(self[Solrizer.solr_name('publish_channels', :symbol)])
   end
+
+  def view_notes
+    Array(self[Solrizer.solr_name('view_notes', :stored_searchable)])
+  end
+
+  def visual_surrogate
+    Array(self[Solrizer.solr_name('visual_surrogate', :stored_searchable)]).first
+  end
 end

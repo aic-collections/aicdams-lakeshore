@@ -11,6 +11,8 @@ module AssetFormBehaviors
         { representations_for: [] },
         { documents_for: [] },
         { publish_channel_uris: [] },
+        { imaging_uid: [] },
+        { view_notes: [] },
         :document_type_uri,
         :first_document_sub_type_uri,
         :second_document_sub_type_uri,
