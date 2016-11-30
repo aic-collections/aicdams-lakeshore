@@ -18,7 +18,6 @@ class GenericWork < Resource
 
   before_create :status_is_active
   validate :id_matches_uid_checksum, on: :update
-  before_destroy :asset_cannot_be_referenced
 
   def still_image?
     type.include? AICType.StillImage
@@ -64,11 +63,8 @@ class GenericWork < Resource
     errors.add :uid, 'must match checksum' if id != service.hash(uid)
   end
 
-  def asset_cannot_be_referenced
-    if representing_resource.present?
-      errors[:representations] = "are assigned to this resource"
-    end
-    return false unless errors.empty?
+  def asset_has_relationships?
+    representing_resource.present? ? true : false
   end
 
   # CurationConcerns' title is required, and is multivalued

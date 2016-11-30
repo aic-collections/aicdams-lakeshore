@@ -127,13 +127,7 @@ describe CitiResource do
           expect(facets_for_representations).to contain_exactly("Documentation For", 1, "Is Preferred Representation", 1)
         end
       end
-      context "when removing the asset" do
-        before { asset.destroy }
-        specify do
-          expect(asset.errors).to include(:representations)
-          expect(asset).to be_persisted
-        end
-      end
+
       context "when reloading as a solr document" do
         subject { SolrDocument.new(resource.to_solr, nil) }
         its(:preferred_representation_id) { is_expected.to eq(asset.id) }
