@@ -839,6 +839,38 @@
                     ]
                 }
             ]
+        },
+        "Dataset" : {
+            "doctypes" : [
+                {
+                    "label" : "General",
+                    "value" : "http://definitions.artic.edu/doctypes/GeneralDataset"
+                }
+            ]
+        },
+        "MovingImage" : {
+            "doctypes" : [
+                {
+                    "label" : "General",
+                    "value" : "http://definitions.artic.edu/doctypes/GeneralMovingImage"
+                }
+            ]
+        },
+        "Sound" : {
+            "doctypes" : [
+                {
+                    "label" : "General",
+                    "value" : "http://definitions.artic.edu/doctypes/GeneralSound"
+                }
+            ]
+        },
+        "Archive" : {
+            "doctypes" : [
+                {
+                    "label" : "General",
+                    "value" : "http://definitions.artic.edu/doctypes/GeneralArchive"
+                }
+            ]
         }
     }
 }
