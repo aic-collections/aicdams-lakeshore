@@ -12,23 +12,23 @@ class FileSet < ActiveFedora::Base
 
   private
 
-    # Create additional derivatives:
-    #   * jp2 file for image assets
-    #   * pdf for text assets
-    #   * second thumbnail for CITI
+    # create additional derivatives:
+    # jp2 file for image assets
+    # pdf for text assets
+    # second thumbnail for CITI
     def create_asset_derivatives(filename)
       case mime_type
       when *self.class.image_mime_types
         Hydra::Derivatives::ImageDerivatives.create(filename, outputs: image_outputs)
       when *self.class.pdf_mime_types
         Hydra::Derivatives::PdfDerivatives.create(filename, outputs: pdf_outputs)
-      when *office_document_mime_types
+      when *self.class.office_document_mime_types
         Derivatives::DocumentDerivatives.create(filename, outputs: [document_output])
       end
     end
 
     def create_fulltext_derivatives(filename)
-      return unless (office_document_mime_types + self.class.pdf_mime_types).include?(mime_type)
+      return unless (self.class.office_document_mime_types + self.class.pdf_mime_types).include?(mime_type)
       Hydra::Derivatives::FullTextExtract.create(filename, outputs: [{ url: uri, container: "extracted_text" }])
     end
 
@@ -43,7 +43,7 @@ class FileSet < ActiveFedora::Base
     def image_outputs
       [
         { label: :thumbnail, format: 'jpg', size: '200x150>', url: derivative_url('thumbnail') },
-        { label: :access, format: 'jp2[512x512]', url: derivative_url('access') },
+        { label: :access, format: 'jp2', size: '3000x3000>', url: derivative_url('access') },
         { label: :citi, format: 'jpg', size: '96x96>', quality: "90", url: derivative_url('citi') },
         { label: :large, format: 'jpg', size: '1024x1024>', quality: "85", url: derivative_url('large') }
       ]
@@ -52,7 +52,8 @@ class FileSet < ActiveFedora::Base
     def pdf_outputs
       [
         { label: :thumbnail, format: 'jpg', size: '200x150>', layer: 0, url: derivative_url('thumbnail') },
-        { label: :citi, format: 'jpg', size: '96x96>', layer: 0, quality: "90", url: derivative_url('citi') }
+        { label: :citi, format: 'jpg', size: '96x96>', layer: 0, quality: "90", url: derivative_url('citi') },
+        { label: :access, format: 'pdf', quality: '90', size: '1024x1024', url: derivative_url('document') }
       ]
     end
 
@@ -64,10 +65,6 @@ class FileSet < ActiveFedora::Base
         access: derivative_url('document'),
         citi: derivative_url('citi')
       }
-    end
-
-    def office_document_mime_types
-      self.class.office_document_mime_types + ["text/plain"]
     end
 
     def derivative_path_factory
