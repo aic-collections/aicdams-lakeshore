@@ -546,4 +546,12 @@ class AICDocType < RDF::StrictVocabulary("http://definitions.artic.edu/doctypes/
        "skos:broader": "aicdoctype:InfoServicesText"
   term :InfoServicesText,
        label: "Information Services"
+  term :GeneralMovingImage,
+       label: "General"
+  term :GeneralDataset,
+       label: "General"
+  term :GeneralSound,
+       label: "General"
+  term :GeneralArchive,
+       label: "General"
 end
