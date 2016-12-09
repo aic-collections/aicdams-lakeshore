@@ -3,14 +3,19 @@ class BatchEditsController < ApplicationController
   include Hydra::BatchEditBehavior
   include FileSetHelper
   include Sufia::BatchEditsControllerBehavior
+  include AICAssetAfterDeleteBehavior
 
   def destroy_collection
+    assets_with_relationships = []
     batch.each do |doc_id|
       obj = ActiveFedora::Base.find(doc_id, cast: true)
-      report_delete_error unless obj.destroy
+      if obj.asset_has_relationships?
+        assets_with_relationships << obj.title
+      else
+        obj.destroy
+      end
     end
-    flash[:notice] = "Batch delete complete" if flash[:error].nil?
-    after_destroy_collection
+    report_status_and_redirect(assets_with_relationships, batch: true)
   end
 
   protected
@@ -21,11 +26,5 @@ class BatchEditsController < ApplicationController
         report_delete_error unless gw.destroy
       end
       after_update
-    end
-
-  private
-
-    def report_delete_error
-      flash[:error] = "Some assets were not deleted because they have resources linking to them"
     end
 end
