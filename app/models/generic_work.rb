@@ -64,7 +64,7 @@ class GenericWork < Resource
   end
 
   def asset_has_relationships?
-    representing_resource.present? ? true : false
+    representing_resource.present?
   end
 
   # CurationConcerns' title is required, and is multivalued
