@@ -40,39 +40,27 @@ describe CurationConcerns::GenericWorksController do
   end
   describe "#destroy" do
     context "with relationships" do
-      let(:asset2) { create(:asset, user: user, title: ["Title"], pref_label: "Good Title") }
-      before { asset2.save! }
+      let!(:asset2) { create(:asset, user: user, title: ["Title"], pref_label: "Good Title") }
       before { allow_any_instance_of(InboundRelationships).to receive(:present?).and_return(true) }
 
       it "will not delete the resource" do
-        number_of_works = GenericWork.all.count
-
-        post "destroy", method: "delete", id: asset2
-
-        expect(number_of_works).to eq(GenericWork.all.count)
+        expect { delete :destroy, id: asset2 }.not_to change { GenericWork.count }
       end
 
       it "will report to user that assets weren't deleted" do
-        post "destroy", method: "delete", id: asset2
-
+        delete :destroy, id: asset2
         expect(flash[:error]).to eq("These assets were not deleted because they have resources linking to them: #{[asset2.title].join}.")
       end
     end
 
     context "without relationships" do
-      let(:asset1) { create(:asset, user: user, title: ["Title"], pref_label: "Good Title") }
-      before { asset1.save! }
+      let!(:asset1) { create(:asset, user: user, title: ["Title"], pref_label: "Good Title") }
       it "deletes the resource" do
-        number_of_works = GenericWork.all.count
-
-        post "destroy", method: "delete", id: asset1
-
-        expect(GenericWork.all.count).to eq(number_of_works - 1)
+        expect { delete :destroy, id: asset1 }.to change { GenericWork.count }.by(-1)
       end
 
       it "will report to user that assets were deleted" do
-        post "destroy", method: "delete", id: asset1
-
+        delete :destroy, id: asset1
         expect(flash[:notice]).to eq("Asset was successfully deleted.")
       end
     end

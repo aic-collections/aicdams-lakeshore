@@ -97,12 +97,9 @@ describe GenericWork do
   end
 
   describe "#asset_has_relationships?" do
-    let(:work) { create(:still_image_asset, user: user, title: ["Hello Title"]) }
+    let!(:work) { create(:still_image_asset, user: user, title: ["Hello Title"]) }
     context "with relationships" do
-      before {
-        work.save!
-        allow_any_instance_of(InboundRelationships).to receive(:present?).and_return(true)
-      }
+      before { allow_any_instance_of(InboundRelationships).to receive(:present?).and_return(true) }
       it { is_expected.to be_asset_has_relationships }
     end
     context "without relationships" do
