@@ -1,3 +1,9 @@
 <h2>Relationships</h2>
+
 <%= render 'add_asset', presenter: presenter if presenter.citi_presenter? %>
-<%= render 'relationships_table', presenter: presenter %>
+
+<% if presenter.has_relationships? %>
+  <%= render 'relationships_table', presenter: presenter %>
+<% else %>
+  <p>No relationships found for this <%= presenter.human_readable_type %></p>
+<% end %>

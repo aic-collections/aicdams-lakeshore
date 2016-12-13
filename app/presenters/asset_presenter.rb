@@ -4,32 +4,10 @@ class AssetPresenter < Sufia::WorkShowPresenter
 
   def self.terms
     [
-      :uid,
-      :legacy_uid,
-      :status,
-      :dept_created,
-      :aic_depositor,
-      :updated,
-      :description,
-      :batch_uid,
-      :language,
-      :publisher,
-      :pref_label,
-      :alt_label,
-      :rights_holder,
-      :keyword,
-      :created_by,
-      :compositing,
-      :light_type,
-      :view,
-      :capture_device,
-      :digitization_source,
-      :imaging_uid,
-      :transcript,
-      :modified_date,
-      :create_date,
-      :publish_channels,
-      :view_notes,
+      :uid, :legacy_uid, :status, :dept_created, :aic_depositor, :updated,
+      :description, :batch_uid, :language, :publisher, :pref_label, :alt_label, :rights_holder,
+      :keyword, :created_by, :compositing, :light_type, :view, :capture_device, :digitization_source,
+      :imaging_uid, :transcript, :modified_date, :create_date, :publish_channels, :view_notes,
       :visual_surrogate
     ]
   end
@@ -75,7 +53,7 @@ class AssetPresenter < Sufia::WorkShowPresenter
   end
 
   def has_relationships?
-    !relationships.ids.empty?
+    relationships.ids.present? || attachment_ids.present?
   end
 
   def artist_presenters?
@@ -104,9 +82,25 @@ class AssetPresenter < Sufia::WorkShowPresenter
                                                         *presenter_factory_arguments)
   end
 
+  def attachment_presenters
+    CurationConcerns::PresenterFactory.build_presenters(solr_document.attachment_ids,
+                                                        AssetPresenter,
+                                                        *presenter_factory_arguments)
+  end
+
+  def attaching_presenters
+    CurationConcerns::PresenterFactory.build_presenters(relationships.attachment_ids,
+                                                        AssetPresenter,
+                                                        *presenter_factory_arguments)
+  end
+
   private
 
     def relationships
       @relationships ||= InboundRelationships.new(id)
+    end
+
+    def attachment_ids
+      relationships.attachment_ids + solr_document.attachment_ids
     end
 end

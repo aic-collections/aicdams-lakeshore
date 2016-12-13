@@ -1,0 +1,26 @@
+<h3><%= heading %></h3>
+
+<table class="table table-striped relationships">
+  <tbody>
+    <tr>
+      <th>Preview</th>
+      <th>Document Type</th>
+      <th>Link</th>
+      <th>UID</th>
+    </tr>
+    <% presenters.each do |rel| %>
+      <tr>
+        <td><%= image_tag(rel.solr_document['thumbnail_path_ss']) %></td>
+        <td><%= rel.document_types %></td>
+        <td>
+          <% if rel.viewable? %>
+            <%= link_to rel.to_s, polymorphic_path([main_app, rel]) %>
+          <% else %>
+            <%= rel.to_s %>
+          <% end %>
+        </td>
+        <td><%= rel.uid %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

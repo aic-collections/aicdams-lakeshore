@@ -4,9 +4,7 @@
     sufia.new_batch_upload_path(document_for: @presenter, resource_title: @presenter.display_pref_label_and_uid), { class: "add_document_btn" } %></p>
 
 <% if @presenter.has_relationships? %>
-  <%= render_preferred_representations(@presenter) %>
-  <%= render_representations(@presenter) %>
-  <%= render_documents(@presenter) %>
+  <%= render '/curation_concerns/base/relationships_table', presenter: @presenter %>
 <% else %>
   <p>No relationships found for this <%= @presenter.human_readable_type.gsub('Work', 'Object') %></p>
 <% end %>

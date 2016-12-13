@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 # Updates a Citi resource with changes to its relationships from either the create or update
 # action of a given asset. This allows the user to add or remove an asset from multiple
-# Citi resources at the same time the asset is either created or updated.
+# Citi resources or other assets at the same time the asset is either created or updated.
 #
 # Resources are specified in two ways: 1) in the url via a link from the originating resource; or
 # 2) assembled in the edit form of the asset.
@@ -13,7 +13,7 @@
 class AddToCitiResourceActor < CurationConcerns::Actors::AbstractActor
   include CurationConcerns::Lockable
 
-  attr_reader :representations, :additional_representation, :documents, :additional_document
+  attr_reader :representations, :additional_representation, :documents, :additional_document, :attachments
 
   def create(attributes)
     delete_relationship_attributes(attributes)
@@ -30,6 +30,7 @@ class AddToCitiResourceActor < CurationConcerns::Actors::AbstractActor
     @additional_representation = attributes.delete(:additional_representation)
     @documents = attributes.delete(:documents_for)
     @additional_document = attributes.delete(:additional_document)
+    @attachments = attributes.delete(:attachments_for)
   end
 
   # Assembles all unique representation ids, removing any empty strings passed in from the form.
@@ -46,59 +47,22 @@ class AddToCitiResourceActor < CurationConcerns::Actors::AbstractActor
     (Array.wrap(documents) + Array.wrap(additional_document)).uniq.delete_if(&:empty?)
   end
 
+  # Assets are referenced using uris and not ids
+  # @return [Array<String>]
+  def attachment_uris
+    Array.wrap(attachments).uniq.delete_if(&:empty?)
+  end
+
   private
 
     def add_relationships
-      add_representations
-      add_documents
+      management_service.add_or_remove(:representations, representation_ids)
+      management_service.add_or_remove(:documents, document_ids)
+      management_service.add_or_remove(:attachments, attachment_uris)
       true
     end
 
-    # TODO: Refactor into a new service
-    def add_representations
-      # remove representations
-      (representing_resource.representations.map(&:id) - representation_ids).each do |old_id|
-        acquire_lock_for(old_id) do
-          resource = ActiveFedora::Base.find(old_id)
-          new_list = resource.representations.map { |r| r unless r.id == curation_concern.id }.compact
-          resource.representation_uris = new_list.map(&:uri)
-          resource.save
-        end
-      end
-
-      # add new ones
-      representation_ids.each do |id|
-        acquire_lock_for(id) do
-          resource = ActiveFedora::Base.find(id)
-          resource.representation_uris += [curation_concern.uri]
-          resource.save
-        end
-      end
-    end
-
-    # TODO: Refactor into a new service
-    def add_documents
-      # remove documents
-      (representing_resource.documents.map(&:id) - document_ids).each do |old_id|
-        acquire_lock_for(old_id) do
-          resource = ActiveFedora::Base.find(old_id)
-          new_list = resource.documents.map { |r| r unless r.id == curation_concern.id }.compact
-          resource.document_uris = new_list.map(&:uri)
-          resource.save
-        end
-      end
-
-      # add new ones
-      document_ids.each do |id|
-        acquire_lock_for(id) do
-          resource = ActiveFedora::Base.find(id)
-          resource.document_uris += [curation_concern.uri]
-          resource.save
-        end
-      end
-    end
-
-    def representing_resource
-      @representing_resource ||= InboundRelationships.new(curation_concern)
+    def management_service
+      @management_service ||= InboundRelationshipManagementService.new(curation_concern)
     end
 end

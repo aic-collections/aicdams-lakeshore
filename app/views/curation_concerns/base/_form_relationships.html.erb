@@ -1,6 +1,6 @@
 <h3>Relationships for this asset</h3>
 <%= select_tag "autocomplete_model", options_for_select(
-      [ "Agent", "Exhibition", "Place", "Shipment", "Transaction", "Work" ], "Agent") %>
+      [ "Agent", "Asset", "Exhibition", "Place", "Shipment", "Transaction", "Work" ], "Agent") %>
 
 <div id="representations">
   <% if params.fetch(:representation_for, nil) %>
@@ -17,4 +17,13 @@
     <%= f.hidden_field :additional_document, value: params.fetch(:document_for) %>
   <% end %>
   <%= f.input :documents_for, as: :hidden_multi_select, input_html: { class: 'form-control' }, required: false %>
+</div>
+
+<div id="attachments">
+  <%= f.input :attachment_uris, as: :hidden_multi_select, property: :attachments,
+      input_html: { class: 'form-control' }, required: false %>
+</div>
+
+<div id="attachments_for">
+  <%= f.input :attachments_for, as: :hidden_multi_select, input_html: { class: 'form-control' }, required: false %>
 </div>

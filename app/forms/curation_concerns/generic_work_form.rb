@@ -3,7 +3,7 @@ module CurationConcerns
   class GenericWorkForm < Sufia::Forms::WorkForm
     include AssetFormBehaviors
 
-    delegate :dept_created, to: :model
+    delegate :dept_created, :attachment_uris, :attachments, to: :model
 
     def self.aic_terms
       [
@@ -12,6 +12,11 @@ module CurationConcerns
         :status_uri, :digitization_source_uri, :compositing_uri, :light_type_uri, :view_uris,
         :keyword_uris, :publish_channel_uris, :view_notes, :visual_surrogate
       ]
+    end
+
+    def self.multiple?(term)
+      return true if term == :attachment_uris
+      super
     end
 
     self.model_class = ::GenericWork
@@ -50,9 +55,13 @@ module CurationConcerns
       representing_resource.documents
     end
 
+    def attachments_for
+      representing_resource.assets
+    end
+
     # Overrides hydra-editor MultiValueInput#collection
     def [](term)
-      if [:representations_for, :documents_for].include? term
+      if [:representations_for, :documents_for, :attachments_for].include? term
         send(term)
       else
         super

@@ -1,0 +1,18 @@
+<h3><%= heading %></h3>
+
+<table class="table table-striped relationships">
+  <tbody>
+    <tr>
+      <th>Resource Type</th>
+      <th>Link</th>
+      <th>UID</th>
+    </tr>
+    <% presenters.each do |rel| %>
+      <tr>
+        <td><%= rel.resource_type.first %></td>
+        <td><%= link_to rel.to_s, polymorphic_path([main_app, rel]) %></td>
+        <td><%= rel.uid %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

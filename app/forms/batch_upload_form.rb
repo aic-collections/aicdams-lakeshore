@@ -32,6 +32,14 @@ class BatchUploadForm < Sufia::Forms::BatchUploadForm
     []
   end
 
+  def attachment_uris
+    []
+  end
+
+  def attachments_for
+    []
+  end
+
   # Overrides hydra-editor MultiValueInput#collection
   def [](term)
     if [:imaging_uid, :view_notes].include? term

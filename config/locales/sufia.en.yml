@@ -150,8 +150,11 @@ en:
   simple_form:
     labels:
       defaults:
-        alt_label:            "Alternative label"
-      generic_work:
+        alt_label:                    "Alternative label"
+        document_uris:                "Documents"
+        preferred_representation_uri: "Preferred Representation"
+        representation_uris:          "Representations"
+      asset: &asset
         uid:                  "UID"
         legacy_uid:           "Legacy UID"
         document_type:        "Document Type"
@@ -180,13 +183,18 @@ en:
         imaging_uid:          "Imaging UID"
         view_notes:           "View Notes"
         visual_surrogate:     "Visual Surrogate"
+        attachment_uris:      "Attachments"
+        attachments_for:      "Attachment For"
+      generic_work:
+        <<: *asset
+      batch_upload_item:
+        <<: *asset
 
     hints:
       defaults:
         alt_label: "Optional titles or names for the resource. These fields will be added to the 'alt' tag of Web images. For longer text, please use the 'description' field."
         description: "Free-text notes about the Asset, e.g. description of the subject of an image or abstract of a text document."
         pref_label: "Preferred title or name of the resource. This will be the principal value for the 'alt' tag of web images."
-      #exhibition:
         document_uris: "Assets documenting this resource."
         preferred_representation_uri: "Preferred image representing the resource. This will be used for the resource thumbnail and similar purposes"
         representation_uris: "Visual representations of this resource."
@@ -214,6 +222,8 @@ en:
         view_notes: "Additional notes related to view. <em>Please use the 'view' field first and only add here what is not already available as an option in the drop-down menu.</em>"
         view_uris: "Viewing angle, overall or detail, etc."
         visual_surrogate: "Description of an image meant to be used as a reference for visually impaired users (ADA compatibility)."
+        attachment_uris: "Other assets that are attachments of the current asset being edited."
+        attachments_for: "Other assets that have the current asset as an attachment."
       generic_work:
         <<: *asset
       batch_upload_item:

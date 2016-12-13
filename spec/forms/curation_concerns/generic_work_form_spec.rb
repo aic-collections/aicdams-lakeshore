@@ -10,6 +10,8 @@ describe CurationConcerns::GenericWorkForm do
 
   describe "delegates" do
     it { is_expected.to delegate_method(:dept_created).to(:model) }
+    it { is_expected.to delegate_method(:attachment_uris).to(:model) }
+    it { is_expected.to delegate_method(:attachments).to(:model) }
   end
 
   describe "#required_fields" do
@@ -41,6 +43,11 @@ describe CurationConcerns::GenericWorkForm do
   describe "::build_permitted_params" do
     subject { described_class.build_permitted_params }
     it { is_expected.to include(:additional_representation, :additional_document, :uid, :dept_created) }
+  end
+
+  describe "::multiple?" do
+    subject { described_class.multiple?(:attachment_uris) }
+    it { is_expected.to be true }
   end
 
   describe "#uris_for" do
@@ -77,6 +84,15 @@ describe CurationConcerns::GenericWorkForm do
 
     describe "#documents_for" do
       its(:documents_for) { is_expected.to eq([resource]) }
+    end
+  end
+
+  context "when the asset has an attachment" do
+    let(:asset)    { create(:asset) }
+    let(:resource) { create(:asset, attachments: [asset.uri]) }
+
+    describe "#attachments_for" do
+      its(:attachments_for) { is_expected.to eq([resource]) }
     end
   end
 end

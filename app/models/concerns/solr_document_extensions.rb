@@ -51,6 +51,10 @@ module SolrDocumentExtensions
     Array(self[Solrizer.solr_name('preferred_representation', :symbol)]).first
   end
 
+  def attachment_ids
+    Array(self[Solrizer.solr_name('attachments', :symbol)])
+  end
+
   def visibility
     @visibility ||= if read_groups.include? Hydra::AccessControls::AccessRight::PERMISSION_TEXT_VALUE_PUBLIC
                       Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PUBLIC

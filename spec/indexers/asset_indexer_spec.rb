@@ -3,8 +3,9 @@ require 'rails_helper'
 
 describe AssetIndexer do
   describe "#generate_solr_document" do
-    let(:asset)    { create(:asset, :with_metadata) }
-    let(:solr_doc) { described_class.new(asset).generate_solr_document }
+    let(:attachment) { create(:asset) }
+    let(:asset)      { create(:asset, :with_metadata, attachments: [attachment.uri]) }
+    let(:solr_doc)   { described_class.new(asset).generate_solr_document }
 
     it "indexes the correct fields" do
       expect(solr_doc["digitization_source_tesim"]).to eq(asset.digitization_source.pref_label)
@@ -16,6 +17,7 @@ describe AssetIndexer do
       expect(solr_doc["dept_created_tesim"]).to eq(asset.dept_created.pref_label)
       expect(solr_doc["aic_type_sim"]).to contain_exactly("Asset", "Still Image")
       expect(solr_doc["dept_created_sim"]).to eq(asset.dept_created.pref_label)
+      expect(solr_doc["attachments_ssim"]).to contain_exactly(attachment.id)
     end
 
     context "with all three document types" do

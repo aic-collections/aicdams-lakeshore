@@ -136,33 +136,40 @@ describe GenericWork do
   describe "::accepts_uris_for" do
     let(:work) { build(:asset) }
     let(:item) { create(:list_item) }
+
     context "using a multi-valued term" do
       subject { work }
+
       context "with a string" do
         before { work.keyword_uris = [item.uri.to_s] }
         its(:keyword) { is_expected.to contain_exactly(item) }
         its(:keyword_uris) { is_expected.to contain_exactly(item.uri.to_s) }
       end
+
       context "with a RDF::URI" do
         before { work.keyword_uris = [item.uri] }
         its(:keyword) { is_expected.to contain_exactly(item) }
         its(:keyword_uris) { is_expected.to contain_exactly(item.uri.to_s) }
       end
+
       context "with a singular value" do
         it "raises an ArgumentError" do
           expect { work.keyword_uris = item.uri }.to raise_error(ArgumentError)
         end
       end
+
       context "with empty strings" do
         before { work.keyword_uris = [""] }
         its(:keyword) { is_expected.to be_empty }
         its(:keyword_uris) { is_expected.to be_empty }
       end
+
       context "with empty arrays" do
         before { work.keyword_uris = [] }
         its(:keyword) { is_expected.to be_empty }
         its(:keyword_uris) { is_expected.to be_empty }
       end
+
       context "with existing values" do
         before { work.keyword_uris = [item.uri.to_s] }
         it "uses a null set to remote them" do
@@ -172,33 +179,41 @@ describe GenericWork do
         end
       end
     end
+
     context "using a single-valued term" do
       subject { work }
+
       context "with a string" do
         before { work.digitization_source_uri = item.uri.to_s }
         its(:digitization_source) { is_expected.to eq(item) }
         its(:digitization_source_uri) { is_expected.to eq(item.uri.to_s) }
       end
+
       context "with a RDF::URI" do
         before { work.digitization_source_uri = item.uri }
         its(:digitization_source) { is_expected.to eq(item) }
         its(:digitization_source_uri) { is_expected.to eq(item.uri.to_s) }
       end
+
       context "with an empty string" do
         before { work.digitization_source_uri = "" }
         its(:digitization_source) { is_expected.to be_nil }
         its(:digitization_source_uri) { is_expected.to be_nil }
       end
+
       context "with an existing value" do
         before { work.digitization_source_uri = item.uri }
+
         it "uses nil to remove it" do
           expect { work.digitization_source_uri = nil }.to change { work.digitization_source }.to(nil)
         end
+
         it "uses an empty string to remove it" do
           expect { work.digitization_source_uri = "" }.to change { work.digitization_source }.to(nil)
         end
       end
     end
+
     context "with remaining terms" do
       it { is_expected.to respond_to(:document_type_uri=) }
       it { is_expected.to respond_to(:first_document_sub_type_uri=) }
@@ -212,6 +227,19 @@ describe GenericWork do
       it { is_expected.to respond_to(:compositing_uri) }
       it { is_expected.to respond_to(:light_type_uri) }
       it { is_expected.to respond_to(:view_uris) }
+      it { is_expected.to respond_to(:attachment_uris) }
+    end
+  end
+
+  describe "assigning representations" do
+    let(:attachment) { create(:asset) }
+    let(:asset)      { create(:asset, attachments: [attachment.uri]) }
+
+    it "contains the correct kind of representations" do
+      expect(asset.attachments).to contain_exactly(attachment)
+      expect(asset.to_solr[Solrizer.solr_name("representation", :facetable)]).to contain_exactly("Has Attachment")
+      expect(facets_for(Solrizer.solr_name("representation", :facetable), asset.id)).to contain_exactly("Has Attachment", 1)
+      expect(facets_for(Solrizer.solr_name("representation", :facetable), attachment.id)).to contain_exactly("Is Attachment Of", 1)
     end
   end
 end

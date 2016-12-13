@@ -11,12 +11,10 @@ class InboundRelationships
     @id = asset.is_a?(String) ? asset : asset.id
   end
 
-  def present?
-    document_ids.present? || representation_ids.present? || preferred_representation_ids.present?
-  end
+  delegate :present?, to: :ids
 
   def ids
-    document_ids + representation_ids + preferred_representation_ids
+    document_ids + representation_ids + preferred_representation_ids + asset_ids
   end
 
   def documents
@@ -50,6 +48,16 @@ class InboundRelationships
   def representation_ids
     @representation_ids ||= ids_with(:representations_ssim)
   end
+
+  def assets
+    @asset_ids ||= resources_with(:attachments_ssim)
+  end
+  alias attachments assets
+
+  def asset_ids
+    @asset_ids ||= ids_with(:attachments_ssim)
+  end
+  alias attachment_ids asset_ids
 
   private
 

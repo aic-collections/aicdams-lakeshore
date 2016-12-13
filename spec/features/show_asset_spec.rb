@@ -2,8 +2,9 @@
 require 'rails_helper'
 
 describe "Displaying an asset" do
-  let(:user)  { create(:user1) }
-  let(:asset) { create(:department_asset, :with_metadata) }
+  let(:user)       { create(:user1) }
+  let(:attachment) { create(:asset, pref_label: "Sample Attachment") }
+  let(:asset)      { create(:department_asset, :with_metadata, attachments: [attachment.uri]) }
 
   before do
     create(:exhibition, preferred_representation: asset.uri)
@@ -62,11 +63,13 @@ describe "Displaying an asset" do
     expect(page).to have_selector("h3", text: "Preferred Representation Of")
     expect(page).to have_selector("h3", text: "Representation Of")
     expect(page).to have_selector("h3", text: "Documentation For")
+    expect(page).to have_selector("h3", text: "Attachments")
 
     # User1 gets links to the assets
     expect(page).to have_link("Sample Exhibition")
     expect(page).to have_link("Sample Work")
     expect(page).to have_link("Sample Shipment")
+    expect(page).to have_link("Sample Attachment")
 
     # Title and description
     expect(page).to have_selector("h1", text: asset.pref_label)

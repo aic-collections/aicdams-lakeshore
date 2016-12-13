@@ -42,6 +42,14 @@ describe BatchUploadForm do
       its(:documents_for) { is_expected.to be_empty }
     end
 
+    describe "#attachment_uris" do
+      its(:attachment_uris) { is_expected.to be_empty }
+    end
+
+    describe "#attachments_for" do
+      its(:attachments_for) { is_expected.to be_empty }
+    end
+
     describe "#visibility" do
       its(:visibility) { is_expected.to eq("department") }
     end

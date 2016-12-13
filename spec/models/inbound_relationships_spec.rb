@@ -2,12 +2,13 @@
 require 'rails_helper'
 
 describe InboundRelationships do
-  let!(:asset)                    { create(:asset) }
+  let!(:attachment)               { create(:asset) }
+  let!(:asset)                    { create(:asset, attachments: [attachment.uri]) }
   let!(:document)                 { create(:exhibition, documents: [asset.uri]) }
   let!(:representation)           { create(:exhibition, representations: [asset.uri]) }
   let!(:preferred_representation) { create(:exhibition, preferred_representation: asset.uri) }
 
-  context "with an asset contain all the types of relationships" do
+  context "with an asset containing all the types of relationships" do
     let(:relationships) { described_class.new(asset) }
     it "maps all incomming relationships to the asset" do
       expect(relationships.documents).to eq([document])
@@ -34,5 +35,10 @@ describe InboundRelationships do
       expect(relationships.present?).to be false
       expect(relationships.ids).to be_empty
     end
+  end
+
+  context "with an attachment" do
+    subject { described_class.new(attachment) }
+    its(:assets) { is_expected.to contain_exactly(asset) }
   end
 end

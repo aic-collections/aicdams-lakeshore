@@ -5,7 +5,7 @@ class AssetIndexer < Sufia::WorkIndexer
   def generate_solr_document
     super.tap do |solr_doc|
       solr_doc[Solrizer.solr_name("aic_type", :facetable)] = aic_types(["Asset"])
-      solr_doc[Solrizer.solr_name("representation", :facetable)] = representations
+      solr_doc[Solrizer.solr_name("representation", :facetable)] = FacetBuilder.new(object).representations
       solr_doc[Solrizer.solr_name("aic_depositor", :symbol)] = object.depositor
       solr_doc[Solrizer.solr_name("fedora_uri", :symbol)] = object.uri.to_s
       solr_doc[Solrizer.solr_name("digitization_source", :stored_searchable)] = pref_label_for(:digitization_source)
@@ -18,6 +18,7 @@ class AssetIndexer < Sufia::WorkIndexer
       solr_doc[Solrizer.solr_name("document_types", :facetable)] = document_types_facet
       solr_doc[Solrizer.solr_name("publish_channels", :facetable)] = object.publish_channels.map(&:pref_label)
       solr_doc[Solrizer.solr_name("publish_channels", :symbol)] = object.publish_channels.map(&:pref_label)
+      solr_doc[Solrizer.solr_name("attachments", :symbol)] = object.attachments.map(&:id)
     end
   end
 
@@ -36,20 +37,57 @@ class AssetIndexer < Sufia::WorkIndexer
       types.compact
     end
 
-    def representations(types = [])
-      r = InboundRelationships.new(object.id)
-      return types unless r.present?
-      types << "Documentation For" unless r.documents.empty?
-      types << "Is Representation" unless r.representations.empty?
-      types << "Is Preferred Representation" unless r.preferred_representation.nil?
-      types
-    end
-
     def document_types_display
       [
         pref_label_for(:document_type),
         pref_label_for(:first_document_sub_type),
         pref_label_for(:second_document_sub_type)
       ].compact.join(" > ")
+    end
+
+    class FacetBuilder
+      attr_reader :object
+
+      def initialize(object)
+        @object = object
+      end
+
+      def representations
+        [
+          attachment_facet, attachment_of_facet, documentation_facet,
+          representation_facet, preferred_representation_facet
+        ].compact
+      end
+
+      def attachment_facet
+        return if object.attachments.empty?
+        "Has Attachment"
+      end
+
+      def attachment_of_facet
+        return if relationships.attachments.empty?
+        "Is Attachment Of"
+      end
+
+      def documentation_facet
+        return if relationships.documents.empty?
+        "Documentation For"
+      end
+
+      def representation_facet
+        return if relationships.representations.empty?
+        "Is Representation"
+      end
+
+      def preferred_representation_facet
+        return if relationships.preferred_representation.nil?
+        "Is Preferred Representation"
+      end
+
+      private
+
+        def relationships
+          @relationships ||= InboundRelationships.new(object.id)
+        end
     end
 end
