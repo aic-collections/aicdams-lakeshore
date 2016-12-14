@@ -42,7 +42,8 @@ set :linked_files, fetch(:linked_files, []).push(
   'config/redis.yml',
   'config/role_map.yml',
   'config/secrets.yml',
-  'config/solr.yml'
+  'config/solr.yml',
+  'config/initializers/sufia.rb'
 )
 set :linked_dirs, fetch(:linked_dirs, []).push(
   'log',
