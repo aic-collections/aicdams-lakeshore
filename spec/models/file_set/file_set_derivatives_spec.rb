@@ -144,5 +144,16 @@ describe FileSet do
         it { is_expected.to contain_exactly(end_with("34-access.pdf"), end_with("34-thumbnail.jpeg"), end_with("34-citi.jpg")) }
       end
     end
+
+    context "when specifying no text extraction" do
+      let(:image_file) { File.join(fixture_path, "tardis.png") }
+
+      before { allow(file).to receive(:create_asset_derivatives).with(image_file) }
+
+      it "does not extract full text from the file source" do
+        expect(file).not_to receive(:create_fulltext_derivatives)
+        file.create_derivatives(image_file, no_text: true)
+      end
+    end
   end
 end

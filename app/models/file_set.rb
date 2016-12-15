@@ -5,26 +5,32 @@ class FileSet < ActiveFedora::Base
   include Permissions
   self.indexer = FileSetIndexer
 
-  # This completely overrides the version in CurationConcerns so that we
-  # can create additional derivatives:
-  #   * jp2 file for image assets
-  #   * pdf for text assets
-  #   * second thumbnail for CITI
-  #
-  def create_derivatives(filename)
-    case mime_type
-    when *self.class.image_mime_types
-      Hydra::Derivatives::ImageDerivatives.create(filename, outputs: image_outputs)
-    when *self.class.pdf_mime_types
-      Hydra::Derivatives::PdfDerivatives.create(filename, outputs: pdf_outputs)
-      Hydra::Derivatives::FullTextExtract.create(filename, outputs: [{ url: uri, container: "extracted_text" }])
-    when *office_document_mime_types
-      Derivatives::DocumentDerivatives.create(filename, outputs: [document_output])
-      Hydra::Derivatives::FullTextExtract.create(filename, outputs: [{ url: uri, container: "extracted_text" }])
-    end
+  def create_derivatives(filename, opts = {})
+    create_asset_derivatives(filename)
+    create_fulltext_derivatives(filename) unless opts.fetch(:no_text, false)
   end
 
   private
+
+    # Create additional derivatives:
+    #   * jp2 file for image assets
+    #   * pdf for text assets
+    #   * second thumbnail for CITI
+    def create_asset_derivatives(filename)
+      case mime_type
+      when *self.class.image_mime_types
+        Hydra::Derivatives::ImageDerivatives.create(filename, outputs: image_outputs)
+      when *self.class.pdf_mime_types
+        Hydra::Derivatives::PdfDerivatives.create(filename, outputs: pdf_outputs)
+      when *office_document_mime_types
+        Derivatives::DocumentDerivatives.create(filename, outputs: [document_output])
+      end
+    end
+
+    def create_fulltext_derivatives(filename)
+      return unless (office_document_mime_types + self.class.pdf_mime_types).include?(mime_type)
+      Hydra::Derivatives::FullTextExtract.create(filename, outputs: [{ url: uri, container: "extracted_text" }])
+    end
 
     # Returns the correct type class for attributes when loading an object from Solr
     # Catches malformed dates that will not parse into DateTime, see #198
