@@ -17,6 +17,7 @@ describe AssetType::Sound do
 
   describe "::types" do
     subject { described_class.types }
-    its(:first) { is_expected.to be_kind_of(MIME::Type::Columnar) }
+    its(:first) { is_expected.to be_kind_of(MIME::Type) }
+    its(:last) { is_expected.to be_kind_of(MIME::Type::Columnar) }
   end
 end

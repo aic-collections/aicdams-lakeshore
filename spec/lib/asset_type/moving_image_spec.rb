@@ -14,7 +14,8 @@ describe AssetType::MovingImage do
                                         "video/webm",
                                         "video/x-flv",
                                         "video/x-msvideo",
-                                        "video/x-ms-wmv") }
+                                        "video/x-ms-wmv",
+                                        "video/mts") }
   end
 
   describe "::types" do

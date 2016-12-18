@@ -9,10 +9,11 @@ describe AssetType::Dataset do
     it { is_expected.to contain_exactly("text/csv",
                                         "application/json",
                                         "application/x-filemaker",
-                                        "application/x-msexcel",
+                                        "application/vnd.ms-excel",
                                         "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
                                         "application/vnd.oasis.opendocument.spreadsheet",
                                         "application/xml",
+                                        "application/twbx",
                                         "text/tab-separated-values") }
   end
 
