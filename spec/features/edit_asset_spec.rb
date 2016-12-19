@@ -17,6 +17,12 @@ describe "Editing assets" do
     expect(selected_second_document_sub_type).to eq("http://definitions.artic.edu/doctypes/Lecture")
     expect(generic_work_hidden_asset_type.value).to eq("http://definitions.artic.edu/ontology/1.0/type/StillImage")
     expect(selected_publish_channel).to eq("http://definitions.artic.edu/publish_channel/Web")
+
+    # Displaying hints
+    within("div.generic_work_language") do
+      expect(page).to have_content("The language of the asset content.")
+    end
+
     click_link "Files"
     expect(page).to have_selector("li", text: "Adobe Portable Document Format")
     expect(page).to have_selector('.asset-stillimage')

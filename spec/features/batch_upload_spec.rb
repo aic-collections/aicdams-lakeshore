@@ -29,5 +29,10 @@ describe "Batch upload" do
     select("Imaging", from: "batch_upload_item_document_type_uri")
     select("Event", from: "batch_upload_item_first_document_sub_type_uri")
     select("Lecture", from: "batch_upload_item_second_document_sub_type_uri")
+
+    # Displaying hints
+    within("div.batch_upload_item_language") do
+      expect(page).to have_content("The language of the asset content.")
+    end
   end
 end

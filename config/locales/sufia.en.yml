@@ -190,7 +190,7 @@ en:
         document_uris: "Assets documenting this resource."
         preferred_representation_uri: "Preferred image representing the resource. This will be used for the resource thumbnail and similar purposes"
         representation_uris: "Visual representations of this resource."
-      generic_work:
+      asset: &asset
         capture_device: "Capture device of original file."
         compositing_uri: "Whether the image is a composite, a part of a composite, a layer in a multi-layer image, etc."
         contributor: "Agent who participated in the creation of the resource although not in a primary role."
@@ -214,6 +214,10 @@ en:
         view_notes: "Additional notes related to view. <em>Please use the 'view' field first and only add here what is not already available as an option in the drop-down menu.</em>"
         view_uris: "Viewing angle, overall or detail, etc."
         visual_surrogate: "Description of an image meant to be used as a reference for visually impaired users (ADA compatibility)."
+      generic_work:
+        <<: *asset
+      batch_upload_item:
+        <<: *asset
 
   curation_concerns:
     institution:
