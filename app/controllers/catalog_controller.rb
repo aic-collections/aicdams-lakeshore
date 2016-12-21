@@ -21,6 +21,18 @@ class CatalogController < ApplicationController
     solr_name("file_size", :stored_sortable, type: :integer)
   end
 
+  # disable the bookmark control from displaying in gallery view
+  # Sufia doesn't show any of the default controls on the list view, so
+  # this method is not called in that context.
+  def render_bookmarks_control?
+    false
+  end
+
+  # Overrides Sufia::Catalog
+  def search_builder_class
+    CatalogSearchBuilder
+  end
+
   configure_blacklight do |config|
     config.view.gallery.partials = [:index_header, :index]
     config.view.masonry.partials = [:index]
@@ -32,7 +44,7 @@ class CatalogController < ApplicationController
     config.advanced_search ||= Blacklight::OpenStructWithHashAccess.new
     # config.advanced_search[:qt] ||= 'advanced'
     config.advanced_search[:url_key] ||= 'advanced'
-    config.advanced_search[:query_parser] ||= 'dismax'
+    config.advanced_search[:query_parser] ||= 'edismax'
     config.advanced_search[:form_solr_parameters] ||= {}
 
     config.search_builder_class = Sufia::SearchBuilder
@@ -351,12 +363,5 @@ class CatalogController < ApplicationController
     # If there are more than this many search results, no spelling ("did you
     # mean") suggestion is offered.
     config.spell_max = 5
-  end
-
-  # disable the bookmark control from displaying in gallery view
-  # Sufia doesn't show any of the default controls on the list view, so
-  # this method is not called in that context.
-  def render_bookmarks_control?
-    false
   end
 end

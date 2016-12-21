@@ -3,6 +3,12 @@ require 'rails_helper'
 
 describe CatalogController do
   include_context "authenticated saml user"
+
+  describe "#search_builder_class" do
+    subject { described_class.new }
+    its(:search_builder_class) { is_expected.to eq(CatalogSearchBuilder) }
+  end
+
   context "when Lists are present" do
     let!(:list) { create(:list, edit_users: ["user1"]) }
     it "excludes List resources from search results" do

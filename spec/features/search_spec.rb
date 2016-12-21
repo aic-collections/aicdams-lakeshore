@@ -33,9 +33,9 @@ describe "Searching" do
       end
     end
 
-    it "displays search results for non-assets" do
+    it "displays search results for non-assets using a wildcard search" do
       visit(root_path)
-      fill_in(:q, with: "Great Sidewalk Gum")
+      fill_in(:q, with: "Side*")
       click_button("Go")
       within("div#search-results") do
         expect(page).to have_selector("td", text: "Department 100")
