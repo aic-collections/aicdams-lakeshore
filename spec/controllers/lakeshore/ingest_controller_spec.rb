@@ -56,4 +56,17 @@ describe Lakeshore::IngestController do
       its(:body) { is_expected.to eq("[\"Intermediate file is not the correct asset type\"]") }
     end
   end
+
+  context "when uploading a duplicate file" do
+    let(:duplicate_file) { double }
+    subject { response }
+
+    before do
+      allow(AssetTypeVerificationService).to receive(:call).with("asset", AICType.StillImage).and_return(true)
+      allow(controller).to receive(:duplicate_upload).and_return([duplicate_file])
+      post :create, asset_type: "StillImage", content: { intermediate: "asset" }, metadata: metadata
+    end
+    it { is_expected.to be_bad_request }
+    its(:body) { is_expected.to start_with("[\"Intermediate file is a duplicate of") }
+  end
 end

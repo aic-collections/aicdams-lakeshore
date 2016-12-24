@@ -10,7 +10,12 @@
         </div>
         <div class="col-sm-6">
           {% if (file.error) { %}
-              <div><span class="label label-danger">Error</span> {%=file.error%}</div>
+            <div>
+              <span class="label label-danger">Error</span> {%=file.error%}
+              {% if (file.duplicate_path) { %}
+                <a href="{%=file.duplicate_path%}">{%=file.duplicate_name%}</a>
+              {% } %}
+            </div>
           {% } %}
           <span class="size">{%=o.formatFileSize(file.size)%}</span>
           <button class="btn btn-danger delete pull-right" data-type="{%=file.deleteType%}" data-url="{%=file.deleteUrl%}"{% if (file.deleteWithCredentials) { %} data-xhr-fields='{"withCredentials":true}'{% } %}>

@@ -9,6 +9,9 @@ en:
       asset_type_descr_sound_html: "<p>Use this type for files containing audio with no video. For A/V files, use the &ldquo;Moving Image&rdquo; type.</p>"
       asset_type_descr_stillimage_html: "<p>Use this type for files whose <strong>content</strong> is predominantly image-based. Line drawings and graphs also belong to this group.</p><p>For files with mixed content, e.g. a PDF with an image and a caption, it is appropriate to select this type.</p>"
       asset_type_descr_text_html: "<p>Use this type for files whose <strong>content</strong> is predominantly text-based. Image files of scanned text also belong to this category.</p><p>For files with mixed content, e.g. a report with text and images, it is appropriate to select this type.</p>"
+      errors:
+        invalid: "Incorrect asset type. %{name} is not a type of %{type}"
+        duplicate: "%{name} is a duplicate of:"
     relationship:
       add_assets: "Add New Assets to this Resource"
       batch_add_representations: "Add Representations"

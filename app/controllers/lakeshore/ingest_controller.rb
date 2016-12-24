@@ -5,7 +5,7 @@ module Lakeshore
     # load_and_authorize_resource :curation_concern, class: 'GenericWork'
 
     delegate :intermediate_file, :asset_type, :ingestor, :attributes_for_actor, to: :ingest
-    before_action :validate_ingest, :validate_asset_type
+    before_action :validate_ingest, :validate_asset_type, :validate_duplicate_upload
 
     def create
       if actor.create(attributes_for_actor)
@@ -28,6 +28,12 @@ module Lakeshore
         render json: ingest.errors.full_messages, status: :bad_request
       end
 
+      def validate_duplicate_upload
+        return if duplicate_upload.empty?
+        ingest.errors.add(:intermediate_file, "is a duplicate of #{duplicate_upload.first}")
+        render json: ingest.errors.full_messages, status: :bad_request
+      end
+
     private
 
       def ingest
@@ -40,6 +46,10 @@ module Lakeshore
 
       def curation_concern
         @curation_concern ||= GenericWork.new
+      end
+
+      def duplicate_upload
+        @duplicate_upload ||= DuplicateUploadVerificationService.new(intermediate_file).duplicates
       end
   end
 end

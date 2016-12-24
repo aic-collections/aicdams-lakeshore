@@ -5,6 +5,9 @@ describe Sufia::UploadsController do
   routes { Sufia::Engine.routes }
   include_context "authenticated saml user"
 
+  let(:duplicates) { [] }
+  before { allow(controller).to receive(:duplicate_upload).and_return(duplicates) }
+
   describe "uploading a single asset" do
     before { post :create, files: [file], generic_work: work_attributes, format: 'json' }
 
@@ -15,6 +18,19 @@ describe Sufia::UploadsController do
         expect(response).to be_success
         expect(assigns(:upload)).to be_kind_of Sufia::UploadedFile
         expect(assigns(:upload)).to be_persisted
+      end
+
+      context "when the file is a duplicate" do
+        let(:parent)         { create(:asset) }
+        let(:duplicate_file) { create(:file_set) }
+        let(:duplicates)     { [duplicate_file] }
+
+        before { parent.members << duplicate_file }
+
+        it "reports the error" do
+          expect(response).to be_success
+          expect(response.body).to include("sun.png is a duplicate")
+        end
       end
     end
 

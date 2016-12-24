@@ -2,7 +2,7 @@
 module Sufia
   class UploadsController < ApplicationController
     load_and_authorize_resource class: UploadedFile
-    before_action :validate_asset_type, only: [:create]
+    before_action :validate_asset_type, :validate_duplicate_upload, only: [:create]
 
     def create
       @upload.attributes = { file: uploaded_file, user: current_user }
@@ -18,7 +18,12 @@ module Sufia
 
       def validate_asset_type
         return if AssetTypeVerificationService.call(uploaded_file, asset_type)
-        render json: { files: [{ error: error_message }] }
+        render json: { files: [error_message] }
+      end
+
+      def validate_duplicate_upload
+        return if duplicate_upload.empty?
+        render json: { files: [duplicate_error_message] }
       end
 
       def uploaded_file
@@ -35,13 +40,27 @@ module Sufia
       end
 
       def error_message
-        "Incorrect asset type. #{uploaded_file.original_filename} is not a type of #{type_label}"
+        {
+          error: t('lakeshore.upload.errors.invalid', name: uploaded_file.original_filename, type: type_label)
+        }
+      end
+
+      def duplicate_error_message
+        {
+          error:          t('lakeshore.upload.errors.duplicate', name: uploaded_file.original_filename),
+          duplicate_path: polymorphic_path(duplicate_upload.first),
+          duplicate_name: duplicate_upload.first.to_s
+        }
       end
 
       # We use this controller with both the single upload and batch upload form
       # so it needs to work with both kinds of parameter hashes.
       def asset_attributes
         params.fetch(:generic_work, nil) || params.fetch(:batch_upload_item, nil)
+      end
+
+      def duplicate_upload
+        @duplicate_upload ||= DuplicateUploadVerificationService.new(uploaded_file).duplicates
       end
   end
 end
