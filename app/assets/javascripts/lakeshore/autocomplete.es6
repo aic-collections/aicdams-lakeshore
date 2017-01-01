@@ -1,19 +1,19 @@
 // lakeshore/autocomplete.es6
 export class AutocompleteControl {
-  // initialize the provide HTMLElement with the jQuery select2 module
-  // the initialize function assumes a single entity, or an array of entities that all get the same values.
-  // but select2 needs to be called on an array of unique values.
+  // initialize the provided HTMLElements with the jQuery select2 module
   initialize(el) {
-    $(el).select2({
-      placeholder: ( el.dataset.placeholder !== undefined && el.dataset.placeholder.length > 0 ) ? el.dataset.placeholder : 'Search for a Resource by title, ID or main ref. number...',
-      minimumInputLength: ( el.dataset.minchars !== undefined && el.dataset.minchars.length > 0 ) ? el.dataset.minchars : 3,
+    var elem = $(el).find(".autocomplete");
+    elem.select2({
+      placeholder: ( elem.data("placeholder") !== undefined && elem.data("placeholder").length > 0 ) ? elem.data("placeholder") : 'Search for a Resource by title, ID or main ref. number...',
+      minimumInputLength: ( elem.data("minchars") !== undefined && elem.data("minchars").length > 0 ) ? elem.data("minchars") : 3,
       ajax: { // instead of writing the function to execute the request we use Select2's convenient helper
-        url: ( el.dataset.endpoint !== undefined && el.dataset.endpoint.length > 0 ) ? el.dataset.endpoint :
+        url: ( elem.data("endpoint") !== undefined && elem.data("endpoint").length > 0 ) ? elem.data("endpoint") :
             '/autocomplete',
         dataType: 'json',
         data: function (term, page) {
-          if ( $('#autocomplete_model').length > 0 ) {
-            return { q: term, model: $('#autocomplete_model').val() }
+          var model_select = $(el).find(".autocomplete_model")[1]
+          if ( $(model_select).length > 0 ) {
+            return { q: term, model: $(model_select).val() }
           }
           else {
             return { q: term }

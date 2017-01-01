@@ -16,6 +16,8 @@ export class AssetManager {
       event.preventDefault()
       $this.data = $(this).data()
       $('table.'+$this.data.attribute).append($this.assetRow)
+      var sel = "." + $this.data.attribute
+      $(sel).select2("val", "")
     })
 
     $('.am').on('click', '.am-delete', function(event) {
@@ -51,7 +53,7 @@ export class AssetManager {
         '<td>' +
            this.selectedAssetText + this.hiddenInput +
         '</td>' +
-        '<td><a href="#" class="btn btn-danger btn-xs am-delete">Remove</a></td>' +
+        '<td><a href="#" class="btn btn-danger am-delete">- Remove</a></td>' +
       '</td>'
     return html
   }
@@ -59,7 +61,7 @@ export class AssetManager {
   // Input inserted when a asset is selected
   get hiddenInput() {
     var id = this.data.model + '_' + this.data.attribute
-    return '<input value="'+this.selectedAssetUti+'" id="'+id+'" name="'+this.data.name+'" type="hidden" />' 
+    return '<input value="'+this.selectedAssetUti+'" id="'+id+'" name="'+this.data.name+'" type="hidden" />'
   }
 
   get selectedAssetText() {

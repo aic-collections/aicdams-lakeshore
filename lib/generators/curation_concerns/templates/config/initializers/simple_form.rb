@@ -1,6 +1,4 @@
 # frozen_string_literal: true
-# NOTE: This is a modified version of simple_form's default config file.
-#       The only changes were to move the input to after the hint and error.
 
 # Use this setup block to configure all options available in SimpleForm.
 SimpleForm.setup do |config|
@@ -45,8 +43,9 @@ SimpleForm.setup do |config|
     b.optional :readonly
 
     ## Inputs
-    b.use :label
-    b.use :hint,  wrap_with: { tag: :span, class: :hint }
+    b.optional :label
+    b.optional :hint,  wrap_with: { tag: :span, class: :hint }
+
     b.use :error, wrap_with: { tag: :span, class: :error }
     b.use :input
 
@@ -123,7 +122,7 @@ SimpleForm.setup do |config|
   # in this configuration, which is recommended due to some quirks from different browsers.
   # To stop SimpleForm from generating the novalidate option, enabling the HTML5 validations,
   # change this configuration to true.
-  config.browser_validations = true
+  config.browser_validations = false
 
   # Collection of methods to detect if a file type was given.
   # config.file_methods = [ :mounted_as, :file?, :public_filename ]
