@@ -17,3 +17,4 @@ dump.rdb
 .byebug_history
 public/uploads
 public/protected
+fcrepo4-test-data

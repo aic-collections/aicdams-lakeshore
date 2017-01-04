@@ -1,14 +1,28 @@
-<h3>Relationships for this asset</h3>
-<%= select_tag "autocomplete_model", options_for_select(
-      [ "Agent", "Asset", "Exhibition", "Place", "Shipment", "Transaction", "Work" ], "Agent") %>
-
+<h3 class="asset-relationships">Relationships for this asset</h3>
 <div id="representations">
   <% if params.fetch(:representation_for, nil) %>
-  <!-- this is a good case for new property on presenter that tries for preferred label and defaults to id.-->
+  <!-- this is a good case for new property on presenter that tries for preferred label and defaults to id.
+
+  So. theres one select foreach type of relationship, needs to be one for each, from ui pov. hudden multi select is using default label from gem, needs to overridden. -->
     <p>This Asset will be added as a representation of CITI resource <%= params.fetch(:resource_title) %>.</p>
     <%= f.hidden_field :additional_representation, value: params.fetch(:representation_for) %>
   <% end %>
-  <%= f.input :representations_for, as: :hidden_multi_select, input_html: { class: 'form-control' }, required: false %>
+    <h4>Representation Of</h4>
+    <p>
+      <em>Resources this Asset is a visual representation of (whether as total, detail, or specific angle).
+      </em>
+    </p>
+  <table class="autocomplete-components">
+    <tr>
+      <td>
+        <%= select_tag "autocomplete_representations", options_for_select(
+          [ "Agent", "Exhibition", "Place", "Shipment", "Transaction", "Work" ], "Work"), { class: "autocomplete_model", style: "width: 110px;" } %>
+      </td>
+      <td>
+        <%= f.input :representations_for, as: :hidden_multi_select, hint: false, label: false, input_html: { class: 'form-control' }, required: false %>
+      </td>
+    </tr>
+  </table>
 </div>
 
 <div id="documents">
@@ -16,14 +30,59 @@
     <p>This Asset will be added as documentation of CITI resource <%= params.fetch(:resource_title) %>.</p>
     <%= f.hidden_field :additional_document, value: params.fetch(:document_for) %>
   <% end %>
-  <%= f.input :documents_for, as: :hidden_multi_select, input_html: { class: 'form-control' }, required: false %>
+  <h4>Documentation For</h4>
+  <p>
+    <em>
+      Resources that this Asset documents (this can be visual documentation as well, such as the image of a conservation process, or a microphotograph, or images of a facility's features).
+    </em>
+  </p>
+  <table class="autocomplete-components">
+    <tr>
+      <td>
+        <%= select_tag "autocomplete_documents", options_for_select(
+          [ "Agent", "Exhibition", "Place", "Shipment", "Transaction", "Work" ], "Work"), { class: "autocomplete_model", style: "width: 110px;" } %>
+      </td>
+      <td>
+          <%= f.input :documents_for, as: :hidden_multi_select, hint: false, label: false, input_html: { class: 'form-control' }, required: false %>
+      </td>
+    </tr>
+  </table>
 </div>
 
 <div id="attachments">
-  <%= f.input :attachment_uris, as: :hidden_multi_select, property: :attachments,
-      input_html: { class: 'form-control' }, required: false %>
+  <h4>Attachment Of</h4>
+  <p>
+    <em>Other Assets that this asset is attached to. This can be a report which has this asset as ancillary documentation, for example.
+    </em>
+  </p>
+  <table class="autocomplete-components">
+    <tr>
+      <td>
+        <%= select_tag "autocomplete_attachments", options_for_select(
+          [ "Asset"], "Asset"), { class: "autocomplete_model", style: "width: 110px;" } %>
+        </td>
+        <td>
+          <%= f.input :attachment_uris, as: :hidden_multi_select, hint: false, label: false, property: :attachments, input_html: { class: 'form-control' }, required: false %>
+        </td>
+      </tr>
+  </table>
 </div>
 
 <div id="attachments_for">
-  <%= f.input :attachments_for, as: :hidden_multi_select, input_html: { class: 'form-control' }, required: false %>
+  <h4>Has Attachment</h4>
+  <p>
+    <em>Other Assets that are attached to this asset, e.g. additional images for a report.
+    </em>
+  </p>
+  <table class="autocomplete-components">
+    <tr>
+      <td>
+        <%= select_tag "autocomplete_attachments_for", options_for_select(
+          [ "Asset"], "Asset"), { class: "autocomplete_model", style: "width: 110px;" } %>
+        </td>
+        <td>
+          <%= f.input :attachments_for, as: :hidden_multi_select, hint: false, label: false, input_html: { class: 'form-control' }, required: false %>
+        </td>
+      </tr>
+  </table>
 </div>

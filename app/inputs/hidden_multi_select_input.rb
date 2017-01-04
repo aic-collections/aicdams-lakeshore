@@ -13,12 +13,12 @@ class HiddenMultiSelectInput < MultiValueInput
 
       <<-HTML
         <input type="hidden" class="autocomplete bigdrop #{attribute_name}" data-placeholder="#{placeholder}" data-endpoint="#{endpoint}" data-minchars="#{minchars}"
-           id="#{input_html_options[:id]}" style="width: 600px;">
-        <a href="#" class="am-add"
+           id="#{input_html_options[:id]}">
+        <a href="#" class="am-add btn btn-success"
            data-attribute="#{attribute_name}"
            data-model="#{object.model.class.to_s.downcase}"
-           data-name="#{input_html_options[:name]}">Add</a>
-        <table class="table table-condensed am #{attribute_name}">
+           data-name="#{input_html_options[:name]}">+ Add</a>
+        <table class="table-condensed am #{attribute_name}">
           #{yield}
         </table>
       HTML
@@ -40,7 +40,7 @@ class HiddenMultiSelectInput < MultiValueInput
           #{resources[index].pref_label}
           #{yield}
         </td>
-        <td><a href="#" class="btn btn-danger btn-xs am-delete">Remove</a></td>
+        <td><a href="#" class="btn btn-danger am-delete">- Remove</a></td>
       HTML
     end
 

@@ -87,6 +87,49 @@ div.facets h3 {
 	min-height: 25px;
 }
 
+table.autocomplete-components {
+  width: 100%;
+}
+
+div table.autocomplete-components td,
+div#documents td {
+  vertical-align: top;
+}
+
+table.autocomplete-components div.autocomplete.bigdrop {
+  width: 80%;
+}
+
+table.autocomplete-components table.table-condensed {
+  width: 100%;
+}
+
+div.autocomplete-components {
+  width: 650px;
+}
+
+div.autocomplete-components div.autocomplete.bigdrop {
+  width: 530px;
+}
+
+div.autocomplete-components table.table-condensed {
+  width: 100%;
+}
+
+table.autocomplete-components a.btn,
+div.autocomplete-components a.btn {
+  width: 86px;
+  float: right;
+}
+
+h3.asset-relationships {
+  margin-bottom: 30px;
+}
+
+table.table-condensed > tbody > tr > td {
+  padding-right: 0;
+}
+
 ul.nav {
 	padding-right: 0px;
 }

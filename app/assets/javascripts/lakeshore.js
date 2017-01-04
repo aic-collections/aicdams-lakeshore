@@ -2,8 +2,12 @@
 Lakeshore = {
   initialize: function () {
     this.assetTypeControl();
-    $('.autocomplete').each(function (i) {
+    $('.autocomplete-components').each(function (i) {
       Lakeshore.autocompleteControl(this);
+    });
+    $('.autocomplete_model').select2({
+      theme: "classic",
+      minimumResultsForSearch: Infinity
     });
     this.assetManager();
     this.assetWorkflow();
