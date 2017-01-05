@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 gem 'rails', '4.2.7.1'
-
+gem 'posix-spawn'
 # Hydra Gems
 gem 'sufia', '~> 7.2'
 gem 'flipflop', git: 'https://github.com/jcoyne/flipflop.git', branch: 'hydra'
