@@ -7,6 +7,7 @@ describe "Displaying an asset" do
   let(:asset)      { create(:department_asset, :with_metadata, attachments: [attachment.uri]) }
 
   before do
+    LakeshoreTesting.restore
     create(:exhibition, preferred_representation: asset.uri)
     create(:work, representations: [asset.uri])
     create(:shipment, documents: [asset.uri])
