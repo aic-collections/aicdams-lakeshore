@@ -5,9 +5,13 @@ describe FileSet do
   let(:file)        { build(:department_file, id: '1234') }
   let(:derivatives) { CurationConcerns::DerivativePath.derivatives_for_reference(file) }
 
-  before { LakeshoreTesting.reset_derivatives }
+  describe "::office_document_mime_types" do
+    subject { described_class }
+    its(:office_document_mime_types) { is_expected.to include("text/plain") }
+  end
 
   describe "#create_derivatives" do
+    before { LakeshoreTesting.reset_derivatives }
     context "with image mime types" do
       let(:image_file) { File.join(fixture_path, "tardis.png") }
 
@@ -21,7 +25,8 @@ describe FileSet do
           },
           {
             label:    :access,
-            format:   "jp2[512x512]",
+            format:   "jp2",
+            size:     "3000x3000>",
             url:      "file:#{Rails.root}/tmp/test-derivatives/12/34-access.jp2"
           },
           {
@@ -82,6 +87,13 @@ describe FileSet do
             layer:    0,
             quality:  "90",
             url:      "file:#{Rails.root}/tmp/test-derivatives/12/34-citi.jpg"
+          },
+          {
+            label:    :access,
+            format:   "pdf",
+            size:     "1024x1024",
+            quality:  "90",
+            url:      "file:#{Rails.root}/tmp/test-derivatives/12/34-access.pdf"
           }
         ]
       end
@@ -91,6 +103,7 @@ describe FileSet do
       end
 
       before { allow(file).to receive(:mime_type).and_return("application/pdf") }
+      before { LakeshoreTesting.reset_derivatives }
 
       it "sends the correct parameters for pdf files" do
         expect(Hydra::Derivatives::PdfDerivatives).to receive(:create).with(pdf_file, outputs: outputs)

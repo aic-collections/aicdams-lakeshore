@@ -3,7 +3,6 @@
 class SolrDocument
   include Blacklight::Solr::Document
   include Blacklight::Gallery::OpenseadragonSolrDocument
-
   # Adds CurationConcerns behaviors to the SolrDocument.
   include CurationConcerns::SolrDocumentBehavior
   # Adds Sufia behaviors to the SolrDocument.
@@ -12,7 +11,6 @@ class SolrDocument
   include SolrDocumentExtensions
 
   # self.unique_key = 'id'
-
   # Email uses the semantic field mappings below to generate the body of an email.
   SolrDocument.use_extension(Blacklight::Document::Email)
 

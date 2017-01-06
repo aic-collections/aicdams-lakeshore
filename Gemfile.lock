@@ -694,6 +694,7 @@ DEPENDENCIES
   openseadragon (= 0.3.0)
   pg
   poltergeist
+  posix-spawn
   rails (= 4.2.7.1)
   resque-pool
   rsolr (~> 1.1)

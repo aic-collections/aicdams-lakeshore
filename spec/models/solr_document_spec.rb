@@ -15,6 +15,12 @@ describe SolrDocument do
     end
   end
 
+  describe "image types from Hydra::Works::MimeTypes" do
+    it "contains Hydra types and psd types" do
+      expect(subject.class.image_mime_types).to eq ["image/png", "image/jpeg", "image/jpg", "image/jp2", "image/bmp", "image/gif", "image/tiff", "image/psd", "image/vnd.adobe.photoshop"]
+    end
+  end
+
   describe "#visibility" do
     subject { described_class.new(asset.to_solr).visibility }
     context "with department assets" do

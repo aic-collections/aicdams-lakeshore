@@ -21,6 +21,7 @@ describe Lakeshore::IngestController do
   end
 
   context "when uploading a file" do
+    before { LakeshoreTesting.restore }
     it "successfully adds the fileset to the work" do
       expect(CharacterizeJob).to receive(:perform_later)
       post :create, asset_type: "StillImage", content: { intermediate: image_asset }, metadata: metadata
