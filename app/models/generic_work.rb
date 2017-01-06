@@ -58,6 +58,18 @@ class GenericWork < Resource
     document_type
   end
 
+  def original_file_set
+    members.select { |f| f.type.include?(AICType.OriginalFileSet) }
+  end
+
+  def intermediate_file_set
+    members.select { |f| f.type.include?(AICType.IntermediateFileSet) }
+  end
+
+  def preservation_file_set
+    members.select { |f| f.type.include?(AICType.PreservationMasterFileSet) }
+  end
+
   private
 
     def service

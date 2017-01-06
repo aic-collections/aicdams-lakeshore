@@ -27,5 +27,11 @@ describe Rails.application.routes do
                                                    format: :json,
                                                    asset_type: "Text")
     end
+    it "routes to updating an asset" do
+      expect(post: "/api/update/1234").to route_to(controller: "lakeshore/ingest",
+                                                   action: "update",
+                                                   id: "1234",
+                                                   format: :json)
+    end
   end
 end

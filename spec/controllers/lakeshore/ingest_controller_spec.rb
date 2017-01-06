@@ -11,63 +11,149 @@ describe Lakeshore::IngestController do
                                            tempfile:     File.new(File.join(fixture_path, "sun.png")))
   end
 
-  let(:metadata) do
-    { "visibility" => "department", "depositor" => user.email, "document_type_uri" => AICDocType.ConservationStillImage }
-  end
-
   before do
     LakeshoreTesting.reset_uploads
     sign_in_basic(apiuser)
   end
 
-  context "when uploading a file" do
-    before { LakeshoreTesting.restore }
-    it "successfully adds the fileset to the work" do
-      expect(CharacterizeJob).to receive(:perform_later)
-      post :create, asset_type: "StillImage", content: { intermediate: image_asset }, metadata: metadata
-      expect(response).to be_accepted
+  describe "#create" do
+    let(:metadata) do
+      { "visibility" => "department", "depositor" => user.email, "document_type_uri" => AICDocType.ConservationStillImage }
     end
-  end
 
-  context "when the ingest is invalid" do
-    before { post :create, asset_type: "StillImage" }
-    subject { response }
-    it { is_expected.to be_bad_request }
-    its(:body) { is_expected.to eq("[\"Ingestor can't be blank\",\"Document type uri can't be blank\",\"Intermediate file can't be blank\"]") }
-  end
+    context "when uploading a file" do
+      before { LakeshoreTesting.restore }
+      it "successfully adds the fileset to the work" do
+        expect(CharacterizeJob).to receive(:perform_later)
+        post :create, asset_type: "StillImage", content: { intermediate: image_asset }, metadata: metadata
+        expect(response).to be_accepted
+      end
+    end
 
-  describe "asset type validation" do
-    subject { response }
+    context "when the ingest is invalid" do
+      before { post :create, asset_type: "StillImage" }
+      subject { response }
+      it { is_expected.to be_bad_request }
+      its(:body) { is_expected.to eq("[\"Ingestor can't be blank\",\"Document type uri can't be blank\",\"Intermediate file can't be blank\"]") }
+    end
 
-    context "when uploading a text asset to StillImage" do
+    describe "asset type validation" do
+      subject { response }
+
+      context "when uploading a text asset to StillImage" do
+        before do
+          allow(AssetTypeVerificationService).to receive(:call).with("asset", AICType.StillImage).and_return(false)
+          post :create, asset_type: "StillImage", content: { intermediate: "asset" }, metadata: metadata
+        end
+        it { is_expected.to be_bad_request }
+        its(:body) { is_expected.to eq("[\"Intermediate file is not the correct asset type\"]") }
+      end
+
+      context "when uploading an image asset to Text" do
+        before do
+          allow(AssetTypeVerificationService).to receive(:call).with("asset", AICType.Text).and_return(false)
+          post :create, asset_type: "Text", content: { intermediate: "asset" }, metadata: metadata
+        end
+        it { is_expected.to be_bad_request }
+        its(:body) { is_expected.to eq("[\"Intermediate file is not the correct asset type\"]") }
+      end
+    end
+
+    context "when uploading a duplicate file" do
+      let(:duplicate_file) { double }
+      subject { response }
+
       before do
-        allow(AssetTypeVerificationService).to receive(:call).with("asset", AICType.StillImage).and_return(false)
+        allow(AssetTypeVerificationService).to receive(:call).with("asset", AICType.StillImage).and_return(true)
+        allow(controller).to receive(:duplicate_upload).and_return([duplicate_file])
         post :create, asset_type: "StillImage", content: { intermediate: "asset" }, metadata: metadata
       end
-      it { is_expected.to be_bad_request }
-      its(:body) { is_expected.to eq("[\"Intermediate file is not the correct asset type\"]") }
+      its(:status) { is_expected.to eq(409) }
+      its(:body) { is_expected.to start_with("[\"Intermediate file is a duplicate of") }
     end
 
-    context "when uploading an image asset to Text" do
-      before do
-        allow(AssetTypeVerificationService).to receive(:call).with("asset", AICType.Text).and_return(false)
-        post :create, asset_type: "Text", content: { intermediate: "asset" }, metadata: metadata
+    context "when the ingestor does not exist in Fedora" do
+      let(:metadata) do
+        { "visibility" => "department", "depositor" => "bogus", "document_type_uri" => AICDocType.ConservationStillImage }
       end
+
+      subject { response }
+
+      before { post :create, asset_type: "StillImage", content: { intermediate: image_asset }, metadata: metadata }
+
       it { is_expected.to be_bad_request }
-      its(:body) { is_expected.to eq("[\"Intermediate file is not the correct asset type\"]") }
+      its(:body) { is_expected.to eq("[\"Ingestor can't be blank\"]") }
     end
   end
 
-  context "when uploading a duplicate file" do
-    let(:duplicate_file) { double }
-    subject { response }
+  describe "#update" do
+    let(:metadata) { { "depositor" => user.email } }
 
-    before do
-      allow(AssetTypeVerificationService).to receive(:call).with("asset", AICType.StillImage).and_return(true)
-      allow(controller).to receive(:duplicate_upload).and_return([duplicate_file])
-      post :create, asset_type: "StillImage", content: { intermediate: "asset" }, metadata: metadata
+    let(:replacement_asset) do
+      ActionDispatch::Http::UploadedFile.new(filename:     "tardis.png",
+                                             content_type: "image/png",
+                                             tempfile:     File.new(File.join(fixture_path, "tardis.png")))
     end
-    its(:status) { is_expected.to eq(409) }
-    its(:body) { is_expected.to start_with("[\"Intermediate file is a duplicate of") }
+
+    before { LakeshoreTesting.restore }
+
+    context "with an intermediate file" do
+      subject { asset.intermediate_file_set.first }
+
+      context "when none exists" do
+        let(:asset) { create(:asset) }
+
+        before do
+          allow(CharacterizeJob).to receive(:perform_later)
+          post :update, id: asset.id, content: { intermediate: image_asset }, metadata: metadata
+          asset.reload
+        end
+
+        its(:title) { is_expected.to eq(["sun.png"]) }
+      end
+
+      context "when one already exists" do
+        let(:asset) { create(:asset, :with_intermediate_file_set) }
+
+        before do
+          allow(CharacterizeJob).to receive(:perform_later)
+          post :update, id: asset.id, content: { intermediate: replacement_asset }, metadata: metadata
+          asset.reload
+        end
+
+        its(:title) { is_expected.to eq(["tardis.png"]) }
+      end
+    end
+
+    context "with an original file" do
+      subject { asset.original_file_set.first }
+
+      context "when none exists" do
+        let(:asset) { create(:asset) }
+
+        before do
+          allow(CharacterizeJob).to receive(:perform_later)
+          post :update, id: asset.id, content: { original: image_asset }, metadata: metadata
+          asset.reload
+        end
+
+        its(:title) { is_expected.to eq(["sun.png"]) }
+      end
+
+      context "when one already exists" do
+        let(:asset) { create(:asset, :with_original_file_set) }
+
+        before do
+          allow(CharacterizeJob).to receive(:perform_later)
+          post :update, id: asset.id, content: { original: replacement_asset }, metadata: metadata
+          asset.reload
+        end
+
+        # TODO: it's replacing the file, but not the metadata
+        it "replaces the file" do
+          expect(subject.characterization_proxy.file_name).to eq(["tardis.png"])
+        end
+      end
+    end
   end
 end

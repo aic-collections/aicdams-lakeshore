@@ -11,12 +11,13 @@ module Lakeshore
     # @param [ActionController::Parameters] params from the controller
     def initialize(params)
       @params = params
-      @submitted_asset_type = params.fetch(:asset_type)
+      @submitted_asset_type = params.fetch(:asset_type, nil)
       register_files(params.fetch(:content, {}))
       register_terms(params.fetch(:metadata, {}))
     end
 
     def asset_type
+      return unless submitted_asset_type
       return AICType.send(submitted_asset_type) if AICType.respond_to?(submitted_asset_type)
       errors.add(:asset_type, "#{submitted_asset_type} is not a registered asset type")
     end
@@ -25,7 +26,7 @@ module Lakeshore
     # Order is important. The representative file set is the first one added to the work. We
     # want the intermediate file to be the representative.
     def files
-      return [] unless valid?
+      return [] unless valid? || valid_update?
       [intermediate_upload, original_upload, presevation_master_upload].compact + additional_uploads
     end
 
@@ -34,6 +35,11 @@ module Lakeshore
       attributes[:uploaded_files] = files
       attributes[:permissions_attributes] = JSON.parse(params.fetch(:sharing, "[]"))
       attributes.merge!(asset_type: asset_type)
+    end
+
+    # TODO: We ought to be able to use features of ActiveModel::Validations instead of this custom method
+    def valid_update?
+      ingestor.present?
     end
 
     private
@@ -46,6 +52,7 @@ module Lakeshore
 
       def find_or_create_user(key)
         return unless key
+        return unless AICUser.find_by_nick(key).present?
         User.find_by_user_key(key) || User.create!(email: key)
       end
 

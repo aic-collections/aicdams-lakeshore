@@ -21,6 +21,16 @@ describe Lakeshore::Ingest do
     end
   end
 
+  describe "#valid_update?" do
+    let(:params) do
+      { metadata: { action: "update", depositor: user.email } }
+    end
+
+    subject { ingest }
+
+    it { is_expected.to be_valid_update }
+  end
+
   describe "#errors" do
     before { ingest.validate }
 

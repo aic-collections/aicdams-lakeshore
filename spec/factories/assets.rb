@@ -29,6 +29,18 @@ FactoryGirl.define do
       end
     end
 
+    trait :with_intermediate_file_set do
+      after(:create) do |asset|
+        asset.members << FactoryGirl.create(:intermediate_file_set)
+      end
+    end
+
+    trait :with_original_file_set do
+      after(:create) do |asset|
+        asset.members << FactoryGirl.create(:original_file_set)
+      end
+    end
+
     trait :with_metadata do
       pref_label                   "Asset with metadata"
       description                  ["A sample asset with a complete listing of metadata"]

@@ -242,4 +242,28 @@ describe GenericWork do
       expect(facets_for(Solrizer.solr_name("representation", :facetable), attachment.id)).to contain_exactly("Is Attachment Of", 1)
     end
   end
+
+  describe "FileSet types" do
+    let(:asset)        { build(:asset) }
+    let(:original)     { build(:original_file_set) }
+    let(:intermediate) { build(:intermediate_file_set) }
+    let(:preservation) { build(:preservation_file_set) }
+    let(:other)        { build(:file_set) }
+
+    subject { asset }
+
+    before { asset.members = [original, intermediate, preservation, other] }
+
+    context "with an original file" do
+      its(:original_file_set) { is_expected.to contain_exactly(original) }
+    end
+
+    context "with an intermediate file" do
+      its(:intermediate_file_set) { is_expected.to contain_exactly(intermediate) }
+    end
+
+    context "with a preservation master" do
+      its(:preservation_file_set) { is_expected.to contain_exactly(preservation) }
+    end
+  end
 end

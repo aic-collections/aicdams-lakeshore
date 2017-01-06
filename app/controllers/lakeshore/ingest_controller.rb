@@ -5,10 +5,18 @@ module Lakeshore
     # load_and_authorize_resource :curation_concern, class: 'GenericWork'
 
     delegate :intermediate_file, :asset_type, :ingestor, :attributes_for_actor, to: :ingest
-    before_action :validate_ingest, :validate_asset_type, :validate_duplicate_upload
+    before_action :validate_ingest, :validate_asset_type, :validate_duplicate_upload, only: [:create]
 
     def create
       if actor.create(attributes_for_actor)
+        head :accepted
+      else
+        render_json_response(response_type: :unprocessable_entity, options: { errors: curation_concern.errors })
+      end
+    end
+
+    def update
+      if actor.update(attributes_for_actor)
         head :accepted
       else
         render_json_response(response_type: :unprocessable_entity, options: { errors: curation_concern.errors })
@@ -45,7 +53,11 @@ module Lakeshore
       end
 
       def curation_concern
-        @curation_concern ||= GenericWork.new
+        @curation_concern ||= if params[:id]
+                                GenericWork.find(params[:id])
+                              else
+                                GenericWork.new
+                              end
       end
 
       def duplicate_upload

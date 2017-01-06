@@ -32,6 +32,24 @@ FactoryGirl.define do
       end
     end
 
+    factory :original_file_set do
+      after(:build) do |file|
+        file.type << AICType.OriginalFileSet
+      end
+    end
+
+    factory :intermediate_file_set do
+      after(:build) do |file|
+        file.type << AICType.IntermediateFileSet
+      end
+    end
+
+    factory :preservation_file_set do
+      after(:build) do |file|
+        file.type << AICType.PreservationMasterFileSet
+      end
+    end
+
     after(:build) do |file, evaluator|
       file.apply_depositor_metadata(evaluator.user.user_key)
     end
