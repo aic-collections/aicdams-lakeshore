@@ -6,7 +6,7 @@
 //= require fileupload/jquery.fileupload-ui.js
 //
 
-// Overrides Sufia uploader.js to set maxFileSize
+// Overrides Sufia uploader.js to set maxFileSize and maxNumberOfFiles
 
 /*
  * jQuery File Upload Plugin JS Example
@@ -31,7 +31,7 @@
         // acceptFileTypes: /(\.|\/)(png|mov|jpe?g|pdf)$/i, // not a strong check, just a regex on the filename
         // limitMultiFileUploadSize: 500000000, // bytes
         limitConcurrentUploads: 6,
-        maxNumberOfFiles: 100,
+        maxNumberOfFiles: 150,
         maxFileSize: 3000000000, // bytes, i.e. 3 GB
         autoUpload: true,
         url: '/uploads/',
