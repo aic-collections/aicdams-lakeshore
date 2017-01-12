@@ -14,20 +14,47 @@ describe AICUser do
     its(:family_name) { is_expected.to eq("Bob") }
   end
 
-  describe "::search" do
+  context "using existing records in Fedora and Solr" do
     before(:all) { create(:aic_user, family_name: "James", given_name: "LeBron", nick: "theking") }
-    subject { described_class.search(params).map { |r| r.fetch(:id) } }
-    context "with a fuzzy search" do
-      let(:params) { "bron" }
-      it { is_expected.to include("theking") }
+
+    describe "::search" do
+      subject { described_class.search(params).map { |r| r.fetch(:id) } }
+      context "with a fuzzy search" do
+        let(:params) { "bron" }
+        it { is_expected.to include("theking") }
+      end
+      context "with an exact search" do
+        let(:params) { "theking" }
+        it { is_expected.to include("theking") }
+      end
+      context "with a null search" do
+        let(:params) { "asdf" }
+        it { is_expected.to be_empty }
+      end
     end
-    context "with an exact search" do
-      let(:params) { "theking" }
-      it { is_expected.to include("theking") }
-    end
-    context "with a null search" do
-      let(:params) { "asdf" }
-      it { is_expected.to be_empty }
+
+    describe "::find_by_nick" do
+      context "with solr" do
+        context "using an existing user" do
+          subject { described_class.find_by_nick("theking", with_solr: true) }
+          its(:nick) { is_expected.to eq("theking") }
+        end
+
+        context "when the user doesn't exist" do
+          subject { described_class.find_by_nick("zxcv", with_solr: true) }
+          it { is_expected.to be_nil }
+        end
+
+        context "with a nil nick" do
+          subject { described_class.find_by_nick(nil, with_solr: true) }
+          it { is_expected.to be_nil }
+        end
+      end
+
+      context "without solr" do
+        subject { described_class.find_by_nick("theking") }
+        its(:nick) { is_expected.to eq("theking") }
+      end
     end
   end
 

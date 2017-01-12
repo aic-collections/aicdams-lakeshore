@@ -73,4 +73,16 @@ module SolrDocumentExtensions
   def thumbnail_path
     Array(self['thumbnail_path_ss']).first
   end
+
+  def nick
+    Array(self[Solrizer.solr_name('nick', :stored_searchable)]).first
+  end
+
+  def family_name
+    Array(self[Solrizer.solr_name('family_name', :stored_searchable)]).first
+  end
+
+  def given_name
+    Array(self[Solrizer.solr_name('given_name', :stored_searchable)]).first
+  end
 end

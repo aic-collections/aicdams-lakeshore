@@ -32,5 +32,17 @@ describe Department do
       subject { described_class.find_by_department_key("201") }
       it { is_expected.to be_nil }
     end
+    context "using solr" do
+      subject { described_class.find_by_citi_uid("200", with_solr: true) }
+      its(:pref_label) { is_expected.to eq("Department 200") }
+    end
+    context "using solr with a nil department" do
+      subject { described_class.find_by_citi_uid(nil, with_solr: true) }
+      it { is_expected.to be_nil }
+    end
+    context "using solr with a non-existent department" do
+      subject { described_class.find_by_citi_uid("zxc", with_solr: true) }
+      it { is_expected.to be_nil }
+    end
   end
 end

@@ -18,11 +18,11 @@ module Devise::Behaviors::SamlAuthenticatableBehavior
   end
 
   def aic_user
-    AICUser.find_by_nick(saml_user)
+    AICUser.find_by_nick(saml_user, with_solr: true)
   end
 
   def department
-    Department.find_by_citi_uid(saml_department)
+    Department.find_by_citi_uid(saml_department, with_solr: true)
   end
 
   private
