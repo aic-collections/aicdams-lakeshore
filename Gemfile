@@ -10,15 +10,16 @@ gem 'blacklight_range_limit'
 gem 'coffee-rails', '~> 4.2'
 gem 'devise', '~> 4.2'
 gem 'devise-guests', '~> 0.5'
+gem 'figaro'
 gem 'jbuilder', '~> 2.6'
 gem 'jquery-rails'
+gem 'openseadragon', '0.3.0'
 gem 'resque-pool'
 gem 'rsolr', '~> 1.1'
 gem 'sass-rails', '~> 5.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'turbolinks'
 gem 'uglifier', '~> 3.0'
-gem 'openseadragon', '0.3.0'
 
 group :development, :test do
   gem 'better_errors'

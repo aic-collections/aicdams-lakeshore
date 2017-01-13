@@ -1,0 +1,12 @@
+# Environment variable configuration file used by Figaro
+#
+# This will be overwritten during deployment.
+# Used to set the temporary directories
+#
+# Ex:
+# production:
+#   TMPDIR: "path/to/dir"
+development:
+  sample_variable: "foo"
+test:
+  sample_variable: "foo"
