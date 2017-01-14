@@ -1,9 +1,4 @@
-audit: 2
-batch_update: 3
-characterize: 2
-derivatives: 2
+ingest: 6
 event: 5
-import_url: 3
 resolrize: 4
-sufia: 2
-"*": 4
+"*": 1

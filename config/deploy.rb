@@ -42,6 +42,7 @@ set :linked_files, fetch(:linked_files, []).push(
   'config/fedora.yml',
   'config/initializers/sufia.rb',
   'config/redis.yml',
+  'config/resque-pool.yml',
   'config/role_map.yml',
   'config/secrets.yml',
   'config/solr.yml'

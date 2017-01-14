@@ -15,6 +15,8 @@ Sufia.config do |config|
   config.register_curation_concern :transaction
   config.register_curation_concern :work
 
+  config.ingest_queue_name = :ingest
+
   # Email recipient of messages sent via the contact form
   # config.contact_email = "repo-admin@example.org"
 
