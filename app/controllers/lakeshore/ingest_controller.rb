@@ -31,12 +31,14 @@ module Lakeshore
       end
 
       def validate_asset_type
+        return unless intermediate_file
         return if AssetTypeVerificationService.call(intermediate_file, asset_type)
         ingest.errors.add(:intermediate_file, "is not the correct asset type")
         render json: ingest.errors.full_messages, status: :bad_request
       end
 
       def validate_duplicate_upload
+        return unless intermediate_file
         return if duplicate_upload.empty?
         ingest.errors.add(:intermediate_file, "is a duplicate of #{duplicate_upload.first}")
         render json: ingest.errors.full_messages, status: :conflict

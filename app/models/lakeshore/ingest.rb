@@ -6,7 +6,7 @@ module Lakeshore
     attr_reader :ingestor, :submitted_asset_type, :document_type_uri, :original_file,
                 :intermediate_file, :presevation_master_file, :additional_files, :params
 
-    validates :ingestor, :asset_type, :document_type_uri, :intermediate_file, presence: true
+    validates :ingestor, :asset_type, :document_type_uri, presence: true
 
     # @param [ActionController::Parameters] params from the controller
     def initialize(params)
@@ -86,6 +86,7 @@ module Lakeshore
       end
 
       def additional_uploads
+        return [] unless additional_files
         additional_files.values.map do |file|
           Sufia::UploadedFile.create(file: file, user: ingestor)
         end
