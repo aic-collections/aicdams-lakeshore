@@ -85,4 +85,8 @@ module SolrDocumentExtensions
   def given_name
     Array(self[Solrizer.solr_name('given_name', :stored_searchable)]).first
   end
+
+  def rdf_types
+    Array(self[Solrizer.solr_name('rdf_types', :symbol)])
+  end
 end

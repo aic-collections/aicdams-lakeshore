@@ -6,6 +6,7 @@ class FileSetIndexer < CurationConcerns::FileSetIndexer
       solr_doc[Solrizer.solr_name("image_height", :searchable, type: :integer)] = Integer(object.height.first) if object.height.present?
       solr_doc[Solrizer.solr_name("image_width", :searchable, type: :integer)] = Integer(object.width.first) if object.width.present?
       solr_doc[Solrizer.solr_name("aic_depositor", :symbol)] = object.depositor
+      solr_doc[Solrizer.solr_name("rdf_types", :symbol)] = object.type.map(&:to_s)
     end
   end
 end

@@ -28,4 +28,10 @@ class Ability
   def admins_can_read_solr_documents
     can :read, SolrDocument if admin?
   end
+
+  # Overrides Sufia::Ability to enable updates of uploaded files
+  def uploaded_file_abilities
+    super
+    can :update, [Sufia::UploadedFile]
+  end
 end

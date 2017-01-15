@@ -185,6 +185,7 @@ en:
         visual_surrogate:     "Visual Surrogate"
         attachment_uris:      "Attachments"
         attachments_for:      "Attachment For"
+        use_uri:              "Role"
       generic_work:
         <<: *asset
       batch_upload_item:
@@ -230,6 +231,9 @@ en:
         <<: *asset
 
   curation_concerns:
+    base:
+      items:
+        role: "Role"
     institution:
       name: "AIC"
     institution_name: "AIC"

@@ -5,13 +5,23 @@ module Sufia
     before_action :validate_asset_type, :validate_duplicate_upload, only: [:create]
 
     def create
-      @upload.attributes = { file: uploaded_file, user: current_user }
+      @upload.attributes = { file: uploaded_file, user: current_user, use_uri: use_uri }
       @upload.save!
     end
 
     def destroy
       @upload.destroy
       head :no_content
+    end
+
+    def update
+      upload = Sufia::UploadedFile.find(params[:id])
+      upload.use_uri = params[:use_uri]
+      if upload.save
+        head :accepted
+      else
+        head :unprocessable_entity
+      end
     end
 
     private
@@ -32,6 +42,10 @@ module Sufia
 
       def asset_type
         asset_attributes.fetch(:asset_type)
+      end
+
+      def use_uri
+        asset_attributes.fetch(:use_uri, nil)
       end
 
       # AICType.find_term(asset_type).label ought to work here, but doesn't

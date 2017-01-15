@@ -13,7 +13,7 @@ describe Sufia::UploadsController do
 
     context "with a valid still image" do
       let(:file) { fixture_file_upload('sun.png', 'image/png') }
-      let(:work_attributes) { { "asset_type" => AICType.StillImage.to_s } }
+      let(:work_attributes) { { "asset_type" => AICType.StillImage.to_s, "use_uri" => AICType.IntermediateFileSet.to_s } }
       it "successfully uploads the file" do
         expect(response).to be_success
         expect(assigns(:upload)).to be_kind_of Sufia::UploadedFile
@@ -52,7 +52,8 @@ describe Sufia::UploadsController do
 
     context "with a valid still image" do
       let(:file) { fixture_file_upload('sun.png', 'image/png') }
-      let(:work_attributes) { { "asset_type" => AICType.StillImage.to_s } }
+      let(:work_attributes) { { "asset_type" => AICType.StillImage.to_s, "use_uri" => AICType.IntermediateFileSet.to_s } }
+
       it "successfully uploads the file" do
         expect(response).to be_success
         expect(assigns(:upload)).to be_kind_of Sufia::UploadedFile
@@ -71,5 +72,18 @@ describe Sufia::UploadsController do
         expect(response.body).to eq(error)
       end
     end
+  end
+
+  describe "updating the use uri" do
+    routes { Rails.application.routes }
+
+    let!(:user)          { create(:user1) }
+    let!(:file)          { File.open(File.join(fixture_path, "sun.png")) }
+    let!(:uploaded_file) { Sufia::UploadedFile.create(file: file, user: user) }
+
+    subject { uploaded_file.reload }
+
+    before { put :update, id: uploaded_file.id, use_uri: AICType.IntermediateFileSet }
+    its(:use_uri) { is_expected.to eq(AICType.IntermediateFileSet) }
   end
 end

@@ -48,9 +48,13 @@ export class AssetWorkflow {
         $this.selectiveShowHideFields()
       }
       else {
-        $this.disableFilesTab()  
+        $this.disableFilesTab()
         $('#hidden_asset_type').val('')
       }
+    })
+
+    $($this.tabContent).on('change', 'select.wf-role', function(evt) {
+      $this.updateUploadedFile($(this))
     })
   }
 
@@ -70,6 +74,19 @@ export class AssetWorkflow {
   selectiveShowHideFields() {
     $('.selective-hide').hide()
     $('.selective-show-' + this.assetTypeClass).show()
+  }
+
+  updateUploadedFile(select) {
+    $.ajax({
+      url: select.data('url'),
+      type: 'PUT',
+      data: { 'use_uri': select.val() },
+      statusCode: {
+        202: function() {
+          $(select).attr('data-updated', 'true')
+        }
+      }
+    })
   }
 
   get assetTypeSelector() {

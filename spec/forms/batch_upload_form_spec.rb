@@ -50,6 +50,10 @@ describe BatchUploadForm do
       its(:attachments_for) { is_expected.to be_empty }
     end
 
+    describe "#use_uri" do
+      its(:use_uri) { is_expected.to eq(AICType.IntermediateFileSet) }
+    end
+
     describe "#visibility" do
       its(:visibility) { is_expected.to eq("department") }
     end

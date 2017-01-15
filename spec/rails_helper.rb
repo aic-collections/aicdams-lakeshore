@@ -49,6 +49,19 @@ RSpec.configure do |config|
 
   config.include Warden::Test::Helpers, type: :feature
   config.after(:each, type: :feature) { Warden.test_reset! }
+
+  # Gets around a bug in RSpec where helper methods that are defined in views aren't
+  # getting scoped correctly and RSpec returns "does not implement" errors. So we
+  # can disable verify_partial_doubles if a particular test is giving us problems.
+  # Ex:
+  #   describe "problem test", verify_partial_doubles: false do
+  #     ...
+  #   end
+  config.before :each do |example|
+    config.mock_with :rspec do |mocks|
+      mocks.verify_partial_doubles = example.metadata.fetch(:verify_partial_doubles, true)
+    end
+  end
 end
 
 Shoulda::Matchers.configure do |config|

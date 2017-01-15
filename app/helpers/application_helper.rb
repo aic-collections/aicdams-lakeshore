@@ -44,4 +44,13 @@ module ApplicationHelper
     end
     safe_join(facet_links, " > ")
   end
+
+  def use_uri_options
+    [
+      ["No role", nil],
+      [AICType.OriginalFileSet.label, AICType.OriginalFileSet],
+      [AICType.PreservationMasterFileSet.label, AICType.PreservationMasterFileSet],
+      [AICType.LegacyFileSet.label, AICType.LegacyFileSet]
+    ]
+  end
 end

@@ -72,6 +72,8 @@ Rails.application.routes.draw do
 
   get "/login_confirm", to: "dummy#login_confirm"
 
+  put "uploads/:id", to: "sufia/uploads#update", as: "update_sufia_uploaded_file", defaults: { format: :json }
+
   # Sufia should come last because in production it will 404 any unknown routes
   mount Sufia::Engine => '/'
 end

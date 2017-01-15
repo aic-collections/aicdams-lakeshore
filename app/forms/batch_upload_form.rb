@@ -40,6 +40,11 @@ class BatchUploadForm < Sufia::Forms::BatchUploadForm
     []
   end
 
+  # The default file set type created for each asset
+  def use_uri
+    AICType.IntermediateFileSet
+  end
+
   # Overrides hydra-editor MultiValueInput#collection
   def [](term)
     if [:imaging_uid, :view_notes].include? term
