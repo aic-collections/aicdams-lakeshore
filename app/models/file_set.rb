@@ -18,6 +18,10 @@ class FileSet < ActiveFedora::Base
     # second thumbnail for CITI
     def create_asset_derivatives(filename)
       case mime_type
+      when *image_mime_types_with_cli
+        MiniMagick.with_cli(:imagemagick) do
+          Hydra::Derivatives::ImageDerivatives.create(filename, outputs: image_outputs)
+        end
       when *self.class.image_mime_types
         Hydra::Derivatives::ImageDerivatives.create(filename, outputs: image_outputs)
       when *self.class.pdf_mime_types
@@ -65,6 +69,10 @@ class FileSet < ActiveFedora::Base
         access: derivative_url('document'),
         citi: derivative_url('citi')
       }
+    end
+
+    def image_mime_types_with_cli
+      ["psd", "vnd.adobe.photoshop"]
     end
 
     def derivative_path_factory
