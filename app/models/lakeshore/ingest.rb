@@ -4,7 +4,7 @@ module Lakeshore
     include ActiveModel::Validations
 
     attr_reader :ingestor, :submitted_asset_type, :document_type_uri, :original_file,
-                :intermediate_file, :presevation_master_file, :additional_files, :params
+                :intermediate_file, :presevation_master_file, :legacy_file, :additional_files, :params
 
     validates :ingestor, :asset_type, :document_type_uri, presence: true
 
@@ -27,7 +27,7 @@ module Lakeshore
     # want the intermediate file to be the representative.
     def files
       return [] unless valid? || valid_update?
-      [intermediate_upload, original_upload, presevation_master_upload].compact + additional_uploads
+      [intermediate_upload, original_upload, presevation_master_upload, legacy_upload].compact + additional_uploads
     end
 
     def attributes_for_actor
@@ -61,6 +61,7 @@ module Lakeshore
         @original_file = content.delete(:original)
         @intermediate_file = content.delete(:intermediate)
         @presevation_master_file = content.delete(:pres_master)
+        @legacy_file = content.delete(:legacy)
         @additional_files = content
       end
 
@@ -83,6 +84,13 @@ module Lakeshore
         Sufia::UploadedFile.create(file: presevation_master_file,
                                    user: ingestor,
                                    use_uri: AICType.PreservationMasterFileSet).id.to_s
+      end
+
+      def legacy_upload
+        return unless legacy_file
+        Sufia::UploadedFile.create(file: legacy_file,
+                                   user: ingestor,
+                                   use_uri: AICType.LegacyFileSet).id.to_s
       end
 
       def additional_uploads

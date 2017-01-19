@@ -158,7 +158,66 @@ describe Lakeshore::IngestController do
           asset.reload
         end
 
-        # TODO: it's replacing the file, but not the metadata
+        it "replaces the file" do
+          expect(subject.characterization_proxy.file_name).to eq(["tardis.png"])
+        end
+      end
+    end
+
+    context "with a preservation master file" do
+      subject { asset.preservation_file_set.first }
+
+      context "when none exists" do
+        let(:asset) { create(:asset) }
+
+        before do
+          allow(CharacterizeJob).to receive(:perform_later)
+          post :update, id: asset.id, content: { pres_master: image_asset }, metadata: metadata
+          asset.reload
+        end
+
+        its(:title) { is_expected.to eq(["sun.png"]) }
+      end
+
+      context "when one already exists" do
+        let(:asset) { create(:asset, :with_preservation_file_set) }
+
+        before do
+          allow(CharacterizeJob).to receive(:perform_later)
+          post :update, id: asset.id, content: { pres_master: replacement_asset }, metadata: metadata
+          asset.reload
+        end
+
+        it "replaces the file" do
+          expect(subject.characterization_proxy.file_name).to eq(["tardis.png"])
+        end
+      end
+    end
+
+    context "with a legacy file" do
+      subject { asset.legacy_file_set.first }
+
+      context "when none exists" do
+        let(:asset) { create(:asset) }
+
+        before do
+          allow(CharacterizeJob).to receive(:perform_later)
+          post :update, id: asset.id, content: { legacy: image_asset }, metadata: metadata
+          asset.reload
+        end
+
+        its(:title) { is_expected.to eq(["sun.png"]) }
+      end
+
+      context "when one already exists" do
+        let(:asset) { create(:asset, :with_legacy_file_set) }
+
+        before do
+          allow(CharacterizeJob).to receive(:perform_later)
+          post :update, id: asset.id, content: { legacy: replacement_asset }, metadata: metadata
+          asset.reload
+        end
+
         it "replaces the file" do
           expect(subject.characterization_proxy.file_name).to eq(["tardis.png"])
         end

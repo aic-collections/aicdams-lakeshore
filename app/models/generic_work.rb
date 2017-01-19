@@ -70,6 +70,10 @@ class GenericWork < Resource
     members.select { |f| f.type.include?(AICType.PreservationMasterFileSet) }
   end
 
+  def legacy_file_set
+    members.select { |f| f.type.include?(AICType.LegacyFileSet) }
+  end
+
   private
 
     def service

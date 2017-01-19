@@ -16,6 +16,10 @@ class FileSetReplacementService
       replace(intermediate_file_set)
     elsif original_file_set && file.use_uri == AICType.OriginalFileSet
       replace(original_file_set)
+    elsif preservation_file_set && file.use_uri == AICType.PreservationMasterFileSet
+      replace(preservation_file_set)
+    elsif legacy_file_set && file.use_uri == AICType.LegacyFileSet
+      replace(legacy_file_set)
     else
       false
     end
@@ -36,5 +40,13 @@ class FileSetReplacementService
 
     def original_file_set
       @original_file_set ||= asset.original_file_set.first
+    end
+
+    def preservation_file_set
+      @preservation_file_set ||= asset.preservation_file_set.first
+    end
+
+    def legacy_file_set
+      @legacy_file_set ||= asset.legacy_file_set.first
     end
 end

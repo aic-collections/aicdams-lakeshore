@@ -50,6 +50,12 @@ FactoryGirl.define do
       end
     end
 
+    factory :legacy_file_set do
+      after(:build) do |file|
+        file.type << AICType.LegacyFileSet
+      end
+    end
+
     after(:build) do |file, evaluator|
       file.apply_depositor_metadata(evaluator.user.user_key)
     end

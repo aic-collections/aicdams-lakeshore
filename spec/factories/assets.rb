@@ -41,6 +41,18 @@ FactoryGirl.define do
       end
     end
 
+    trait :with_preservation_file_set do
+      after(:create) do |asset|
+        asset.members << FactoryGirl.create(:preservation_file_set)
+      end
+    end
+
+    trait :with_legacy_file_set do
+      after(:create) do |asset|
+        asset.members << FactoryGirl.create(:legacy_file_set)
+      end
+    end
+
     trait :with_metadata do
       pref_label                   "Asset with metadata"
       description                  ["A sample asset with a complete listing of metadata"]

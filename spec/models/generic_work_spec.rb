@@ -248,11 +248,12 @@ describe GenericWork do
     let(:original)     { build(:original_file_set) }
     let(:intermediate) { build(:intermediate_file_set) }
     let(:preservation) { build(:preservation_file_set) }
+    let(:legacy)       { build(:legacy_file_set) }
     let(:other)        { build(:file_set) }
 
     subject { asset }
 
-    before { asset.members = [original, intermediate, preservation, other] }
+    before { asset.members = [original, intermediate, preservation, legacy, other] }
 
     context "with an original file" do
       its(:original_file_set) { is_expected.to contain_exactly(original) }
@@ -264,6 +265,10 @@ describe GenericWork do
 
     context "with a preservation master" do
       its(:preservation_file_set) { is_expected.to contain_exactly(preservation) }
+    end
+
+    context "with a legacy file" do
+      its(:legacy_file_set) { is_expected.to contain_exactly(legacy) }
     end
   end
 end

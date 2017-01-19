@@ -30,6 +30,7 @@ curl -u citi:password -X POST\
  -F 'content[original]=@spec/fixtures/sun.png'\
  -F 'content[pres_master]=@spec/fixtures/sun.png'\
  -F 'content[intermediate]=@spec/fixtures/sun.png'\
+ -F 'content[legacy]=@spec/fixtures/sun.png'\
  http://localhost:3000/api/ingest/StillImage
 
 curl -u citi:password -X POST\
