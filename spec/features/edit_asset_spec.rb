@@ -18,6 +18,8 @@ describe "Editing assets" do
     expect(generic_work_hidden_asset_type.value).to eq("http://definitions.artic.edu/ontology/1.0/type/StillImage")
     expect(selected_publish_channel).to eq("http://definitions.artic.edu/publish_channel/Web")
 
+    expect(page).not_to have_content('string multi_value optional form-control generic_work_alt_label form-control multi-text-field')
+
     # Displaying hints
     within("div.generic_work_language") do
       expect(page).to have_content("The language of the asset content.")
