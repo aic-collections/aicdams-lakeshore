@@ -68,11 +68,14 @@ Rails.application.routes.draw do
     resources :downloads, only: [:show], defaults: { format: :json }
     post "ingest/:asset_type", to: "ingest#create",  defaults: { format: :json }
     post "update/:id", to: "ingest#update", defaults: { format: :json }
+    get "derivatives/:id/:file", to: "derivatives#show"
   end
 
   get "/login_confirm", to: "dummy#login_confirm"
 
   put "uploads/:id", to: "sufia/uploads#update", as: "update_sufia_uploaded_file", defaults: { format: :json }
+
+  get "derivatives/:id/:file", to: "derivatives#show", as: "derivative"
 
   # Sufia should come last because in production it will 404 any unknown routes
   mount Sufia::Engine => '/'
