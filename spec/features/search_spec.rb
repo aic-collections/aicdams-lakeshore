@@ -22,7 +22,7 @@ describe "Searching" do
         expect(page).not_to have_link(department_asset)
       end
       visit(polymorphic_path(department_asset))
-      expect(page).to have_content("The page you have tried to access is private")
+      expect(page).to have_content("You are not authorized to see this asset. Please contact First User if you would like to request access to it.")
 
       # Searching on uid
       visit(root_path)

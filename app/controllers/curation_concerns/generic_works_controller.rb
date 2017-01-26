@@ -16,6 +16,15 @@ class CurationConcerns::GenericWorksController < ApplicationController
     end
     report_status_and_redirect(asset_with_relationships, batch: false)
   end
+  # we have to override this action in Curation Concerns application controller behavior class
+
+  def deny_access
+    presenter = UnauthorizedPresenter.new(params[:id])
+    render template: '/error/unauthorized',
+           formats: [:html],
+           status: 401,
+           locals: { presenter: presenter }
+  end
 
   protected
 

@@ -16,8 +16,12 @@ describe DuplicateUploadVerificationService do
   end
 
   context "when duplicates exist" do
+    let(:asset) { create(:asset) }
     let(:duplicate_file) { double }
-    before { allow(FileSet).to receive(:where).with(digest_ssim: file_digest).and_return([duplicate_file]) }
-    it { is_expected.to contain_exactly(duplicate_file) }
+    before do
+      allow(duplicate_file).to receive(:parent).and_return(asset)
+      allow(FileSet).to receive(:where).with(digest_ssim: file_digest).and_return([duplicate_file])
+    end
+    it { is_expected.to contain_exactly(asset) }
   end
 end
