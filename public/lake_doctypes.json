@@ -661,6 +661,10 @@
                                 {
                                     "label" : "Summary",
                                     "value" : "http://definitions.artic.edu/doctypes/ExhibDocSummary"
+                                },
+                                {
+                                    "label" : "Installation Document",
+                                    "value" : "http://definitions.artic.edu/doctypes/ExhibDocInstallation"
                                 }
                             ]
                         },

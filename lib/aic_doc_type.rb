@@ -432,6 +432,9 @@ class AICDocType < RDF::StrictVocabulary("http://definitions.artic.edu/doctypes/
   term :ExhibDocSummary,
        label: "Summary",
        "skos:broader": "aicdoctype:ExhibitionDocumentation"
+  term :ExhibDocInstallation,
+       label: "Installation Document",
+       "skos:broader": "aicdoctype:ExhibitionDocumentation"
   term :ExhibitionDocumentation,
        label: "Exhibition Documentation",
        "skos:broader": "aicdoctype:CuratorialDocument"
