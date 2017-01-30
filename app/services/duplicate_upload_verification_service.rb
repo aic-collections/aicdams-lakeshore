@@ -8,7 +8,7 @@ class DuplicateUploadVerificationService
   end
 
   def duplicates
-    existing_filesets
+    existing_filesets.empty? ? [] : [GenericWork.find(existing_filesets.first.parent.id)]
   end
 
   private

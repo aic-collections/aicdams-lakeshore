@@ -38,6 +38,7 @@ describe CurationConcerns::GenericWorksController do
       expect(response).to be_unauthorized
     end
   end
+
   describe "#destroy" do
     context "with relationships" do
       let!(:asset2) { create(:asset, user: user, title: ["Title"], pref_label: "Good Title") }

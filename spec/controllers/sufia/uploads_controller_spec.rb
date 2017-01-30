@@ -25,7 +25,9 @@ describe Sufia::UploadsController do
         let(:duplicate_file) { create(:file_set) }
         let(:duplicates)     { [duplicate_file] }
 
-        before { parent.members << duplicate_file }
+        before do
+          parent.members << duplicate_file
+        end
 
         it "reports the error" do
           expect(response).to be_success
