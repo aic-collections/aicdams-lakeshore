@@ -41,6 +41,12 @@ FactoryGirl.define do
       end
     end
 
+    trait :with_aic_depositor do
+      after(:create) do |asset|
+        asset.aic_depositor = FactoryGirl.create(:aic_user)
+      end
+    end
+
     trait :with_preservation_file_set do
       after(:create) do |asset|
         asset.members << FactoryGirl.create(:preservation_file_set)

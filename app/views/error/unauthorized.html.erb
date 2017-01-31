@@ -1,15 +1,30 @@
 <div class="alert alert-danger">
-  <%= presenter.message %>
+  <%= t('lakeshore.unauthorized') %>
 </div>
 <div class="row">
   <div class="col-xs-12">
-    <div class="col-xs-3">
-      <%= image_tag("#{presenter.thumbnail}") %>
+    <div class="col-xs-2">
+      <%= image_tag("#{presenter.thumbnail_path}") %>
     </div>
-    <div class="col-xs-3">
-      <p class="unauthorized_asset_title">
-        <%= presenter.title %>
-      <p>
+    <div class="col-xs-2">
+      <p class="unauthorized_asset_display asset_title">
+        <%= presenter.title_or_label %>
+      </p>
+    </div>
+    <div class="col-xs-2">
+      <p class="unauthorized_asset_display">
+        (<%= presenter.uid %>)
+      </p>
+    </div>
+    <div class="col-xs-2">
+      <p class="unauthorized_asset_display">
+        <%= presenter.depositor_full_name %>
+      </p>
+    </div>
+    <div class="col-xs-2">
+      <p class="unauthorized_asset_display">
+        <%= render partial: "shared/request_access", locals: { presenter: presenter } %>
+      </p>
     </div>
   </div>
 </div>

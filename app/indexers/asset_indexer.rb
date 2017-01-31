@@ -6,6 +6,7 @@ class AssetIndexer < Sufia::WorkIndexer
     super.tap do |solr_doc|
       solr_doc[Solrizer.solr_name("aic_type", :facetable)] = aic_types(["Asset"])
       solr_doc[Solrizer.solr_name("representation", :facetable)] = FacetBuilder.new(object).representations
+      solr_doc[Solrizer.solr_name("depositor_full_name", :stored_searchable)] = depositor_full_name
       solr_doc[Solrizer.solr_name("aic_depositor", :symbol)] = object.depositor
       solr_doc[Solrizer.solr_name("fedora_uri", :symbol)] = object.uri.to_s
       solr_doc[Solrizer.solr_name("digitization_source", :stored_searchable)] = pref_label_for(:digitization_source)
@@ -43,6 +44,12 @@ class AssetIndexer < Sufia::WorkIndexer
         pref_label_for(:first_document_sub_type),
         pref_label_for(:second_document_sub_type)
       ].compact.join(" > ")
+    end
+
+    def depositor_full_name
+      return unless object.aic_depositor
+      return object.aic_depositor.nick unless object.aic_depositor.given_name && object.aic_depositor.family_name
+      [[object.aic_depositor.given_name, object.aic_depositor.family_name].join(" ")]
     end
 
     class FacetBuilder

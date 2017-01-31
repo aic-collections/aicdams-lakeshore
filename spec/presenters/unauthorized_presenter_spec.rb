@@ -2,20 +2,20 @@
 require 'rails_helper'
 
 describe UnauthorizedPresenter do
-  let(:id) { "1234" }
-  let(:asset) { build(:department_asset, id: "1234", pref_label: "Sample Label") }
-  let(:solr_document) { SolrDocument.new(asset.to_solr) }
-  let(:depositor) { build(:aic_user) }
-  let(:presenter)     { described_class.new(id) }
+  let(:resource) { create(:department_asset, pref_label: "Sample Label") }
+  let(:solr_document) { SolrDocument.new(resource.to_solr) }
+  let(:presenter)     { described_class.new(resource.id) }
   subject { presenter }
 
-  it "will get minimum info from the requested asset" do
-    allow(GenericWork).to receive(:find).with(id).and_return(asset)
-    allow(asset).to receive(:aic_depositor).and_return(depositor)
+  before do
+    allow(GenericWork).to receive(:find).with(resource.id).and_return(resource)
+  end
 
-    expect(subject.title).to eq("Sample Label")
-    expect(subject.depositor).to eq("Joe Bob")
-    expect(subject.thumbnail).to eq("/assets/work-ff055336041c3f7d310ad69109eda4a887b16ec501f35afc0a547c4adb97ee72.png")
-    expect(subject.message).to eq("You are not authorized to see this asset. Please contact Joe Bob if you would like to request access to it.")
+  it "will get minimum info from the requested asset" do
+    expect(subject.title_or_label).to eq("Sample Label")
+    expect(subject.id).to eq(resource.id)
+    expect(subject.depositor_full_name).to eq("First User")
+    expect(subject.depositor_first_name).to eq("First")
+    expect(subject.thumbnail_path).to eq("/assets/work-ff055336041c3f7d310ad69109eda4a887b16ec501f35afc0a547c4adb97ee72.png")
   end
 end

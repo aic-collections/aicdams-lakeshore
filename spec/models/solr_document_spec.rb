@@ -49,6 +49,8 @@ describe SolrDocument do
   end
 
   it { is_expected.to respond_to(:citi_uid) }
+  it { is_expected.to respond_to(:uid) }
+  it { is_expected.to respond_to(:id) }
   it { is_expected.to respond_to(:status) }
   it { is_expected.to respond_to(:fedora_uri) }
   it { is_expected.to respond_to(:document_ids) }
@@ -58,6 +60,7 @@ describe SolrDocument do
   it { is_expected.to respond_to(:artist_id) }
   it { is_expected.to respond_to(:current_location_id) }
   it { is_expected.to respond_to(:aic_depositor) }
+  it { is_expected.to respond_to(:depositor_full_name) }
   it { is_expected.to respond_to(:dept_created) }
   it { is_expected.to respond_to(:thumbnail_path) }
 

@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <p>
+      Requested access to asset <%= @presenter.uid %>: <%= @presenter.title_or_label %> from <%= @presenter.requester_pretty_name %>.
+    </p>
+
+    <p><a href="https://<%= @host %>/concern/generic_works/<%= @presenter.id %>/edit#share">Approve request</a></p>
+
+    <p><a href="https://<%= @host %>/concern/generic_works/<%= @presenter.id %>/">Review asset</a>.</p>
+
+    <p>If you rather decline or would like to request further information, please reply to this email explaining your concerns.</p>
+  </body>
+</html>

@@ -1,3 +1,4 @@
+
 # frozen_string_literal: true
 module SolrDocumentExtensions
   extend ActiveSupport::Concern
@@ -18,6 +19,10 @@ module SolrDocumentExtensions
     Array(self[Solrizer.solr_name('citi_uid', :symbol)]).first
   end
 
+  def uid
+    Array(self[Solrizer.solr_name('uid', :stored_searchable)]).first
+  end
+
   def status
     Array(self[Solrizer.solr_name('status', :stored_searchable)]).first
   end
@@ -28,6 +33,10 @@ module SolrDocumentExtensions
 
   def aic_depositor
     Array(self[Solrizer.solr_name('aic_depositor', :symbol)]).first
+  end
+
+  def depositor_full_name
+    Array(self[Solrizer.solr_name('depositor_full_name', :stored_searchable)]).first
   end
 
   def dept_created

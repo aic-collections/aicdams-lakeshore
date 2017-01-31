@@ -18,6 +18,7 @@ describe AssetIndexer do
       expect(solr_doc["aic_type_sim"]).to contain_exactly("Asset", "Still Image")
       expect(solr_doc["dept_created_sim"]).to eq(asset.dept_created.pref_label)
       expect(solr_doc["attachments_ssim"]).to contain_exactly(attachment.id)
+      expect(solr_doc["depositor_full_name_tesim"]).to contain_exactly("First User")
     end
 
     context "with all three document types" do

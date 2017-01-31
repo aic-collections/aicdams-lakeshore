@@ -1,0 +1,5 @@
+<%= form_tag("/request_access") do %>
+  <%= hidden_field_tag(:resource_id, presenter.id) %>
+  <%= hidden_field_tag(:requester_nick, current_user) %>
+  <%= submit_tag "Request access", { class: "btn btn-success" } %>
+<% end %>
