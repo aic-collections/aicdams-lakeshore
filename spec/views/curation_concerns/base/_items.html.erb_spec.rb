@@ -12,7 +12,7 @@ describe 'curation_concerns/base/items', verify_partial_doubles: false do
   let(:blacklight_configuration_context) do
     Blacklight::Configuration::Context.new(controller)
   end
-
+  let(:page) { Capybara::Node::Simple.new(rendered) }
   before do
     stub_template 'curation_concerns/base/_actions.html.erb' => 'Actions'
     allow(presenter).to receive(:member_presenters).and_return([member])

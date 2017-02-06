@@ -19,14 +19,6 @@ describe 'curation_concerns/base/show.html.erb' do
     render
   end
 
-  context "with a department asset" do
-    let(:asset)     { build(:department_asset, id: '999', pref_label: 'Department Asset') }
-    let(:presenter) { AssetPresenter.new(solr_document, ability) }
-    specify do
-      expect(page).to have_selector('span.label-warning', text: "Department")
-    end
-  end
-
   context "with a registered asset" do
     let(:asset)     { build(:registered_asset, id: '999', pref_label: 'Department Asset') }
     let(:presenter) { AssetPresenter.new(solr_document, ability) }
