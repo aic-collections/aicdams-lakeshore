@@ -18,7 +18,8 @@ class WorkPresenter < Sufia::WorkShowPresenter
       :place_of_origin,
       :provenance_text,
       :publication_history,
-      :publ_ver_level
+      :publ_ver_level,
+      :imaging_uid
     ]
   end
 
