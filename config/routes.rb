@@ -77,6 +77,7 @@ Rails.application.routes.draw do
 
   get "derivatives/:id/:file", to: "derivatives#show", as: "derivative"
 
+  post "/request_access/", to: "application#request_access"
   # Sufia should come last because in production it will 404 any unknown routes
   mount Sufia::Engine => '/'
 end

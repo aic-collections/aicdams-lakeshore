@@ -183,6 +183,10 @@ table.relationships img {
 	max-height: 150px;
 }
 
-p.unauthorized_asset_title {
+p.unauthorized_asset_display {
   margin-top: 25%;
+}
+
+p.unauthorized_asset_display.asset_title {
+  margin-left: 15px;
 }

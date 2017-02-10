@@ -34,4 +34,12 @@ class ApplicationController < ActionController::Base
            status: 401,
            locals: { aic_user: aic_user, department: department }
   end
+
+  def request_access
+    presenter = RequestAccessPresenter.new(params[:resource_id], params[:requester_nick])
+    RequestAccessMailer.request_access(presenter).deliver_now
+
+    flash[:notice] = "#{presenter.depositor_full_name} has been emailed your request to see this resource."
+    redirect_to root_url
+  end
 end
