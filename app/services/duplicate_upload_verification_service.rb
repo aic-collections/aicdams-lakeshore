@@ -8,7 +8,7 @@ class DuplicateUploadVerificationService
   end
 
   def duplicates
-    existing_filesets.empty? ? [] : [GenericWork.find(existing_filesets.first.parent.id)]
+    FileSet.where(digest_ssim: fedora_shasum).map(&:parent)
   end
 
   private
@@ -16,10 +16,6 @@ class DuplicateUploadVerificationService
     # Calculate the SHA1 checksum and format it like Fedora does
     def fedora_shasum
       "urn:sha1:#{Digest::SHA1.file(file_path)}"
-    end
-
-    def existing_filesets
-      FileSet.where(digest_ssim: fedora_shasum)
     end
 
     def file_path
