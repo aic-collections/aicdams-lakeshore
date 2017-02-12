@@ -14,14 +14,14 @@ describe Work do
   describe "metadata" do
     subject { described_class.new }
     context "defined in the presenter" do
-      (WorkPresenter.terms - [:imaging_uid]).each do |term|
+      WorkPresenter.terms.each do |term|
         it { is_expected.to respond_to(term) }
       end
     end
   end
 
   describe "cardinality" do
-    (WorkPresenter.model_terms - [:artist, :department, :current_location, :dimensions_display, :imaging_uid]).each do |term|
+    (WorkPresenter.model_terms - [:artist, :department, :current_location, :dimensions_display]).each do |term|
       it "limits #{term} to a single value" do
         expect(described_class.properties[term.to_s].multiple?).to be false
       end
