@@ -21,13 +21,13 @@ describe 'curation_concerns/base/_show_actions.html.erb' do
       context "the asset has an imaging number" do
         let(:asset) { build(:asset, id: '1234', pref_label: 'FineArt', imaging_uid: ["1"]) }
 
-        it { is_expected.to have_link("Create Lab Work", href: "http://phoenix.artic.edu/order/create/batch/1") }
+        it { is_expected.to have_link("Create Lab Work", href: "https://phoenix.artic.edu/order/create/batch/1") }
       end
 
       context "the asset does not have an imaging number" do
         let(:asset) { build(:asset, id: '1234', pref_label: 'FineArt') }
 
-        it { is_expected.not_to have_link("Create Lab Work", href: "http://phoenix.artic.edu/order/create/batch/1") }
+        it { is_expected.not_to have_link("Create Lab Work", href: "https://phoenix.artic.edu/order/create/batch/1") }
       end
     end
   end
