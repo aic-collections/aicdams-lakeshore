@@ -12,7 +12,6 @@ describe WorkPresenter do
 
   it_behaves_like "a citi presenter"
   it_behaves_like "a citi presenter with related assets"
-  it { is_expected.to delegate_method(:imaging_uid).to(:solr_document) }
 
   describe "#artist_presenters?" do
     it { is_expected.to be_artist_presenters }

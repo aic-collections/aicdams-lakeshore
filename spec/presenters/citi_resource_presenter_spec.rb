@@ -10,6 +10,7 @@ describe CitiResourcePresenter do
 
   subject { presenter }
   it_behaves_like "a citi presenter"
+
   describe "#viewable?" do
     it { is_expected.to be_viewable }
   end

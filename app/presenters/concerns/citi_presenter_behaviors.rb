@@ -11,6 +11,10 @@ module CitiPresenterBehaviors
     [pref_label]
   end
 
+  def imaging_uid
+    []
+  end
+
   def artist_presenters?
     true
   end
