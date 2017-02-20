@@ -34,7 +34,7 @@ module Lakeshore
       attributes = CurationConcerns::GenericWorkForm.model_attributes(params.fetch("metadata"))
       attributes[:uploaded_files] = files
       attributes[:permissions_attributes] = JSON.parse(params.fetch(:sharing, "[]"))
-      attributes.merge!(asset_type: asset_type)
+      attributes.merge!(asset_type: asset_type, ingest_method: "api")
     end
 
     # TODO: We ought to be able to use features of ActiveModel::Validations instead of this custom method

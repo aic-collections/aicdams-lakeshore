@@ -5,7 +5,7 @@ module Sufia
       [AddToCitiResourceActor,
        ReplaceFileActor,
        CreateWithRemoteFilesActor,
-       CreateWithFilesActor,
+       CreateAssetsActor,
        CurationConcerns::Actors::AddToCollectionActor,
        CurationConcerns::Actors::AddToWorkActor,
        CurationConcerns::Actors::AssignRepresentativeActor,

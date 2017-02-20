@@ -24,7 +24,7 @@ describe Lakeshore::IngestController do
     context "when uploading a file" do
       before { LakeshoreTesting.restore }
       it "successfully adds the fileset to the work" do
-        expect(CharacterizeJob).to receive(:perform_later)
+        expect(Lakeshore::AttachFilesToWorkJob).to receive(:perform_later)
         post :create, asset_type: "StillImage", content: { intermediate: image_asset }, metadata: metadata
         expect(response).to be_accepted
       end
@@ -33,7 +33,7 @@ describe Lakeshore::IngestController do
     context "when uploading without a file" do
       before { LakeshoreTesting.restore }
       it "successfully creates the the work" do
-        expect(CharacterizeJob).not_to receive(:perform_later)
+        expect(Lakeshore::AttachFilesToWorkJob).not_to receive(:perform_later)
         post :create, asset_type: "StillImage", metadata: metadata
         expect(response).to be_accepted
       end
@@ -104,7 +104,10 @@ describe Lakeshore::IngestController do
                                              tempfile:     File.new(File.join(fixture_path, "tardis.png")))
     end
 
-    before { LakeshoreTesting.restore }
+    before do
+      LakeshoreTesting.restore
+      allow(Lakeshore::CreateAllDerivatives).to receive(:perform_later)
+    end
 
     context "with an intermediate file" do
       subject { asset.intermediate_file_set.first }
@@ -113,7 +116,6 @@ describe Lakeshore::IngestController do
         let(:asset) { create(:asset) }
 
         before do
-          allow(CharacterizeJob).to receive(:perform_later)
           post :update, id: asset.id, content: { intermediate: image_asset }, metadata: metadata
           asset.reload
         end
@@ -125,7 +127,6 @@ describe Lakeshore::IngestController do
         let(:asset) { create(:asset, :with_intermediate_file_set) }
 
         before do
-          allow(CharacterizeJob).to receive(:perform_later)
           post :update, id: asset.id, content: { intermediate: replacement_asset }, metadata: metadata
           asset.reload
         end
@@ -141,7 +142,6 @@ describe Lakeshore::IngestController do
         let(:asset) { create(:asset) }
 
         before do
-          allow(CharacterizeJob).to receive(:perform_later)
           post :update, id: asset.id, content: { original: image_asset }, metadata: metadata
           asset.reload
         end
@@ -153,7 +153,6 @@ describe Lakeshore::IngestController do
         let(:asset) { create(:asset, :with_original_file_set) }
 
         before do
-          allow(CharacterizeJob).to receive(:perform_later)
           post :update, id: asset.id, content: { original: replacement_asset }, metadata: metadata
           asset.reload
         end
@@ -171,7 +170,6 @@ describe Lakeshore::IngestController do
         let(:asset) { create(:asset) }
 
         before do
-          allow(CharacterizeJob).to receive(:perform_later)
           post :update, id: asset.id, content: { pres_master: image_asset }, metadata: metadata
           asset.reload
         end
@@ -183,7 +181,6 @@ describe Lakeshore::IngestController do
         let(:asset) { create(:asset, :with_preservation_file_set) }
 
         before do
-          allow(CharacterizeJob).to receive(:perform_later)
           post :update, id: asset.id, content: { pres_master: replacement_asset }, metadata: metadata
           asset.reload
         end
@@ -201,7 +198,6 @@ describe Lakeshore::IngestController do
         let(:asset) { create(:asset) }
 
         before do
-          allow(CharacterizeJob).to receive(:perform_later)
           post :update, id: asset.id, content: { legacy: image_asset }, metadata: metadata
           asset.reload
         end
@@ -213,7 +209,6 @@ describe Lakeshore::IngestController do
         let(:asset) { create(:asset, :with_legacy_file_set) }
 
         before do
-          allow(CharacterizeJob).to receive(:perform_later)
           post :update, id: asset.id, content: { legacy: replacement_asset }, metadata: metadata
           asset.reload
         end

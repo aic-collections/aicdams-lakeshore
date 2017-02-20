@@ -101,6 +101,7 @@ describe Lakeshore::Ingest do
       it { is_expected.to include(asset_type: AICType.StillImage,
                                   document_type_uri: "doc_type",
                                   permissions_attributes: [],
+                                  ingest_method: "api",
                                   uploaded_files: ["1"])}
     end
 

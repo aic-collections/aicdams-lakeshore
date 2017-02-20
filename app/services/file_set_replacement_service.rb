@@ -1,14 +1,16 @@
 # frozen_string_literal: true
 class FileSetReplacementService
-  attr_reader :asset, :file, :user
+  attr_reader :asset, :file, :user, :ingest_method
 
   # @param [GenericWork] asset
   # @param [String] id of Sufia::UploadedFile
   # @param [User] user performing the actions, usually current_user from a controller or actor
-  def initialize(asset, id, user)
+  # @param [String, nil] ingest_method indicates what controller the request came from
+  def initialize(asset, id, user, ingest_method)
     @asset = asset
     @file = Sufia::UploadedFile.find(id)
     @user = user
+    @ingest_method = ingest_method
   end
 
   def replaced?
@@ -28,7 +30,7 @@ class FileSetReplacementService
   def replace(file_set)
     file_set.title = [file.file.file.original_filename]
     file_set.save!
-    CurationConcerns::Actors::FileActor.new(file_set, "original_file", user).ingest_file(file.file)
+    file_actor.new(file_set, "original_file", user).ingest_file(file.file)
     true
   end
 
@@ -48,5 +50,13 @@ class FileSetReplacementService
 
     def legacy_file_set
       @legacy_file_set ||= asset.legacy_file_set.first
+    end
+
+    def file_actor
+      if ingest_method == "api"
+        Lakeshore::Actors::FileActor
+      else
+        CurationConcerns::Actors::FileActor
+      end
     end
 end
