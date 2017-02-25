@@ -41,6 +41,11 @@ gtar_mime_type = MIME::Type.new("application/x-gtar") do |t|
 end
 MIME::Types.add gtar_mime_type
 
+jpf_mime_type = MIME::Type.new("image/jpf") do |t|
+  t.extensions = %w(jpf)
+end
+MIME::Types.add jpf_mime_type
+
 # Register application mime types
 Mime::Type.register 'application/x-endnote-refer', :endnote
 Mime::Type.register "application/n-triples", :nt

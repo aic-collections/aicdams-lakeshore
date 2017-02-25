@@ -6,6 +6,7 @@ module AssetType
        "image/jpeg",
        "image/png",
        "image/tiff",
+       "image/jpf",
        "image/vnd.adobe.photoshop"]
     end
   end
