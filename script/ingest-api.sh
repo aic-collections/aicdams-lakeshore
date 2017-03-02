@@ -13,6 +13,20 @@ curl -u citi:password -X POST\
  -F 'sharing=[{ "type" : "group", "name" : "6", "access" : "read" }, {"type" : "person", "name" : "scossu", "access" : "edit"}]'\
  http://localhost:3000/api/ingest/StillImage
 
+ curl -u citi:password -X POST\
+ -F 'metadata[pref_label]=Duplicate Tardis'\
+ -F 'metadata[visibility]=department'\
+ -F 'metadata[uid]=SI-101011'\
+ -F 'metadata[document_type_uri]=http://definitions.artic.edu/doctypes/ConservationStillImage'\
+ -F 'metadata[depositor]=awead'\
+ -F 'metadata[dept_created]=112'\
+ -F 'metadata[imaging_uid][]=uid-1'\
+ -F 'metadata[imaging_uid][]=uid-2'\
+ -F 'content[intermediate]=@spec/fixtures/tardis.png'\
+ -F 'sharing=[{ "type" : "group", "name" : "6", "access" : "read" }, {"type" : "person", "name" : "scossu", "access" : "edit"}]'\
+ -F 'duplicate_check=false'\
+ http://localhost:3000/api/ingest/StillImage
+
 curl -u citi:password -X POST\
  -F 'metadata[pref_label]=Oddball text'\
  -F 'metadata[visibility]=department'\

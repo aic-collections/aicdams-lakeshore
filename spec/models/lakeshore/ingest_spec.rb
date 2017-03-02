@@ -18,6 +18,19 @@ describe Lakeshore::Ingest do
         }
       end
       it { is_expected.to be_valid }
+      it { is_expected.to be_check_duplicates }
+    end
+
+    context "when not checking for duplicates" do
+      let(:params) do
+        {
+          asset_type: "StillImage",
+          content: { intermediate: "file_set" },
+          metadata: { document_type_uri: "doc_type", depositor: user.email },
+          duplicate_check: "false"
+        }
+      end
+      it { is_expected.not_to be_check_duplicates }
     end
   end
 

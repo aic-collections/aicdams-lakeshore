@@ -42,6 +42,12 @@ module Lakeshore
       ingestor.present?
     end
 
+    # @return [Boolean]
+    # Only returns false if the parameter is explicitly set to "false"
+    def check_duplicates?
+      params.fetch(:duplicate_check, nil) == "false" ? false : true
+    end
+
     private
 
       def register_terms(metadata)
