@@ -93,6 +93,26 @@ describe Lakeshore::IngestController do
       it { is_expected.to be_bad_request }
       its(:body) { is_expected.to eq("[\"Ingestor can't be blank\"]") }
     end
+
+    context "when a provided CITI resource already has a preferred representation" do
+      let(:metadata) do
+        {
+          "visibility" => "department",
+          "depositor" => user.email,
+          "document_type_uri" => AICDocType.ConservationStillImage,
+          "preferred_representation_for" => ["resource"]
+        }
+      end
+
+      subject { response }
+
+      before do
+        allow(controller).to receive(:represented_resources).and_return(["resource"])
+        post :create, asset_type: "StillImage", content: { intermediate: image_asset }, metadata: metadata
+      end
+
+      its(:body) { is_expected.to eq("[\"Represented resources resource already have a preferred representation\"]") }
+    end
   end
 
   describe "#update" do

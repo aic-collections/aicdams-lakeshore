@@ -22,23 +22,35 @@ describe AddToCitiResourceActor do
       end
       its(:representations) { is_expected.to include(asset) }
     end
+
+    context "with a preferred representation" do
+      let(:attributes) do
+        { "preferred_representation_for" => [resource.id] }
+      end
+      its(:preferred_representation) { is_expected.to eq(asset) }
+    end
   end
 
   describe "#update" do
     let!(:other)      { create(:asset) }
     let!(:work)       { create(:work, representations: [asset.uri], documents: [asset.uri]) }
     let!(:exhibition) { create(:exhibition, representations: [asset.uri]) }
-    let!(:shipment)   { create(:shipment, representations: [asset.uri, other.uri]) }
+    let!(:shipment)   { create(:shipment, representations: [asset.uri, other.uri], preferred_representation: other.uri) }
 
-    context "with multiple representations and documents" do
+    context "with multiple representations, documents, and a preferred representation" do
       let(:attributes) do
-        { "representations_for" => [work.id, exhibition.id], "documents_for" => [exhibition.id] }
+        {
+          "representations_for" => [work.id, exhibition.id],
+          "documents_for" => [exhibition.id],
+          "preferred_representation_for" => [shipment.id]
+        }
       end
 
       before { actor.update(attributes) }
 
       it "adds or removes the representations" do
         expect(shipment.reload.representations).to eq([other])
+        expect(shipment.reload.preferred_representation).to eq(asset)
         expect(exhibition.reload.representations).to eq([asset])
         expect(exhibition.reload.documents).to eq([asset])
         expect(work.reload.representations).to eq([asset])

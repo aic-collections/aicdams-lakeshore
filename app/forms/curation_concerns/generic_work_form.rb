@@ -59,6 +59,10 @@ module CurationConcerns
       representing_resource.assets
     end
 
+    def preferred_representation_for
+      # TODO: need to add this to the relationships tab
+    end
+
     # Overrides hydra-editor MultiValueInput#collection
     def [](term)
       if [:representations_for, :documents_for, :attachments_for].include? term

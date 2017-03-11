@@ -38,6 +38,10 @@ describe BatchUploadForm do
       its(:representations_for) { is_expected.to be_empty }
     end
 
+    describe "#preferred_representation_for" do
+      its(:preferred_representation_for) { is_expected.to be_empty }
+    end
+
     describe "#documents_for" do
       its(:documents_for) { is_expected.to be_empty }
     end

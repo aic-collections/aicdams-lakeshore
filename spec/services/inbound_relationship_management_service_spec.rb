@@ -44,5 +44,35 @@ describe InboundRelationshipManagementService do
         expect(old_work.representations).to be_empty
       end
     end
+
+    context "with preferred representations" do
+      let(:resource) { "resource" }
+      it "returns an error" do
+        expect { service.add_or_remove(:preferred_representations, ["ids"]) }.to raise_error(NotImplementedError)
+      end
+    end
+  end
+
+  describe "#update" do
+    context "with a relationship other than preferred representations" do
+      let(:resource) { "resource" }
+      it "returns an error" do
+        expect { service.update(:representations, ["ids"]) }.to raise_error(NotImplementedError)
+      end
+    end
+
+    context "with preferred representations" do
+      let(:resource) { create(:asset) }
+      let(:work)     { create(:work) }
+
+      subject { work }
+
+      before do
+        service.update(:preferred_representations, [work.id])
+        work.reload
+      end
+
+      its(:preferred_representation) { is_expected.to eq(resource) }
+    end
   end
 end

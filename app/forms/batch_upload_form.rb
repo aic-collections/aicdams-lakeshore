@@ -28,6 +28,11 @@ class BatchUploadForm < Sufia::Forms::BatchUploadForm
     # noop
   end
 
+  # TODO: delegate this to parameterized_relationships later when we want to add this relationship via the url
+  def preferred_representation_for
+    []
+  end
+
   # The default file set type created for each asset
   def use_uri
     AICType.IntermediateFileSet

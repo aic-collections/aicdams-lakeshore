@@ -13,7 +13,8 @@
 class AddToCitiResourceActor < CurationConcerns::Actors::AbstractActor
   include CurationConcerns::Lockable
 
-  attr_reader :representations, :additional_representation, :documents, :additional_document, :attachments
+  attr_reader :representations, :preferred_representations, :additional_representation, :documents,
+              :additional_document, :attachments
 
   def create(attributes)
     delete_relationship_attributes(attributes)
@@ -27,6 +28,7 @@ class AddToCitiResourceActor < CurationConcerns::Actors::AbstractActor
 
   def delete_relationship_attributes(attributes)
     @representations = attributes.delete(:representations_for)
+    @preferred_representations = attributes.delete(:preferred_representation_for)
     @additional_representation = attributes.delete(:additional_representation)
     @documents = attributes.delete(:documents_for)
     @additional_document = attributes.delete(:additional_document)
@@ -47,6 +49,13 @@ class AddToCitiResourceActor < CurationConcerns::Actors::AbstractActor
     (Array.wrap(documents) + Array.wrap(additional_document)).uniq.delete_if(&:empty?)
   end
 
+  # Assembles all unique preferred_representation ids, removing any empty strings passed in from the form.
+  # @return [Array<String>]
+  # TODO: we may want to cast to uris instead?
+  def preferred_representation_ids
+    Array.wrap(preferred_representations).uniq.delete_if(&:empty?)
+  end
+
   # Assets are referenced using uris and not ids
   # @return [Array<String>]
   def attachment_uris
@@ -59,6 +68,7 @@ class AddToCitiResourceActor < CurationConcerns::Actors::AbstractActor
       management_service.add_or_remove(:representations, representation_ids)
       management_service.add_or_remove(:documents, document_ids)
       management_service.add_or_remove(:attachments, attachment_uris)
+      management_service.update(:preferred_representations, preferred_representation_ids)
       true
     end
 

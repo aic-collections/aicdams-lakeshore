@@ -137,4 +137,55 @@ describe Lakeshore::Ingest do
                                   uploaded_files: ["1"])}
     end
   end
+
+  describe "#represented_resources" do
+    let(:params) do
+      {
+        asset_type: "StillImage",
+        content: { intermediate: "file_set" },
+        metadata: { document_type_uri: "doc_type", depositor: user.email }
+      }
+    end
+
+    subject { ingest }
+
+    context "when no preferred representations are specified" do
+      let(:params) do
+        {
+          asset_type: "StillImage",
+          content: { intermediate: "file_set" },
+          metadata: { document_type_uri: "doc_type", depositor: user.email }
+        }
+      end
+
+      its(:represented_resources) { is_expected.to be_empty }
+    end
+
+    context "when specifying a resource that already has a preferred representation" do
+      let(:asset)    { create(:asset) }
+      let(:resource) { create(:work, preferred_representation_uri: asset.uri) }
+      let(:params) do
+        {
+          asset_type: "StillImage",
+          content: { intermediate: "file_set" },
+          metadata: { document_type_uri: "doc_type", depositor: user.email, preferred_representation_for: [resource.id] }
+        }
+      end
+
+      its(:represented_resources) { is_expected.to contain_exactly(resource.id) }
+    end
+
+    context "when specifying a resource that does not have a preferred representation" do
+      let(:resource) { create(:work) }
+      let(:params) do
+        {
+          asset_type: "StillImage",
+          content: { intermediate: "file_set" },
+          metadata: { document_type_uri: "doc_type", depositor: user.email, preferred_representation_for: [resource.id] }
+        }
+      end
+
+      its(:represented_resources) { is_expected.to be_empty }
+    end
+  end
 end

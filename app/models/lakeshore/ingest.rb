@@ -4,7 +4,8 @@ module Lakeshore
     include ActiveModel::Validations
 
     attr_reader :ingestor, :submitted_asset_type, :document_type_uri, :original_file,
-                :intermediate_file, :presevation_master_file, :legacy_file, :additional_files, :params
+                :intermediate_file, :presevation_master_file, :legacy_file, :additional_files, :params,
+                :preferred_representation_for
 
     validates :ingestor, :asset_type, :document_type_uri, presence: true
 
@@ -48,11 +49,20 @@ module Lakeshore
       params.fetch(:duplicate_check, nil) == "false" ? false : true
     end
 
+    # @return [Array<String>]
+    # Returns an array of ids from preferred_representation_for that already have preferred representations defined.
+    def represented_resources
+      preferred_representation_for.select do |id|
+        SolrDocument.new(ActiveFedora::SolrService.query("id:#{id}").first).preferred_representation_id.present?
+      end
+    end
+
     private
 
       def register_terms(metadata)
         return unless metadata.present?
         @document_type_uri = metadata.fetch(:document_type_uri, nil)
+        @preferred_representation_for = metadata.fetch(:preferred_representation_for, [])
         @ingestor = find_or_create_user(metadata.fetch(:depositor, nil))
       end
 

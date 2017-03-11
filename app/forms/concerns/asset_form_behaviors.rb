@@ -11,6 +11,7 @@ module AssetFormBehaviors
         { representations_for: [] },
         { documents_for: [] },
         { attachments_for: [] },
+        { preferred_representation_for: [] },
         { publish_channel_uris: [] },
         { imaging_uid: [] },
         { view_notes: [] },

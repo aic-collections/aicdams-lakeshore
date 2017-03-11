@@ -4,9 +4,11 @@ module Lakeshore
     # TODO
     # load_and_authorize_resource :curation_concern, class: 'GenericWork'
 
-    delegate :intermediate_file, :asset_type, :ingestor, :attributes_for_actor, :check_duplicates?, to: :ingest
+    delegate :intermediate_file, :asset_type, :ingestor, :attributes_for_actor,
+             :check_duplicates?, :represented_resources, to: :ingest
+
     before_action :validate_ingest, :validate_asset_type, only: [:create]
-    before_action :validate_duplicate_upload, only: [:create, :update]
+    before_action :validate_duplicate_upload, :validate_preferred_representations, only: [:create, :update]
 
     def create
       if actor.create(attributes_for_actor)
@@ -42,6 +44,12 @@ module Lakeshore
         return unless intermediate_file && check_duplicates?
         return if duplicate_upload.empty?
         ingest.errors.add(:intermediate_file, "is a duplicate of #{duplicate_upload.first}")
+        render json: ingest.errors.full_messages, status: :conflict
+      end
+
+      def validate_preferred_representations
+        return unless represented_resources.present?
+        ingest.errors.add(:represented_resources, "#{represented_resources.join(', ')} already have a preferred representation")
         render json: ingest.errors.full_messages, status: :conflict
       end
 
