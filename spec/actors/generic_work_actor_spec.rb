@@ -55,14 +55,38 @@ describe CurationConcerns::Actors::GenericWorkActor do
       let(:parameters) { { "asset_type" => AICType.Text, "updated" => "asdf" } }
       its(:updated) { is_expected.to be_nil }
     end
+
+    context "with a copyright representative" do
+      let(:representative) { create(:agent, pref_label: "Sample Representative") }
+      let(:parameters) { { "asset_type" => AICType.Text, "copyright_representatives" => [representative.id] } }
+      its(:copyright_representatives) { is_expected.to contain_exactly(representative) }
+    end
   end
 
   describe "#update" do
-    let(:work) { create(:asset) }
-    let(:parameters) do
-      { "asset_type" => AICType.StillImage, "pref_label" => "New Label" }
+    context "when changing the label" do
+      let(:work) { create(:asset) }
+      let(:parameters) { { "asset_type" => AICType.StillImage, "pref_label" => "New Label" } }
+
+      before { actor.update(parameters) }
+
+      its(:pref_label) { is_expected.to eq("New Label") }
     end
-    before { actor.update(parameters) }
-    its(:pref_label) { is_expected.to eq("New Label") }
+
+    context "when removing a copyright representative" do
+      let(:representative) { create(:agent, pref_label: "Sample Representative") }
+      let(:work) { create(:asset) }
+      let(:parameters) { { "asset_type" => AICType.Text, "copyright_representatives" => [] } }
+
+      before do
+        work.copyright_representative_uris = [representative.uri]
+        work.save
+        actor.update(parameters)
+      end
+
+      subject { work.reload }
+
+      its(:copyright_representatives) { is_expected.to be_empty }
+    end
   end
 end

@@ -45,6 +45,9 @@ describe 'curation_concerns/base/_form.html.erb' do
       expect(page).to have_selector("label", text: "Image Compositing")
       expect(page).to have_selector("label", text: "Description")
     end
+    it "public domain defaults to false" do
+      expect(page).to have_unchecked_field("generic_work_public_domain")
+    end
   end
 
   context "when editing an existing asset" do
@@ -84,12 +87,13 @@ describe 'curation_concerns/base/_form.html.erb' do
     end
   end
 
-  context "with singular terms using list items" do
+  context "with list items" do
     let(:item) { create(:list_item) }
     let(:addl) { create(:list_item, pref_label: "Additional Item") }
     let(:work) { create(:asset, compositing: item.uri,
                                 light_type: item.uri,
                                 digitization_source: item.uri,
+                                licensing_restrictions: [item.uri, addl.uri],
                                 view: [item.uri, addl.uri]) }
 
     before do
@@ -104,6 +108,10 @@ describe 'curation_concerns/base/_form.html.erb' do
       is_expected.to have_select('generic_work_light_type_uri', selected: item.pref_label)
       is_expected.to have_select('generic_work_digitization_source_uri', selected: item.pref_label)
       within("div.generic_work_view_uris") do
+        is_expected.to have_content("<option selected=\"selected\" value=\"#{item.uri}\">#{item.pref_label}</option>")
+        is_expected.to have_content("<option selected=\"selected\" value=\"#{addl.uri}\">#{addl.pref_label}</option>")
+      end
+      within("div.generic_work_licensing_restriction_uris") do
         is_expected.to have_content("<option selected=\"selected\" value=\"#{item.uri}\">#{item.pref_label}</option>")
         is_expected.to have_content("<option selected=\"selected\" value=\"#{addl.uri}\">#{addl.pref_label}</option>")
       end
@@ -131,6 +139,23 @@ describe 'curation_concerns/base/_form.html.erb' do
       it "is enabled" do
         is_expected.to have_select('generic_work_publish_channel_uris')
       end
+    end
+  end
+
+  describe "copyright_representatives" do
+    let(:representative) { build(:agent, id: "rep-1", pref_label: "Sample Agent") }
+    let(:work) { create(:asset) }
+
+    before do
+      allow_any_instance_of(HiddenMultiSelectInput).to receive(:render_thumbnail).and_return("thumbnail")
+      allow(work).to receive(:copyright_representatives).and_return([representative])
+      render
+    end
+
+    subject { Capybara::Node::Simple.new(rendered) }
+
+    it "displays the existing representative" do
+      expect(page.all("input#generic_work_copyright_representatives", visible: false).first.value).to eq(representative.id)
     end
   end
 end

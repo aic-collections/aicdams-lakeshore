@@ -39,6 +39,10 @@ class BatchUploadForm < Sufia::Forms::BatchUploadForm
   def external_file_label
   end
 
+  def copyright_representatives
+    []
+  end
+
   # TODO: delegate this to parameterized_relationships later when we want to add this relationship via the url
   def preferred_representation_for
     []

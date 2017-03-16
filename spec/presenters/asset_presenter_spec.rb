@@ -33,6 +33,9 @@ describe AssetPresenter do
   it { is_expected.to delegate_method(:view_notes).to(:solr_document) }
   it { is_expected.to delegate_method(:visual_surrogate).to(:solr_document) }
   it { is_expected.to delegate_method(:external_resources).to(:solr_document) }
+  it { is_expected.to delegate_method(:licensing_restrictions).to(:solr_document) }
+  it { is_expected.to delegate_method(:public_domain?).to(:solr_document) }
+  it { is_expected.to delegate_method(:copyright_representatives).to(:solr_document) }
 
   its(:title) { is_expected.to eq(["Sample Label"]) }
 
@@ -66,6 +69,17 @@ describe AssetPresenter do
     context "when the user is not an admin" do
       before { allow(ability).to receive(:admin?).and_return(false) }
       it { is_expected.to be_nil }
+    end
+  end
+
+  describe "#public_domain" do
+    context "by default" do
+      its(:public_domain) { is_expected.to be("No") }
+    end
+
+    context "when true" do
+      before { allow(solr_document).to receive(:public_domain?).and_return(true) }
+      its(:public_domain) { is_expected.to be("Yes") }
     end
   end
 

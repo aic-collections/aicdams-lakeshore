@@ -12,6 +12,7 @@ describe CurationConcerns::GenericWorkForm do
     it { is_expected.to delegate_method(:dept_created).to(:model) }
     it { is_expected.to delegate_method(:attachment_uris).to(:model) }
     it { is_expected.to delegate_method(:attachments).to(:model) }
+    it { is_expected.to delegate_method(:copyright_representatives).to(:model) }
   end
 
   describe "#required_fields" do

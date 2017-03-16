@@ -57,7 +57,18 @@ module AssetMetadata
 
     property :attachments, predicate: AIC.isAttachmentOf, class_name: "GenericWork"
 
+    property :copyright_representatives, predicate: AIC.copyrightRepresentative, class_name: "Agent" do |index|
+      index.as :stored_searchable, using: :pref_label
+    end
+
+    property :licensing_restrictions, predicate: AIC.licensingRestriction, class_name: "ListItem" do |index|
+      index.as :stored_searchable, using: :pref_label
+    end
+
+    property :public_domain, predicate: AIC.publicDomain, multiple: false
+
     accepts_uris_for :keyword, :digitization_source, :document_type, :first_document_sub_type,
-                     :second_document_sub_type, :publish_channels, :attachments
+                     :second_document_sub_type, :publish_channels, :attachments, :copyright_representatives,
+                     :licensing_restrictions
   end
 end

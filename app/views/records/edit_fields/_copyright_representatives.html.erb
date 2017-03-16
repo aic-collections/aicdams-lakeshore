@@ -1,0 +1,23 @@
+<%# TODO: might need another kind of input %>
+<%# f.input key, as: :hidden_multi_select, property: :copyright_representatives, hint: false, label: false,
+    input_html: { class: 'form-control' }, required: false %>
+
+<div id="copyright_representatives">
+  <h4>Copyright Representatives</h4>
+  <p>
+    <em>Agents who hold copyright on this asset.
+    </em>
+  </p>
+  <table class="autocomplete-components">
+    <tr>
+      <td>
+        <%= select_tag "autocomplete_attachments_for", options_for_select(
+          [ "Agent"], "Agent"), { class: "autocomplete_model", style: "width: 110px;" } %>
+        </td>
+        <td>
+          <%= f.input :copyright_representatives, as: :hidden_multi_select, hint: false, label: false,
+              input_html: { class: 'form-control' }, required: false %>
+        </td>
+      </tr>
+  </table>
+</div>

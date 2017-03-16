@@ -30,5 +30,8 @@ describe BatchUploadForm do
     its(:visibility) { is_expected.to eq("department") }
     its(:external_file) { is_expected.to be_nil }
     its(:external_file_label) { is_expected.to be_nil }
+    its(:copyright_representatives) { is_expected.to be_empty }
+    its(:use_uri) { is_expected.to eq(AICType.IntermediateFileSet) }
+    its(:visibility) { is_expected.to eq("department") }
   end
 end

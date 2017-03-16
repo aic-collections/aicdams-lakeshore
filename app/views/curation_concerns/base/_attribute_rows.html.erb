@@ -11,6 +11,7 @@
 <%= presenter.attribute_to_html(:create_date) %>
 <%= presenter.attribute_to_html(:creator_display) %>
 <%= presenter.attribute_to_html(:credit_line, render_as: :multiline) %>
+<%= presenter.attribute_to_html(:copyright_representatives) %>
 <%= render_linked_attributes(presenter.current_location_presenters) if presenter.current_location_presenters? %>
 <%= presenter.attribute_to_html(:date_display) %>
 <%= presenter.attribute_to_html(:death_date) %>
@@ -34,6 +35,7 @@
 <%= presenter.attribute_to_html(:lat) %>
 <%= presenter.attribute_to_html(:latest_year) %>
 <%= presenter.attribute_to_html(:legacy_uid) %>
+<%= presenter.attribute_to_html(:licensing_restrictions) %>
 <%= presenter.attribute_to_html(:light_type) %>
 <%= presenter.attribute_to_html(:long) %>
 <%= presenter.attribute_to_html(:main_ref_number) %>
@@ -45,6 +47,7 @@
 <%= presenter.attribute_to_html(:place_of_origin, render_as: :multiline) %>
 <%= presenter.attribute_to_html(:provenance_text, render_as: :multiline) %>
 <%= presenter.attribute_to_html(:publ_ver_level) %>
+<%= presenter.attribute_to_html(:public_domain) %>
 <%= presenter.attribute_to_html(:publication_history, render_as: :multiline) %>
 <%= presenter.attribute_to_html(:publish_channels) %>
 <%= presenter.attribute_to_html(:start_date) %>

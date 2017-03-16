@@ -82,6 +82,14 @@ class AICType < RDF::StrictVocabulary("http://definitions.artic.edu/ontology/1.0
        subClassOf: Hydra::Works::Vocab::WorksTerms.FileSet,
        label: "Legacy File Set",
        comment: "Legacy file set"
+  term :LicensingRestriction,
+       subClassOf: "aictype:ListItem",
+       label: "Licensing Restriction",
+       comment: "Licensing restriction"
+  term :LicensingRestrictionList,
+       subClassOf: "aictype:List",
+       label: "Licensing Restriction List",
+       comment: "Licensing restriction list"
   term :LightType,
        subClassOf: "aictype:ListItem",
        label: "Light type",

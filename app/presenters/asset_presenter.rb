@@ -8,12 +8,12 @@ class AssetPresenter < Sufia::WorkShowPresenter
       :description, :batch_uid, :language, :publisher, :pref_label, :alt_label, :rights_holder,
       :keyword, :created_by, :compositing, :light_type, :view, :capture_device, :digitization_source,
       :imaging_uid, :transcript, :modified_date, :create_date, :publish_channels, :view_notes,
-      :visual_surrogate, :external_resources
+      :visual_surrogate, :external_resources, :licensing_restrictions, :copyright_representatives
     ]
   end
 
   def self.presenter_terms
-    terms + [:document_types]
+    terms + [:document_types, :public_domain?]
   end
 
   include ResourcePresenterBehaviors
@@ -28,6 +28,10 @@ class AssetPresenter < Sufia::WorkShowPresenter
   def fedora_uri
     return unless current_ability.admin?
     solr_document.fedora_uri
+  end
+
+  def public_domain
+    public_domain? ? "Yes" : "No"
   end
 
   # TODO: Does this cause a load from Fedora? Use solr_document instead?

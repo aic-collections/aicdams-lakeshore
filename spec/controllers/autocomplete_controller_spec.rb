@@ -35,9 +35,9 @@ describe AutocompleteController do
       subject { JSON.parse(response.body).first }
 
       context "with a partial label query" do
-        let!(:agent) { create(:agent, pref_label: "Agent to search") }
-        before { get :index, q: "Age", model: "Agent", format: :json }
-        it { is_expected.to include("label" => "Agent to search", "id" => agent.id) }
+        let!(:agent) { create(:agent, pref_label: "Zzypdx Abc") }
+        before { get :index, q: "pdx", model: "Agent", format: :json }
+        it { is_expected.to include("label" => "Zzypdx Abc", "id" => agent.id) }
       end
 
       context "with a partial ref. number query" do

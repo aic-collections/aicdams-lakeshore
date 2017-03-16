@@ -155,5 +155,10 @@ FactoryGirl.define do
       visual_surrogate             "a visual surrogate"
       external_resources           ["http://www.google.com"]
     end
+
+    trait :with_license_metadata do
+      copyright_representatives { [create(:agent, pref_label: "Judge Wopner").uri] }
+      licensing_restrictions { [create(:list_item, pref_label: "licensing restriction").uri] }
+    end
   end
 end
