@@ -18,7 +18,7 @@ class CitiNotificationJob < ActiveJob::Base
   private
 
     def notify_citi
-      return post.body if post.response.code.to_i == 200
+      return post.body if post.response.code.to_i == 202
       raise StandardError, "CITI notification failed. #{post.body}"
     end
 
