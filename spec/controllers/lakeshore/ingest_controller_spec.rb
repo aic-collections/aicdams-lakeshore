@@ -120,6 +120,7 @@ describe Lakeshore::IngestController do
       subject { response }
 
       before do
+        allow(controller).to receive(:validate_duplicate_upload)
         allow(controller).to receive(:represented_resources).and_return(["resource"])
         post :create, asset_type: "StillImage", content: { intermediate: image_asset }, metadata: metadata
       end
