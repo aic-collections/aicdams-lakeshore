@@ -25,6 +25,14 @@ describe CitiNotificationJob do
         job.perform(file_set)
       end
     end
+
+    context "when the file set in nil indicating the relationship was removed" do
+      it "sends a POST request to Citi" do
+        VCR.use_cassette("citi_notify_remove", record: :none) do
+          job.perform(nil, work)
+        end
+      end
+    end
   end
 
   describe "an unsuccessful outcome" do

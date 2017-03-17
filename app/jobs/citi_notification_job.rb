@@ -28,14 +28,8 @@ class CitiNotificationJob < ActiveJob::Base
     end
 
     def body
-      {
-        uid: ENV.fetch("citi_api_uid"),
-        password: ENV.fetch("citi_api_password"),
-        type: citi_resource.class.to_s,
-        citi_uid: citi_resource.citi_uid,
-        image_uid: file_set.id,
-        last_modified: file_set.modified_date.iso8601
-      }
+      return removal_request unless file_set
+      removal_request.merge(image_uid: file_set.id, last_modified: file_set.modified_date.iso8601)
     end
 
     def post
@@ -52,5 +46,16 @@ class CitiNotificationJob < ActiveJob::Base
     def verify_ssl?
       return false if ENV.fetch("citi_api_ssl_verify", "true") == "false"
       true
+    end
+
+    def removal_request
+      {
+        uid: ENV.fetch("citi_api_uid"),
+        password: ENV.fetch("citi_api_password"),
+        type: citi_resource.class.to_s,
+        citi_uid: citi_resource.citi_uid,
+        image_uid: nil,
+        last_modified: nil
+      }
     end
 end

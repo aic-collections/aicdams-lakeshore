@@ -17,7 +17,10 @@ class CitiResource < Resource
   end
 
   def notify_citi
-    return unless preferred_representation && preferred_representation.intermediate_file_set.present?
-    CitiNotificationJob.perform_later(preferred_representation.intermediate_file_set.first, self)
+    if preferred_representation.nil?
+      CitiNotificationJob.perform_later(nil, self)
+    elsif preferred_representation.intermediate_file_set.present?
+      CitiNotificationJob.perform_later(preferred_representation.intermediate_file_set.first, self)
+    end
   end
 end
