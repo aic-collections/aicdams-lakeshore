@@ -2,12 +2,16 @@
 require 'rails_helper'
 
 describe CitiNotificationJob do
-  let(:file_set) { create(:file_set) }
-  let(:asset)    { create(:asset) }
-  let(:work)     { create(:work, citi_uid: "1234") }
-  let(:job)      { described_class.new }
+  let(:file_set)  { create(:file_set) }
+  let(:asset)     { create(:asset) }
+  let(:work)      { create(:work, citi_uid: "1234") }
+  let(:mock_file) { double("MockFile", modified_date: Time.now) }
+  let(:job)       { described_class.new }
 
-  before { WebMock.enable! }
+  before do
+    WebMock.enable!
+    allow(file_set).to receive(:original_file).and_return(mock_file)
+  end
 
   describe "a successful outcome" do
     context "when the CITI resource is supplied" do
