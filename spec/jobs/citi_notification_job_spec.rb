@@ -5,7 +5,7 @@ describe CitiNotificationJob do
   let(:file_set)  { create(:file_set) }
   let(:asset)     { create(:asset) }
   let(:work)      { create(:work, citi_uid: "1234") }
-  let(:mock_file) { double("MockFile", modified_date: Time.now) }
+  let(:mock_file) { double("MockFile", fcrepo_modified: [Time.now]) }
   let(:job)       { described_class.new }
 
   before do

@@ -29,7 +29,7 @@ class CitiNotificationJob < ActiveJob::Base
 
     def body
       return removal_request unless file_set
-      removal_request.merge(image_uid: file_set.id, last_modified: file_set.original_file.modified_date.iso8601)
+      removal_request.merge(image_uid: file_set.id, last_modified: file_modification_date)
     end
 
     def post
@@ -57,5 +57,10 @@ class CitiNotificationJob < ActiveJob::Base
         image_uid: nil,
         last_modified: nil
       }
+    end
+
+    def file_modification_date
+      return unless file_set.original_file
+      Array.wrap(file_set.original_file.fcrepo_modified).first.iso8601
     end
 end
