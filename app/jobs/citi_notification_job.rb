@@ -61,6 +61,6 @@ class CitiNotificationJob < ActiveJob::Base
 
     def file_modification_date
       return unless file_set.original_file
-      Array.wrap(file_set.original_file.fcrepo_modified).first.iso8601
+      file_set.original_file.fcrepo_modified.first.iso8601
     end
 end
