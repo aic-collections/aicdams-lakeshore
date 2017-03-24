@@ -228,7 +228,7 @@ GEM
       railties (>= 3.0.0)
     faraday (0.9.2)
       multipart-post (>= 1.2, < 3)
-    fcrepo_wrapper (0.6.0)
+    fcrepo_wrapper (0.8.0)
       ruby-progressbar
     figaro (1.1.1)
       thor (~> 0.14)
@@ -728,4 +728,4 @@ DEPENDENCIES
   xray-rails
 
 BUNDLED WITH
-   1.14.5
+   1.14.6
