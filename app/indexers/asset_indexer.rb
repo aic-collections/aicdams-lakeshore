@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class AssetIndexer < Sufia::WorkIndexer
   include PrefLabel
 
@@ -20,6 +21,7 @@ class AssetIndexer < Sufia::WorkIndexer
       solr_doc[Solrizer.solr_name("publish_channels", :facetable)] = object.publish_channels.map(&:pref_label)
       solr_doc[Solrizer.solr_name("publish_channels", :symbol)] = object.publish_channels.map(&:pref_label)
       solr_doc[Solrizer.solr_name("attachments", :symbol)] = object.attachments.map(&:id)
+      solr_doc[Solrizer.solr_name("related_works", :symbol)] = FacetBuilder.new(object).related_works
     end
   end
 
@@ -91,10 +93,41 @@ class AssetIndexer < Sufia::WorkIndexer
         "Is Preferred Representation"
       end
 
+      # related_works creates a json structure of the asset's representations and preferred representations, containing only the citi_uids and main_ref_numbers of each representation.
+
+      def related_works
+        return if relationships.representations.empty? && relationships.preferred_representation.nil?
+
+        all_related_works = relationships.representations + preferreds
+
+        related_works = all_related_works.map do |r|
+          related_work(r)
+        end.compact
+
+        related_works.uniq.to_json
+      end
+
       private
 
         def relationships
           @relationships ||= InboundRelationships.new(object.id)
+        end
+
+        def valid_work?(work)
+          if ((work.type.include? AICType.CitiResource) && work.citi_uid.present?) && ((work.respond_to? "main_ref_number") && work.main_ref_number.present?)
+            return true
+          end
+          false
+        end
+
+        def related_work(work)
+          if valid_work?(work)
+            { "citi_uid": work.citi_uid, "main_ref_number": work.main_ref_number }
+          end
+        end
+
+        def preferreds
+          relationships.preferred_representations.count == 1 ? [relationships.preferred_representation] : relationships.preferred_representations
         end
     end
 end

@@ -49,5 +49,63 @@ describe AssetIndexer do
         expect(solr_doc["document_types_tesim"]).to eq("Ad Material > Membership event")
       end
     end
+    # related_works is an array of hashes. the array contains hashes of representations data, each hash contains only citi_uids and main_ref_numbers of a representation.
+    describe "create related_works field" do
+      context "with one relationship" do
+        let!(:asset) { create(:asset) }
+        let!(:work) { create(:work, :with_sample_metadata, representations: [asset.uri]) }
+        let!(:solr_doc) { described_class.new(asset).generate_solr_document }
+        it "creates a related_works field with a list" do
+          expect(solr_doc["related_works_ssim"]).to eq("[{\"citi_uid\":\"43523\",\"main_ref_number\":\"1999.397\"}]")
+        end
+      end
+
+      context "with two relationships" do
+        let!(:asset) { create(:asset) }
+        let!(:work) { create(:work, :with_sample_metadata, representations: [asset.uri]) }
+        let!(:work2) { create(:work, :with_sample_metadata, citi_uid: "12345", main_ref_number: "2017.392", representations: [asset.uri]) }
+        let!(:solr_doc) { described_class.new(asset).generate_solr_document }
+        it "creates a related_works field with a list" do
+          expect(solr_doc["related_works_ssim"]).to eq("[{\"citi_uid\":\"43523\",\"main_ref_number\":\"1999.397\"},{\"citi_uid\":\"12345\",\"main_ref_number\":\"2017.392\"}]")
+        end
+      end
+
+      context "with missing work data" do
+        let!(:asset) { create(:asset) }
+        let!(:work) { create(:work, :with_sample_metadata, citi_uid: "", main_ref_number: "", representations: [asset.uri]) }
+        let!(:solr_doc) { described_class.new(asset).generate_solr_document }
+        it "won't create a list with empty values" do
+          expect(solr_doc["related_works_ssim"]).to eq("[]")
+        end
+      end
+      # the related_works field does not distinguish preferred representations in any way, they simply must be indexed if present.
+      context "with a representation and a preferred representation of the same work" do
+        let!(:asset) { create(:asset) }
+        let!(:work) { create(:work, :with_sample_metadata, representations: [asset.uri], preferred_representation: asset.uri) }
+        let!(:solr_doc) { described_class.new(asset).generate_solr_document }
+        it "won't index duplicates" do
+          expect(solr_doc["related_works_ssim"]).to eq("[{\"citi_uid\":\"43523\",\"main_ref_number\":\"1999.397\"}]")
+        end
+      end
+
+      context "with a preferred representation" do
+        let!(:asset) { create(:asset) }
+        let!(:preferred_representation) { create(:work, citi_uid: "12345", main_ref_number: "2017.392", preferred_representation: asset.uri) }
+        let!(:solr_doc) { described_class.new(asset).generate_solr_document }
+        it "will index the preferred representation" do
+          expect(solr_doc["related_works_ssim"]).to eq("[{\"citi_uid\":\"12345\",\"main_ref_number\":\"2017.392\"}]")
+        end
+      end
+
+      context "with several preferred representations" do
+        let!(:asset) { create(:asset) }
+        let!(:preferred_representation1) { create(:work, citi_uid: "54321", main_ref_number: "1720.392", preferred_representation: asset.uri) }
+        let!(:preferred_representation2) { create(:work, citi_uid: "12345", main_ref_number: "2017.392", preferred_representation: asset.uri) }
+        let!(:solr_doc) { described_class.new(asset).generate_solr_document }
+        it "will index the preferred representations" do
+          expect(solr_doc["related_works_ssim"]).to eq("[{\"citi_uid\":\"54321\",\"main_ref_number\":\"1720.392\"},{\"citi_uid\":\"12345\",\"main_ref_number\":\"2017.392\"}]")
+        end
+      end
+    end
   end
 end
