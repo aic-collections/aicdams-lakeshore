@@ -43,6 +43,7 @@
           return
         } else {
           if (totalOptions.length) {
+            selectListForm.append("<option value=''>Please Select</option>");
             for (var i = 0; i < totalOptions.length; i++) {
               var dataVals = [];
               var selected;
@@ -54,7 +55,6 @@
                 selectListForm.append("<option value='" + dataVals['value'] + "' label='" + dataVals['label'] + "'>" + dataVals['label'] + "</option>");
               }
             }
-            selectListForm.append("<option value=''>Please Select</option>");
           }
         }
       },
@@ -70,7 +70,7 @@
 
         if (totalSubtypes2) {
           $(firstsubtype).after(
-            this.documentSubType(this.formModel, "second_document_sub_type_uri", "<option value=''>Please Select</option>").hide());
+            this.documentSubType(this.formModel, "second_document_sub_type_uri").hide());
           var subTypeList2 = $(this.secondSubTypeSelector);
           this.makeDropdown(subTypeList2, null, totalSubtypes2);
           $(this.secondSubTypeSelector).show();
@@ -120,12 +120,6 @@
         if (this.selectedSecondSubtype == true){
           //remove subSub clear
           $('.second_invalid_subtype').remove();
-        } else {
-          // send empty unless you have a value, to clear
-          var html = "<input class='second_invalid_subtype form-control form-control' " +
-            "name='"+this.formModel+"[second_document_sub_type_uri]' " +
-            "id='"+this.formModel+"_second_document_sub_type_uri' type='hidden'></input>";
-          $(html).appendTo('form.simple_form');
         }
       }
     };
@@ -140,7 +134,6 @@ Blacklight.onLoad(function() {
   var totalSubtypes;
   var docType;
 
-  var option = "<option value=''>Please Select</option>";
   var formModel = select_doctype.getFormModel($('form.simple_form'));
   var docTypeSelector = "#"+formModel+"_document_type_uri";
   var docTypeDivSelector = "div."+formModel+"_document_type_uri";
@@ -171,7 +164,7 @@ Blacklight.onLoad(function() {
         docTypeList.html("");
         $( firstSubTypeSelector ).remove();
         $( secondSubTypeSelector ).remove();
-        docTypeList.append("<option value=''>Please Select</option>");
+
         var key = dropdown.val();
         select_doctype.asset_type = key;
         totalDocTypes = select_doctype.getAssetType(data, key);
@@ -188,13 +181,17 @@ Blacklight.onLoad(function() {
       $(secondSubTypeSelector).remove();
       select_doctype.selectedSubtype = false;
       select_doctype.selectedSecondSubtype = false;
+
+      select_doctype.hiddenSubType(formModel, "first_document_sub_type_uri", docTypeSelector, "first_invalid_subtype");
+
+      select_doctype.hiddenSubType(formModel, "second_document_sub_type_uri", firstSubTypeDivSelector, "second_invalid_subtype");
       var key = dropdown.val();
       select_doctype.doctype_val = key;
       //info services
       if (key) {
         $(docTypeSelector).after(
           select_doctype.documentSubType(formModel,
-            "first_document_sub_type_uri", option).hide());
+            "first_document_sub_type_uri").hide());
           var subTypeList = $(firstSubTypeSelector);
           totalSubtypes = select_doctype.getListValues(key, totalDocTypes);
           if ((totalSubtypes) && (totalSubtypes.length > 0)){
