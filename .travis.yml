@@ -1,12 +1,16 @@
 language: ruby
 sudo: false
-
+rvm:
+  - 2.3.1
 cache:
   bundler: true
   directories:
     - "travis_phantomjs"
     - "dep_cache"
-
+services:
+  - redis-server
+before_script:
+  - jdk_switcher use oraclejdk8
 before_install:
   - gem install bundler
   - "phantomjs --version"
@@ -22,18 +26,22 @@ before_install:
   - "cp config/travis/solr_wrapper_test.yml config/solr_wrapper_test.yml"
   - "cp config/travis/fcrepo_wrapper_test.yml config/fcrepo_wrapper_test.yml"
 
-rvm:
-  - 2.3.1
 env:
   global:
     - NOKOGIRI_USE_SYSTEM_LIBRARIES=true
+  matrix:
+    - TEST_SUITE=feature
+    - TEST_SUITE=unit
+    - TEST_SUITE=rubocop
+matrix:
+  fast_finish: true
+script:
+  - "bundle exec rake ci:$TEST_SUITE"
+
 notifications:
   email:
     recipients:
       - "amsterdamos@gmail.com"
     on_success: "change"
     on_failure: "always"
-services:
-  - redis-server
-before_script:
-  - jdk_switcher use oraclejdk8
+
