@@ -44,7 +44,7 @@ describe Hydra::Derivatives::Processors::Image do
       let(:directives) { { label: :access, format: "jp2", size: "3000x3000>", url: "file:#{Rails.root}/tmp/derivatives/s-access.jp2" } }
       let(:file_name) { File.join(fixture_path, "tardis.png") }
       it "converts the image" do
-        expect(described_class).to receive(:execute).with("#{ENV['hydra_bin_path']}mogrify #{Rails.root}/tmp/derivatives/s-access.jp2")
+        expect(described_class).to receive(:execute).with("#{ENV['hydra_bin_path']}mogrify  #{Rails.root}/tmp/derivatives/s-access.jp2")
         subject.process
 
         _stdin, _stdout, _stderr = popen3("rm -rf #{Rails.root}/tmp/derivatives/s-access.jp2")

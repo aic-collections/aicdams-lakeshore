@@ -60,19 +60,20 @@ module Hydra::Derivatives::Processors
 
       # We need to adjust our *-access jp2s; mogrify will ensure they actually are in the jp2 format if they aren't.
 
+      def execute_mogrify_commands(output_file:, arguments:)
+        Image.execute("#{ENV['hydra_bin_path']}mogrify #{arguments} #{output_file}")
+      rescue StandardError => e
+        Rails.logger.error("#{self.class} mogrify error. #{e}")
+      end
+
       def write_image(xfrm)
         output_io = StringIO.new
         xfrm.write(output_io)
         output_io.rewind
-
         str = output_file_service.call(output_io, directives)
-        if directives[:url].include?("access") && directives[:url].include?("jp2")
-          output_file = directives[:url].split("file:")[1]
-          begin
-            Image.execute("#{ENV['hydra_bin_path']}mogrify #{output_file}")
-          rescue StandardError => e
-            Rails.logger.error("#{self.class} mogrify error. #{e}")
-          end
+
+        if file_should_be_mogrified(directives)
+          execute_mogrify_commands(output_file: directives[:url].split("file:")[1], arguments: add_sharpening(directives))
         end
         str
       end
@@ -84,6 +85,17 @@ module Hydra::Derivatives::Processors
       end
 
     private
+
+      def file_should_be_mogrified(directives)
+        if (directives[:url].include?("access") && directives[:url].include?("jp2")) || directives[:url].include?("citi")
+          return true
+        end
+        false
+      end
+
+      def add_sharpening(directives)
+        directives[:url].include?("citi") ? "-sharpen 1,.5" : ""
+      end
 
       def size
         directives.fetch(:size, nil)
