@@ -1,0 +1,8 @@
+port: 8985
+version: 5.5.3
+instance_dir: solr-test
+download_dir: dep_cache
+collection:
+  persist: false
+  dir: solr/config/
+  name: hydra-test
