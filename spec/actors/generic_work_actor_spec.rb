@@ -40,6 +40,21 @@ describe CurationConcerns::Actors::GenericWorkActor do
       let(:parameters) { { "asset_type" => AICType.Text, "document_type_uri" => doc_type.uri } }
       its(:type) { is_expected.to include(AICType.Text) }
     end
+
+    context "when parsing valid create dates" do
+      let(:parameters) { { "asset_type" => AICType.Text, "created" => "July 6, 2092" } }
+      its(:created) { is_expected.to be_kind_of(Date) }
+    end
+
+    context "when parsing valid update dates" do
+      let(:parameters) { { "asset_type" => AICType.Text, "updated" => "July 6, 2092" } }
+      its(:updated) { is_expected.to be_kind_of(Date) }
+    end
+
+    context "when parsing invalid dates" do
+      let(:parameters) { { "asset_type" => AICType.Text, "updated" => "asdf" } }
+      its(:updated) { is_expected.to be_nil }
+    end
   end
 
   describe "#update" do

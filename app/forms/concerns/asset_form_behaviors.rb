@@ -1,8 +1,15 @@
 # frozen_string_literal: true
+# Module for defining form behaviors that are included in both GenericWorkForm and BatchUploadForm.
 module AssetFormBehaviors
   extend ActiveSupport::Concern
 
   included do
+    # return [Array<Hash, Symbol>]
+    # Defines which parameters are allowed to pass from parameter hash to the object for updating.
+    # Any parameter that is a defined field in the form object's terms will be included by default;
+    # however, sometimes we need to provide additional parameters that are outside of the terms defined
+    # on the object. These would include parameters that are passed as uris, representation parameters,
+    # or parameters that get passed in from the API and not from the UI.
     def self.build_permitted_params
       super + [
         { rights_holder_uris: [] },
@@ -27,7 +34,9 @@ module AssetFormBehaviors
         :additional_representation,
         :additional_document,
         :uid,
-        :dept_created
+        :dept_created,
+        :created,
+        :updated
       ]
     end
   end
