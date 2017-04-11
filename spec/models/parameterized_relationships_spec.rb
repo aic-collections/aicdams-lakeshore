@@ -29,7 +29,7 @@ describe ParameterizedRelationships do
     context "when the citi_uid parameter is not an array" do
       let(:params) { ActionController::Parameters.new(citi_type: "Work",
                                                       relationship: "documentation_for",
-                                                      citi_uid: "1234") }
+                                                      citi_uid: "dne") }
 
       its(:representations_for) { is_expected.to be_empty }
       its(:documents_for)       { is_expected.to be_empty }
@@ -41,7 +41,7 @@ describe ParameterizedRelationships do
   context "with non-existent CITI resources" do
     let(:params) { ActionController::Parameters.new(citi_type: "Work",
                                                     relationship: "documentation_for",
-                                                    citi_uid: ["1234"]) }
+                                                    citi_uid: ["dne"]) }
 
     its(:representations_for) { is_expected.to be_empty }
     its(:documents_for)       { is_expected.to be_empty }
@@ -52,7 +52,7 @@ describe ParameterizedRelationships do
   context "with non-existent CITI types" do
     let(:params) { ActionController::Parameters.new(citi_type: "Bogus",
                                                     relationship: "documentation_for",
-                                                    citi_uid: ["1234"]) }
+                                                    citi_uid: ["dne"]) }
 
     its(:representations_for) { is_expected.to be_empty }
     its(:documents_for)       { is_expected.to be_empty }
