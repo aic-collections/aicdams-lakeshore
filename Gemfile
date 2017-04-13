@@ -15,6 +15,7 @@ gem 'jbuilder', '~> 2.6'
 gem 'jquery-rails'
 gem 'openseadragon', '0.3.0'
 gem 'resque-pool'
+gem 'resque-cleaner'
 gem 'rsolr', '~> 1.1'
 gem 'sass-rails', '~> 5.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
