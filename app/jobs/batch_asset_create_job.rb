@@ -24,7 +24,7 @@ class BatchAssetCreateJob < BatchCreateJob
         child_log = CurationConcerns::Operation.create!(user: user,
                                                         operation_type: "Create Asset",
                                                         parent: log)
-        CreateWorkJob.perform_later(user, model, attributes, child_log)
+        CreateAssetJob.perform_later(user, model, attributes, child_log)
       end
     end
 end

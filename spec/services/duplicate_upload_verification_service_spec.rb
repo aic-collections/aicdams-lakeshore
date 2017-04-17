@@ -24,4 +24,12 @@ describe DuplicateUploadVerificationService do
     end
     it { is_expected.to contain_exactly(asset) }
   end
+
+  describe "::unique?" do
+    subject { described_class.unique?(uploaded_file) }
+    context "when no duplicates exist" do
+      before { allow(FileSet).to receive(:where).with(digest_ssim: file_digest).and_return([]) }
+      it { is_expected.to be(true) }
+    end
+  end
 end

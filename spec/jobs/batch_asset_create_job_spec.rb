@@ -7,6 +7,7 @@ describe BatchAssetCreateJob do
 
   before do
     allow(CharacterizeJob).to receive(:perform_later)
+    allow(DuplicateUploadVerificationService).to receive(:unique?).and_return(true)
     allow(CurationConcerns.config.callback).to receive(:run)
     allow(CurationConcerns.config.callback).to receive(:set?).with(:after_batch_create_success).and_return(true)
     allow(CurationConcerns.config.callback).to receive(:set?).with(:after_batch_create_failure).and_return(true)

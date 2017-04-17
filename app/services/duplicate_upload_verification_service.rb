@@ -2,7 +2,11 @@
 class DuplicateUploadVerificationService
   attr_reader :duplicates, :file
 
-  # @param [Rack::Test::UploadedFile] file uploaded via Rack
+  def self.unique?(file)
+    new(file).duplicate_file_sets.empty?
+  end
+
+  # @param [Sufia::UploadedFile] file uploaded via Rack
   def initialize(file)
     @file = file
   end
