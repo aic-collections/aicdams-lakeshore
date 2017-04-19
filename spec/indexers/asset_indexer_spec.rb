@@ -51,7 +51,15 @@ describe AssetIndexer do
         expect(solr_doc["document_types_tesim"]).to eq("Ad Material > Membership event")
       end
     end
-    # related_works is an array of hashes. the array contains hashes of representations data, each hash contains only citi_uids and main_ref_numbers of a representation.
+
+    context "with no relationships" do
+      let(:asset) { create(:asset, :with_metadata) }
+      let(:solr_doc) { described_class.new(asset).generate_solr_document }
+      it "creates a facet for assets without relationships" do
+        expect(solr_doc["representation_sim"]).to eq("No Relationship")
+      end
+    end
+    # related_works is an array of hashes, in JSON. the array contains hashes of representations data, each hash contains only citi_uids and main_ref_numbers of a representation.
     describe "create related_works field" do
       context "with one relationship" do
         let!(:asset) { create(:asset) }

@@ -62,10 +62,11 @@ class AssetIndexer < Sufia::WorkIndexer
       end
 
       def representations
-        [
+        representations = [
           attachment_facet, attachment_of_facet, documentation_facet,
           representation_facet, preferred_representation_facet
         ].compact
+        representations.empty? ? "No Relationship" : representations
       end
 
       def attachment_facet

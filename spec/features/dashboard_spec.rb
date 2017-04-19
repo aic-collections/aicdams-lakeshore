@@ -14,4 +14,12 @@ describe "The dashboard" do
       end
     end
   end
+
+  context "with an asset the user has created" do
+    let!(:asset) { create(:asset, :with_metadata) }
+    it "creates a No Relationship Facet" do
+      visit("/dashboard/works")
+      expect(page).to have_link("No Relationship")
+    end
+  end
 end
