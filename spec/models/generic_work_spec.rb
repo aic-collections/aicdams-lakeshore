@@ -237,9 +237,9 @@ describe GenericWork do
 
     it "contains the correct kind of representations" do
       expect(asset.attachments).to contain_exactly(attachment)
-      expect(asset.to_solr[Solrizer.solr_name("representation", :facetable)]).to contain_exactly("Has Attachment")
-      expect(facets_for(Solrizer.solr_name("representation", :facetable), asset.id)).to contain_exactly("Has Attachment", 1)
-      expect(facets_for(Solrizer.solr_name("representation", :facetable), attachment.id)).to contain_exactly("Is Attachment Of", 1)
+      expect(asset.to_solr[Solrizer.solr_name("representation", :facetable)]).to contain_exactly("Is Attachment Of")
+      expect(facets_for(Solrizer.solr_name("representation", :facetable), asset.id)).to contain_exactly("Is Attachment Of", 1)
+      expect(facets_for(Solrizer.solr_name("representation", :facetable), attachment.id)).to contain_exactly("Has Attachment", 1)
     end
   end
 

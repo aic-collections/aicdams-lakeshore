@@ -108,9 +108,9 @@ class AIC < RDF::StrictVocabulary("http://definitions.artic.edu/ontology/1.0/")
   term :galleryLocation,
        label: "Gallery Location",
        comment: "Gallery location"
-  term :hasAttachment,
-       label: "Attachment",
-       comment: "Attachment"
+  term :attachmentOf,
+       label: "Attachment Of",
+       comment: "Attachment of another asset"
   term :hasComment,
        label: "Comment",
        comment: "Comment"

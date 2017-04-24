@@ -69,14 +69,16 @@ class AssetIndexer < Sufia::WorkIndexer
         representations.empty? ? "No Relationship" : representations
       end
 
+      # This method name is incongruent with the actual facet value and will be corrected in #1682
       def attachment_facet
         return if object.attachments.empty?
-        "Has Attachment"
+        "Is Attachment Of"
       end
 
+      # This method name is incongruent with the actual facet value and will be corrected in #1682
       def attachment_of_facet
         return if relationships.attachments.empty?
-        "Is Attachment Of"
+        "Has Attachment"
       end
 
       def documentation_facet

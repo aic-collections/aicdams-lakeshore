@@ -64,7 +64,7 @@ describe "Displaying an asset" do
     expect(page).to have_selector("h3", text: "Preferred Representation Of")
     expect(page).to have_selector("h3", text: "Representation Of")
     expect(page).to have_selector("h3", text: "Documentation For")
-    expect(page).to have_selector("h3", text: "Attachments")
+    expect(page).to have_selector("h3", text: "Attachment Of")
 
     # User1 gets links to the assets
     expect(page).to have_link("Sample Exhibition")
