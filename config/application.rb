@@ -19,6 +19,7 @@ module Lakeshore
     config.autoload_paths << Rails.root.join('app', 'models', 'vocabularies')
     config.autoload_paths << Rails.root.join('app', 'forms', 'concerns')
     config.autoload_paths << Rails.root.join('app', 'jobs', 'concerns')
+    config.autoload_paths << Rails.root.join('app', 'indexers', 'concerns')
 
     config.assets.paths << Rails.root.join('app', 'assets', 'fonts')
     # config.action_mailer.default_url_options = { host: 'lakeshore.artic.edu' }

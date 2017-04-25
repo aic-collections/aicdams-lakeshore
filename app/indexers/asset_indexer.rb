@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class AssetIndexer < Sufia::WorkIndexer
-  include PrefLabel
+  include IndexingBehaviors
 
   def generate_solr_document
     super.tap do |solr_doc|
@@ -46,12 +46,6 @@ class AssetIndexer < Sufia::WorkIndexer
         pref_label_for(:first_document_sub_type),
         pref_label_for(:second_document_sub_type)
       ].compact.join(" > ")
-    end
-
-    def depositor_full_name
-      return unless object.aic_depositor
-      return object.aic_depositor.nick unless object.aic_depositor.given_name && object.aic_depositor.family_name
-      [[object.aic_depositor.given_name, object.aic_depositor.family_name].join(" ")]
     end
 
     class FacetBuilder

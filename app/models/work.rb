@@ -2,7 +2,7 @@
 class Work < CitiResource
   include ::CurationConcerns::WorkBehavior
   include CitiBehaviors
-  include PrefLabel
+
   self.indexer = WorkIndexer
 
   def self.aic_type

@@ -1,21 +1,25 @@
 # frozen_string_literal: true
 require 'rails_helper'
 
-describe GenericWork do
-  let(:department_asset) { build(:department_asset) }
-  let(:registered_asset) { build(:registered_asset) }
+describe Collection do
+  let(:department_asset) { build(:department_collection) }
+  let(:registered_asset) { build(:registered_collection) }
 
   context "by default" do
-    it { is_expected.not_to be_private }
-    it { is_expected.to be_department }
-    its(:visibility) { is_expected.to eq(Permissions::LakeshoreVisibility::VISIBILITY_TEXT_VALUE_DEPARTMENT) }
-    its(:read_groups) { is_expected.to be_empty }
+    it { is_expected.to be_private }
     its(:discover_groups) { is_expected.to contain_exactly(Hydra::AccessControls::AccessRight::PERMISSION_TEXT_VALUE_AUTHENTICATED) }
+    its(:visibility) { is_expected.to eq("restricted") }
   end
 
-  context "when setting to restricted" do
+  context "when setting to private" do
     before { subject.visibility = Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PRIVATE }
-    specify { expect(subject.errors.messages[:visibility]).to include("cannot be restricted") }
+    it { is_expected.to be_private }
+  end
+
+  context "when setting to department" do
+    before { subject.visibility = Permissions::LakeshoreVisibility::VISIBILITY_TEXT_VALUE_DEPARTMENT }
+    its(:visibility) { is_expected.to eq("department") }
+    it { is_expected.to be_department }
   end
 
   context "when setting to open" do
