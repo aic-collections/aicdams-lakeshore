@@ -1,0 +1,43 @@
+<% tabs ||= %w[metadata share] # default tab order %>
+
+<%= simple_form_for @form, html: { class: 'editor' } do |f| %>
+
+  <div role="main">
+    <!-- Nav tabs -->
+    <ul class="nav nav-tabs" role="tablist">
+      <li role="presentation" class="active">
+        <a href="#metadata" aria-controls="metadata" role="tab" data-toggle="tab">
+          <i class="fa icon-metadata"></i> Descriptions
+        </a>
+      </li>
+      <li role="presentation">
+        <a href="#share" aria-controls="share" role="tab" data-toggle="tab">
+          <i class="fa icon-share"></i> Share
+        </a>
+      </li>
+    </ul>
+
+    <!-- Tab panes -->
+    <div class="tab-content">
+      <div role="tabpanel" class="tab-pane active" id="metadata">
+        <div class="form-tab-content">
+          <%= render "form_metadata", f: f %>
+        </div>
+      </div>
+      <div role="tabpanel" class="tab-pane" id="share" data-param-key="<%= f.object.model_name.param_key %>">
+        <div class="form-tab-content">
+          <%= render "curation_concerns/base/form_share", f: f %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="primary-actions">
+    <% if params[:action] == "new" %>
+      <%= f.submit 'Create Collection', class: 'btn btn-primary', onclick: "confirmation_needed = false;", id: "create_submit", name: "create_collection" %>
+    <% else %>
+      <%= f.submit 'Update Collection', class: 'btn btn-primary', onclick: "confirmation_needed = false;", id: "update_submit", name: "update_collection" %>
+    <% end %>
+    <%= link_to t(:'helpers.action.cancel'), main_app.root_path, class: 'btn btn-link' %>
+  </div>
+<% end %>
