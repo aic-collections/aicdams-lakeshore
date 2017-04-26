@@ -29,7 +29,7 @@ namespace :lakeshore do
       response = Blacklight::Solr::Response.new(query(start), nil)
       response.docs.map { |d| DeleteIndexJob.perform_later(d.fetch("id")) }
       start = start + response.rows
-    end  
+    end
   end
 
   desc "Load lists"
@@ -39,15 +39,22 @@ namespace :lakeshore do
     end
   end
 
-  desc "Regenerate thumbnails for all assets"
+  desc "Regenerate derivatives for all assets"
   task regenerate: :environment do
     FileSet.all.each do |fs|
       RegenerateAssetDerivativesJob.perform_later(fs, fs.original_file.id)
     end
   end
 
+  desc "Regenerate citi derivatives for all assets"
+  task regenerate_citi_thumbnails: :environment do
+    FileSet.all.each do |fs|
+      RegenerateCitiDerivativesJob.perform_later(fs, fs.original_file.id)
+    end
+  end
+
   def query(start=0)
-    Blacklight.default_index.connection.get('select', params: {   
+    Blacklight.default_index.connection.get('select', params: {
                                                                 q: "*:*",
                                                                 qt: "document",
                                                                 fl: "id",
