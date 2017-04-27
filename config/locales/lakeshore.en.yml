@@ -1,6 +1,6 @@
 en:
   lakeshore:
-    unauthorized: "You are not authorized to see this asset." 
+    unauthorized: "You are not authorized to see this asset."
     upload:
       restrictions_html: "<h3>Maximum Upload Restrictions</h3><ul><li>Individual File Size: 1 GB</li></ul>"
       asset_types: "The following file types can be uploaded:"
@@ -17,3 +17,8 @@ en:
       add_assets: "Add New Assets to this Resource"
       batch_add_representations: "Add Representations"
       batch_add_documentation: "Add Documentation"
+    collections:
+      tabs:
+        metadata: "Descriptions"
+        share: "Share"
+      copy_warning: "Visibility and sharing only affect the collection itself, not its member resources, which have their own permissions"

@@ -5,6 +5,10 @@
       <small>Who should be able to view your collection?</small>
     </legend>
 
+    <div class="alert alert-warning" role="alert">
+      <%= t('lakeshore.collections.copy_warning') %>
+    </div>
+
     <div class="form-group">
       <label class="radio">
         <input type="radio" id="visibility_open" name="<%= f.object_name %>[visibility]" value="<%= Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PUBLIC %>" <% if @collection.open_access? %> checked="true"<% end %>/>

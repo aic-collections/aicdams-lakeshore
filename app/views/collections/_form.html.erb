@@ -7,12 +7,12 @@
     <ul class="nav nav-tabs" role="tablist">
       <li role="presentation" class="active">
         <a href="#metadata" aria-controls="metadata" role="tab" data-toggle="tab">
-          <i class="fa icon-metadata"></i> Descriptions
+          <i class="fa icon-metadata"></i> <%= t('lakeshore.collections.tabs.metadata') %>
         </a>
       </li>
       <li role="presentation">
         <a href="#share" aria-controls="share" role="tab" data-toggle="tab">
-          <i class="fa icon-share"></i> Share
+          <i class="fa icon-share"></i> <%= t('lakeshore.collections.tabs.share') %>
         </a>
       </li>
     </ul>
@@ -26,6 +26,9 @@
       </div>
       <div role="tabpanel" class="tab-pane" id="share" data-param-key="<%= f.object.model_name.param_key %>">
         <div class="form-tab-content">
+          <div class="alert alert-warning" role="alert">
+            <%= t('lakeshore.collections.copy_warning') %>
+          </div>
           <%= render "curation_concerns/base/form_share", f: f %>
         </div>
       </div>
