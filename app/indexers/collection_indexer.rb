@@ -8,6 +8,8 @@ class CollectionIndexer < CurationConcerns::CollectionIndexer
       solr_doc[Solrizer.solr_name("aic_depositor", :symbol)] = object.depositor
       solr_doc[Solrizer.solr_name("dept_created", :stored_searchable)] = pref_label_for(:dept_created)
       solr_doc[Solrizer.solr_name("dept_created", :facetable)] = pref_label_for(:dept_created)
+      solr_doc[Solrizer.solr_name("publish_channels", :facetable)] = object.publish_channels.map(&:pref_label)
+      solr_doc[Solrizer.solr_name("publish_channels", :symbol)] = object.publish_channels.map(&:pref_label)
     end
   end
 end

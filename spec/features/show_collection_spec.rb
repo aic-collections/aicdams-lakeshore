@@ -5,7 +5,7 @@ describe "Collection display" do
   let(:user)       { create(:user1) }
   let(:asset)      { create(:department_asset, pref_label: "Asset in collection") }
 
-  let!(:collection) { create(:department_collection, title: ["Sample collection"], members: [asset]) }
+  let!(:collection) { create(:department_collection, :with_metadata, members: [asset]) }
 
   before do
     sign_in(user)
@@ -23,6 +23,9 @@ describe "Collection display" do
     expect(page).to have_content(collection.title.first)
     within("h1") do
       expect(page).to have_selector("span.label-warning", text: "Department")
+    end
+    within(".metadata-collections") do
+      expect(page).to have_content(collection.publish_channels.first.pref_label)
     end
     within(".table") do
       expect(page).to have_content(asset.pref_label)

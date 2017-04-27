@@ -29,7 +29,8 @@ FactoryGirl.define do
     end
 
     trait :with_metadata do
-      # TBD
+      title                 ["Collection with metadata"]
+      publish_channel_uris  ["http://definitions.artic.edu/publish_channel/Web"]
     end
   end
 end

@@ -3,7 +3,7 @@ require 'rails_helper'
 
 describe "collections/_form.html.erb" do
   let(:collection) { build(:collection) }
-  let(:form)       { CollectionForm.new(collection) }
+  let(:form)       { CollectionForm.new(collection, Ability.new(nil)) }
 
   before do
     assign(:form, form)
