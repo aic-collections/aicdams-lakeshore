@@ -72,7 +72,7 @@ class AssetIndexer < Sufia::WorkIndexer
       # This method name is incongruent with the actual facet value and will be corrected in #1682
       def attachment_facet
         return if object.attachments.empty?
-        "Is Attachment Of"
+        "Is Attachment"
       end
 
       # This method name is incongruent with the actual facet value and will be corrected in #1682

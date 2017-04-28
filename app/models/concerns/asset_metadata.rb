@@ -51,7 +51,7 @@ module AssetMetadata
 
     property :publish_channels, predicate: AIC.publishChannel, class_name: "PublishChannel"
 
-    property :attachments, predicate: AIC.attachmentOf, class_name: "GenericWork"
+    property :attachments, predicate: AIC.isAttachmentOf, class_name: "GenericWork"
 
     accepts_uris_for :keyword, :digitization_source, :document_type, :first_document_sub_type,
                      :second_document_sub_type, :publish_channels, :attachments
