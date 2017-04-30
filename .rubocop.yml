@@ -88,6 +88,10 @@ Style/PredicateName:
     - 'app/presenters/asset_presenter.rb'
     - 'app/presenters/concerns/citi_presenter_behaviors.rb'
 
+Style/FileName:
+  Exclude:
+    - 'config/initializers/active_fedora-noid.rb'
+
 Rails:
   Enabled: true
 
