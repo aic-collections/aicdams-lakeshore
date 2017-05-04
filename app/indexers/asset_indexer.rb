@@ -6,7 +6,7 @@ class AssetIndexer < Sufia::WorkIndexer
   def generate_solr_document
     super.tap do |solr_doc|
       solr_doc[Solrizer.solr_name("aic_type", :facetable)] = aic_types(["Asset"])
-      solr_doc[Solrizer.solr_name("representation", :facetable)] = FacetBuilder.new(object).representations
+      solr_doc[Solrizer.solr_name("representation", :facetable)] = field_builder.representations
       solr_doc[Solrizer.solr_name("depositor_full_name", :stored_searchable)] = depositor_full_name
       solr_doc[Solrizer.solr_name("aic_depositor", :symbol)] = object.depositor
       solr_doc[Solrizer.solr_name("fedora_uri", :symbol)] = object.uri.to_s
@@ -21,7 +21,7 @@ class AssetIndexer < Sufia::WorkIndexer
       solr_doc[Solrizer.solr_name("publish_channels", :facetable)] = object.publish_channels.map(&:pref_label)
       solr_doc[Solrizer.solr_name("publish_channels", :symbol)] = object.publish_channels.map(&:pref_label)
       solr_doc[Solrizer.solr_name("attachments", :symbol)] = object.attachments.map(&:id)
-      solr_doc[Solrizer.solr_name("related_works", :symbol)] = FacetBuilder.new(object).related_works
+      solr_doc[Solrizer.solr_name("related_works", :symbol)] = field_builder.related_works
     end
   end
 
@@ -48,83 +48,7 @@ class AssetIndexer < Sufia::WorkIndexer
       ].compact.join(" > ")
     end
 
-    class FacetBuilder
-      attr_reader :object
-
-      def initialize(object)
-        @object = object
-      end
-
-      def representations
-        representations = [
-          attachment_facet, attachment_of_facet, documentation_facet,
-          representation_facet, preferred_representation_facet
-        ].compact
-        representations.empty? ? "No Relationship" : representations
-      end
-
-      # This method name is incongruent with the actual facet value and will be corrected in #1682
-      def attachment_facet
-        return if object.attachments.empty?
-        "Is Attachment"
-      end
-
-      # This method name is incongruent with the actual facet value and will be corrected in #1682
-      def attachment_of_facet
-        return if relationships.attachments.empty?
-        "Has Attachment"
-      end
-
-      def documentation_facet
-        return if relationships.documents.empty?
-        "Documentation For"
-      end
-
-      def representation_facet
-        return if relationships.representations.empty?
-        "Is Representation"
-      end
-
-      def preferred_representation_facet
-        return if relationships.preferred_representation.nil?
-        "Is Preferred Representation"
-      end
-
-      # related_works creates a json structure of the asset's representations and preferred representations, containing only the citi_uids and main_ref_numbers of each representation.
-
-      def related_works
-        return if relationships.representations.empty? && relationships.preferred_representation.nil?
-
-        all_related_works = relationships.representations + preferreds
-
-        related_works = all_related_works.map do |r|
-          related_work(r)
-        end.compact
-
-        related_works.uniq.to_json
-      end
-
-      private
-
-        def relationships
-          @relationships ||= InboundRelationships.new(object.id)
-        end
-
-        def valid_work?(work)
-          if ((work.type.include? AICType.CitiResource) && work.citi_uid.present?) && ((work.respond_to? "main_ref_number") && work.main_ref_number.present?)
-            return true
-          end
-          false
-        end
-
-        def related_work(work)
-          if valid_work?(work)
-            { "citi_uid": work.citi_uid, "main_ref_number": work.main_ref_number }
-          end
-        end
-
-        def preferreds
-          relationships.preferred_representations.count == 1 ? [relationships.preferred_representation] : relationships.preferred_representations
-        end
+    def field_builder
+      @field_builder = AssetSolrFieldBuilder.new(object)
     end
 end
