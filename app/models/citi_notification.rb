@@ -54,6 +54,6 @@ class CitiNotification
 
     def asset_details
       return {} unless citi_resource.respond_to?(:imaging_uid)
-      { image_number: citi_resource.imaging_uid }
+      { image_number: citi_resource.imaging_uid.first }
     end
 end

@@ -36,6 +36,6 @@ describe CitiNotification do
   context "with an asset with an image_uid" do
     let(:citi_resource) { build(:asset, imaging_uid: ["fakeimageuid"]) }
 
-    its(:asset_details) { is_expected.to eq(image_number: ["fakeimageuid"]) }
+    its(:asset_details) { is_expected.to eq(image_number: "fakeimageuid") }
   end
 end
