@@ -525,6 +525,7 @@ GEM
     rspec-its (1.2.0)
       rspec-core (>= 3.0.0)
       rspec-expectations (>= 3.0.0)
+    rspec-json_expectations (2.1.0)
     rspec-mocks (3.5.0)
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.5.0)
@@ -715,6 +716,7 @@ DEPENDENCIES
   rsolr (~> 1.1)
   rspec-activemodel-mocks
   rspec-its
+  rspec-json_expectations
   rspec-rails (~> 3.5)
   rubocop (~> 0.39.0)
   rubocop-rspec (~> 1.4.1)

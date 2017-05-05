@@ -59,14 +59,18 @@ describe AssetIndexer do
         expect(solr_doc["representation_sim"]).to eq("No Relationship")
       end
     end
-    # related_works is an array of hashes, in JSON. the array contains hashes of representations data, each hash contains only citi_uids and main_ref_numbers of a representation.
+
+    # Related_works is an array of hashes, in JSON.
+    # The array contains hashes of representations data, each hash contains only citi_uids
+    # and main_ref_numbers of a representation.
     describe "create related_works field" do
       context "with one relationship" do
         let!(:asset) { create(:asset) }
         let!(:work) { create(:work, :with_sample_metadata, representations: [asset.uri]) }
         let!(:solr_doc) { described_class.new(asset).generate_solr_document }
-        it "creates a related_works field with a list" do
-          expect(solr_doc["related_works_ssim"]).to eq("[{\"citi_uid\":\"43523\",\"main_ref_number\":\"1999.397\"}]")
+        it "creates fields for related works" do
+          expect(solr_doc["related_works_ssim"]).to include_json([{ citi_uid: "43523", main_ref_number: "1999.397" }])
+          expect(solr_doc["related_work_main_ref_number_ssim"]).to contain_exactly("1999.397")
         end
       end
 
@@ -75,8 +79,10 @@ describe AssetIndexer do
         let!(:work) { create(:work, :with_sample_metadata, representations: [asset.uri]) }
         let!(:work2) { create(:work, :with_sample_metadata, citi_uid: "12345", main_ref_number: "2017.392", representations: [asset.uri]) }
         let!(:solr_doc) { described_class.new(asset).generate_solr_document }
-        it "creates a related_works field with a list" do
-          expect(solr_doc["related_works_ssim"]).to eq("[{\"citi_uid\":\"43523\",\"main_ref_number\":\"1999.397\"},{\"citi_uid\":\"12345\",\"main_ref_number\":\"2017.392\"}]")
+        it "creates fields for related works" do
+          expect(solr_doc["related_works_ssim"]).to include_json([{ citi_uid: "43523", main_ref_number: "1999.397" },
+                                                                  { citi_uid: "12345", main_ref_number: "2017.392" }])
+          expect(solr_doc["related_work_main_ref_number_ssim"]).to contain_exactly("1999.397", "2017.392")
         end
       end
 
@@ -86,15 +92,19 @@ describe AssetIndexer do
         let!(:solr_doc) { described_class.new(asset).generate_solr_document }
         it "won't create a list with empty values" do
           expect(solr_doc["related_works_ssim"]).to eq("[]")
+          expect(solr_doc["related_work_main_ref_number_ssim"]).to be_empty
         end
       end
-      # the related_works field does not distinguish preferred representations in any way, they simply must be indexed if present.
+
+      # The related_works field does not distinguish preferred representations in any way,
+      # they simply must be indexed if present.
       context "with a representation and a preferred representation of the same work" do
         let!(:asset) { create(:asset) }
         let!(:work) { create(:work, :with_sample_metadata, representations: [asset.uri], preferred_representation: asset.uri) }
         let!(:solr_doc) { described_class.new(asset).generate_solr_document }
         it "won't index duplicates" do
-          expect(solr_doc["related_works_ssim"]).to eq("[{\"citi_uid\":\"43523\",\"main_ref_number\":\"1999.397\"}]")
+          expect(solr_doc["related_works_ssim"]).to include_json([{ citi_uid: "43523", main_ref_number: "1999.397" }])
+          expect(solr_doc["related_work_main_ref_number_ssim"]).to contain_exactly("1999.397")
         end
       end
 
@@ -103,7 +113,8 @@ describe AssetIndexer do
         let!(:preferred_representation) { create(:work, citi_uid: "12345", main_ref_number: "2017.392", preferred_representation: asset.uri) }
         let!(:solr_doc) { described_class.new(asset).generate_solr_document }
         it "will index the preferred representation" do
-          expect(solr_doc["related_works_ssim"]).to eq("[{\"citi_uid\":\"12345\",\"main_ref_number\":\"2017.392\"}]")
+          expect(solr_doc["related_works_ssim"]).to include_json([{ citi_uid: "12345", main_ref_number: "2017.392" }])
+          expect(solr_doc["related_work_main_ref_number_ssim"]).to contain_exactly("2017.392")
         end
       end
 
@@ -113,7 +124,9 @@ describe AssetIndexer do
         let!(:preferred_representation2) { create(:work, citi_uid: "12345", main_ref_number: "2017.392", preferred_representation: asset.uri) }
         let!(:solr_doc) { described_class.new(asset).generate_solr_document }
         it "will index the preferred representations" do
-          expect(solr_doc["related_works_ssim"]).to eq("[{\"citi_uid\":\"54321\",\"main_ref_number\":\"1720.392\"},{\"citi_uid\":\"12345\",\"main_ref_number\":\"2017.392\"}]")
+          expect(solr_doc["related_works_ssim"]).to include_json([{ citi_uid: "54321", main_ref_number: "1720.392" },
+                                                                  { citi_uid: "12345", main_ref_number: "2017.392" }])
+          expect(solr_doc["related_work_main_ref_number_ssim"]).to contain_exactly("1720.392", "2017.392")
         end
       end
     end

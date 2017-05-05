@@ -48,6 +48,7 @@ group :test do
   gem 'poltergeist'
   gem 'rspec-activemodel-mocks'
   gem 'rspec-its'
+  gem 'rspec-json_expectations'
   gem 'rspec-rails', '~> 3.5'
   gem 'shoulda-matchers', '~> 3.1'
 end

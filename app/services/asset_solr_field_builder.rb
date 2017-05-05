@@ -53,15 +53,15 @@ class AssetSolrFieldBuilder
   # A json structure of the asset's representations and preferred representations, containing only the
   # citi_uids and main_ref_numbers of each representation.
   def related_works
-    return if relationships.representations.empty? && relationships.preferred_representation.nil?
+    valid_related_works.map do |work|
+      { "citi_uid": work.citi_uid, "main_ref_number": work.main_ref_number }
+    end.compact.uniq.to_json
+  end
 
-    all_related_works = relationships.representations + preferreds
-
-    related_works = all_related_works.map do |r|
-      related_work(r)
-    end.compact
-
-    related_works.uniq.to_json
+  # @return [Array<String>]
+  # Only the main_ref_number properties for related works
+  def main_ref_numbers
+    valid_related_works.map(&:main_ref_number).uniq
   end
 
   private
@@ -77,10 +77,10 @@ class AssetSolrFieldBuilder
       false
     end
 
-    def related_work(work)
-      if valid_work?(work)
-        { "citi_uid": work.citi_uid, "main_ref_number": work.main_ref_number }
-      end
+    def valid_related_works
+      return [] if relationships.representations.empty? && relationships.preferred_representation.nil?
+      all_related_works = relationships.representations + preferreds
+      all_related_works.map { |w| w if valid_work?(w) }.compact
     end
 
     def preferreds
