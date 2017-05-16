@@ -53,4 +53,8 @@ module SolrDocumentExtensions::Asset
   def visual_surrogate
     Array(self[Solrizer.solr_name('visual_surrogate', :stored_searchable)]).first
   end
+
+  def external_resources
+    Array(self[Solrizer.solr_name('external_resources', :stored_searchable)])
+  end
 end

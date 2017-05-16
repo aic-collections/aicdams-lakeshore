@@ -9,6 +9,7 @@ describe 'curation_concerns/base/_form.html.erb' do
 
   before do
     allow(controller).to receive(:current_user).and_return(user)
+    allow(view).to receive(:controller_name).and_return("generic_works")
     assign(:form, form)
   end
 

@@ -49,6 +49,10 @@ module AssetMetadata
       index.as :stored_searchable, :facetable, using: :pref_label
     end
 
+    property :external_resources, predicate: AIC.hasContent do |index|
+      index.as :stored_searchable
+    end
+
     property :publish_channels, predicate: AIC.publishChannel, class_name: "PublishChannel"
 
     property :attachments, predicate: AIC.isAttachmentOf, class_name: "GenericWork"

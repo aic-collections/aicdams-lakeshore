@@ -77,4 +77,27 @@ describe "Batch upload" do
       end
     end
   end
+
+  context "with an external resoure" do
+    before { LakeshoreTesting.restore }
+
+    it "creates a new asset without any local files" do
+      visit("/batch_uploads/new")
+      select("Still Image", from: "asset_type_select")
+      fill_in("External File", with: "http://www.google.com")
+      fill_in("Label for External File", with: "Google link")
+      click_link("Descriptions")
+      select("Imaging", from: "batch_upload_item_document_type_uri")
+      select("Event Photography", from: "batch_upload_item_first_document_sub_type_uri")
+      select("Lecture", from: "batch_upload_item_second_document_sub_type_uri")
+
+      # This has no local file, so characterization will not be performed
+      expect(CharacterizeJob).not_to receive(:perform_later)
+      click_button("Save")
+
+      within("div#documents") do
+        expect(page).to have_content("Display all details of Google link")
+      end
+    end
+  end
 end

@@ -131,6 +131,7 @@ describe SolrDocument do
     it { is_expected.to respond_to(:publish_channels) }
     it { is_expected.to respond_to(:view_notes) }
     it { is_expected.to respond_to(:visual_surrogate) }
+    it { is_expected.to respond_to(:external_resources) }
   end
 
   describe "Resource terms" do

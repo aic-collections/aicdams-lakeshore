@@ -10,8 +10,7 @@ class Sufia::BatchUploadsController < ApplicationController
     log = Sufia::BatchCreateOperation.create!(user: current_user,
                                               operation_type: "Batch Create")
     ::BatchAssetCreateJob.perform_later(current_user,
-                                        params[:pref_label],
-                                        params[:uploaded_files],
+                                        params,
                                         attributes_for_actor,
                                         log)
   end

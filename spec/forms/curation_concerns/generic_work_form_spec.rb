@@ -18,6 +18,10 @@ describe CurationConcerns::GenericWorkForm do
     its(:required_fields) { is_expected.to contain_exactly(:asset_type, :document_type_uri) }
   end
 
+  describe "#primary_terms" do
+    its(:primary_terms) { is_expected.not_to include(:external_resources) }
+  end
+
   describe "#secondary_terms" do
     its(:secondary_terms) { is_expected.to be_empty }
   end
@@ -42,7 +46,11 @@ describe CurationConcerns::GenericWorkForm do
 
   describe "::build_permitted_params" do
     subject { described_class.build_permitted_params }
-    it { is_expected.to include(:additional_representation, :additional_document, :uid, :dept_created) }
+    it { is_expected.to include(:additional_representation,
+                                :additional_document,
+                                :uid,
+                                :dept_created,
+                                external_resources: []) }
   end
 
   describe "::multiple?" do

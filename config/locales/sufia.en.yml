@@ -190,6 +190,8 @@ en:
         <<: *asset
       batch_upload_item:
         <<: *asset
+        external_file:        "External File"
+        external_file_label:  "Label for External File"
 
     hints:
       defaults:
@@ -229,6 +231,8 @@ en:
         <<: *asset
       batch_upload_item:
         <<: *asset
+        external_file: "Create an asset with a remote url. Creating multiple assets with different urls is not available at this time"
+        external_file_label: "This will be the preferred label of the asset created using this remote url"
 
   curation_concerns:
     base:

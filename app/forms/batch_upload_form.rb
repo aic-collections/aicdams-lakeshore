@@ -10,7 +10,7 @@ class BatchUploadForm < Sufia::Forms::BatchUploadForm
   delegate :representations_for, :documents_for, :attachment_uris, :attachments_for, to: :parameterized_relationships
 
   def primary_terms
-    CurationConcerns::GenericWorkForm.aic_terms - [:asset_type, :pref_label]
+    CurationConcerns::GenericWorkForm.aic_terms - [:asset_type, :pref_label, :external_resources]
   end
 
   def secondary_terms
@@ -27,6 +27,16 @@ class BatchUploadForm < Sufia::Forms::BatchUploadForm
 
   def uris_for(term)
     # noop
+  end
+
+  # @return nil
+  # A noop so that we can render custom inputs that aren't tied to the model
+  def external_file
+  end
+
+  # @return nil
+  # A noop so that we can render custom inputs that aren't tied to the model
+  def external_file_label
   end
 
   # TODO: delegate this to parameterized_relationships later when we want to add this relationship via the url

@@ -29,6 +29,7 @@ describe "Editing assets" do
     expect(page).to have_selector("li", text: "Adobe Portable Document Format")
     expect(page).to have_selector('.asset-stillimage')
     expect(page).not_to have_selector('.asset-text')
+    expect(page).to have_selector("input#generic_work_external_resources[value='#{asset.external_resources.first}']")
   end
 
   it "selects a new doctype that has no sub or sub-subtypes and persists it" do

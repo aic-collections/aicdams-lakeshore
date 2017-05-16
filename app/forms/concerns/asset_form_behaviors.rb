@@ -36,7 +36,9 @@ module AssetFormBehaviors
         :uid,
         :dept_created,
         :created,
-        :updated
+        :updated,
+        :external_file,
+        :external_file_label
       ]
     end
   end

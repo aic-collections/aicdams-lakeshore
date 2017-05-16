@@ -6,7 +6,9 @@ class BatchUploadItem < Resource
   include ::CurationConcerns::WorkBehavior
   include ::CurationConcerns::BasicMetadata
   include Sufia::WorkBehavior
-  include ResourceMetadata
+  include StillImageMetadata
+  include TextMetadata
+  include AssetMetadata
 
   # This mocks out the behavior of Hydra::PCDM::PcdmBehavior
   def in_collection_ids

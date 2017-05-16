@@ -11,7 +11,7 @@ module CurationConcerns
         :asset_type, :document_type_uri, :first_document_sub_type_uri, :second_document_sub_type_uri,
         :pref_label, :alt_label, :description, :language, :publisher, :capture_device,
         :status_uri, :digitization_source_uri, :compositing_uri, :light_type_uri, :view_uris,
-        :keyword_uris, :publish_channel_uris, :view_notes, :visual_surrogate
+        :keyword_uris, :publish_channel_uris, :view_notes, :visual_surrogate, :external_resources
       ]
     end
 
@@ -27,7 +27,7 @@ module CurationConcerns
     self.required_fields = [:asset_type, :document_type_uri]
 
     def primary_terms
-      self.class.aic_terms
+      self.class.aic_terms - [:external_resources]
     end
 
     def secondary_terms
