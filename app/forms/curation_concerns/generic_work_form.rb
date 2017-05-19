@@ -35,8 +35,7 @@ module CurationConcerns
     end
 
     def asset_type
-      return AICType.StillImage if model.still_image?
-      return AICType.Text if model.text?
+      AssetTypeAssignmentService.new(model).current_type.first
     end
 
     def uris_for(term)

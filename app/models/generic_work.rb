@@ -19,14 +19,6 @@ class GenericWork < Resource
   before_create :status_is_active
   validate :id_matches_uid_checksum, on: :update
 
-  def still_image?
-    type.include? AICType.StillImage
-  end
-
-  def text?
-    type.include? AICType.Text
-  end
-
   # Overrides CurationConcerns::Noid to set #id to be a MD5 checksum of #uid.
   def assign_id
     self.uid = service.mint unless new_record? && uid.present?

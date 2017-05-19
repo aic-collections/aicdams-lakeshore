@@ -48,4 +48,38 @@ describe AssetTypeAssignmentService do
       its(:prefix) { is_expected.to be_nil }
     end
   end
+
+  describe "#current_type" do
+    subject { service }
+
+    context "with a still image asset" do
+      let(:asset) { build(:asset) }
+      its(:current_type) { is_expected.to contain_exactly(AICType.StillImage) }
+    end
+
+    context "with a text asset" do
+      let(:asset) { build(:text_asset) }
+      its(:current_type) { is_expected.to contain_exactly(AICType.Text) }
+    end
+
+    context "with a dataset asset" do
+      let(:asset) { build(:dataset_asset) }
+      its(:current_type) { is_expected.to contain_exactly(AICType.Dataset) }
+    end
+
+    context "with a moving image asset" do
+      let(:asset) { build(:moving_image_asset) }
+      its(:current_type) { is_expected.to contain_exactly(AICType.MovingImage) }
+    end
+
+    context "with a sound asset" do
+      let(:asset) { build(:sound_asset) }
+      its(:current_type) { is_expected.to contain_exactly(AICType.Sound) }
+    end
+
+    context "with a archive asset" do
+      let(:asset) { build(:archive_asset) }
+      its(:current_type) { is_expected.to contain_exactly(AICType.Archive) }
+    end
+  end
 end

@@ -29,6 +29,30 @@ FactoryGirl.define do
       end
     end
 
+    factory :dataset_asset do
+      after(:build) do |asset|
+        AssetTypeAssignmentService.new(asset).assign(AICType.Dataset)
+      end
+    end
+
+    factory :moving_image_asset do
+      after(:build) do |asset|
+        AssetTypeAssignmentService.new(asset).assign(AICType.MovingImage)
+      end
+    end
+
+    factory :sound_asset do
+      after(:build) do |asset|
+        AssetTypeAssignmentService.new(asset).assign(AICType.Sound)
+      end
+    end
+
+    factory :archive_asset do
+      after(:build) do |asset|
+        AssetTypeAssignmentService.new(asset).assign(AICType.Archive)
+      end
+    end
+
     trait :with_intermediate_file_set do
       after(:create) do |asset|
         asset.members << FactoryGirl.create(:intermediate_file_set)
