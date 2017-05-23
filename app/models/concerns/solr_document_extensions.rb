@@ -97,5 +97,4 @@ module SolrDocumentExtensions
   def rdf_types
     Array(self[Solrizer.solr_name('rdf_types', :symbol)])
   end
-  alias type rdf_types
 end
