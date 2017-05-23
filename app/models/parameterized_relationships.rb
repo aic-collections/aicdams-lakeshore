@@ -49,9 +49,11 @@ class ParameterizedRelationships
       params.fetch(:citi_uid, [])
     end
 
+    # @param [String] id
+    # @return [Nil, Object] rescues undefined citi types
     def load_type(id)
-      citi_type.constantize.find_by_citi_uid(id)
-    rescue ActiveFedora::ObjectNotFoundError, NameError
+      citi_type.constantize.find_by_citi_uid(id, with_solr: true)
+    rescue NameError
       nil
     end
 end
