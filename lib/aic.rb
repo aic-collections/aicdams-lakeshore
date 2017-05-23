@@ -117,9 +117,9 @@ class AIC < RDF::StrictVocabulary("http://definitions.artic.edu/ontology/1.0/")
   term :hasConstituent,
        label: "Has Constituent",
        comment: "Asset that is a constituent part of a Work rather than a representation or a document, e.g. an A/V stream that makes up a video artwork"
-  term :hasContent,
-       label: "Has Content",
-       comment: "Resource that holds contents for an asset."
+  term :hasExternalContent,
+       label: "Has External Content",
+       comment: "Resource that holds external content for an asset."
   term :hasDocument,
        label: "Has Document",
        comment: "Asset documenting the resource"

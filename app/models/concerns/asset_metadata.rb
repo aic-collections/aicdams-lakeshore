@@ -49,7 +49,7 @@ module AssetMetadata
       index.as :stored_searchable, :facetable, using: :pref_label
     end
 
-    property :external_resources, predicate: AIC.hasContent do |index|
+    property :external_resources, predicate: AIC.hasExternalContent do |index|
       index.as :stored_searchable
     end
 
