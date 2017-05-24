@@ -51,7 +51,9 @@ describe Lakeshore::Ingest do
 
     context "without the required parameters" do
       let(:params) { { asset_type: "StillImage" } }
-      its(:full_messages) { is_expected.to contain_exactly("Ingestor can't be blank", "Document type uri can't be blank") }
+      its(:full_messages) { is_expected.to contain_exactly("Ingestor can't be blank",
+                                                           "Document type uri can't be blank",
+                                                           "Intermediate file can't be blank") }
     end
 
     context "with a bad asset type" do
