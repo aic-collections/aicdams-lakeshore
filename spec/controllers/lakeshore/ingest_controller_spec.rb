@@ -30,15 +30,6 @@ describe Lakeshore::IngestController do
       end
     end
 
-    context "when uploading without a file" do
-      before { LakeshoreTesting.restore }
-      it "successfully creates the the work" do
-        expect(Lakeshore::AttachFilesToWorkJob).not_to receive(:perform_later)
-        post :create, asset_type: "StillImage", metadata: metadata
-        expect(response).to be_accepted
-      end
-    end
-
     context "when uploading with a created and updated date" do
       let(:metadata) do
         {
@@ -55,8 +46,8 @@ describe Lakeshore::IngestController do
       before { LakeshoreTesting.restore }
 
       it "successfully creates the the work" do
-        expect(Lakeshore::AttachFilesToWorkJob).not_to receive(:perform_later)
-        post :create, asset_type: "StillImage", metadata: metadata
+        expect(Lakeshore::AttachFilesToWorkJob).to receive(:perform_later)
+        post :create, asset_type: "StillImage", content: { intermediate: image_asset }, metadata: metadata
         expect(response).to be_accepted
         expect(asset.created).to eq(Date.parse("July 19, 1934"))
         expect(asset.updated).to eq(Date.parse("July 21, 1936"))
@@ -67,7 +58,7 @@ describe Lakeshore::IngestController do
       before { post :create, asset_type: "StillImage" }
       subject { response }
       it { is_expected.to be_bad_request }
-      its(:body) { is_expected.to eq("[\"Ingestor can't be blank\",\"Document type uri can't be blank\"]") }
+      its(:body) { is_expected.to eq("[\"Ingestor can't be blank\",\"Document type uri can't be blank\",\"Intermediate file can't be blank\"]") }
     end
 
     describe "asset type validation" do
@@ -165,6 +156,7 @@ describe Lakeshore::IngestController do
     before do
       LakeshoreTesting.restore
       allow(Lakeshore::CreateAllDerivatives).to receive(:perform_later)
+      allow(controller).to receive(:duplicate_upload).and_return([])
     end
 
     context "with an intermediate file" do

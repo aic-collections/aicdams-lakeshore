@@ -46,10 +46,3 @@ curl -u citi:password -X POST\
  -F 'content[intermediate]=@spec/fixtures/sun.png'\
  -F 'content[legacy]=@spec/fixtures/sun.png'\
  http://localhost:3000/api/ingest/StillImage
-
-curl -u citi:password -X POST\
- -F 'metadata[pref_label]=Asset without an image'\
- -F 'metadata[visibility]=authenticated'\
- -F 'metadata[document_type_uri]=http://definitions.artic.edu/doctypes/ConservationStillImage'\
- -F 'metadata[depositor]=awead'\
- http://localhost:3000/api/ingest/StillImage
