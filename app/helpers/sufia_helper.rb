@@ -7,6 +7,7 @@ module SufiaHelper
   include CurationConcerns::MainAppHelpers
   include Sufia::BlacklightOverride
   include Sufia::SufiaHelperBehavior
+  include Sufia::DashboardHelperBehavior
 
   def visibility_options(variant)
     options = [
@@ -28,6 +29,12 @@ module SufiaHelper
     agent = AICUser.find_by_nick(key) || Department.find_by_department_key(key)
     return agent.pref_label if agent.is_a?(Department)
     AICUserPresenter.new(agent).display_name
+  end
+
+  # @return [True, False]
+  # Overrides Sufia::DashboardHelperBehavior to display either on my works or assets shared with me
+  def on_my_works?
+    (params[:controller] =~ /^my\/[works|shares]/) == 0
   end
 
   private

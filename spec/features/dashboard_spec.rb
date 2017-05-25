@@ -2,24 +2,41 @@
 require 'rails_helper'
 
 describe "The dashboard" do
-  let(:user)  { create(:user1) }
+  let(:user1)  { create(:user1) }
+  let(:user2)  { create(:user2) }
 
-  before { sign_in(user) }
+  let!(:asset)        { create(:asset, :with_metadata) }
+  let!(:shared_asset) { create(:asset, :with_metadata, title: ["Shared asset"],
+                                                       depositor: "user2",
+                                                       edit_users: ["user1"]) }
 
-  context "with my assets" do
-    it "list assets belonging to the user" do
-      visit("/dashboard/works")
-      within("#search-form-header") do
-        expect(page).to have_link("My Assets")
-      end
+  before { sign_in(user1) }
+
+  it "displays the user's own assets and shared assets" do
+    # My Assets tab
+    visit("/dashboard/works")
+    within("#search-form-header") do
+      expect(page).to have_link("My Assets")
     end
-  end
+    expect(page).to have_link("No Relationship")
+    expect(page).to have_content(asset.pref_label.first)
+    within(".batch-info") do
+      expect(page).to have_button("Add to Collection", visible: false)
+    end
+    check("check_all")
+    within(".batch-info") do
+      expect(page).to have_button("Add to Collection")
+    end
 
-  context "with an asset the user has created" do
-    let!(:asset) { create(:asset, :with_metadata) }
-    it "creates a No Relationship Facet" do
-      visit("/dashboard/works")
-      expect(page).to have_link("No Relationship")
+    # Assets Shared with Me tab
+    visit("/dashboard/shares")
+    expect(page).to have_content(shared_asset.pref_label.first)
+    within(".batch-info") do
+      expect(page).to have_button("Add to Collection", visible: false)
+    end
+    check("check_all")
+    within(".batch-info") do
+      expect(page).to have_button("Add to Collection")
     end
   end
 end
