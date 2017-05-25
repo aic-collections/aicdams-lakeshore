@@ -62,8 +62,8 @@ describe ParameterizedRelationships do
 
   context "with existing CITI resources" do
     before do
-      allow(Work).to receive(:find_by_citi_uid).with("work1").and_return(work1)
-      allow(Work).to receive(:find_by_citi_uid).with("work2").and_return(work2)
+      allow(Work).to receive(:find_by_citi_uid).with("work1", with_solr: true).and_return(work1)
+      allow(Work).to receive(:find_by_citi_uid).with("work2", with_solr: true).and_return(work2)
     end
 
     context "with representations" do

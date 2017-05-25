@@ -73,7 +73,7 @@ class HiddenMultiSelectInput < MultiValueInput
     end
 
     def render_thumbnail(resource)
-      template.render_thumbnail_tag(SolrDocument.new(resource.to_solr))
+      template.render_thumbnail_tag(resource)
     end
 
     def value_for_input(value)
