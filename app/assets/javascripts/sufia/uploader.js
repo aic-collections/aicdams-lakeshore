@@ -25,21 +25,23 @@
   $.fn.extend({
     sufiaUploader: function( options ) {
       // Initialize our jQuery File Upload widget.
-      // TODO: get these values from configuration.
       this.fileupload($.extend({
-        // xhrFields: {withCredentials: true},              // to send cross-domain cookies
-        // acceptFileTypes: /(\.|\/)(png|mov|jpe?g|pdf)$/i, // not a strong check, just a regex on the filename
-        // limitMultiFileUploadSize: 500000000, // bytes
+        sequentialUploads: false,
         limitConcurrentUploads: 6,
         maxNumberOfFiles: 150,
         maxFileSize: 3000000000, // bytes, i.e. 3 GB
-        autoUpload: true,
+        autoUpload: false,
         url: '/uploads/',
         type: 'POST',
         dropZone: $(this).find('.dropzone')
       }, options))
       .bind('fileuploadadded', function (e, data) {
         $(e.currentTarget).find('button.cancel').removeClass('hidden');
+        $(e.currentTarget).find('div#all_files').removeClass('hidden');
+      })
+      .bind('fileuploadcompleted', function (e, data) {
+        if ($('button.start').length == 0)
+          $(e.currentTarget).find('div#all_files').addClass('hidden');
       });
 
       $(document).bind('dragover', function(e) {
@@ -68,6 +70,11 @@
             window.dropZoneTimeout = null;
             dropZone.removeClass('in hover');
         }, 100);
+      });
+
+      $('button.all').on('click', function(event) {
+        event.preventDefault();
+        $('button.start').click();
       });
     }
   });

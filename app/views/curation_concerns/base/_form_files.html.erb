@@ -1,13 +1,9 @@
 <div id="fileupload">
-  <!-- Redirect browsers with JavaScript disabled to the origin page -->
-  <noscript><input type="hidden" name="redirect" value="<%= main_app.root_path %>"></noscript>
-  <!-- The table listing the files available for upload/download -->
-  <table role="presentation" class="table table-striped"><tbody class="files"></tbody></table>
 
   <h2><%= t('curation_concerns.base.form_files.local_upload') %></h2>
   <!-- The fileupload-buttonbar contains buttons to add/delete files and start/cancel the upload -->
   <div class="row fileupload-buttonbar">
-    <div class="col-xs-7">
+    <div class="col-xs-5">
       <!-- The fileinput-button span is used to style the file input field as button -->
       <span class="btn btn-success fileinput-button">
         <span class="glyphicon glyphicon-plus"></span>
@@ -22,15 +18,22 @@
           <input type="file" name="files[]" multiple directory webkitdirectory>
         </span>
       <% end %>
-      <button type="reset" class="btn btn-warning cancel hidden">
-        <span class="glyphicon glyphicon-ban-circle"></span>
-        <span>Cancel upload</span>
+    </div>
+    <div class="col-xs-7">
+      <div class="dropzone">
+        <%= t('curation_concerns.base.form_files.dropzone') %>
+      </div>
+    </div>
+  </div>
+  <div id="all_files" class="row hidden">
+    <div class="col-xs-4">
+      <button class="btn btn-info all">
+        <span class="glyphicon glyphicon-circle-arrow-up"></span>
+        <span>Upload all local files</span>
       </button>
-      <!-- The global file processing state -->
-      <span class="fileupload-process"></span>
     </div>
     <!-- The global progress state -->
-    <div class="col-xs-5 fileupload-progress fade">
+    <div class="col-xs-8 fileupload-progress fade">
       <!-- The global progress bar -->
       <div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100">
         <div class="progress-bar progress-bar-success" style="width:0%;"></div>
@@ -39,11 +42,8 @@
       <div class="progress-extended">&nbsp;</div>
     </div>
   </div>
-  <div class="dropzone">
-    <%= t('curation_concerns.base.form_files.dropzone') %>
-  </div>
 
-  <h2>External Resources</h2>
+  <h2><%= t('lakeshore.upload.external_resources') %></h2>
   <% if controller_name == "generic_works" %>
     <%= f.input :external_resources, as: :multi_value, label: "URL",
         input_html: { class: 'form-control external-files' } %>
@@ -52,6 +52,13 @@
     <%= f.input :external_file_label, input_html: { class: 'form-control' } %>
   <% end %>
 
+  <!-- The table listing the files available for upload/download -->
+  <h2><%= t('lakeshore.upload.available_files.heading') %></h2>
+  <p><%= t('lakeshore.upload.available_files.description') %></p>
+  <table role="presentation" class="table table-striped"><tbody class="files"></tbody></table>
 </div>
+
+<!-- Redirect browsers with JavaScript disabled to the origin page -->
+<noscript><input type="hidden" name="redirect" value="<%= main_app.root_path %>"></noscript>
 
 <%= render 'sufia/uploads/js_templates' %>

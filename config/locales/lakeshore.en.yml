@@ -13,6 +13,10 @@ en:
       errors:
         invalid: "Incorrect asset type. %{name} is not a type of %{type}"
         duplicate: "%{name} is a duplicate of:"
+      available_files:
+        heading: Files Available for Upload
+        description: Files that are ready to be added to this asset will appear below.
+      external_resources: External Resources
     relationship:
       add_assets: "Add New Assets to this Resource"
       batch_add_representations: "Add Representations"

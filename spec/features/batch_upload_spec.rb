@@ -29,6 +29,7 @@ describe "Batch upload" do
 
       # Upload a file
       attach_file('files[]', File.join(fixture_path, "sun.png"), visible: false)
+      click_button("Upload all local files")
       within("div#fileupload") do
         sleep 0.1 until page.text.include?("Preferred Title")
         expect(page).to have_selector("input#pref_label_1")
