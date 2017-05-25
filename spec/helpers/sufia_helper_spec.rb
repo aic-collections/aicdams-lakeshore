@@ -25,4 +25,23 @@ describe SufiaHelper do
       it { is_expected.to eq("First User (user1)") }
     end
   end
+
+  describe "#on_my_works?" do
+    subject { helper.on_my_works? }
+
+    context "when on my assets" do
+      before { controller.params[:controller] = "my/works" }
+      it { is_expected.to be_truthy }
+    end
+
+    context "when on assets shared with me" do
+      before { controller.params[:controller] = "my/shared" }
+      it { is_expected.to be_truthy }
+    end
+
+    context "when on my collections" do
+      before { controller.params[:controller] = "my/collections" }
+      it { is_expected.to be_falsey }
+    end
+  end
 end
