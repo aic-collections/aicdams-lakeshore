@@ -72,8 +72,11 @@ class HiddenMultiSelectInput < MultiValueInput
       @resources ||= object.send(options.fetch(:property, attribute_name))
     end
 
+    # @param [SolrDocument, GenericWork] resource
+    # @todo Further optimizations would make this method take only a SolrDocument
     def render_thumbnail(resource)
-      template.render_thumbnail_tag(resource)
+      solr_document = resource.is_a?(SolrDocument) ? resource : SolrDocument.new(resource.to_solr)
+      template.render_thumbnail_tag(solr_document)
     end
 
     def value_for_input(value)

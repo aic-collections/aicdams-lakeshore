@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 require 'rails_helper'
 
-describe "Displaying a Citi Work" do
+describe "Interacting with CITI works" do
   let(:user)  { create(:user1) }
   let(:agent) { create(:agent, :with_sample_metadata) }
   let(:place) { create(:place, :with_sample_metadata) }
@@ -16,7 +16,8 @@ describe "Displaying a Citi Work" do
 
   before { sign_in(user) }
 
-  it "renders Artist and Current Place metadata" do
+  specify do
+    # Search
     visit(root_path)
     fill_in(:q, with: work.pref_label)
     click_button("Go")
@@ -24,18 +25,23 @@ describe "Displaying a Citi Work" do
       click_link(work.pref_label)
     end
 
+    # Show view
     expect(page).to have_selector("th", text: "Artist")
     expect(page).to have_selector("td", text: agent.pref_label)
     expect(page).to have_selector("th", text: "Current Location")
     expect(page).to have_selector("td", text: place.pref_label)
     expect(page).to have_selector("h3", text: "Representations")
     expect(page).to have_link(asset.pref_label)
-
-    # Visit CITI relationships page
-    visit(relationship_model_path("work", work.citi_uid))
     expect(page).to have_selector("h3", text: "Representations")
     expect(page).to have_link(asset.pref_label)
     expect(page).to have_link("Add Representations")
     expect(page).to have_link("Add Documentation")
+
+    # Edit view
+    click_link("Edit")
+    expect(page).to have_content("Edit Work: #{work.pref_label.first}")
+    within("table.representation_uris") do
+      expect(page).to have_content(asset.pref_label.first)
+    end
   end
 end
