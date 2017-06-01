@@ -14,7 +14,7 @@ class InboundRelationships
   delegate :present?, to: :ids
 
   def ids
-    document_ids + representation_ids + preferred_representation_ids + asset_ids
+    (document_ids + representation_ids + preferred_representation_ids + asset_ids).uniq
   end
 
   def documents

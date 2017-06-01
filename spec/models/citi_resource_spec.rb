@@ -146,13 +146,14 @@ describe CitiResource do
         end
       end
 
-      context "when removing the preferred representation" do
+      context "when removing all the representations" do
         let(:new_asset) { create(:asset, :with_intermediate_file_set) }
 
         before do
           resource.preferred_representation = new_asset.uri
           allow(CitiNotificationJob).to receive(:perform_later)
           resource.save
+          resource.representations = []
           resource.preferred_representation_uri = nil
         end
 
@@ -160,6 +161,16 @@ describe CitiResource do
           expect(CitiNotificationJob).to receive(:perform_later).with(nil, resource)
           resource.save
         end
+      end
+
+      context "with only representations" do
+        before do
+          resource.representations = [asset.uri]
+          resource.preferred_representation = nil
+        end
+
+        subject { resource }
+        its(:preferred_representation) { is_expected.to eq(asset) }
       end
     end
   end
