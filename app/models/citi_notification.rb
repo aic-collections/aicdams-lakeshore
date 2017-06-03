@@ -22,7 +22,7 @@ class CitiNotification
       password: password,
       citi_uid: citi_uid,
       type: type,
-      image_uid: image_uid,
+      lake_image_uid: image_uid,
       last_modified: last_modified,
       asset_details: asset_details
     }.to_json
