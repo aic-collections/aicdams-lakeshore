@@ -7,7 +7,7 @@ class CitiNotification
   delegate :citi_uid, to: :citi_resource
 
   # @param [FileSet] file_set
-  # @param [CitiResource] citi_resource such as a work, exhibit
+  # @param [CitiResource, SolrDocument] citi_resource such as a work, exhibit
   def initialize(file_set, citi_resource)
     @file_set = file_set
     @citi_resource = citi_resource
@@ -24,7 +24,7 @@ class CitiNotification
       type: type,
       lake_image_uid: image_uid,
       last_modified: last_modified,
-      asset_details: asset_details
+      asset_details: { image_number: imaging_uid }
     }.to_json
   end
 
@@ -38,8 +38,13 @@ class CitiNotification
       ENV.fetch("citi_api_password")
     end
 
+    # TODO: Need a common interface for AF:Base and SolrDocument to return its model name
     def type
-      citi_resource.class.to_s
+      if citi_resource.is_a?(ActiveFedora::Base)
+        citi_resource.class.to_s
+      else
+        citi_resource.hydra_model.to_s
+      end
     end
 
     def last_modified
@@ -52,8 +57,8 @@ class CitiNotification
       file_set.id
     end
 
-    def asset_details
-      return {} unless citi_resource.respond_to?(:imaging_uid)
-      { image_number: citi_resource.imaging_uid.first }
+    def imaging_uid
+      return unless citi_resource.respond_to?(:imaging_uid)
+      citi_resource.imaging_uid.first
     end
 end
