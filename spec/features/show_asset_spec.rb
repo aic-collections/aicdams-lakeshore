@@ -15,14 +15,8 @@ describe "Displaying an asset" do
   end
 
   it "renders metadata" do
-    # Display in the recent documents list
-    visit(root_path)
-    within("#recent_docs") do
-      expect(page).to have_link(asset.keyword.first.pref_label)
-      expect(page).to have_link(asset.pref_label)
-    end
-
     # Index search results
+    visit(root_path)
     fill_in(:q, with: asset.pref_label)
     click_button("Go")
     within("#document_#{asset.id}") do
