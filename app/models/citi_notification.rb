@@ -58,7 +58,7 @@ class CitiNotification
     end
 
     def imaging_uid
-      return unless citi_resource.respond_to?(:imaging_uid)
-      citi_resource.imaging_uid.first
+      return unless file_set && file_set.parent.respond_to?(:imaging_uid)
+      file_set.parent.imaging_uid.first
     end
 end

@@ -55,7 +55,7 @@ describe CitiNotification do
       its(:to_json) { is_expected.to include_json(json) }
     end
 
-    describe "a notification with a AF:Base object" do
+    describe "a notification with a SolrDocument" do
       let(:resource)  { SolrDocument.new(build(:work, id: "fakeid", citi_uid: "WO-fake").to_solr) }
       let(:file_set)  { build(:file_set, id: "fakefsid") }
       let(:mock_file) { double("MockFile", fcrepo_modified: [DateTime.parse("July 14")]) }
@@ -63,6 +63,34 @@ describe CitiNotification do
       before { allow(file_set).to receive(:original_file).and_return(mock_file) }
 
       its(:to_json) { is_expected.to match(/fakefsid/) }
+    end
+  end
+
+  context "with an imaging uid" do
+    let(:json) do
+      {
+        uid: ENV.fetch("citi_api_uid"),
+        password: ENV.fetch("citi_api_password"),
+        citi_uid: "WO-fake",
+        type: "Work",
+        lake_image_uid: "fakefsid",
+        last_modified: "2017-07-14T00:00:00+00:00",
+        asset_details: { image_number: "1234" }
+      }
+    end
+
+    describe "a notification with a AF:Base object" do
+      let(:resource)  { build(:work, id: "fakeid", citi_uid: "WO-fake") }
+      let(:file_set)  { build(:file_set, id: "fakefsid") }
+      let(:parent)    { build(:asset, imaging_uid: ["1234"]) }
+      let(:mock_file) { double("MockFile", fcrepo_modified: [DateTime.parse("July 14")]) }
+
+      before do
+        allow(file_set).to receive(:original_file).and_return(mock_file)
+        allow(file_set).to receive(:parent).and_return(parent)
+      end
+
+      its(:to_json) { is_expected.to include_json(json) }
     end
   end
 end
