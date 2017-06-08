@@ -47,6 +47,7 @@ RSpec.configure do |config|
   config.include APISupport, type: :controller
   config.include CustomMatchers
   config.include RakeHelper
+  config.include SolrSupport
 
   config.formatter = 'LoggingFormatter'
 

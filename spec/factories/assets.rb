@@ -53,6 +53,13 @@ FactoryGirl.define do
       end
     end
 
+    # @todo Make this a default for all build actions?
+    trait :with_id do
+      after(:build) do |asset|
+        asset.id = SecureRandom.uuid unless asset.id.present?
+      end
+    end
+
     trait :with_intermediate_file_set do
       after(:create) do |asset|
         asset.members << FactoryGirl.create(:intermediate_file_set)
