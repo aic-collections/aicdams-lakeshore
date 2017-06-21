@@ -10,6 +10,8 @@ class CollectionIndexer < CurationConcerns::CollectionIndexer
       solr_doc[Solrizer.solr_name("dept_created", :facetable)] = pref_label_for(:dept_created)
       solr_doc[Solrizer.solr_name("publish_channels", :facetable)] = object.publish_channels.map(&:pref_label)
       solr_doc[Solrizer.solr_name("publish_channels", :symbol)] = object.publish_channels.map(&:pref_label)
+      solr_doc[Solrizer.solr_name("collection_type", :facetable)] = pref_label_for(:collection_type)
+      solr_doc[Solrizer.solr_name("collection_type", :symbol)] = pref_label_for(:collection_type)
     end
   end
 end

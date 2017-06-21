@@ -98,4 +98,8 @@ module SolrDocumentExtensions
     Array(self[Solrizer.solr_name('rdf_types', :symbol)])
   end
   alias type rdf_types
+
+  def collection_type
+    Array(self[Solrizer.solr_name('collection_type', :symbol)]).first
+  end
 end

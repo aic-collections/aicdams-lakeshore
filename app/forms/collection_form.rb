@@ -7,7 +7,7 @@ class CollectionForm < Sufia::Forms::CollectionForm
   attr_reader :current_ability
 
   def self.terms
-    super + [:publish_channel_uris]
+    [:title, :representative_id, :thumbnail_id, :publish_channel_uris, :collection_type_uri]
   end
 
   # @param [Collection] model
@@ -20,10 +20,15 @@ class CollectionForm < Sufia::Forms::CollectionForm
   end
 
   def primary_terms
-    [:title, :publish_channel_uris]
+    [:title, :publish_channel_uris, :collection_type_uri]
   end
 
   def uris_for(term)
     model.send(term).map(&:uri).map(&:to_s)
+  end
+
+  def uri_for(term)
+    return unless model.send(term)
+    model.send(term).uri.to_s
   end
 end

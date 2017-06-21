@@ -9,7 +9,7 @@ describe CollectionPresenter do
 
   describe "::terms" do
     subject { described_class }
-    its(:terms) { is_expected.to include(:publish_channels) }
+    its(:terms) { is_expected.to contain_exactly(:total_items, :size, :publish_channels, :collection_type) }
   end
 
   subject { presenter }

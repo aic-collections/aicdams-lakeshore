@@ -33,6 +33,9 @@ class AIC < RDF::StrictVocabulary("http://definitions.artic.edu/ontology/1.0/")
   term :citiUid,
        label: "CITI UID",
        comment: "CITI unique identifier (PKey)"
+  term :collectionType,
+       label: "Collection Type",
+       comment: "Collection type"
   term :compositing,
        label: "Compositing",
        comment: "Compositing type"

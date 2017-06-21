@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 class CollectionPresenter < Sufia::CollectionPresenter
-  delegate :publish_channels, to: :solr_document
+  delegate :publish_channels, :collection_type, to: :solr_document
 
   def self.terms
-    super + [:publish_channels]
+    [:total_items, :size, :publish_channels, :collection_type]
   end
 
   def permission_badge_class

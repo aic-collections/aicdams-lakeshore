@@ -149,4 +149,8 @@ describe SolrDocument do
     it { is_expected.to respond_to(:rights_holder) }
     it { is_expected.to respond_to(:alt_label) }
   end
+
+  describe "Collection terms" do
+    it { is_expected.to respond_to(:collection_type) }
+  end
 end

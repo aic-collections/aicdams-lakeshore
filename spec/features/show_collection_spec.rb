@@ -17,7 +17,19 @@ describe "Collection display" do
     click_button("Go")
     within("div#search-results") do
       expect(page).to have_link(collection)
+      expect(page).to have_selector("th", text: "Depositor")
+      expect(page).to have_link(collection.depositor)
+      expect(page).to have_selector("th", text: AIC.deptCreated.label)
+      expect(page).to have_selector("td", text: asset.dept_created.pref_label)
+      expect(page).to have_selector("th", text: AIC.collectionType.label)
+      expect(page).to have_selector("td", text: collection.collection_type.pref_label)
     end
+
+    within("#facets") do
+      expect(page).to have_selector("h3", text: AIC.deptCreated.label)
+      expect(page).to have_selector("h3", text: AIC.collectionType.label)
+    end
+
     visit(polymorphic_path(collection))
     expect(page).to have_content(collection.title.first)
     within("h1") do
@@ -25,6 +37,7 @@ describe "Collection display" do
     end
     within(".metadata-collections") do
       expect(page).to have_content(collection.publish_channels.first.pref_label)
+      expect(page).to have_content(collection.collection_type.pref_label)
     end
     within(".table") do
       expect(page).to have_content(asset.pref_label)
