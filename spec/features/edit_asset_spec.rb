@@ -2,8 +2,6 @@
 require 'rails_helper'
 
 describe "Editing assets" do
-  before(:all) { LakeshoreTesting.restore }
-
   let!(:asset) { create(:asset, :with_metadata) }
   let!(:agent) { create(:agent, representation_uris: [asset.uri], preferred_representation_uri: asset.uri) }
   let!(:work)  { create(:work, representation_uris: [asset.uri]) }

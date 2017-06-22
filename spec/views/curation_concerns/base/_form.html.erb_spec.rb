@@ -97,7 +97,7 @@ describe 'curation_concerns/base/_form.html.erb' do
                                 view: [item.uri, addl.uri]) }
 
     before do
-      allow(List).to receive(:options).and_return("Item 1" => item.uri, "Additional Item" => addl.uri)
+      allow(ListOptionsService).to receive(:call).and_return("Item 1" => item.uri, "Additional Item" => addl.uri)
       render
     end
 
