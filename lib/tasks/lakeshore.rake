@@ -39,6 +39,12 @@ namespace :lakeshore do
     end
   end
 
+  desc "Re-index lists"
+  task reindex_lists: :environment do
+    ListItem.all.map(&:update_index)
+    List.all.map(&:update_index)
+  end
+
   desc "Regenerate derivatives for all assets"
   task regenerate: :environment do
     FileSet.all.each do |fs|
