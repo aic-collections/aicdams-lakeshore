@@ -1,4 +1,6 @@
 # frozen_string_literal: true
+# AICWorkShowPresenter subclasses Sufia::WorkShowPresenter
+# and adds tiling image and canvas displaying behaviors
 class AssetPresenter < Sufia::WorkShowPresenter
   self.file_presenter_class = FileSetPresenter
 
@@ -14,6 +16,10 @@ class AssetPresenter < Sufia::WorkShowPresenter
 
   def self.presenter_terms
     terms + [:document_types, :public_domain?]
+  end
+
+  def manifest_url
+    manifest_helper.polymorphic_url([:manifest, self])
   end
 
   include ResourcePresenterBehaviors
@@ -101,5 +107,9 @@ class AssetPresenter < Sufia::WorkShowPresenter
 
     def attachment_ids
       relationships.attachment_ids + solr_document.attachment_ids
+    end
+
+    def manifest_helper
+      @manifest_helper ||= ManifestHelper.new(request.base_url)
     end
 end
