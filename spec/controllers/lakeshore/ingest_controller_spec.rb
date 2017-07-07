@@ -30,7 +30,7 @@ describe Lakeshore::IngestController do
       end
     end
 
-    context "when uploading with a created and updated date" do
+    context "when uploading with additional fields" do
       let(:metadata) do
         {
           "visibility" => "department",
@@ -38,7 +38,8 @@ describe Lakeshore::IngestController do
           "document_type_uri" => AICDocType.ConservationStillImage,
           "uid" => "SI-99",
           "created" => "July 19, 1934",
-          "updated" => "July 21, 1936"
+          "updated" => "July 21, 1936",
+          "batch_uid" => "1234"
         }
       end
       let(:asset) { GenericWork.where(uid: "SI-99").first }
@@ -51,6 +52,7 @@ describe Lakeshore::IngestController do
         expect(response).to be_accepted
         expect(asset.created).to eq(Date.parse("July 19, 1934"))
         expect(asset.updated).to eq(Date.parse("July 21, 1936"))
+        expect(asset.batch_uid).to eq("1234")
       end
     end
 

@@ -39,7 +39,8 @@ module AssetFormBehaviors
         :created,
         :updated,
         :external_file,
-        :external_file_label
+        :external_file_label,
+        :batch_uid
       ]
     end
   end
