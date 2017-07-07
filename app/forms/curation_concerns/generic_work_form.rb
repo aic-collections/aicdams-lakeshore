@@ -12,7 +12,7 @@ module CurationConcerns
         :pref_label, :alt_label, :description, :language, :publisher, :capture_device,
         :status_uri, :digitization_source_uri, :compositing_uri, :light_type_uri, :view_uris,
         :keyword_uris, :publish_channel_uris, :view_notes, :visual_surrogate, :external_resources,
-        :copyright_representatives, :public_domain, :licensing_restriction_uris
+        :copyright_representatives, :public_domain, :licensing_restriction_uris, :caption
       ]
     end
 

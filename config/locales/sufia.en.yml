@@ -188,6 +188,7 @@ en:
         use_uri:                "Role"
         public_domain:          "Public Domain"
         licensing_restriction_uris: "Licensing Restrictions"
+        caption:                "Caption"
       generic_work:
         <<: *asset
       batch_upload_item:
@@ -231,6 +232,7 @@ en:
         attachments_for: "Other assets that have the current asset as an attachment."
         public_domain: "Indicates asset is in the public domain"
         licensing_restriction_uris: "Licenses that restrict access to this asset."
+        caption: "A 30-character alphanumeric string serving as a caption for the asset"
       generic_work:
         <<: *asset
       batch_upload_item:

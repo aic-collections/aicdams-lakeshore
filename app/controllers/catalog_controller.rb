@@ -112,6 +112,9 @@ class CatalogController < ApplicationController
     config.add_show_field solr_name("same_as", :stored_searchable),       label: ::RDF::OWL.sameAs.label
     config.add_show_field solr_name("uid", :stored_searchable),           label: AIC.uid.label
 
+    # Asset fields
+    config.add_show_field solr_name("caption", :stored_searchable), label: AIC.caption.label
+
     # Work fields
     config.add_show_field solr_name("artist", :stored_searchable), label: AIC.artist.label
     config.add_show_field solr_name("citi_uid", :stored_searchable),            label: AIC.citiUid.label

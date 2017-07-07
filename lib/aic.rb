@@ -21,6 +21,9 @@ class AIC < RDF::StrictVocabulary("http://definitions.artic.edu/ontology/1.0/")
   term :birthYear,
        label: "Birth Year",
        comment: "Birth year"
+  term :caption,
+       label: "Caption",
+       comment: "Caption"
   term :captureDevice,
        label: "Capture Device",
        comment: "Capture device of original file"

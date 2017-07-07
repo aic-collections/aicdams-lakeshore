@@ -165,6 +165,7 @@ FactoryGirl.define do
       view_notes                   ["view note 1", "view note 2"]
       visual_surrogate             "a visual surrogate"
       external_resources           ["http://www.google.com"]
+      caption                      "A1B2C"
     end
 
     trait :with_license_metadata do

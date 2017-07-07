@@ -69,4 +69,8 @@ module SolrDocumentExtensions::Asset
   def public_domain?
     Array(self["public_domain_bsi"]).first
   end
+
+  def caption
+    Array(self[Solrizer.solr_name('caption', :stored_searchable)]).first
+  end
 end

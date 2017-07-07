@@ -67,6 +67,10 @@ module AssetMetadata
 
     property :public_domain, predicate: AIC.publicDomain, multiple: false
 
+    property :caption, predicate: AIC.caption, multiple: false do |index|
+      index.as :stored_searchable
+    end
+
     accepts_uris_for :keyword, :digitization_source, :document_type, :first_document_sub_type,
                      :second_document_sub_type, :publish_channels, :attachments, :copyright_representatives,
                      :licensing_restrictions
