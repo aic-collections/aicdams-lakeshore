@@ -34,13 +34,48 @@ describe FileSetPresenter do
       its(:role) { is_expected.to contain_exactly(AICType.LegacyFileSet.label) }
     end
 
+    context "Only displays access_masters" do
+      let(:file_set) { create(:file_set, id: '1234') }
+      let(:doc) { [{ "rdf_types_ssim": ["http://definitions.artic.edu/ontology/1.0/type/IntermediateFileSet", "http://fedora.info/definitions/v4/repository#Container", "http://projecthydra.org/works/models#FileSet", "http://www.w3.org/ns/ldp#RDFSource"] }] }
+
+      it "displays access_masters" do
+        allow(ActiveFedora::SolrService).to receive(:query).with("id:#{file_set.id}").and_return(doc)
+        allow(presenter).to receive(:base_image_url).with(file_set.id).and_return("http://hello.com")
+        allow(DerivativePath).to receive(:access_path)
+        allow(IIIFManifest::DisplayImage).to receive(:new)
+
+        presenter.display_image
+
+        expect(DerivativePath).to have_received(:access_path).with(file_set.id)
+        expect(IIIFManifest::DisplayImage).to have_received(:new)
+      end
+    end
+    context "Will not display originals" do
+      let(:file_set) { create(:file_set, id: '1234') }
+      let(:doc) { [{ "rdf_types_ssim": ["http://definitions.artic.edu/ontology/1.0/type/OriginalFileSet", "http://fedora.info/definitions/v4/repository#Container", "http://projecthydra.org/works/models#FileSet", "http://www.w3.org/ns/ldp#RDFSource"] }] }
+
+      it "rejects originals" do
+        allow(ActiveFedora::SolrService).to receive(:query).with("id:#{file_set.id}").and_return(doc)
+        allow(presenter).to receive(:base_image_url).with(file_set.id).and_return("http://hello.com")
+        allow(DerivativePath).to receive(:access_path)
+        allow(IIIFManifest::DisplayImage).to receive(:new)
+
+        presenter.display_image
+
+        expect(DerivativePath).not_to have_received(:access_path)
+        expect(IIIFManifest::DisplayImage).not_to have_received(:new)
+      end
+    end
+
     context "can display image with iiif_manifest data" do
       let(:file_set) { create(:file_set, id: '1234') }
-      let(:doc) { { "response" => { "docs" => [{ "id" => "1234", "height_is" => 200, "width_is" => 100 }] } } }
       let(:iiif_manifest) { IIIFManifest::DisplayImage.new("http://hello.com", width: 100, height: 200, iiif_endpoint: iiif_endpoint) }
 
+      let(:doc) { [{ "height_is": 200, "width_is": 100, "rdf_types_ssim": ["http://fedora.info/definitions/v4/repository#Resource", "http://definitions.artic.edu/ontology/1.0/type/IntermediateFileSet", "http://fedora.info/definitions/v4/repository#Container", "http://projecthydra.org/works/models#FileSet", "http://www.w3.org/ns/ldp#RDFSource"] }] }
+
       it "can return an image's iiif manifest" do
-        allow(ActiveFedora::SolrService).to receive(:get).and_return(doc)
+        allow(ActiveFedora::SolrService).to receive(:query).with("id:#{file_set.id}").and_return(doc)
+        allow(presenter).to receive(:image_is_access_master).and_return(true)
         allow(presenter).to receive(:base_image_url).with(file_set.id).and_return("http://hello.com")
         allow(DerivativePath).to receive(:access_path).with(file_set.id).and_return("http://hello.com")
         expect(presenter.display_image).to be_kind_of(IIIFManifest::DisplayImage)

@@ -9,6 +9,8 @@ module DisplaysImage
     hit = ActiveFedora::SolrService.query("id:#{id}")
     return nil if hit[0].nil?
 
+    # we do not want to display any image but the access_master
+    return unless image_is_access_master(hit)
     url = DerivativePath.access_path(id)
     doc = SolrDocument.new(hit[0])
 
@@ -16,6 +18,11 @@ module DisplaysImage
   end
 
   private
+
+    def image_is_access_master(solr_doc)
+      # I believe IntermediateFileSet is the access master
+      solr_doc[0][:rdf_types_ssim].include?("http://definitions.artic.edu/ontology/1.0/type/IntermediateFileSet")
+    end
 
     def base_image_url(fileset_id)
       uri = Riiif::Engine.routes.url_helpers.info_url(fileset_id, host: request.base_url)
