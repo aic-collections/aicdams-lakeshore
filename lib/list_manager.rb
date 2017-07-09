@@ -75,7 +75,7 @@ class ListManager
     end
 
     def list
-      @list ||= if List.find_by_uid(uid)
+      @list ||= if List.exists?(service.hash(uid))
                   update_list
                 else
                   create_list
@@ -90,11 +90,11 @@ class ListManager
         list.uid = uid
         list_types.each { |t| list.type << t }
       end.save
-      List.find_by_uid(uid)
+      List.find(service.hash(uid))
     end
 
     def update_list
-      list = List.find_by_uid(uid)
+      list = List.find(service.hash(uid))
       list.update(pref_label: pref_label, description: [description])
       RDFTypeChangeService.call(list, list_types)
       list.reload
@@ -110,7 +110,7 @@ class ListManager
     end
 
     def update_item(member)
-      item = ListItem.find_by_uid(uid(member))
+      item = ListItem.find(service.hash(uid(member)))
       item.update(pref_label: pref_label(member), description: [description(member)])
       RDFTypeChangeService.call(item, list_item_types)
       item.reload
