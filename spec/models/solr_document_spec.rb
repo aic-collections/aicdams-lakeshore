@@ -132,6 +132,9 @@ describe SolrDocument do
     it { is_expected.to respond_to(:view_notes) }
     it { is_expected.to respond_to(:visual_surrogate) }
     it { is_expected.to respond_to(:external_resources) }
+    it { is_expected.to respond_to(:licensing_restrictions) }
+    it { is_expected.to respond_to(:public_domain?) }
+    it { is_expected.to respond_to(:copyright_representatives) }
   end
 
   describe "Resource terms" do

@@ -16,7 +16,7 @@ class GenericWork < Resource
 
   type type + aic_type
 
-  before_create :status_is_active
+  before_create :status_is_active, :public_is_false
   validate :id_matches_uid_checksum, on: :update
 
   # Overrides CurationConcerns::Noid to set #id to be a MD5 checksum of #uid.
@@ -26,7 +26,15 @@ class GenericWork < Resource
   end
 
   def status_is_active
-    self.status = StatusType.active.uri
+    self.status = ListItem.active_status.uri
+  end
+
+  # Public domain defaults to false if no value is present.
+  # Note: we return :true: so the object will save properly.
+  def public_is_false
+    return if public_domain.present?
+    self.public_domain = false
+    true
   end
 
   def id_matches_uid_checksum

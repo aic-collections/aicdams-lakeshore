@@ -23,6 +23,7 @@ module AssetFormBehaviors
         { imaging_uid: [] },
         { view_notes: [] },
         { attachment_uris: [] },
+        { licensing_restriction_uris: [] },
         :document_type_uri,
         :first_document_sub_type_uri,
         :second_document_sub_type_uri,

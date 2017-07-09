@@ -11,8 +11,18 @@ describe Lakeshore::ReindexController do
       let(:body) { '["res1"]' }
       before { allow(ActiveFedora::Base).to receive(:exists?).and_return(true) }
       it "returns a successful response" do
-        expect(UpdateIndexJob).to receive(:perform_later).with("res1")
+        expect(UpdateIndexJob).to receive(:perform_later).with("res1", nil)
         post :create, body
+        expect(response.status).to eql 204
+      end
+    end
+
+    context "with a custom queue" do
+      let(:body) { '["res1"]' }
+      before { allow(ActiveFedora::Base).to receive(:exists?).and_return(true) }
+      it "returns a successful response" do
+        expect(UpdateIndexJob).to receive(:perform_later).with("res1", "special")
+        post :create, body, queue: "special"
         expect(response.status).to eql 204
       end
     end

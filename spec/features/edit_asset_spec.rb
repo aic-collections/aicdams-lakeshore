@@ -51,7 +51,7 @@ describe "Editing assets" do
     end
   end
 
-  it "selects a new doctype that has no sub or sub-subtypes and persists it" do
+  xit "selects a new doctype that has no sub or sub-subtypes and persists it" do
     visit(edit_polymorphic_path(asset))
 
     find('select#generic_work_document_type_uri').select("Development")

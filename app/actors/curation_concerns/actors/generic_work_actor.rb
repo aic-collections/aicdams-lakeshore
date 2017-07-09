@@ -9,12 +9,14 @@ module CurationConcerns
         asset_type = RDF::URI(attributes.delete("asset_type"))
         AssetTypeAssignmentService.new(curation_concern).assign(asset_type)
         apply_dates(updated: attributes.delete("updated"), created: attributes.delete("created"))
+        assign_copyright_representatives(attributes.delete("copyright_representatives"))
         super
       end
 
       def update(attributes)
         attributes.delete("asset_type")
         apply_dates(updated: attributes.delete("updated"), created: attributes.delete("created"))
+        assign_copyright_representatives(attributes.delete("copyright_representatives"))
         super
       end
 
@@ -35,12 +37,24 @@ module CurationConcerns
         end
       end
 
+      def assign_copyright_representatives(reps)
+        return if reps.nil?
+        new_representatives = build_representatives(reps)
+        curation_concern.copyright_representative_uris = new_representatives
+      end
+
       private
 
         def parse_date(property, value)
           curation_concern.send("#{property}=", Date.parse(value))
         rescue ArgumentError
           Rails.logger.error("Unable to parse #{value} into date for property #{property}")
+        end
+
+        def build_representatives(reps)
+          reps.map do |id|
+            Agent.find(id).uri
+          end
         end
     end
   end

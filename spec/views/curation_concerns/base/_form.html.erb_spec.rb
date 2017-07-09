@@ -45,6 +45,9 @@ describe 'curation_concerns/base/_form.html.erb' do
       expect(page).to have_selector("label", text: "Image Compositing")
       expect(page).to have_selector("label", text: "Description")
     end
+    it "public domain defaults to false" do
+      expect(page).to have_unchecked_field("generic_work_public_domain")
+    end
   end
 
   context "when editing an existing asset" do
@@ -55,7 +58,7 @@ describe 'curation_concerns/base/_form.html.erb' do
       expect(rendered).to include("type=\"hidden\" value=\"#{AICType.StillImage}\"")
     end
     it "renders the existing status selected" do
-      expect(rendered).to include("<option selected=\"selected\" value=\"#{StatusType.active.uri}\">Active</option>")
+      expect(rendered).to include("<option selected=\"selected\" value=\"#{ListItem.active_status.uri}\">Active</option>")
     end
     it "renders hints after labels and before inputs" do
       expect(page.find('.generic_work_pref_label label + .help-block')).to have_content 'Preferred title or name of the resource. This will be the principal value for the \'alt\' tag of web images.'
@@ -84,16 +87,17 @@ describe 'curation_concerns/base/_form.html.erb' do
     end
   end
 
-  context "with singular terms using list items" do
+  context "with list items" do
     let(:item) { create(:list_item) }
     let(:addl) { create(:list_item, pref_label: "Additional Item") }
     let(:work) { create(:asset, compositing: item.uri,
                                 light_type: item.uri,
                                 digitization_source: item.uri,
+                                licensing_restrictions: [item.uri, addl.uri],
                                 view: [item.uri, addl.uri]) }
 
     before do
-      allow(BaseVocabulary).to receive(:all).and_return([item, addl])
+      allow(List).to receive(:options).and_return("Item 1" => item.uri, "Additional Item" => addl.uri)
       render
     end
 
@@ -104,6 +108,10 @@ describe 'curation_concerns/base/_form.html.erb' do
       is_expected.to have_select('generic_work_light_type_uri', selected: item.pref_label)
       is_expected.to have_select('generic_work_digitization_source_uri', selected: item.pref_label)
       within("div.generic_work_view_uris") do
+        is_expected.to have_content("<option selected=\"selected\" value=\"#{item.uri}\">#{item.pref_label}</option>")
+        is_expected.to have_content("<option selected=\"selected\" value=\"#{addl.uri}\">#{addl.pref_label}</option>")
+      end
+      within("div.generic_work_licensing_restriction_uris") do
         is_expected.to have_content("<option selected=\"selected\" value=\"#{item.uri}\">#{item.pref_label}</option>")
         is_expected.to have_content("<option selected=\"selected\" value=\"#{addl.uri}\">#{addl.pref_label}</option>")
       end
@@ -131,6 +139,23 @@ describe 'curation_concerns/base/_form.html.erb' do
       it "is enabled" do
         is_expected.to have_select('generic_work_publish_channel_uris')
       end
+    end
+  end
+
+  describe "copyright_representatives" do
+    let(:representative) { build(:agent, id: "rep-1", pref_label: "Sample Agent") }
+    let(:work) { create(:asset) }
+
+    before do
+      allow_any_instance_of(HiddenMultiSelectInput).to receive(:render_thumbnail).and_return("thumbnail")
+      allow(work).to receive(:copyright_representatives).and_return([representative])
+      render
+    end
+
+    subject { Capybara::Node::Simple.new(rendered) }
+
+    it "displays the existing representative" do
+      expect(page.all("input#generic_work_copyright_representatives", visible: false).first.value).to eq(representative.id)
     end
   end
 end

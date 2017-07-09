@@ -4,7 +4,7 @@ require 'rails_helper'
 describe "Displaying an asset" do
   let(:user)       { create(:user1) }
   let(:attachment) { create(:asset, pref_label: "Sample Attachment") }
-  let(:asset)      { create(:department_asset, :with_metadata, attachments: [attachment.uri]) }
+  let(:asset)      { create(:department_asset, :with_metadata, :with_license_metadata, attachments: [attachment.uri]) }
 
   before do
     LakeshoreTesting.restore
@@ -15,14 +15,8 @@ describe "Displaying an asset" do
   end
 
   it "renders metadata" do
-    # Display in the recent documents list
-    visit(root_path)
-    within("#recent_docs") do
-      expect(page).to have_link(asset.keyword.first.pref_label)
-      expect(page).to have_link(asset.pref_label)
-    end
-
     # Index search results
+    visit(root_path)
     fill_in(:q, with: asset.pref_label)
     click_button("Go")
     within("#document_#{asset.id}") do
@@ -100,9 +94,14 @@ describe "Displaying an asset" do
       expect(page).to have_selector("li.publish_channels", text: asset.publish_channels.first.pref_label)
       expect(page).to have_selector("li.view_notes", text: asset.view_notes.first)
       expect(page).to have_selector("li.visual_surrogate", text: asset.visual_surrogate)
+
       within(".external_resources") do
         expect(page).to have_link(asset.external_resources.first)
       end
+
+      expect(page).to have_selector("li.licensing_restrictions", text: asset.licensing_restrictions.first.pref_label)
+      expect(page).to have_selector("li.public_domain", text: "No")
+      expect(page).to have_selector("li.copyright_representatives", text: asset.copyright_representatives.first.pref_label)
     end
   end
 end

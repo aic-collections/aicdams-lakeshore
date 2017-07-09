@@ -1,0 +1,2 @@
+<%= f.input :licensing_restriction_uris, as: :select, collection: List.options(AICType.LicensingRestrictionList),
+    selected: @form.uris_for(:licensing_restrictions), input_html: { class: 'form-control', multiple: true } %>

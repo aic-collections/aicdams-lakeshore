@@ -21,6 +21,7 @@ describe AssetIndexer do
       expect(solr_doc["depositor_full_name_tesim"]).to contain_exactly("First User")
       expect(solr_doc["created_dtsi"]).to eq("2016-10-30T00:00:00Z")
       expect(solr_doc["updated_dtsi"]).to eq("2016-10-31T00:00:00Z")
+      expect(solr_doc["public_domain_bsi"]).to be(false)
     end
 
     context "with all three document types" do

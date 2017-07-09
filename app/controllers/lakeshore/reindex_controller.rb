@@ -23,7 +23,7 @@ module Lakeshore
       def reindex_submitted_ids
         return false if @json.empty? || !@json.is_a?(Array)
         @json.each do |id|
-          UpdateIndexJob.perform_later(id) unless deleted_from_solr?(id)
+          UpdateIndexJob.perform_later(id, params.fetch("queue", nil)) unless deleted_from_solr?(id)
         end
       end
 

@@ -57,4 +57,16 @@ module SolrDocumentExtensions::Asset
   def external_resources
     Array(self[Solrizer.solr_name('external_resources', :stored_searchable)])
   end
+
+  def copyright_representatives
+    Array(self[Solrizer.solr_name('copyright_representatives', :stored_searchable)])
+  end
+
+  def licensing_restrictions
+    Array(self[Solrizer.solr_name('licensing_restrictions', :stored_searchable)])
+  end
+
+  def public_domain?
+    Array(self["public_domain_bsi"]).first
+  end
 end

@@ -45,6 +45,9 @@ class AIC < RDF::StrictVocabulary("http://definitions.artic.edu/ontology/1.0/")
   term :contributor,
        label: "Contributor",
        comment: "Person or corporate body who participated in the creation of the resource"
+  term :copyrightRepresentative,
+       label: "Copyright Representative",
+       comment: "Copyright representative"
   term :created,
        label: "Created On",
        comment: "Creation timestamp for resources not managed by Hydra"
@@ -150,6 +153,9 @@ class AIC < RDF::StrictVocabulary("http://definitions.artic.edu/ontology/1.0/")
   term :legacyUid,
        label: "Legacy ID",
        comment: "UID assigned to resource from a legacy system"
+  term :licensingRestriction,
+       label: "Licensing Restriction",
+       comment: "Licensing restriction"
   term :lightType,
        label: "Light Type",
        comment: "Light type used to capture the image"
@@ -177,6 +183,9 @@ class AIC < RDF::StrictVocabulary("http://definitions.artic.edu/ontology/1.0/")
   term :provenanceText,
        label: "Provenance Text",
        comment: "Provenance text"
+  term :publicDomain,
+       label: "Public Domain",
+       comment: "Public domain"
   term :publicationHistory,
        label: "Publication History",
        comment: "Publication history text"

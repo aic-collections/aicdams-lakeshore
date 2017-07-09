@@ -34,9 +34,21 @@ namespace :lakeshore do
 
   desc "Load lists"
   task load_lists: :environment do
+    # Delete all solr records for lists
+    list_ids = ActiveFedora::SolrService.query("has_model_ssim:List", rows: 1000).map(&:id)
+    list_item_ids = ActiveFedora::SolrService.query("has_model_ssim:ListItem", rows: 1000).map(&:id)
+    [list_ids + list_item_ids].each { |id| ActiveFedora::SolrService.delete(id) }
+    ActiveFedora::SolrService.commit
+
     Dir.glob("config/lists/*.yml").each do |list|
-      ListManager.new(list).create!
+      ListManager.new(list).create
     end
+  end
+
+  desc "Re-index lists"
+  task reindex_lists: :environment do
+    ListItem.all.map(&:update_index)
+    List.all.map(&:update_index)
   end
 
   desc "Regenerate derivatives for all assets"

@@ -1,0 +1,15 @@
+pref_label: "Licensing Restrictions"
+description: "Licensing restrictions."
+type: "AICType.LicensingRestrictionList"
+additional_types: []
+item_type: "AICType.LicensingRestriction"
+additional_item_types: []
+uid: "LS-7"
+members:
+  - pref_label: "ARS"
+    description: ""
+    uid: "LR-1"
+  - pref_label: "No Licensing"
+    description: ""
+    uid: "LR-2"
+
