@@ -47,7 +47,6 @@ describe "Batch management of works", type: :feature do
 
     it "displays the field's existing values" do
       expect(page).to have_content("Changes will be applied to the following 2 assets:")
-      expect(page).to have_field("Alternative label", with: asset1.alt_label.first)
       expect(page).to have_field("Language", with: asset1.language.first)
       expect(page).to have_field("Publisher", with: asset1.publisher.first)
       expect(page).to have_select("Publish Channels", disabled: true)

@@ -12,6 +12,6 @@ module BatchEditActions
   end
 
   def batch_edit_fields
-    ["alt_label", "publisher", "language"]
+    ["publisher", "language"]
   end
 end

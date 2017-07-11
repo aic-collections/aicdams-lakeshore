@@ -5,7 +5,7 @@ class BatchEditForm < Sufia::Forms::BatchEditForm
   attr_reader :documents
 
   self.terms = [
-    :publish_channel_uris, :status_uri, :alt_label, :language, :publisher
+    :publish_channel_uris, :status_uri, :language, :publisher
   ]
 
   # Call the method on BatchUploadForm because including the AssetFormBehaviors module was not working.
