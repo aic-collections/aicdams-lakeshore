@@ -66,10 +66,8 @@ class BatchEditsController < ApplicationController
     #       is present when changing permissions on a single work.
     def update_asset(obj)
       visibility_changed = visibility_status(obj)
-      obj.attributes = work_params
-      obj.date_modified = Time.current.ctime
-      obj.save
-
+      actor = CurationConcerns::CurationConcern.actor(obj, current_user)
+      actor.update(work_params)
       VisibilityCopyJob.perform_later(obj) if visibility_changed
       InheritPermissionsJob.perform_later(obj) if work_params.fetch(:permissions_attributes, nil)
     end

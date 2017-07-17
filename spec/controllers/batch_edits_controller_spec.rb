@@ -119,6 +119,34 @@ describe BatchEditsController do
         expect(work2.reload.edit_groups).to contain_exactly("newgroop")
       end
     end
+
+    context "when passing embargo and lease information" do
+      let(:parameters) do
+        {
+          update_type: "update",
+          generic_work: {
+            visibility: "open",
+            visibility_during_embargo: "department",
+            embargo_release_date: "2017-07-18",
+            visibility_after_embargo: "open",
+            visibility_during_lease: "open",
+            lease_expiration_date: "2017-07-18",
+            visibility_after_lease: "department"
+          },
+          batch_document_ids: [work1.id, work2.id]
+        }
+      end
+
+      it "applies the new setting to all works" do
+        expect(VisibilityCopyJob).to receive(:perform_later).twice
+        expect(InheritPermissionsJob).not_to receive(:perform_later)
+        put :update, parameters.as_json
+        expect(work1.reload.visibility).to eq("open")
+        expect(work2.reload.visibility).to eq("open")
+        expect(work1.reload.visibility_during_embargo).to be_nil
+        expect(work2.reload.visibility_during_embargo).to be_nil
+      end
+    end
   end
 
   describe "#edit" do
