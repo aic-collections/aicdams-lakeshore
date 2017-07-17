@@ -27,6 +27,13 @@ describe 'curation_concerns/base/_form_share.html.erb' do
     end
   end
 
+  context "with a public asset" do
+    let(:work) { create(:public_asset, edit_users: [user]) }
+    it "does not render hidden values for any implicit permission objects" do
+      expect(page).not_to have_selector("#generic_work_permissions_attributes_0_id", visible: false)
+    end
+  end
+
   context "with batch edits" do
     before { allow(view).to receive(:controller_name).and_return("batch_edits") }
 

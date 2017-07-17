@@ -25,7 +25,7 @@
   <%= f.fields_for :permissions do |permission_fields| %>
 
     <%# skip admin and any permisions maintained by visibility %>
-    <% next if ['admin', 'registered', 'department', dept_created_uid, depositor].include? permission_fields.object.agent_name.downcase %>
+    <% next if ['admin', 'registered', 'department', 'public', dept_created_uid, depositor].include? permission_fields.object.agent_name.downcase %>
     <tr>
       <td>
 	<%= permission_fields.select :access, Sufia.config.permission_levels, {}, class: 'form-control select_perm' %>

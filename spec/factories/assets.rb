@@ -21,6 +21,10 @@ FactoryGirl.define do
       factory :registered_asset do
         visibility Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_AUTHENTICATED
       end
+
+      factory :public_asset do
+        visibility Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PUBLIC
+      end
     end
 
     factory :text_asset do
