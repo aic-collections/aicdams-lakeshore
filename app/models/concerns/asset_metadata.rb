@@ -67,7 +67,7 @@ module AssetMetadata
 
     property :public_domain, predicate: AIC.publicDomain, multiple: false
 
-    property :caption, predicate: AIC.caption, multiple: false do |index|
+    property :caption, predicate: AIC.nonObjCaption, multiple: false do |index|
       index.as :stored_searchable
     end
 

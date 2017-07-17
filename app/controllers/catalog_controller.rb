@@ -113,7 +113,7 @@ class CatalogController < ApplicationController
     config.add_show_field solr_name("uid", :stored_searchable),           label: AIC.uid.label
 
     # Asset fields
-    config.add_show_field solr_name("caption", :stored_searchable), label: AIC.caption.label
+    config.add_show_field solr_name("caption", :stored_searchable), label: AIC.nonObjCaption.label
 
     # Work fields
     config.add_show_field solr_name("artist", :stored_searchable), label: AIC.artist.label

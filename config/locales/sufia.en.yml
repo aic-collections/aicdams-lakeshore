@@ -188,7 +188,7 @@ en:
         use_uri:                "Role"
         public_domain:          "Public Domain"
         licensing_restriction_uris: "Licensing Restrictions"
-        caption:                "Caption"
+        caption:                "Non-Object Caption"
       generic_work:
         <<: *asset
       batch_upload_item:

@@ -37,6 +37,7 @@ describe "Editing assets" do
       expect(page).to have_content("The language of the asset content.")
     end
     within("div.generic_work_caption") do
+      expect(page).to have_content("Non-Object Caption")
       expect(page).to have_content("A 30-character alphanumeric string serving as a caption for the asset")
     end
 
