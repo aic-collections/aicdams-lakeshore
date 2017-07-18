@@ -111,6 +111,7 @@ class CatalogController < ApplicationController
     config.add_show_field solr_name("rights_holder", :stored_searchable), label: ::RDF::Vocab::DC.rightsHolder.label
     config.add_show_field solr_name("same_as", :stored_searchable),       label: ::RDF::OWL.sameAs.label
     config.add_show_field solr_name("uid", :stored_searchable),           label: AIC.uid.label
+    config.add_show_field solr_name("batch_uid", :stored_searchable),     label: AIC.batchUid.label
 
     # Asset fields
     config.add_show_field solr_name("caption", :stored_searchable), label: AIC.nonObjCaption.label

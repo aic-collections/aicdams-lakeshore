@@ -5,8 +5,8 @@ describe "Searching" do
   let!(:user1)            { create(:user1) }
   let!(:user2)            { create(:user2) }
   let!(:admin)            { create(:admin) }
-  let!(:department_asset) { create(:department_asset, pref_label: "Department Asset") }
-  let!(:registered_asset) { create(:registered_asset, pref_label: "Registered Asset") }
+  let!(:department_asset) { create(:department_asset, :with_metadata, pref_label: "Department Asset") }
+  let!(:registered_asset) { create(:registered_asset, :with_metadata, pref_label: "Registered Asset") }
   let!(:work)             { create(:work, :with_sample_metadata, department: [Department.find_by_citi_uid("100").uri]) }
 
   context "with a standard user" do
@@ -27,6 +27,14 @@ describe "Searching" do
       # Searching on uid
       visit(root_path)
       fill_in(:q, with: registered_asset.uid.split(/-/).last)
+      click_button("Go")
+      within("div#search-results") do
+        expect(page).to have_link(registered_asset)
+      end
+
+      # Searching on batch-uid
+      visit(root_path)
+      fill_in(:q, with: "batch_uid")
       click_button("Go")
       within("div#search-results") do
         expect(page).to have_link(registered_asset)
