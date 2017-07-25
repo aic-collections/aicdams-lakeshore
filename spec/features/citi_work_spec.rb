@@ -5,7 +5,7 @@ describe "Interacting with CITI works" do
   let(:user)  { create(:user1) }
   let(:agent) { create(:agent, :with_sample_metadata) }
   let(:place) { create(:place, :with_sample_metadata) }
-  let(:asset) { create(:asset, pref_label: "A representation of the work") }
+  let(:asset) { create(:asset, pref_label: "A representation of the work", caption: "Asset caption") }
 
   let(:work) do
     create(:work, :with_sample_metadata,
@@ -30,10 +30,11 @@ describe "Interacting with CITI works" do
     expect(page).to have_selector("td", text: agent.pref_label)
     expect(page).to have_selector("th", text: "Current Location")
     expect(page).to have_selector("td", text: place.pref_label)
+    expect(page).to have_selector("h3", text: "Preferred Representation")
     expect(page).to have_selector("h3", text: "Representations")
     expect(page).to have_link(asset.pref_label)
-    expect(page).to have_selector("h3", text: "Representations")
-    expect(page).to have_link(asset.pref_label)
+    expect(page).to have_selector("th", text: "Non-Object Caption")
+    expect(page).to have_selector("td", text: asset.caption)
     expect(page).to have_link("Add Representations")
     expect(page).to have_link("Add Documentation")
 
