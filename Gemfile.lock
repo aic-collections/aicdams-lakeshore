@@ -1,4 +1,11 @@
 GIT
+  remote: https://github.com/envato/aspect_ratio
+  revision: 8096a805468a12ba775359cde04bb675f8a74dc2
+  branch: master
+  specs:
+    aspect_ratio (1.0.1)
+
+GIT
   remote: https://github.com/jcoyne/flipflop.git
   revision: 0eecddade9890548c92b1e8aa681512f1db01469
   branch: hydra
@@ -699,6 +706,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  aspect_ratio!
   better_errors
   binding_of_caller
   blacklight_range_limit

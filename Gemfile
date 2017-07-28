@@ -6,6 +6,7 @@ gem 'rails', '4.2.7.1'
 gem 'sufia', '~> 7.2'
 gem 'flipflop', git: 'https://github.com/jcoyne/flipflop.git', branch: 'hydra'
 
+gem 'aspect_ratio', git: 'https://github.com/envato/aspect_ratio', branch: 'master'
 gem 'blacklight_range_limit'
 gem 'coffee-rails', '~> 4.2'
 gem 'devise', '~> 4.2'
