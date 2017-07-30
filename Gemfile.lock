@@ -669,9 +669,6 @@ GEM
     tinymce-rails-imageupload (4.0.17.beta)
       railties (>= 3.2, < 6)
       tinymce-rails (~> 4.0)
-    turbolinks (5.0.1)
-      turbolinks-source (~> 5)
-    turbolinks-source (5.0.0)
     twitter-typeahead-rails (0.11.1.pre.corejavascript)
       actionpack (>= 3.1)
       jquery-rails
@@ -746,7 +743,6 @@ DEPENDENCIES
   solr_wrapper
   sqlite3
   sufia (~> 7.2)
-  turbolinks
   uglifier (~> 3.0)
   vcr
   webmock
