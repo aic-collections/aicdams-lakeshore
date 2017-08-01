@@ -43,7 +43,7 @@ class ManifestService
   end
 
   def image_url(image)
-    "https://#{ENV['LAKESHORE_DOMAIN']}/downloads/#{file_set_id}?file=#{image}"
+    "/downloads/#{file_set_id}?file=#{image}"
   end
 
   def file_set_id

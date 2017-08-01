@@ -15,4 +15,11 @@ describe DimensionsService do
     its(:width) { is_expected.to eq(400) }
     its(:height) { is_expected.to eq(500) }
   end
+
+  context "when dimensions are nil" do
+    subject { described_class.new(width: nil, height: nil) }
+
+    its(:width) { is_expected.to be_nil }
+    its(:height) { is_expected.to be_nil }
+  end
 end
