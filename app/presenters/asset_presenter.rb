@@ -16,7 +16,7 @@ class AssetPresenter < Sufia::WorkShowPresenter
   end
 
   def self.presenter_terms
-    terms + [:document_types, :public_domain?]
+    terms + [:document_types, :public_domain?, :type]
   end
 
   def manifest_url
@@ -68,6 +68,14 @@ class AssetPresenter < Sufia::WorkShowPresenter
 
   def current_location_presenters?
     false
+  end
+
+  def still_image?
+    type.include?(AICType.StillImage)
+  end
+
+  def text?
+    type.include?(AICType.Text)
   end
 
   def document_presenters

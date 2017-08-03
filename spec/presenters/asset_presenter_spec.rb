@@ -110,4 +110,15 @@ describe AssetPresenter do
       it { is_expected.not_to be_viewable }
     end
   end
+
+  context "with a still image asset" do
+    it { is_expected.to be_still_image }
+    it { is_expected.not_to be_text }
+  end
+
+  context "with a text asset" do
+    let(:asset) { build(:text_asset, id: "1234", pref_label: "Sample Label") }
+    it { is_expected.to be_text }
+    it { is_expected.not_to be_still_image }
+  end
 end
