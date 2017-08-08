@@ -16,7 +16,7 @@ class AssetPresenter < Sufia::WorkShowPresenter
   end
 
   def self.presenter_terms
-    terms + [:document_types, :public_domain?, :type]
+    terms + [:document_types, :public_domain?, :type, :related_image_id]
   end
 
   def manifest_url

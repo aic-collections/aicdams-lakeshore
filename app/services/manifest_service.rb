@@ -9,15 +9,19 @@ class ManifestService
 
   # @param [String] image
   def image_url(image)
-    "/downloads/#{file_set_id}?file=#{image}"
+    "/downloads/#{file_set.id}?file=#{image}"
   end
 
-  def file_set_id
-    presenter.solr_document["hasRelatedImage_ssim"].first
+  # @return [SolrDocument]
+  # File set of the related image assigned to the asset, or a null pattern object
+  def file_set
+    SolrDocument.find(presenter.related_image_id)
+  rescue Blacklight::Exceptions::RecordNotFound
+    SolrDocument.new
   end
 
-  def text?
-    presenter.solr_document.type.include?(AICType.Text)
+  def text_or_pdf?
+    presenter.solr_document.type.include?(AICType.Text) || file_set.mime_type == "application/pdf"
   end
 
   # @return [Hash]
@@ -32,7 +36,7 @@ class ManifestService
     builder = IIIFManifest::ManifestFactory.new(presenter)
     builder.extend PDFManifestBuilder
     manifest = builder.to_h
-    if text?
+    if text_or_pdf?
       builder.add_media_sequences(manifest, media_info)
     else
       JSON.parse(manifest.to_json)

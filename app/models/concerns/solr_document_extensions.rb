@@ -102,4 +102,8 @@ module SolrDocumentExtensions
   def collection_type
     Array(self[Solrizer.solr_name('collection_type', :symbol)]).first
   end
+
+  def related_image_id
+    Array(self["hasRelatedImage_ssim"]).first
+  end
 end
