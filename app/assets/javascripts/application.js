@@ -20,7 +20,6 @@
 // Load Javascript < ES6
 //= require batch_edit
 //= require blacklight_gallery
-//= require openseadragon
 //= require select_doctype
 
 // Load Sufia and ES6 Javascript

@@ -12,19 +12,17 @@ gem 'coffee-rails', '~> 4.2'
 gem 'devise', '~> 4.2'
 gem 'devise-guests', '~> 0.5'
 gem 'figaro'
+gem 'iiif_manifest', '~> 0.1.2'
 gem 'jbuilder', '~> 2.6'
 gem 'jquery-rails'
-gem 'openseadragon', '0.3.0'
 gem 'posix-spawn'
 gem 'resque-cleaner'
 gem 'resque-pool'
+gem 'riiif'
 gem 'rsolr', '~> 1.1'
 gem 'sass-rails', '~> 5.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'uglifier', '~> 3.0'
-gem 'riiif'
-gem 'iiif_manifest', '~> 0.1.2'
-
 
 group :development, :test do
   gem 'better_errors'

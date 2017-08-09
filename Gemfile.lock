@@ -722,7 +722,6 @@ DEPENDENCIES
   jasmine
   jbuilder (~> 2.6)
   jquery-rails
-  openseadragon (= 0.3.0)
   pg
   poltergeist
   posix-spawn
@@ -749,4 +748,4 @@ DEPENDENCIES
   xray-rails
 
 BUNDLED WITH
-   1.14.6
+   1.15.3

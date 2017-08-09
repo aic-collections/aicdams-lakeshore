@@ -39,11 +39,4 @@ Lakeshore = {
 
 Blacklight.onLoad(function () {
   Lakeshore.initialize();
-  if ( $('div.openseadragon-container').length && !$('div.openseadragon-canvas').length) {
-    initOpenSeadragon();
-  }
 });
-
-function initOpenSeadragon() {
-  $('picture[data-openseadragon]').openseadragon();
-}
