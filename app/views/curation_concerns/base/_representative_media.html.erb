@@ -1,7 +1,7 @@
 <% if presenter.representative_id.present? %>
   <% if presenter.still_image? || presenter.text? %>
     <%= UniversalViewer.script_tag %>
-    <div class="uv viewer"
+    <div class="uv" style="width:100%; height:600px; background-color: #000"
       data-uri="<%= main_app.polymorphic_path [main_app, :manifest, presenter] %>"
       data-config="/uv_config.json"></div>
 

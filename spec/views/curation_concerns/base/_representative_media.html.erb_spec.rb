@@ -18,14 +18,14 @@ RSpec.describe 'curation_concerns/base/_representative_media' do
   context "with a still image asset" do
     let(:solr_doc) { double(representative_id: file_set.id, hydra_model: GenericWork, type: [AICType.StillImage]) }
     it 'has a universal viewer' do
-      expect(rendered).to have_selector 'div.viewer'
+      expect(rendered).to have_selector 'div.uv'
     end
   end
 
   context "with a text asset" do
     let(:solr_doc) { double(representative_id: file_set.id, hydra_model: GenericWork, type: [AICType.Text]) }
     it 'has a universal viewer' do
-      expect(rendered).to have_selector 'div.viewer'
+      expect(rendered).to have_selector 'div.uv'
     end
   end
 end
