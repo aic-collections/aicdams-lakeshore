@@ -5,32 +5,41 @@
       <%= render 'work_title', presenter: @presenter %>
     </header>
     <% if @presenter.citi_presenter? && !@presenter.solr_document['citi_uid_ssim'].nil? %>
-    <div>
-      <%= link_to_citi(
-          @presenter.solr_document['has_model_ssim'].first,
-          @presenter.solr_document['citi_uid_ssim'].first) %>
-    </div>
+      <div>
+        <%= link_to_citi(
+            @presenter.solr_document['has_model_ssim'].first,
+            @presenter.solr_document['citi_uid_ssim'].first) %>
+      </div>
     <% end %>
   </div>
-  <div class="col-sm-8">
-    <%= render 'work_description', presenter: @presenter %>
-    <%= render 'relationships', presenter: @presenter %>
-    <%= render 'metadata', presenter: @presenter %>
-  </div>
-  <div class="col-sm-4">
-    <%= render "show_actions", presenter: @presenter %>
-    Last modified: <%= @presenter.date_modified %>
-    <%= render 'representative_media', presenter: @presenter %>
-  </div>
-</div>
 
-<% if !@presenter.citi_presenter? %>
-<div class="row">
-  <div class="col-sm-12">
-    <%= render 'items', presenter: @presenter %>
-    <%# TODO: we may consider adding these partials in the future %>
-    <%#= render 'sharing_with', presenter: @presenter %>
-    <%#= render 'user_activity', presenter: @presenter %>
-  </div>
+  <% if @presenter.citi_presenter? %>
+    <div class="col-sm-8">
+      <%= render 'work_description', presenter: @presenter %>
+      <%= render 'relationships', presenter: @presenter %>
+      <%= render 'metadata', presenter: @presenter %>
+    </div>
+    <div class="col-sm-4">
+      <%= render "show_actions", presenter: @presenter %>
+      Last modified: <%= @presenter.date_modified %>
+      <%= render 'representative_media', presenter: @presenter %>
+    </div>
+  <% else %>
+    <div class="col-xs-12">
+      <%= render 'representative_media', presenter: @presenter %>
+      <%= render "show_actions", presenter: @presenter %>
+      Last modified: <%= @presenter.date_modified %>
+    </div>
+    <div class="col-xs-12">
+      <%= render 'work_description', presenter: @presenter %>
+      <%= render 'relationships', presenter: @presenter %>
+      <%= render 'metadata', presenter: @presenter %>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-12">
+        <%= render 'items', presenter: @presenter %>
+      </div>
+    </div>
+  <% end %>
 </div>
-<% end %>
