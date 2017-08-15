@@ -13,7 +13,7 @@ describe "Editing collections" do
     let(:user) { create(:admin) }
 
     it "allows editing of all fields" do
-      have_select('collection_publish_channel_uris', selected: "Web", disabled: false)
+      expect(page).to have_select('collection_publish_channel_uris', selected: "Web", disabled: false)
     end
   end
 
@@ -21,7 +21,8 @@ describe "Editing collections" do
     let(:user) { create(:user1) }
 
     it "allows editing of all fields" do
-      have_select('collection_publish_channel_uris', selected: "Web", disabled: true)
+      expect(page).to have_select('collection_publish_channel_uris', selected: "Web", disabled: true)
+      expect(page).to have_select('collection_collection_type_uri')
     end
   end
 end

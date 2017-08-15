@@ -6,7 +6,6 @@ describe Sufia::Ability do
   let(:user1)    { create(:user1) }
   let(:user2)    { create(:user2) }
   let(:admin)    { create(:admin) }
-  let(:admin)    { create(:admin) }
   let(:file)     { create(:asset) }
   let(:solr_doc) { SolrDocument.new(file.to_solr) }
 
@@ -25,6 +24,12 @@ describe Sufia::Ability do
     it { is_expected.not_to be_able_to(:delete, Transaction) }
     it { is_expected.not_to be_able_to(:delete, Shipment) }
     it { is_expected.not_to be_able_to(:delete, Agent) }
+  end
+
+  context "with an admin" do
+    subject { Ability.new(admin) }
+    it { is_expected.to be_able_to(:edit, file.id) }
+    it { is_expected.to be_able_to(:delete, file.id) }
   end
 
   describe "department visibility" do

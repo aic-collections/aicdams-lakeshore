@@ -21,6 +21,10 @@ FactoryGirl.define do
       factory :registered_asset do
         visibility Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_AUTHENTICATED
       end
+
+      factory :public_asset do
+        visibility Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PUBLIC
+      end
     end
 
     factory :text_asset do
@@ -50,6 +54,13 @@ FactoryGirl.define do
     factory :archive_asset do
       after(:build) do |asset|
         AssetTypeAssignmentService.new(asset).assign(AICType.Archive)
+      end
+    end
+
+    # @todo Make this a default for all build actions?
+    trait :with_id do
+      after(:build) do |asset|
+        asset.id = SecureRandom.uuid unless asset.id.present?
       end
     end
 
@@ -154,6 +165,7 @@ FactoryGirl.define do
       view_notes                   ["view note 1", "view note 2"]
       visual_surrogate             "a visual surrogate"
       external_resources           ["http://www.google.com"]
+      caption                      "A1B2C"
     end
 
     trait :with_license_metadata do

@@ -135,26 +135,6 @@ ul.nav {
 	padding-right: 0px;
 }
 
-#osd_modal_bg {
-        position: absolute;
-        display: none;
-        width: 100%;
-        height: 100%;
-        left: 0;
-        top: 0;
-        background-color: rgba(0,0,0,0.5);
-}
-
-#osd_canvas {
-        position: absolute;
-        top: 200px;
-        left: 100px;
-        bottom: 100px;
-        right: 100px;
-        z-index: 999;
-        background-color: white;
-}
-
 #home_header {
     background-image: image-url('lakeshore-2.jpg');
     background-position: 0% 50%;
@@ -166,11 +146,6 @@ ul.nav {
   background-repeat: no-repeat;
   background-size: 16px 16px;
   padding-left: 32px;
-}
-
-// Hide batch edit button until batch edit functionality is fully functional.
-input#batch-edit {
-    display: none;
 }
 
 /* Temporarily hide individual upload button in home page until that is

@@ -4,8 +4,15 @@ class CurationConcerns::GenericWorksController < ApplicationController
   include Sufia::WorksControllerBehavior
   include CitiResourceBehavior
   include AICAssetAfterDeleteBehavior
+
   self.curation_concern_type = GenericWork
   self.show_presenter = AssetPresenter
+  skip_load_and_authorize_resource only: :manifest
+
+  def manifest
+    headers['Access-Control-Allow-Origin'] = '*'
+    render json: ManifestService.new(presenter).manifest_builder
+  end
 
   def destroy
     asset_with_relationships = []
@@ -16,7 +23,6 @@ class CurationConcerns::GenericWorksController < ApplicationController
     end
     report_status_and_redirect(asset_with_relationships, batch: false)
   end
-  # we have to override this action in Curation Concerns application controller behavior class
 
   def deny_access
     presenter = UnauthorizedPresenter.new(params[:id])

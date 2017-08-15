@@ -9,10 +9,11 @@ class LakeshoreTesting
       reset_derivatives
       reset_uploads
       create_minimal_resources
+      ListManager.new(File.join(Rails.root, "config/lists/status.yml")).create
+      ActiveFedora::Base.all.map(&:update_index)
     end
 
     def create_minimal_resources
-      ListManager.new(File.join(Rails.root, "config/lists/status.yml")).create
       FactoryGirl.create(:department100)
       FactoryGirl.create(:department200)
       FactoryGirl.create(:admins)

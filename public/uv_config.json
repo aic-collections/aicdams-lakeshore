@@ -1,0 +1,34 @@
+{
+    "options" : {
+        "rightPanelEnabled" : false
+    },
+    "modules" : {
+        "pagingHeaderPanel" : {
+            "options": {
+                "localeToggleEnabled": false,
+                "pageModeEnabled": true,
+                "pagingToggleEnabled": true
+            }
+        },
+        "downloadDialogue" : {
+            "options" : {
+                "confinedImageSize": 1280
+            },
+            "content": {
+                "currentViewAsJpg": "Current Region ({0}x{1})",
+                "download": "Download",
+                "editSettings": "Edit Settings",
+                "entireDocument": "Entire Document ({0})",
+                "entireFileAsOriginal": "Entire File ({0})",
+                "noneAvailable": "No download options are available.",
+                "pagingNote": "Please turn off Two Page View for additional options.",
+                "preview": "Preview",
+                "title": "Download",
+                "wholeImageHighRes": "Full Size ({0}x{1} {2})",
+                "wholeImageLowResAsJpg": "Presentation Size ({0}x{1})"
+            }
+        }
+    }
+}
+
+

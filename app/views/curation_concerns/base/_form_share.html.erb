@@ -11,27 +11,29 @@
 
 <table class="table">
   <tr id="file_permissions">
-    <td width="20%">
-      <%= Sufia.config.owner_permission_levels.keys[0] %>
-    </td>
-    <td width="60%">
-      <%= label_tag :owner_access, class: "control-label" do %>
-        Depositor (<span id="file_owner" data-depositor="<%= depositor %>"><%= link_to_profile depositor %></span>)
-      <% end %>
-    </td>
+    <% unless controller_name == "batch_edits" %>
+      <td width="20%">
+        <%= Sufia.config.owner_permission_levels.keys[0] %>
+      </td>
+      <td width="60%">
+        <%= label_tag :owner_access, class: "control-label" do %>
+          Depositor (<span id="file_owner" data-depositor="<%= depositor %>"><%= link_to_profile depositor %></span>)
+        <% end %>
+      </td>
+    <% end %>
   </tr>
   <%= f.fields_for :permissions do |permission_fields| %>
 
     <%# skip admin and any permisions maintained by visibility %>
-    <% next if ['admin', 'registered', 'department', dept_created_uid, depositor].include? permission_fields.object.agent_name.downcase %>
+    <% next if ['admin', 'registered', 'department', 'public', dept_created_uid, depositor].include? permission_fields.object.agent_name.downcase %>
     <tr>
       <td>
 	<%= permission_fields.select :access, Sufia.config.permission_levels, {}, class: 'form-control select_perm' %>
-        
+
       </td>
       <td>
 	<%= permission_fields.label :agent_name, class: "control-label" do %>
-    
+
 	  <%= user_display_name_and_key(permission_fields.object.agent_name) %>
 	<% end %>
 	<button class="btn close remove_perm" data-index="<%= permission_fields.index %>">&times;</button>

@@ -36,6 +36,7 @@ describe AssetPresenter do
   it { is_expected.to delegate_method(:licensing_restrictions).to(:solr_document) }
   it { is_expected.to delegate_method(:public_domain?).to(:solr_document) }
   it { is_expected.to delegate_method(:copyright_representatives).to(:solr_document) }
+  it { is_expected.to delegate_method(:related_image_id).to(:solr_document) }
 
   its(:title) { is_expected.to eq(["Sample Label"]) }
 
@@ -56,6 +57,16 @@ describe AssetPresenter do
 
   describe "#current_location_presenters?" do
     it { is_expected.not_to be_current_location_presenters }
+  end
+
+  describe "#manifest_url" do
+    let(:request) { double(base_url: 'http://test.host') }
+
+    let(:presenter) { described_class.new(solr_document, ability, request) }
+
+    subject { presenter.manifest_url }
+
+    it { is_expected.to eq 'http://test.host/concern/generic_works/1234/manifest' }
   end
 
   describe "#fedora_uri" do
@@ -99,5 +110,16 @@ describe AssetPresenter do
       let(:ability) { Ability.new(user) }
       it { is_expected.not_to be_viewable }
     end
+  end
+
+  context "with a still image asset" do
+    it { is_expected.to be_still_image }
+    it { is_expected.not_to be_text }
+  end
+
+  context "with a text asset" do
+    let(:asset) { build(:text_asset, id: "1234", pref_label: "Sample Label") }
+    it { is_expected.to be_text }
+    it { is_expected.not_to be_still_image }
   end
 end

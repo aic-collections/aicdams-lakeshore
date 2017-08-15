@@ -11,6 +11,8 @@ describe CollectionIndexer do
       expect(solr_doc["dept_created_tesim"]).to eq(collection.dept_created.pref_label)
       expect(solr_doc["dept_created_sim"]).to eq(collection.dept_created.pref_label)
       expect(solr_doc["depositor_full_name_tesim"]).to contain_exactly("First User")
+      expect(solr_doc["collection_type_sim"]).to eq(collection.collection_type.pref_label)
+      expect(solr_doc["collection_type_ssim"]).to eq(collection.collection_type.pref_label)
     end
   end
 end

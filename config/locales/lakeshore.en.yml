@@ -22,3 +22,5 @@ en:
         metadata: "Descriptions"
         share: "Share"
       copy_warning: "Visibility and sharing only affect the collection itself, not its member resources, which have their own permissions"
+    batch_edit:
+      permissions_warning: "WARNING! Editing these fields will remove any existing values on the assets and replace with the ones specified in the form"

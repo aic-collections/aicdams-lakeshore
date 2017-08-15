@@ -8,7 +8,11 @@ describe CollectionForm do
 
   describe "::terms" do
     subject { described_class }
-    its(:terms) { is_expected.to include(:publish_channel_uris) }
+    its(:terms) { is_expected.to contain_exactly(:title,
+                                                 :representative_id,
+                                                 :thumbnail_id,
+                                                 :publish_channel_uris,
+                                                 :collection_type_uri) }
   end
 
   subject { form }
@@ -17,7 +21,7 @@ describe CollectionForm do
   it { is_expected.to delegate_method(:dept_created).to(:model) }
   it { is_expected.to delegate_method(:permissions).to(:model) }
 
-  its(:primary_terms) { is_expected.to contain_exactly(:title, :publish_channel_uris) }
+  its(:primary_terms) { is_expected.to contain_exactly(:title, :publish_channel_uris, :collection_type_uri) }
 
   describe "#disabled?" do
     context "when using :only" do
@@ -45,6 +49,18 @@ describe CollectionForm do
       let(:term) { create(:list_item) }
       before { allow(collection).to receive(:publish_channel_uris).and_return([term]) }
       it { is_expected.to eq([term.uri.to_s]) }
+    end
+  end
+
+  describe "#uri_for" do
+    subject { form.uri_for(:collection_type_uri) }
+    context "with no type" do
+      it { is_expected.to be_nil }
+    end
+    context "with a RDF::URI for a type" do
+      let(:type) { create(:list_item) }
+      before { allow(collection).to receive(:collection_type_uri).and_return(type) }
+      it { is_expected.to eq(type.uri.to_s) }
     end
   end
 end

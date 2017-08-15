@@ -1,0 +1,23 @@
+pref_label: "Collection Type"
+description: "Type of collection"
+type: "AICType.CollectionTypeList"
+additional_types: []
+item_type: "AICType.CollectionType"
+additional_item_types: ["AICType.Authority"]
+uid: "LS-8"
+members:
+ - pref_label: "Briefcase"
+   description: ""
+   uid: "CL-1"
+ - pref_label: "Conservation Report"
+   description: ""
+   uid: "CL-2"
+ - pref_label: "Publishing Report"
+   description: ""
+   uid: "CL-3"
+ - pref_label: "Exhibition Image Bank"
+   description: ""
+   uid: "CL-4"
+ - pref_label: "Facility Report"
+   description: ""
+   uid: "CL-5"

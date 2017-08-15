@@ -7,6 +7,7 @@
       <th>Document Type</th>
       <th>Link</th>
       <th>UID</th>
+      <th>Non-Object Caption</th>
     </tr>
     <% presenters.each do |rel| %>
       <tr>
@@ -20,6 +21,7 @@
           <% end %>
         </td>
         <td><%= rel.uid %></td>
+        <td><%= rel.caption %></td>
       </tr>
     <% end %>
   </tbody>

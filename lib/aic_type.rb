@@ -26,6 +26,14 @@ class AICType < RDF::StrictVocabulary("http://definitions.artic.edu/ontology/1.0
        subClassOf: "aictype:Resource",
        label: "CITI Resource",
        comment: "Resource imported from CITI"
+  term :CollectionTypeList,
+       subClassOf: "aictype:List",
+       label: "Collection Type List",
+       comment: "Collection type list"
+  term :CollectionType,
+       subClassOf: "aictype:ListItem",
+       label: "Collection Type",
+       comment: "Collection type"
   term :Comment,
        subClassOf: "aictype:Annotation",
        label: "Comment",

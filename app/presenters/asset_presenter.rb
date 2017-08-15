@@ -1,4 +1,6 @@
 # frozen_string_literal: true
+# AICWorkShowPresenter subclasses Sufia::WorkShowPresenter
+# and adds tiling image and canvas displaying behaviors
 class AssetPresenter < Sufia::WorkShowPresenter
   self.file_presenter_class = FileSetPresenter
 
@@ -8,12 +10,17 @@ class AssetPresenter < Sufia::WorkShowPresenter
       :description, :batch_uid, :language, :publisher, :pref_label, :alt_label, :rights_holder,
       :keyword, :created_by, :compositing, :light_type, :view, :capture_device, :digitization_source,
       :imaging_uid, :transcript, :modified_date, :create_date, :publish_channels, :view_notes,
-      :visual_surrogate, :external_resources, :licensing_restrictions, :copyright_representatives
+      :visual_surrogate, :external_resources, :licensing_restrictions, :copyright_representatives,
+      :caption
     ]
   end
 
   def self.presenter_terms
-    terms + [:document_types, :public_domain?]
+    terms + [:document_types, :public_domain?, :type, :related_image_id]
+  end
+
+  def manifest_url
+    manifest_helper.polymorphic_url([:manifest, self])
   end
 
   include ResourcePresenterBehaviors
@@ -63,6 +70,14 @@ class AssetPresenter < Sufia::WorkShowPresenter
     false
   end
 
+  def still_image?
+    type.include?(AICType.StillImage)
+  end
+
+  def text?
+    type.include?(AICType.Text)
+  end
+
   def document_presenters
     CurationConcerns::PresenterFactory.build_presenters(document_ids,
                                                         CitiResourcePresenter,
@@ -101,5 +116,9 @@ class AssetPresenter < Sufia::WorkShowPresenter
 
     def attachment_ids
       relationships.attachment_ids + solr_document.attachment_ids
+    end
+
+    def manifest_helper
+      @manifest_helper ||= ManifestHelper.new(request.base_url)
     end
 end

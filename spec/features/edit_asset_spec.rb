@@ -2,8 +2,6 @@
 require 'rails_helper'
 
 describe "Editing assets" do
-  before(:all) { LakeshoreTesting.restore }
-
   let!(:asset) { create(:asset, :with_metadata) }
   let!(:agent) { create(:agent, representation_uris: [asset.uri], preferred_representation_uri: asset.uri) }
   let!(:work)  { create(:work, representation_uris: [asset.uri]) }
@@ -30,12 +28,17 @@ describe "Editing assets" do
     expect(page).to have_select("Publish Channels", selected: "Web", disabled: true)
     expect(page).to have_field("View Notes", with: asset.view_notes.first)
     expect(page).to have_field("Visual Surrogate", with: asset.visual_surrogate)
+    expect(page).to have_field("Caption", with: asset.caption)
 
     expect(page).not_to have_content('string multi_value optional form-control generic_work_alt_label form-control multi-text-field')
 
     # Displaying hints
     within("div.generic_work_language") do
       expect(page).to have_content("The language of the asset content.")
+    end
+    within("div.generic_work_caption") do
+      expect(page).to have_content("Non-Object Caption")
+      expect(page).to have_content("A 30-character alphanumeric string serving as a caption for the asset")
     end
 
     click_link "Files"

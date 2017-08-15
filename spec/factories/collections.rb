@@ -31,6 +31,7 @@ FactoryGirl.define do
     trait :with_metadata do
       title                 ["Collection with metadata"]
       publish_channel_uris  ["http://definitions.artic.edu/publish_channel/Web"]
+      collection_type_uri   { create(:list_item, pref_label: "collection type").uri }
     end
   end
 end

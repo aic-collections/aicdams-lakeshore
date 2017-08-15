@@ -69,6 +69,7 @@ describe SolrDocument do
   it { is_expected.to respond_to(:depositor_full_name) }
   it { is_expected.to respond_to(:dept_created) }
   it { is_expected.to respond_to(:thumbnail_path) }
+  it { is_expected.to respond_to(:related_image_id) }
 
   describe "Agent terms" do
     it { is_expected.to respond_to(:birth_year) }
@@ -135,6 +136,7 @@ describe SolrDocument do
     it { is_expected.to respond_to(:licensing_restrictions) }
     it { is_expected.to respond_to(:public_domain?) }
     it { is_expected.to respond_to(:copyright_representatives) }
+    it { is_expected.to respond_to(:caption) }
   end
 
   describe "Resource terms" do
@@ -148,5 +150,9 @@ describe SolrDocument do
     it { is_expected.to respond_to(:rights_statement) }
     it { is_expected.to respond_to(:rights_holder) }
     it { is_expected.to respond_to(:alt_label) }
+  end
+
+  describe "Collection terms" do
+    it { is_expected.to respond_to(:collection_type) }
   end
 end

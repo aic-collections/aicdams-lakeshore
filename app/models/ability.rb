@@ -5,14 +5,15 @@ class Ability
   include Sufia::Ability
 
   self.ability_logic += [:everyone_can_create_curation_concerns,
-                         :admins_can_manage_lists,
+                         :admin_abilities,
                          :departments_can_read_assets,
-                         :users_can_edit_citi_resources,
-                         :admins_can_read_solr_documents
+                         :users_can_edit_citi_resources
                         ]
 
-  def admins_can_manage_lists
-    can :manage, List if admin?
+  def admin_abilities
+    return unless admin?
+    can :manage, :all
+    can :read, SolrDocument
   end
 
   def departments_can_read_assets
@@ -23,10 +24,6 @@ class Ability
 
   def users_can_edit_citi_resources
     can :edit, [Work, Exhibition, Agent, Transaction, Shipment, Place] if registered_user?
-  end
-
-  def admins_can_read_solr_documents
-    can :read, SolrDocument if admin?
   end
 
   # Overrides Sufia::Ability to enable updates of uploaded files

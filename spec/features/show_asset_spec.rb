@@ -94,6 +94,8 @@ describe "Displaying an asset" do
       expect(page).to have_selector("li.publish_channels", text: asset.publish_channels.first.pref_label)
       expect(page).to have_selector("li.view_notes", text: asset.view_notes.first)
       expect(page).to have_selector("li.visual_surrogate", text: asset.visual_surrogate)
+      expect(page).to have_selector("th", "Non-Object Caption")
+      expect(page).to have_selector("li.caption", text: asset.caption)
 
       within(".external_resources") do
         expect(page).to have_link(asset.external_resources.first)

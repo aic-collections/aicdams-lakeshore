@@ -39,7 +39,6 @@ class CatalogController < ApplicationController
     config.view.slideshow.partials = [:index]
 
     config.show.tile_source_field = :content_metadata_image_iiif_info_ssm
-    config.show.partials.insert(1, :openseadragon)
     # default advanced config values
     config.advanced_search ||= Blacklight::OpenStructWithHashAccess.new
     # config.advanced_search[:qt] ||= 'advanced'
@@ -76,6 +75,7 @@ class CatalogController < ApplicationController
     config.add_facet_field solr_name("document_types", :facetable), label: AIC.documentType.label
     config.add_facet_field solr_name("dept_created", :facetable), label: AIC.deptCreated.label
     config.add_facet_field solr_name("publish_channels", :facetable), label: AIC.publishChannel.label
+    config.add_facet_field solr_name("collection_type", :facetable), label: AIC.collectionType.label
 
     # Have BL send all facet field names to Solr, which has been the default
     # previously. Simply remove these lines if you'd rather use Solr request
@@ -92,6 +92,7 @@ class CatalogController < ApplicationController
     config.add_index_field solr_name('credit_line', :stored_searchable),     label: AIC.creditLine.label
     config.add_index_field solr_name('dept_created', :stored_searchable),    label: AIC.deptCreated.label, link_to_search: solr_name("dept_created", :facetable).to_sym
     config.add_index_field solr_name('department', :stored_searchable),      label: AIC.department.label
+    config.add_index_field solr_name('collection_type', :symbol),            label: AIC.collectionType.label
     config.add_index_field solr_name("relationships", :stored_searchable, type: :integer), label: "Related Assets"
     config.add_index_field solr_name("date_uploaded", :stored_sortable, type: :date),      label: "Date Uploaded", itemprop: 'datePublished', helper_method: :human_readable_date
     config.add_index_field solr_name("date_modified", :stored_sortable, type: :date),      label: "Date Modified", itemprop: 'dateModified', helper_method: :human_readable_date
@@ -109,6 +110,10 @@ class CatalogController < ApplicationController
     config.add_show_field solr_name("rights_holder", :stored_searchable), label: ::RDF::Vocab::DC.rightsHolder.label
     config.add_show_field solr_name("same_as", :stored_searchable),       label: ::RDF::OWL.sameAs.label
     config.add_show_field solr_name("uid", :stored_searchable),           label: AIC.uid.label
+    config.add_show_field solr_name("batch_uid", :stored_searchable),     label: AIC.batchUid.label
+
+    # Asset fields
+    config.add_show_field solr_name("caption", :stored_searchable), label: AIC.nonObjCaption.label
 
     # Work fields
     config.add_show_field solr_name("artist", :stored_searchable), label: AIC.artist.label
@@ -144,6 +149,9 @@ class CatalogController < ApplicationController
     config.add_show_field solr_name("resource_type", :stored_searchable), label: "Asset Type"
     config.add_show_field solr_name("format", :stored_searchable), label: "File Format"
     config.add_show_field solr_name("identifier", :stored_searchable), label: "Identifier"
+
+    # Collection fields
+    config.add_show_field solr_name("title", :stored_searchable), label: "Title"
 
     # "fielded" search configuration. Used by pulldown among other places.
     # For supported keys in hash, see rdoc for Blacklight::SearchFields

@@ -10,6 +10,16 @@ class FileSetPresenter < Sufia::FileSetPresenter
     (rdf_types & available_roles.keys).map { |uri| available_roles[uri].label }
   end
 
+  # @return [IIIFManifest::DisplayImage]
+  # Only for the access master
+  def display_image
+    return unless rdf_types.include?(AICType.IntermediateFileSet)
+    IIIFManifest::DisplayImage.new(DerivativePath.access_path(id),
+                                   width: adjusted_dimensions.width,
+                                   height: adjusted_dimensions.height,
+                                   iiif_endpoint: iiif_endpoint(id))
+  end
+
   private
 
     # AICType.find doesn't seem work, so we have to do some key/value matching in order
@@ -21,5 +31,20 @@ class FileSetPresenter < Sufia::FileSetPresenter
         AICType.PreservationMasterFileSet.to_s => AICType.PreservationMasterFileSet,
         AICType.LegacyFileSet.to_s             => AICType.LegacyFileSet
       }
+    end
+
+    # @todo There should be a riiif route for this
+    def base_image_url(fileset_id)
+      uri = Riiif::Engine.routes.url_helpers.info_url(fileset_id, host: request.base_url)
+      uri.sub(%r{/info\.json\Z}, '')
+    end
+
+    def iiif_endpoint(fileset_id)
+      IIIFManifest::IIIFEndpoint.new(base_image_url(fileset_id), profile: "http://iiif.io/api/image/2/level2.json")
+    end
+
+    # @return [Array<Integer>] resized x and y values
+    def adjusted_dimensions
+      @adjusted_dimensions ||= DimensionsService.new(width: solr_document.width, height: solr_document.height)
     end
 end

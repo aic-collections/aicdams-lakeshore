@@ -10,5 +10,9 @@ describe ListIndexer do
     it "indexes RDF types" do
       expect(solr_doc["types_ssim"]).to contain_exactly(AICType.List, AICType.Resource)
     end
+
+    it "indexes member ids" do
+      expect(solr_doc["member_ids_ssim"]).to be_empty
+    end
   end
 end
