@@ -9,6 +9,7 @@ class Place < CitiResource
 
   type type + aic_type
 
+  # @todo This is currently unused and probably needs to be a kind of ListItem
   property :location_type, predicate: AIC.locationType, multiple: false, class_name: "ActiveFedora::Base"
 
   property :lat, predicate: ::RDF::Vocab::GEO.lat, multiple: false do |index|

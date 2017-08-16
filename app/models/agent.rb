@@ -19,7 +19,7 @@ class Agent < CitiResource
     index.as :stored_searchable
   end
 
-  # TODO: I think this is a list
+  # @todo This is currently unused and probably needs to be a kind of ListItem
   property :agent_type, predicate: AIC.agentType, multiple: false, class_name: "ActiveFedora::Base"
 
   property :death_date, predicate: AIC.deathDate do |index|

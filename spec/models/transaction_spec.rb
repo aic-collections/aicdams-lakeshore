@@ -2,7 +2,7 @@
 require 'rails_helper'
 
 describe Transaction do
-  describe "RDF type" do
+  describe "RDF types" do
     subject { described_class.new.type }
     it { is_expected.to include(AICType.Transaction,
                                 AICType.Resource,
