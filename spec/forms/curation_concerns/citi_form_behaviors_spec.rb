@@ -49,6 +49,21 @@ describe CitiFormBehaviors do
     its(:representation_uris)          { is_expected.to be_empty }
     its(:representations)              { is_expected.to be_empty }
     its(:preferred_representation_uri) { is_expected.to be_nil }
-    its(:preferred_representation)     { is_expected.to be_nil }
+    its(:preferred_representation)     { is_expected.to be_kind_of(SolrDocument) }
+  end
+
+  context "with representations" do
+    let(:asset)    { create(:asset) }
+    let(:resource) do
+      NonAsset.new(
+        representation_uris: [asset.uri],
+        document_uris: [asset.uri],
+        preferred_representation_uri: asset.uri
+      )
+    end
+
+    its(:representations)          { is_expected.to contain_exactly(kind_of(SolrDocument)) }
+    its(:documents)                { is_expected.to contain_exactly(kind_of(SolrDocument)) }
+    its(:preferred_representation) { is_expected.to be_kind_of(SolrDocument) }
   end
 end
