@@ -37,7 +37,7 @@ module CitiFormBehaviors
   end
 
   # Overrides hydra-editor MultiValueInput#collection
-  # Form needs to repond to hash-style arguments for methods defined using ::accepts_uris_for
+  # Form needs to respond to hash-style arguments for methods defined using ::accepts_uris_for
   def [](term)
     if [:document_uris, :representation_uris].include? term
       send(term)
