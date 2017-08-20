@@ -16,13 +16,13 @@ module Permissions::LakeshoreVisibility
       # only set explicit permissions
       case value
       when Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PUBLIC
-        public_visibility!
+        public_visibility! && publishable!
       when Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_AUTHENTICATED
-        registered_visibility!
+        registered_visibility! && unpublishable!
       when Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PRIVATE
-        private_visibility!
+        private_visibility! && unpublishable!
       when VISIBILITY_TEXT_VALUE_DEPARTMENT
-        department_visibility!
+        department_visibility! && unpublishable!
       else
         raise ArgumentError, "Invalid visibility: #{value.inspect}"
       end
@@ -75,5 +75,15 @@ module Permissions::LakeshoreVisibility
       else
         VISIBILITY_TEXT_VALUE_DEPARTMENT
       end
+    end
+
+    def publishable!
+      return unless respond_to?(:publishable)
+      self.publishable = true
+    end
+
+    def unpublishable!
+      return unless respond_to?(:publishable)
+      self.publishable = false
     end
 end

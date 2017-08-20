@@ -30,10 +30,12 @@ Metrics/ClassLength:
 Metrics/CyclomaticComplexity:
   Exclude:
     - app/services/file_set_replacement_service.rb
+    - app/models/concerns/permissions/lakeshore_visibility.rb
 
 Metrics/PerceivedComplexity:
   Exclude:
     - app/services/file_set_replacement_service.rb
+    - app/models/concerns/permissions/lakeshore_visibility.rb
 
 Style/BlockDelimiters:
   Exclude:

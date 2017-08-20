@@ -16,11 +16,13 @@ describe GenericWork do
   context "when setting to restricted" do
     before { subject.visibility = Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PRIVATE }
     specify { expect(subject.errors.messages[:visibility]).to include("cannot be restricted") }
+    its(:publishable) { is_expected.to be(false) }
   end
 
   context "when setting to open" do
     before { subject.visibility = Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PUBLIC }
     its(:read_groups) { is_expected.to include("public") }
+    its(:publishable) { is_expected.to be(true) }
   end
 
   context "when changing from department to registered" do
@@ -28,6 +30,7 @@ describe GenericWork do
     before { department_asset.visibility = Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_AUTHENTICATED }
     its(:read_groups) { is_expected.to contain_exactly(Hydra::AccessControls::AccessRight::PERMISSION_TEXT_VALUE_AUTHENTICATED) }
     its(:visibility) { is_expected.to eq(Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_AUTHENTICATED) }
+    its(:publishable) { is_expected.to be(false) }
   end
 
   context "when changing from registered to department" do
@@ -35,6 +38,7 @@ describe GenericWork do
     before { registered_asset.visibility = Permissions::LakeshoreVisibility::VISIBILITY_TEXT_VALUE_DEPARTMENT }
     its(:read_groups) { is_expected.to contain_exactly(Permissions::LakeshoreVisibility::VISIBILITY_TEXT_VALUE_DEPARTMENT, "100") }
     its(:visibility) { is_expected.to eq(Permissions::LakeshoreVisibility::VISIBILITY_TEXT_VALUE_DEPARTMENT) }
+    its(:publishable) { is_expected.to be(false) }
   end
 
   describe "#apply_depositor_metadata" do

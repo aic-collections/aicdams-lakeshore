@@ -144,6 +144,9 @@ class AIC < RDF::StrictVocabulary("http://definitions.artic.edu/ontology/1.0/")
   term :inscriptions,
        label: "Inscriptions",
        comment: "Inscriptions on object"
+  term :isPublishable,
+       label: "Publishable?",
+       comment: "Indicates if this is a publishable resource"
   term :keyword,
        label: "Keyword",
        comment: "Keyword to loosely classify a resource by topic, theme, subject, etc."

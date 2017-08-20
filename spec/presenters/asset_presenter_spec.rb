@@ -35,6 +35,7 @@ describe AssetPresenter do
   it { is_expected.to delegate_method(:external_resources).to(:solr_document) }
   it { is_expected.to delegate_method(:licensing_restrictions).to(:solr_document) }
   it { is_expected.to delegate_method(:public_domain?).to(:solr_document) }
+  it { is_expected.to delegate_method(:publishable?).to(:solr_document) }
   it { is_expected.to delegate_method(:copyright_representatives).to(:solr_document) }
   it { is_expected.to delegate_method(:related_image_id).to(:solr_document) }
 
@@ -91,6 +92,18 @@ describe AssetPresenter do
     context "when true" do
       before { allow(solr_document).to receive(:public_domain?).and_return(true) }
       its(:public_domain) { is_expected.to be("Yes") }
+    end
+  end
+
+  describe "#publishable" do
+    context "when false" do
+      before { allow(solr_document).to receive(:publishable?).and_return(false) }
+      its(:publishable) { is_expected.to be("No") }
+    end
+
+    context "when true" do
+      before { allow(solr_document).to receive(:publishable?).and_return(true) }
+      its(:publishable) { is_expected.to be("Yes") }
     end
   end
 

@@ -16,7 +16,7 @@ class AssetPresenter < Sufia::WorkShowPresenter
   end
 
   def self.presenter_terms
-    terms + [:document_types, :public_domain?, :type, :related_image_id]
+    terms + [:document_types, :public_domain?, :publishable?, :type, :related_image_id]
   end
 
   def manifest_url
@@ -39,6 +39,10 @@ class AssetPresenter < Sufia::WorkShowPresenter
 
   def public_domain
     public_domain? ? "Yes" : "No"
+  end
+
+  def publishable
+    publishable? ? "Yes" : "No"
   end
 
   # TODO: Does this cause a load from Fedora? Use solr_document instead?
