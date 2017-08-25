@@ -10,13 +10,13 @@ describe InboundRelationships do
 
   context "with an asset containing all the types of relationships" do
     let(:relationships) { described_class.new(asset) }
-    it "maps all incoming relationships to the asset" do
+    it "maps all incomming relationships to the asset" do
       expect(relationships.documents).to contain_exactly(kind_of(SolrDocument))
       expect(relationships.document_ids).to eq([document.id])
       expect(relationships.representations).to contain_exactly(kind_of(SolrDocument))
       expect(relationships.representation_ids).to eq([representation.id])
-      expect(relationships.preferred_representations.count).to be(2)
-      expect(relationships.preferred_representation_ids).to contain_exactly(preferred_representation.id, representation.id)
+      expect(relationships.preferred_representations).to contain_exactly(kind_of(SolrDocument))
+      expect(relationships.preferred_representation_ids).to eq([preferred_representation.id])
       expect(relationships.present?).to be true
       expect(relationships.ids).to contain_exactly(document.id, representation.id, preferred_representation.id)
     end

@@ -22,14 +22,6 @@ class Resource < ActiveFedora::Base
     ids.uniq.map { |id| reindex_related_resource(id) }
   end
 
-  # @return [AF:Base, nil]
-  # If no preferred representation is defined, return the first representation
-  def preferred_representation
-    value = super
-    return value unless value.nil?
-    return representations.first if representations.present?
-  end
-
   private
 
     # Returns the correct type class for attributes when loading an object from Solr
