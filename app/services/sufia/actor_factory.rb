@@ -17,8 +17,14 @@ module Sufia
     end
 
     def self.model_actor(curation_concern)
-      return CitiResourceActor if curation_concern.is_a?(CitiResource)
-      super
+      case curation_concern
+      when CitiResource
+        return CitiResourceActor
+      when GenericWork
+        return AssetActor
+      else
+        super
+      end
     end
   end
 end

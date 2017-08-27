@@ -24,7 +24,7 @@ describe Sufia::ActorFactory do
 
     context "with an asset" do
       let(:curation_concern) { build(:asset) }
-      it { is_expected.to be(CurationConcerns::Actors::GenericWorkActor) }
+      it { is_expected.to be(AssetActor) }
     end
   end
 end
