@@ -22,6 +22,7 @@ require 'database_cleaner'
 require 'factory_girl_rails'
 require 'devise'
 require 'webmock'
+require 'webmock/rspec'
 
 WebMock.enable!
 WebMock.disable_net_connect!(allow_localhost: true)
