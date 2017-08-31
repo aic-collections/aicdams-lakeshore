@@ -19,7 +19,7 @@ describe GenericWork do
     end
   end
 
-  describe "initial RDF types" do
+  describe "intial RDF types" do
     subject { described_class.new.type }
     it { is_expected.to include(AICType.Asset, AICType.Resource) }
   end

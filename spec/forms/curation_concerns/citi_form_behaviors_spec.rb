@@ -3,16 +3,11 @@ require 'rails_helper'
 
 describe CitiFormBehaviors do
   let(:user1)    { create(:user1) }
-  let(:resource) { NonAsset.new }
+  let(:resource) { build(:non_asset) }
   let(:ability)  { Ability.new(user1) }
   let(:form)     { NonAssetForm.new(resource, ability) }
 
   before(:all) do
-    class NonAsset < CitiResource
-      include ::CurationConcerns::WorkBehavior
-      include CitiBehaviors
-    end
-
     class NonAssetForm < CurationConcerns::Forms::WorkForm
       self.model_class = NonAsset
       include CitiFormBehaviors
@@ -20,7 +15,6 @@ describe CitiFormBehaviors do
   end
 
   after(:all) do
-    Object.send(:remove_const, :NonAsset) if defined?(NonAsset)
     Object.send(:remove_const, :NonAssetForm) if defined?(NonAssetForm)
   end
 
@@ -55,11 +49,11 @@ describe CitiFormBehaviors do
   context "with representations" do
     let(:asset)    { create(:asset) }
     let(:resource) do
-      NonAsset.new(
-        representation_uris: [asset.uri],
-        document_uris: [asset.uri],
-        preferred_representation_uri: asset.uri
-      )
+      create(:non_asset,
+             representation_uris: [asset.uri],
+             document_uris: [asset.uri],
+             preferred_representation_uri: asset.uri
+            )
     end
 
     its(:representations)          { is_expected.to contain_exactly(kind_of(SolrDocument)) }

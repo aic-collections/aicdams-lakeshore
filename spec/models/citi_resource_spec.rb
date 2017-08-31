@@ -132,46 +132,6 @@ describe CitiResource do
         subject { SolrDocument.new(resource.to_solr, nil) }
         its(:preferred_representation_id) { is_expected.to eq(asset.id) }
       end
-
-      context "when changing the preferred representation" do
-        let(:new_asset) { create(:asset, :with_intermediate_file_set) }
-
-        before do
-          resource.preferred_representation_uri = new_asset.uri
-        end
-
-        it "notifies CITI of the change" do
-          expect(CitiNotificationJob).to receive(:perform_later).with(new_asset.intermediate_file_set.first, resource)
-          resource.save
-        end
-      end
-
-      context "when removing all the representations" do
-        let(:new_asset) { create(:asset, :with_intermediate_file_set) }
-
-        before do
-          resource.preferred_representation = new_asset.uri
-          allow(CitiNotificationJob).to receive(:perform_later)
-          resource.save
-          resource.representations = []
-          resource.preferred_representation_uri = nil
-        end
-
-        it "notifies CITI of the change" do
-          expect(CitiNotificationJob).to receive(:perform_later).with(nil, resource)
-          resource.save
-        end
-      end
-
-      context "with only representations" do
-        before do
-          resource.representations = [asset.uri]
-          resource.preferred_representation = nil
-        end
-
-        subject { resource }
-        its(:preferred_representation) { is_expected.to eq(asset) }
-      end
     end
   end
 end
