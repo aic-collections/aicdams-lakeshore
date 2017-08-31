@@ -147,6 +147,25 @@ describe BatchEditsController do
         expect(work2.reload.visibility_during_embargo).to be_nil
       end
     end
+
+    context "when assets are in relationships" do
+      let!(:non_asset) { create(:work, representation_uris: [work1.uri, work2.uri]) }
+
+      let(:parameters) do
+        {
+          update_type:        "update",
+          generic_work:       { visibility: "authenticated" },
+          batch_document_ids: [work1.id, work2.id]
+        }
+      end
+
+      it "applies the new setting to all works" do
+        expect(non_asset.representations).to contain_exactly(work1, work2)
+        put :update, parameters.as_json
+        non_asset.reload
+        expect(non_asset.representations).to contain_exactly(work1, work2)
+      end
+    end
   end
 
   describe "#edit" do

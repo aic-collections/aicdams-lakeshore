@@ -66,7 +66,7 @@ class BatchEditsController < ApplicationController
     #       is present when changing permissions on a single work.
     def update_asset(obj)
       visibility_changed = visibility_status(obj)
-      actor = CurationConcerns::CurationConcern.actor(obj, current_user)
+      actor = CurationConcerns::Actors::ActorStack.new(obj, current_user, actor_stack)
       actor.update(work_params)
       VisibilityCopyJob.perform_later(obj) if visibility_changed
       InheritPermissionsJob.perform_later(obj) if work_params.fetch(:permissions_attributes, nil)
@@ -74,6 +74,14 @@ class BatchEditsController < ApplicationController
 
     def form_class
       BatchEditForm
+    end
+
+    # Use a special subset of the Sufia::ActorFactory.stack_actors only for batch updates
+    def actor_stack
+      [
+        CurationConcerns::Actors::InterpretVisibilityActor,
+        AssetActor
+      ]
     end
 
     def visibility_status(object)
