@@ -2,14 +2,14 @@
 require 'rails_helper'
 
 describe BatchEditsController do
+  include_context "authenticated saml user"
+
   describe "#form_class" do
     subject { described_class.new }
     its(:form_class) { is_expected.to eq(BatchEditForm) }
   end
 
   describe "#destroy" do
-    include_context "authenticated admin user"
-
     let(:destroy_params) do
       {
         method: "delete",
@@ -41,8 +41,6 @@ describe BatchEditsController do
   end
 
   describe "#update" do
-    include_context "authenticated admin user"
-
     let(:work1) { create(:department_asset) }
     let(:work2) { create(:department_asset) }
     let(:work3) { create(:registered_asset) }
@@ -149,24 +147,42 @@ describe BatchEditsController do
         expect(work2.reload.visibility_during_embargo).to be_nil
       end
     end
+
+    context "when assets are in relationships" do
+      let!(:non_asset) { create(:work, representation_uris: [work1.uri, work2.uri]) }
+
+      let(:parameters) do
+        {
+          update_type:        "update",
+          generic_work:       { visibility: "authenticated" },
+          batch_document_ids: [work1.id, work2.id]
+        }
+      end
+
+      it "applies the new setting to all works" do
+        expect(non_asset.representations).to contain_exactly(work1, work2)
+        put :update, parameters.as_json
+        non_asset.reload
+        expect(non_asset.representations).to contain_exactly(work1, work2)
+      end
+    end
   end
 
   describe "#edit" do
-    include_context "authenticated saml user"
-
-    context "with a bogus-id" do
+    context "with an unknown id" do
       it "redirects to the user's dashboard" do
         get :edit, batch_document_ids: ["bogus-id"]
         expect(response).to be_not_found
       end
     end
 
-    context "with a non-admin user" do
-      let(:work1) { create(:department_asset) }
+    context "when the user does not have edit access" do
+      let(:other) { create(:user2) }
+      let(:work1) { create(:department_asset, user: other) }
 
       it "redirects to the user's dashboard" do
         get :edit, batch_document_ids: [work1.id]
-        expect(flash[:warning]).to eq("Batch edit is only permitted to administrators")
+        expect(flash[:notice]).to eq("You do not have permission to edit the documents: #{work1.id}")
         expect(response).to be_redirect
       end
     end
