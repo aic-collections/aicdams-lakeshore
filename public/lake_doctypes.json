@@ -511,6 +511,10 @@
                         {
                             "label" : "Director's Discretionary Authority",
                             "value" : "http://definitions.artic.edu/doctypes/DirectorDiscretionaryAuthority"
+                        },
+                        {
+                            "label" : "Art Purchase Funding Plan",
+                            "value" : "http://definitions.artic.edu/doctypes/ArtPurchaseFundingPlan"
                         }
                     ]
                 },
@@ -669,6 +673,10 @@
                                 {
                                     "label" : "Loan Acknowledgment Letter",
                                     "value" : "http://definitions.artic.edu/doctypes/LoanAcknowledgmentLetter"
+                                },
+                                {
+                                    "label" : "Loan Appeal Letter",
+                                    "value" : "http://definitions.artic.edu/doctypes/LoanAppealLetter"
                                 },
                                 {
                                     "label" : "Immunity From Seizure Application",
