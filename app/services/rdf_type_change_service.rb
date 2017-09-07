@@ -14,12 +14,14 @@ class RDFTypeChangeService
   end
 
   def delete
+    return self if types_to_delete.empty?
     delete_query = "PREFIX aictype: <http://definitions.artic.edu/ontology/1.0/type/> " \
                    "DELETE { <> a #{types_to_delete.join(', ')} } WHERE { }"
     sparql_update(delete_query)
   end
 
   def insert
+    return self if types_to_add.empty?
     update_query = "PREFIX aictype: <http://definitions.artic.edu/ontology/1.0/type/> " \
                    "INSERT { <> a #{types_to_add.join(', ')} } WHERE { }"
     sparql_update(update_query)
