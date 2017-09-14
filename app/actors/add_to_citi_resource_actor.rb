@@ -64,8 +64,10 @@ class AddToCitiResourceActor < CurationConcerns::Actors::AbstractActor
 
   private
 
+    # @todo wrap this in an async job? If the list of ids is very long, these updates will be done
+    #       synchronously and would impact UX.
     def add_relationships
-      management_service.add_or_remove(:representations, representation_ids)
+      management_service.add_or_remove_representations(representation_ids)
       management_service.add_or_remove(:documents, document_ids)
       management_service.add_or_remove(:attachments, attachment_uris)
       management_service.update(:preferred_representations, preferred_representation_ids)
@@ -73,6 +75,6 @@ class AddToCitiResourceActor < CurationConcerns::Actors::AbstractActor
     end
 
     def management_service
-      @management_service ||= InboundRelationshipManagementService.new(curation_concern)
+      @management_service ||= InboundRelationshipManagementService.new(curation_concern, user)
     end
 end
