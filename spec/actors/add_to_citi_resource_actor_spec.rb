@@ -4,8 +4,21 @@ require 'rails_helper'
 describe AddToCitiResourceActor do
   let(:user)     { create(:user1) }
   let(:asset)    { create(:asset) }
-  let(:resource) { create(:exhibition) }
+  let(:resource) { create(:non_asset) }
   let(:actor)    { CurationConcerns::Actors::ActorStack.new(asset, user, [described_class]) }
+
+  before do
+    Rails.application.routes.draw do
+      namespace :curation_concerns, path: :concern do
+        resources :non_assets
+        mount Sufia::Engine => '/'
+      end
+    end
+  end
+
+  after do
+    Rails.application.reload_routes!
+  end
 
   describe "#create" do
     before  { actor.create(attributes) }
@@ -17,57 +30,57 @@ describe AddToCitiResourceActor do
     end
 
     context "with a representation" do
-      let(:attributes) do
-        { "representations_for" => [resource.id] }
+      let(:attributes) { { "representations_for" => [resource.id] } }
+
+      before { resource.reload }
+
+      it "assigns both representation and preferred representation" do
+        expect(resource.representations).to contain_exactly(asset)
+        expect(resource.preferred_representation).to eq(asset)
       end
-      its(:representations) { is_expected.to include(asset) }
     end
 
     context "with a preferred representation" do
-      let(:attributes) do
-        { "preferred_representation_for" => [resource.id] }
-      end
+      let(:attributes) { { "preferred_representation_for" => [resource.id] } }
       its(:preferred_representation) { is_expected.to eq(asset) }
     end
   end
 
   describe "#update" do
-    let!(:other)      { create(:asset) }
-    let!(:work)       { create(:work, representations: [asset.uri], documents: [asset.uri]) }
-    let!(:exhibition) { create(:exhibition, representations: [asset.uri]) }
-    let!(:shipment)   { create(:shipment, representations: [asset.uri, other.uri], preferred_representation: other.uri) }
+    let!(:other) { create(:asset) }
+    let!(:na2)   { create(:non_asset, representations: [asset.uri], documents: [asset.uri]) }
+    let!(:na1)   { create(:non_asset, representations: [asset.uri]) }
+    let!(:na3)   { create(:non_asset, representations: [asset.uri, other.uri], preferred_representation: other.uri) }
 
     context "with multiple representations, documents, and a preferred representation" do
       let(:attributes) do
         {
-          "representations_for" => [work.id, exhibition.id],
-          "documents_for" => [exhibition.id],
-          "preferred_representation_for" => [shipment.id]
+          "representations_for" => [na2.id, na1.id],
+          "documents_for" => [na1.id],
+          "preferred_representation_for" => [na3.id]
         }
       end
 
       before { actor.update(attributes) }
 
       it "adds or removes the representations" do
-        expect(shipment.reload.representations).to eq([other])
-        expect(shipment.reload.preferred_representation).to eq(asset)
-        expect(exhibition.reload.representations).to eq([asset])
-        expect(exhibition.reload.documents).to eq([asset])
-        expect(work.reload.representations).to eq([asset])
-        expect(work.reload.documents).to be_empty
+        expect(na3.reload.representations).to eq([other])
+        expect(na3.reload.preferred_representation).to eq(asset)
+        expect(na1.reload.representations).to eq([asset])
+        expect(na1.reload.documents).to eq([asset])
+        expect(na2.reload.representations).to eq([asset])
+        expect(na2.reload.documents).to be_empty
       end
 
       describe "removing only representations" do
-        let(:removal) do
-          { "representations_for" => [], "documents_for" => [exhibition.id] }
-        end
+        let(:removal) { { "representations_for" => [], "documents_for" => [na1.id] } }
 
         before { actor.update(removal) }
 
         it "removes all representations and retains documents" do
-          expect(exhibition.reload.documents).to eq([asset])
-          expect(exhibition.reload.representations).to be_empty
-          expect(work.reload.representations).to be_empty
+          expect(na1.reload.documents).to eq([asset])
+          expect(na1.reload.representations).to be_empty
+          expect(na2.reload.representations).to be_empty
         end
       end
     end

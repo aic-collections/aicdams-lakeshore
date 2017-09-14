@@ -3,11 +3,12 @@
 # the asset in a given relationship.
 class InboundRelationshipManagementService
   include CurationConcerns::Lockable
-  attr_reader :curation_concern
+  attr_reader :curation_concern, :user
 
   # @param [GenericWork] resource
-  def initialize(resource)
+  def initialize(resource, user = nil)
     @curation_concern = resource
+    @user = user
   end
 
   # @param [Symbol] relationship such as :representations, :documents, or :attachments
@@ -24,6 +25,11 @@ class InboundRelationshipManagementService
   def update(relationship, ids)
     raise NotImplementedError unless relationship == :preferred_representations
     update_preferred_representations(ids)
+  end
+
+  def add_or_remove_representations(ids_or_uris)
+    ids = ids_or_uris.map { |id| URI.parse(id).path.split("/").last }
+    remove(:representations, ids) && add_with_actor(ids)
   end
 
   private
@@ -53,9 +59,29 @@ class InboundRelationshipManagementService
       end
     end
 
+    # Updates the representation and preferred representation of each non-asset id.
+    # This is different than #add because we employ the CitiResourceActor which has additional
+    # features when editing representation relationships.
+    # @todo #add should be replaced with add_with_actor but for all relationships
+    def add_with_actor(ids)
+      ids.each do |id|
+        acquire_lock_for(id) do
+          resource = ActiveFedora::Base.find(id)
+          attributes = {
+            "preferred_representation_uri" => resource.preferred_representation_uri,
+            "representation_uris" => (resource.representation_uris + [curation_concern.uri])
+          }
+          actor = citi_resource_actor(resource)
+          actor.update(attributes)
+        end
+      end
+    end
+
     # Updates each of resources in the array of ids and sets the {curation_concern} as the relationship
     # for that resource.
     # Note: This presently only applies to preferred_representation relationships
+    # @todo this should removed and its functions rolled into #add_with_actor. This may require
+    #       redefining the interface between AddToCitiResourceActor and this class.
     def update_preferred_representations(ids)
       ids.each do |id|
         acquire_lock_for(id) do
@@ -68,5 +94,9 @@ class InboundRelationshipManagementService
 
     def representing_resource
       @representing_resource ||= InboundRelationships.new(curation_concern)
+    end
+
+    def citi_resource_actor(non_asset)
+      CurationConcerns::Actors::ActorStack.new(non_asset, user, [CitiResourceActor])
     end
 end
