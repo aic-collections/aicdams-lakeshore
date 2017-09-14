@@ -27,7 +27,7 @@ module SolrDocumentExtensions
   end
 
   def fedora_uri
-    Array(self[Solrizer.solr_name('fedora_uri', :symbol)]).first
+    corrected_uri(Array(self[Solrizer.solr_name('fedora_uri', :symbol)]).first)
   end
 
   def aic_depositor
@@ -106,4 +106,11 @@ module SolrDocumentExtensions
   def related_image_id
     Array(self["hasRelatedImage_ssim"]).first
   end
+
+  private
+
+    def corrected_uri(uri)
+      return uri if URI(uri).hostname == URI(ActiveFedora.config.credentials[:url]).hostname
+      URI.join(ActiveFedora.config.credentials[:url], URI(uri).path).to_s
+    end
 end
