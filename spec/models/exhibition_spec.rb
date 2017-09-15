@@ -2,7 +2,7 @@
 require 'rails_helper'
 
 describe Exhibition do
-  describe "RDF type" do
+  describe "RDF types" do
     subject { described_class.new.type }
     it { is_expected.to include(AICType.Exhibition,
                                 AICType.Resource,
@@ -24,10 +24,5 @@ describe Exhibition do
         expect(described_class.properties[term.to_s].multiple?).to be false
       end
     end
-  end
-
-  describe "#pref_label" do
-    subject { build(:exhibition, :with_sample_metadata) }
-    its(:pref_label) { is_expected.to eq("EX-2846") }
   end
 end

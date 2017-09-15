@@ -17,7 +17,13 @@ describe SolrDocument do
 
   describe "image types from Hydra::Works::MimeTypes" do
     it "contains Hydra types and psd types" do
-      expect(subject.class.image_mime_types).to eq ["image/png", "image/jpeg", "image/jpg", "image/jp2", "image/bmp", "image/gif", "image/tiff", "image/psd", "image/vnd.adobe.photoshop"]
+      expect(subject.class.image_mime_types).to contain_exactly("image/png",
+                                                                "image/jpeg",
+                                                                "image/jpg",
+                                                                "image/jp2",
+                                                                "image/bmp",
+                                                                "image/gif",
+                                                                "image/tiff")
     end
   end
 
@@ -54,11 +60,34 @@ describe SolrDocument do
     its(:type) { is_expected.to include(AICType.Resource) }
   end
 
+  describe "#fedora_uri" do
+    let(:good_uri) do
+      URI.join(ActiveFedora.config.credentials[:url],
+               ActiveFedora.config.credentials[:base_path],
+               "id").to_s
+    end
+
+    let(:bad_uri) do
+      URI.join("https://bad.example.com/rest",
+               ActiveFedora.config.credentials[:base_path],
+               "id").to_s
+    end
+
+    context "when the FQDN matches the configured Fedora instance" do
+      subject { described_class.new(Solrizer.solr_name('fedora_uri', :symbol) => good_uri) }
+      its(:fedora_uri) { is_expected.to eq(good_uri) }
+    end
+
+    context "when the FQDN does not match the configured Fedora instance" do
+      subject { described_class.new(Solrizer.solr_name('fedora_uri', :symbol) => bad_uri) }
+      its(:fedora_uri) { is_expected.to eq(good_uri) }
+    end
+  end
+
   it { is_expected.to respond_to(:citi_uid) }
   it { is_expected.to respond_to(:uid) }
   it { is_expected.to respond_to(:id) }
   it { is_expected.to respond_to(:status) }
-  it { is_expected.to respond_to(:fedora_uri) }
   it { is_expected.to respond_to(:document_ids) }
   it { is_expected.to respond_to(:representation_ids) }
   it { is_expected.to respond_to(:preferred_representation_id) }
@@ -135,6 +164,7 @@ describe SolrDocument do
     it { is_expected.to respond_to(:external_resources) }
     it { is_expected.to respond_to(:licensing_restrictions) }
     it { is_expected.to respond_to(:public_domain?) }
+    it { is_expected.to respond_to(:publishable?) }
     it { is_expected.to respond_to(:copyright_representatives) }
     it { is_expected.to respond_to(:caption) }
   end

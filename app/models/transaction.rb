@@ -9,6 +9,6 @@ class Transaction < CitiResource
 
   type type + aic_type
 
-  # TODO: Use has_many relation?
+  # @todo This does not work as written and is likely not currently being used
   property :exhibition, predicate: AIC.exhibition, class_name: "Exhibition"
 end

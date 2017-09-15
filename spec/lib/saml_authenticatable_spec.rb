@@ -30,6 +30,29 @@ describe Devise::Strategies::SamlAuthenticatable do
       let(:request) { double(env: { "HTTP_SAML_UID" => "user1", "HTTP_SAML_PRIMARY_AFFILIATION" => "100" }) }
       it { is_expected.to be_valid }
     end
+
+    context "when logging an authentication failure" do
+      let(:request) { double(env: { "HTTP_SAML_UNSCOPED_AFFILIATION" => "something" }) }
+      specify do
+        expect(Rails.logger).to receive(:error).with(/One or more required credentials are missing/)
+        described_class.new(nil).valid?
+      end
+    end
+  end
+
+  describe "#report" do
+    let(:request) { double(env: { "HTTP_SAML_UNSCOPED_AFFILIATION" => "something" }) }
+    subject { described_class.new(nil).report }
+
+    it do
+      is_expected.to contain_exactly(
+        "AIC department (required): --missing--",
+        "AIC user (required): --missing--",
+        "HTTP_SAML_PRIMARY_AFFILIATION (required): --missing--",
+        "HTTP_SAML_UID (required): --missing--",
+        "HTTP_SAML_UNSCOPED_AFFILIATION: something"
+      )
+    end
   end
 
   describe "#authenticate!" do

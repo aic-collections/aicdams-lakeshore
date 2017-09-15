@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 require 'rails_helper'
 
-describe "Interacting with CITI works" do
+describe "Displaying a CITI work" do
   let(:user)  { create(:user1) }
   let(:agent) { create(:agent, :with_sample_metadata) }
   let(:place) { create(:place, :with_sample_metadata) }
@@ -11,7 +11,9 @@ describe "Interacting with CITI works" do
     create(:work, :with_sample_metadata,
            artist_uris: [agent.uri],
            current_location_uris: [place.uri],
-           representations: [asset.uri])
+           representations: [asset.uri],
+           preferred_representation: asset.uri
+          )
   end
 
   before { sign_in(user) }
@@ -37,12 +39,5 @@ describe "Interacting with CITI works" do
     expect(page).to have_selector("td", text: asset.caption)
     expect(page).to have_link("Add Representations")
     expect(page).to have_link("Add Documentation")
-
-    # Edit view
-    click_link("Edit")
-    expect(page).to have_content("Edit Work: #{work.pref_label.first}")
-    within("table.representation_uris") do
-      expect(page).to have_content(asset.pref_label.first)
-    end
   end
 end

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 require 'rails_helper'
 
-describe CurationConcerns::Actors::GenericWorkActor do
+describe AssetActor do
   let(:user)  { create(:user1) }
   let(:work)  { GenericWork.new }
   let(:actor) { CurationConcerns::CurationConcern.actor(work, user) }

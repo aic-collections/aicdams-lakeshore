@@ -332,6 +332,9 @@ class AICDocType < RDF::StrictVocabulary("http://definitions.artic.edu/doctypes/
   term :DirectorDiscretionaryAuthority,
        label: "Director's Discretionary Authority",
        "skos:broader": "aicdoctype:AcquisitionPaperwork"
+  term :ArtPurchaseFundingPlan,
+       label: "Art Purchase Funding Plan",
+       "skos:broader": "aicdoctype:AcquisitionPaperwork"
   term :AcquisitionPaperwork,
        label: "Acquisition Paperwork"
   term :MeetingMinutes,
@@ -437,6 +440,9 @@ class AICDocType < RDF::StrictVocabulary("http://definitions.artic.edu/doctypes/
        "skos:broader": "aicdoctype:LoanDocument"
   term :LoanAcknowledgmentLetter,
        label: "Loan Acknowledgment Letter",
+       "skos:broader": "aicdoctype:LoanDocument"
+  term :LoanAppealLetter,
+       label: "Loan Appeal Letter",
        "skos:broader": "aicdoctype:LoanDocument"
   term :ImmunityFromSeizureApplication,
        label: "Immunity From Seizure Application",

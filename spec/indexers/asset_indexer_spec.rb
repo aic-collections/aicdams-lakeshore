@@ -4,7 +4,7 @@ require 'rails_helper'
 describe AssetIndexer do
   describe "#generate_solr_document" do
     let(:attachment) { create(:asset) }
-    let(:asset)      { create(:asset, :with_metadata, attachments: [attachment.uri]) }
+    let(:asset)      { create(:department_asset, :with_metadata, attachments: [attachment.uri]) }
     let(:solr_doc)   { described_class.new(asset).generate_solr_document }
 
     it "indexes the correct fields" do
@@ -22,6 +22,7 @@ describe AssetIndexer do
       expect(solr_doc["created_dtsi"]).to eq("2016-10-30T00:00:00Z")
       expect(solr_doc["updated_dtsi"]).to eq("2016-10-31T00:00:00Z")
       expect(solr_doc["public_domain_bsi"]).to be(false)
+      expect(solr_doc["publishable_bsi"]).to be(false)
     end
 
     context "with all three document types" do

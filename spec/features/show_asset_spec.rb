@@ -103,6 +103,7 @@ describe "Displaying an asset" do
 
       expect(page).to have_selector("li.licensing_restrictions", text: asset.licensing_restrictions.first.pref_label)
       expect(page).to have_selector("li.public_domain", text: "No")
+      expect(page).to have_selector("li.publishable", text: "No")
       expect(page).to have_selector("li.copyright_representatives", text: asset.copyright_representatives.first.pref_label)
     end
   end

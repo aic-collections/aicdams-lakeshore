@@ -70,6 +70,10 @@ module SolrDocumentExtensions::Asset
     Array(self["public_domain_bsi"]).first
   end
 
+  def publishable?
+    Array(self["publishable_bsi"]).first
+  end
+
   def caption
     Array(self[Solrizer.solr_name('caption', :stored_searchable)]).first
   end
