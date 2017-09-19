@@ -57,11 +57,21 @@ module ApplicationHelper
   end
 
   def use_uri_options
-    [
-      ["No role", nil],
-      [AICType.OriginalFileSet.label, AICType.OriginalFileSet],
-      [AICType.PreservationMasterFileSet.label, AICType.PreservationMasterFileSet],
-      [AICType.LegacyFileSet.label, AICType.LegacyFileSet]
-    ]
+    if controller_name == "generic_works"
+      default_use_uris.unshift([AICType.IntermediateFileSet.label, AICType.IntermediateFileSet])
+    else
+      default_use_uris
+    end
   end
+
+  private
+
+    def default_use_uris
+      [
+        ["No role", nil],
+        [AICType.OriginalFileSet.label, AICType.OriginalFileSet],
+        [AICType.PreservationMasterFileSet.label, AICType.PreservationMasterFileSet],
+        [AICType.LegacyFileSet.label, AICType.LegacyFileSet]
+      ]
+    end
 end

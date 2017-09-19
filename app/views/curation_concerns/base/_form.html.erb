@@ -1,0 +1,19 @@
+<%= simple_form_for [main_app, @form], html: { multipart: true } do |f| %>
+<% content_for :files_tab do %>
+    <p class="instructions"><%= t("sufia.batch_uploads.files.instructions") %></p>
+    <%= render 'records/edit_fields/asset_type.html', f: f, key: :asset_type %>
+  <% end %>
+  <%= render 'curation_concerns/base/guts4form', f: f, tabs: %w[files metadata relationships share] do %>
+  <% end %>
+  <%= f.input :use_uri, as: :hidden %>
+<% end %>
+
+<%= render "sufia/batch_uploads/lakeshore_js_template" %>
+
+<script type="text/javascript">
+  Blacklight.onLoad(function() {
+    <%# This causes the page to switch back to the default template if they've
+        previously visited the batch download page in this Turbolinks session %>
+    $("#fileupload").fileupload('option', 'downloadTemplateId', 'template-download')
+  });
+</script>

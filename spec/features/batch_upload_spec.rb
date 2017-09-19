@@ -13,6 +13,10 @@ describe "Batch upload" do
       visit("/batch_uploads/new")
       # Intial state of the form
       expect(tabs[1][:class]).to eq("disabled")
+      expect(tabs[0].text).to eq("Files")
+      expect(tabs[1].text).to eq("Descriptions")
+      expect(tabs[2].text).to eq("Relationships")
+      expect(tabs[3].text).to eq("Share")
       expect(page).to have_select("asset_type_select", selected: '')
       expect(page).not_to have_selector(".fileupload-buttonbar")
       expect(page).not_to have_selector(".asset-stillimage")

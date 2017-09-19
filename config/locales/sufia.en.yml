@@ -29,7 +29,7 @@ en:
         shares: "Shares"
       works:
         menu: "Assets"
-        new: "New"
+        new: "Create Single Asset"
         my: "My Assets"
         batch: "Create Assets"
       collections:

@@ -28,7 +28,7 @@ module CurationConcerns
     self.required_fields = [:asset_type, :document_type_uri]
 
     def primary_terms
-      self.class.aic_terms - [:external_resources]
+      self.class.aic_terms - [:asset_type, :external_resources]
     end
 
     def secondary_terms

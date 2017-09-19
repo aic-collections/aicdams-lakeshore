@@ -66,6 +66,12 @@ wav_mime_type = MIME::Type.new("audio/wav") do |t|
 end
 MIME::Types.add wav_mime_type
 
+dng_mime_type = MIME::Type.new("image/x-adobe-dng") do |t|
+  t.extensions = %w(dng)
+  t.friendly("en" => "Adobe Digital Negative Raw Image file (DNG)")
+end
+MIME::Types.add dng_mime_type
+
 # Register application mime types
 Mime::Type.register 'application/x-endnote-refer', :endnote
 Mime::Type.register "application/n-triples", :nt

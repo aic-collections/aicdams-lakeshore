@@ -7,9 +7,12 @@ describe AssetTypeVerificationService do
   describe "still images" do
     let(:asset_type) { AICType.StillImage }
 
-    context "when valid" do
-      let(:file) { double(original_filename: "good.tiff") }
-      it { is_expected.to be true }
+    context "with a valid still image" do
+      ["pdf", "jpeg", "png", "tiff", "jpf", "dng"].each do |ext|
+        it "registers the #{ext} extension" do
+          expect(described_class.call(double(original_filename: "good.#{ext}"), asset_type)).to be true
+        end
+      end
     end
 
     context "when invalid" do

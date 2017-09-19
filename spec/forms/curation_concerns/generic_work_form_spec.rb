@@ -20,7 +20,7 @@ describe CurationConcerns::GenericWorkForm do
   end
 
   describe "#primary_terms" do
-    its(:primary_terms) { is_expected.not_to include(:external_resources) }
+    its(:primary_terms) { is_expected.not_to include(:asset_type, :external_resources) }
   end
 
   describe "#secondary_terms" do
@@ -29,6 +29,10 @@ describe CurationConcerns::GenericWorkForm do
 
   describe "#asset_type" do
     its(:asset_type) { is_expected.to eq(AICType.StillImage) }
+  end
+
+  describe "#use_uri" do
+    its(:use_uri) { is_expected.to eq(AICType.IntermediateFileSet) }
   end
 
   context "A Form with Alt Label metadata" do
