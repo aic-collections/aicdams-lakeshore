@@ -97,6 +97,7 @@ describe SolrDocument do
   it { is_expected.to respond_to(:aic_depositor) }
   it { is_expected.to respond_to(:depositor_full_name) }
   it { is_expected.to respond_to(:dept_created) }
+  it { is_expected.to respond_to(:dept_created_citi_uid) }
   it { is_expected.to respond_to(:thumbnail_path) }
   it { is_expected.to respond_to(:related_image_id) }
 

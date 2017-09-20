@@ -13,6 +13,8 @@ describe 'curation_concerns/base/_form.html.erb' do
     assign(:form, form)
   end
 
+  before(:all) { LakeshoreTesting.restore }
+
   context "with a new asset" do
     let(:work) { GenericWork.new }
     before do

@@ -7,6 +7,11 @@ module IndexingBehaviors
     object.send(term).pref_label
   end
 
+  def citi_uid_for(term)
+    return unless object.send(term)
+    object.send(term).citi_uid
+  end
+
   def depositor_full_name
     return unless object.aic_depositor
     return object.aic_depositor.nick unless object.aic_depositor.given_name && object.aic_depositor.family_name

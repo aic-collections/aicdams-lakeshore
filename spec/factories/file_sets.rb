@@ -6,41 +6,50 @@ FactoryGirl.define do
       content nil
     end
 
+    after(:build) do |file, evaluator|
+      file.apply_depositor_metadata(evaluator.user)
+      file.send(:department_visibility!)
+    end
+
     after(:create) do |file, evaluator|
       if evaluator.content
         Hydra::Works::UploadFileToFileSet.call(file, evaluator.content)
       end
     end
 
-    factory :department_file do
-      visibility Permissions::LakeshoreVisibility::VISIBILITY_TEXT_VALUE_DEPARTMENT
-    end
-
-    factory :registered_file do
-      visibility Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_AUTHENTICATED
-    end
-
-    factory :file_set_with_file do
-      after(:build) do |file, _evaluator|
-        file.title = ['testfile']
+    factory :intermediate_file_set, aliases: [:department_file] do
+      after(:build) do |file|
+        file.type << AICType.IntermediateFileSet
       end
-      after(:create) do |file, evaluator|
-        if evaluator.content
-          Hydra::Works::UploadFileToFileSet.call(file, evaluator.content)
+
+      factory :registered_file do
+        after(:build) do |file|
+          file.send(:registered_visibility!)
         end
-        FactoryGirl.create(:still_image_asset, user: evaluator.user).members << file
+      end
+
+      factory :public_file do
+        after(:build) do |file|
+          file.send(:public_visibility!)
+        end
+      end
+
+      factory :file_set_with_file do
+        after(:build) do |file, _evaluator|
+          file.title = ['testfile']
+        end
+        after(:create) do |file, evaluator|
+          if evaluator.content
+            Hydra::Works::UploadFileToFileSet.call(file, evaluator.content)
+          end
+          FactoryGirl.create(:still_image_asset, user: evaluator.user).members << file
+        end
       end
     end
 
     factory :original_file_set do
       after(:build) do |file|
         file.type << AICType.OriginalFileSet
-      end
-    end
-
-    factory :intermediate_file_set do
-      after(:build) do |file|
-        file.type << AICType.IntermediateFileSet
       end
     end
 
@@ -56,8 +65,12 @@ FactoryGirl.define do
       end
     end
 
-    after(:build) do |file, evaluator|
-      file.apply_depositor_metadata(evaluator.user.user_key)
+    factory :incomplete_file_set do
+      after(:create) do |file|
+        file.edit_groups = []
+        file.read_groups = []
+        file.save
+      end
     end
   end
 end

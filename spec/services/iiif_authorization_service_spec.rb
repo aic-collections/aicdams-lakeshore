@@ -2,20 +2,19 @@
 require 'rails_helper'
 
 RSpec.describe IIIFAuthorizationService do
-  let(:user) { create(:user) }
   let(:ability) { Ability.new(user) }
   let(:controller) { double(current_ability: ability) }
+  let(:file_set) { create(:file_set) }
   let(:service) { described_class.new(controller) }
-  let(:file_set_id) { 'mp48sc763' }
+  let(:file_set_id) { file_set.id }
   let(:image_id) { "#{file_set_id}/files/0b957460-99b4-4c31-902f-0fc23eefb972" }
   let(:image) { Riiif::Image.new(image_id) }
 
   describe "#can?" do
     context "when the user has read access to the FileSet" do
-      before { allow(ability).to receive(:test_read).with(file_set_id).and_return(true) }
+      let(:user) { create(:default_user) }
       context "info" do
         subject { service.can?(:info, image) }
-
         it { is_expected.to be true }
       end
 
@@ -26,10 +25,9 @@ RSpec.describe IIIFAuthorizationService do
     end
 
     context "when the user doesn't have read access to the FileSet" do
-      before { allow(ability).to receive(:test_read).with(file_set_id).and_return(false) }
+      let(:user) { create(:different_user) }
       context "info" do
         subject { service.can?(:info, image) }
-
         it { is_expected.to be false }
       end
 

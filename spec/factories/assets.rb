@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 FactoryGirl.define do
-  factory :generic_work, aliases: [:asset_without_type] do
+  factory :generic_work do
     transient do
       user { FactoryGirl.create(:user1) }
     end
@@ -9,51 +9,73 @@ FactoryGirl.define do
       asset.apply_depositor_metadata(evaluator.user)
     end
 
-    factory :still_image_asset, aliases: [:asset] do
+    factory :asset_without_type do
+      after(:build) do |asset, _evaluator|
+        asset.send(:department_visibility!)
+        asset.send(:unpublishable!)
+      end
+
+      factory :still_image_asset, aliases: [:department_asset, :asset] do
+        after(:build) do |asset|
+          AssetTypeAssignmentService.new(asset).assign(AICType.StillImage)
+        end
+      end
+
+      factory :text_asset do
+        after(:build) do |asset|
+          AssetTypeAssignmentService.new(asset).assign(AICType.Text)
+        end
+      end
+
+      factory :dataset_asset do
+        after(:build) do |asset|
+          AssetTypeAssignmentService.new(asset).assign(AICType.Dataset)
+        end
+      end
+
+      factory :moving_image_asset do
+        after(:build) do |asset|
+          AssetTypeAssignmentService.new(asset).assign(AICType.MovingImage)
+        end
+      end
+
+      factory :sound_asset do
+        after(:build) do |asset|
+          AssetTypeAssignmentService.new(asset).assign(AICType.Sound)
+        end
+      end
+
+      factory :archive_asset do
+        after(:build) do |asset|
+          AssetTypeAssignmentService.new(asset).assign(AICType.Archive)
+        end
+      end
+    end
+
+    factory :registered_asset, aliases: [:aic_asset] do
       after(:build) do |asset|
+        asset.send(:registered_visibility!)
+        asset.send(:unpublishable!)
         AssetTypeAssignmentService.new(asset).assign(AICType.StillImage)
       end
+    end
 
-      factory :department_asset do
-        visibility Permissions::LakeshoreVisibility::VISIBILITY_TEXT_VALUE_DEPARTMENT
-      end
-
-      factory :registered_asset do
-        visibility Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_AUTHENTICATED
-      end
-
-      factory :public_asset do
-        visibility Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PUBLIC
+    factory :public_asset do
+      after(:build) do |asset|
+        asset.send(:public_visibility!)
+        asset.send(:publishable!)
+        AssetTypeAssignmentService.new(asset).assign(AICType.StillImage)
       end
     end
 
-    factory :text_asset do
-      after(:build) do |asset|
-        AssetTypeAssignmentService.new(asset).assign(AICType.Text)
+    factory :incomplete_asset do
+      after(:create) do |asset|
+        asset.edit_groups = []
+        asset.read_groups = []
+        asset.save
       end
-    end
-
-    factory :dataset_asset do
       after(:build) do |asset|
-        AssetTypeAssignmentService.new(asset).assign(AICType.Dataset)
-      end
-    end
-
-    factory :moving_image_asset do
-      after(:build) do |asset|
-        AssetTypeAssignmentService.new(asset).assign(AICType.MovingImage)
-      end
-    end
-
-    factory :sound_asset do
-      after(:build) do |asset|
-        AssetTypeAssignmentService.new(asset).assign(AICType.Sound)
-      end
-    end
-
-    factory :archive_asset do
-      after(:build) do |asset|
-        AssetTypeAssignmentService.new(asset).assign(AICType.Archive)
+        AssetTypeAssignmentService.new(asset).assign(AICType.StillImage)
       end
     end
 
@@ -66,7 +88,8 @@ FactoryGirl.define do
 
     trait :with_intermediate_file_set do
       after(:create) do |asset|
-        asset.members << FactoryGirl.create(:intermediate_file_set)
+        asset.ordered_members = [FactoryGirl.create(:intermediate_file_set)]
+        asset.save
       end
     end
 

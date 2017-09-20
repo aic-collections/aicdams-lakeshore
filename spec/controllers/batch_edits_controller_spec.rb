@@ -117,8 +117,8 @@ describe BatchEditsController do
         expect(VisibilityCopyJob).not_to receive(:perform_later)
         expect(InheritPermissionsJob).to receive(:perform_later).twice
         put :update, parameters.as_json
-        expect(work1.reload.edit_groups).to contain_exactly("newgroop")
-        expect(work2.reload.edit_groups).to contain_exactly("newgroop")
+        expect(work1.reload.edit_groups).to include("newgroop")
+        expect(work2.reload.edit_groups).to include("newgroop")
       end
     end
 

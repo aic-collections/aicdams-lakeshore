@@ -17,6 +17,7 @@ describe "collections/_form_permission.html.erb" do
   before { assign(:collection, collection) }
 
   context "with a private collection" do
+    let(:collection) { build(:private_collection) }
     it { is_expected.to have_checked_field("Private") }
   end
 

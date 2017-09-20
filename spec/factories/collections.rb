@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 FactoryGirl.define do
-  factory :collection do
+  factory :private_collection, class: Collection do
     transient do
       user { FactoryGirl.create(:user1) }
     end
@@ -12,15 +12,24 @@ FactoryGirl.define do
     end
 
     factory :public_collection do
-      visibility Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PUBLIC
+      after(:build) do |collection|
+        collection.send(:public_visibility!)
+        collection.send(:publishable!)
+      end
     end
 
     factory :registered_collection do
-      visibility Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_AUTHENTICATED
+      after(:build) do |collection|
+        collection.send(:registered_visibility!)
+        collection.send(:unpublishable!)
+      end
     end
 
-    factory :department_collection do
-      visibility Permissions::LakeshoreVisibility::VISIBILITY_TEXT_VALUE_DEPARTMENT
+    factory :department_collection, aliases: [:collection] do
+      after(:build) do |collection|
+        collection.send(:department_visibility!)
+        collection.send(:unpublishable!)
+      end
     end
 
     factory :named_collection do
