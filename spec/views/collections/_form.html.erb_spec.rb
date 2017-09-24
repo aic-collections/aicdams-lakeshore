@@ -5,6 +5,8 @@ describe "collections/_form.html.erb" do
   let(:collection) { build(:collection) }
   let(:form)       { CollectionForm.new(collection, Ability.new(nil)) }
 
+  before(:all) { LakeshoreTesting.restore }
+
   before do
     assign(:form, form)
     stub_template 'collections/_form_metadata.html.erb' => ''

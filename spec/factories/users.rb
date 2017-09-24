@@ -1,15 +1,20 @@
 # frozen_string_literal: true
 FactoryGirl.define do
   factory :user do
-    factory :user1 do
+    factory :user1, aliases: [:default_user] do
       email 'user1'
       department '100'
       initialize_with { User.find_or_create_by(email: 'user1') }
     end
 
-    factory :user2 do
+    factory :user2, aliases: [:different_user] do
       email 'user2'
       department '200'
+    end
+
+    factory :department_user do
+      email 'department_user'
+      department '100'
     end
 
     factory :admin do
@@ -22,7 +27,9 @@ FactoryGirl.define do
       password 'password'
     end
   end
+end
 
+FactoryGirl.define do
   factory :department do
     factory :department100 do
       pref_label "Department 100"
@@ -39,7 +46,9 @@ FactoryGirl.define do
       citi_uid   "99"
     end
   end
+end
 
+FactoryGirl.define do
   factory :aic_user, aliases: [:inactive_user], class: AICUser do
     given_name 'Joe'
     family_name 'Bob'
@@ -63,6 +72,13 @@ FactoryGirl.define do
       given_name 'Third'
       family_name 'User'
       nick 'inactiveuser'
+    end
+
+    factory :aic_department_user do
+      given_name 'Department'
+      family_name 'User'
+      nick 'department_user'
+      active
     end
 
     factory :aic_admin do

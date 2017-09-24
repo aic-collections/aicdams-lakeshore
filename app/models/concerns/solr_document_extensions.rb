@@ -42,6 +42,10 @@ module SolrDocumentExtensions
     Array(self[Solrizer.solr_name('dept_created', :stored_searchable)]).first
   end
 
+  def dept_created_citi_uid
+    Array(self[Solrizer.solr_name('dept_created_citi_uid', :symbol)]).first
+  end
+
   # Date/Time resource was modified in Fedora
   def modified_date
     date_field('system_modified')
