@@ -4,11 +4,11 @@ FactoryGirl.define do
     transient do
       user { FactoryGirl.create(:user1) }
       content nil
+      parent nil
     end
 
     after(:build) do |file, evaluator|
       file.apply_depositor_metadata(evaluator.user)
-      file.send(:department_visibility!)
     end
 
     after(:create) do |file, evaluator|
@@ -24,13 +24,11 @@ FactoryGirl.define do
 
       factory :registered_file do
         after(:build) do |file|
-          file.send(:registered_visibility!)
         end
       end
 
       factory :public_file do
         after(:build) do |file|
-          file.send(:public_visibility!)
         end
       end
 

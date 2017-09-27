@@ -8,8 +8,8 @@ module AddingFilesToWorks
       file_set = file_set_type(uploaded_file.use_uri)
       user = User.find_by_user_key(work.depositor)
       actor = file_set_actor.new(file_set, user)
-      actor.create_metadata(work, visibility: work.visibility) do |file|
-        file.permissions_attributes = work.permissions.map(&:to_hash)
+      actor.create_metadata(work) do |file|
+        file.access_control_id = work.access_control_id
       end
 
       attach_content(actor, uploaded_file.file)

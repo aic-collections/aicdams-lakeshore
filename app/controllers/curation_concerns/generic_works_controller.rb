@@ -34,7 +34,24 @@ class CurationConcerns::GenericWorksController < ApplicationController
 
   protected
 
+    # Overrides Sufia to manage file sets which have their ACLs directly linked to the parent asset.
+    def after_update_response
+      curation_concern.reload
+      AclService.new(curation_concern).update if permissions_changed?
+      respond_to do |wants|
+        wants.html { redirect_to [main_app, curation_concern] }
+        wants.json { render :show, status: :ok, location: polymorphic_path([main_app, curation_concern]) }
+      end
+    end
+
     def search_builder_class
       AssetSearchBuilder
+    end
+
+    # Overrides Sufia to check both visibility and sharing permissions.
+    # The asset is reloaded so that removed permissions will be checked.
+    def permissions_changed?
+      return true if curation_concern.visibility_changed?
+      @saved_permissions != curation_concern.permissions.map(&:to_hash)
     end
 end
