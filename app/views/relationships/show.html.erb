@@ -3,6 +3,8 @@
 <p><%= link_to "Add Documentation",
     sufia.new_batch_upload_path(document_for: @presenter, resource_title: @presenter.display_pref_label_and_uid), { class: "add_document_btn" } %></p>
 
+<%= render "shared/clarifying_text" %>
+
 <% if @presenter.has_relationships? %>
   <%= render '/curation_concerns/base/relationships_table', presenter: @presenter %>
 <% else %>
