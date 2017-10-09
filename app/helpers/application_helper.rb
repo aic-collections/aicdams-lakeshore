@@ -1,5 +1,16 @@
 # frozen_string_literal: true
 module ApplicationHelper
+  NAMES = { "local" => "LOC:",
+            "dev" => "DEV:",
+            "staging" => "STG:",
+            "test" => "TST:",
+            "production" => ""
+  }.freeze
+  def env_title_prefix
+    env_var = Figaro.env.HTML_TITLE_PREFIX_ENV
+    NAMES[env_var] ? NAMES[env_var] : ""
+  end
+
   def resource_type_facets
     @resource_types.reject { |r| r.is_a?(Integer) }.sort
   end
