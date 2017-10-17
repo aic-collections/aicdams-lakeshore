@@ -20,6 +20,7 @@ Startup Solr and Fedora using the included wrappers
     bundle exec fcrepo_wrapper
 
 Once they are running, you will need to load sample users and resources
+
     bundle exec rake rails:update:bin (to get bin rails)
     bundle exec rake dev:prep
 

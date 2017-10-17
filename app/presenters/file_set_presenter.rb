@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 class FileSetPresenter < Sufia::FileSetPresenter
-  delegate :rdf_types, to: :solr_document
+  delegate :rdf_types, :dept_created_citi_uid, to: :solr_document
 
   def permission_badge_class
     PermissionBadge

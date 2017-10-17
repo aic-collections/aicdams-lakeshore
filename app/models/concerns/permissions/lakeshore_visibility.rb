@@ -34,7 +34,7 @@ module Permissions::LakeshoreVisibility
         Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PUBLIC
       elsif read_groups.include? Hydra::AccessControls::AccessRight::PERMISSION_TEXT_VALUE_AUTHENTICATED
         Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_AUTHENTICATED
-      elsif read_groups.include? PERMISSION_TEXT_VALUE_DEPARTMENT
+      elsif edit_groups.include? PERMISSION_TEXT_VALUE_DEPARTMENT
         VISIBILITY_TEXT_VALUE_DEPARTMENT
       else
         default_visibility
@@ -51,7 +51,18 @@ module Permissions::LakeshoreVisibility
     def department_visibility!
       visibility_will_change! unless visibility == VISIBILITY_TEXT_VALUE_DEPARTMENT
       remove_groups = represented_visibility - department_visibility_groups
-      set_read_groups(department_visibility_groups, remove_groups)
+      set_read_groups([], remove_groups)
+      set_edit_groups(department_visibility_groups, remove_groups)
+    end
+
+    def registered_visibility!
+      super
+      set_edit_groups([department_uid].compact, [PERMISSION_TEXT_VALUE_DEPARTMENT])
+    end
+
+    def public_visibility!
+      super
+      set_edit_groups([department_uid].compact, [PERMISSION_TEXT_VALUE_DEPARTMENT])
     end
 
     def department_visibility_groups

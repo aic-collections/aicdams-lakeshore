@@ -2,10 +2,7 @@
 require 'rails_helper'
 
 describe Department do
-  describe "#citi_uid" do
-    subject { described_class.all.map(&:citi_uid) }
-    it { is_expected.to contain_exactly("100", "200", "99") }
-  end
+  before(:all) { LakeshoreTesting.restore }
 
   describe "::options" do
     subject { described_class.options }

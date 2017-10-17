@@ -7,6 +7,8 @@
                                            citi_type: @presenter.hydra_model,
                                            citi_uid: [@presenter.citi_uid]) %></p>
 
+<%= render "shared/clarifying_text" %>
+
 <% if @presenter.has_relationships? %>
   <%= render '/curation_concerns/base/relationships_table', presenter: @presenter %>
 <% else %>
