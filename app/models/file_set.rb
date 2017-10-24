@@ -2,7 +2,8 @@
 class FileSet < ActiveFedora::Base
   include ::CurationConcerns::FileSetBehavior
   include Sufia::FileSetBehavior
-  include Permissions
+  include FileSetPermissions
+
   self.indexer = FileSetIndexer
 
   def create_derivatives(filename, opts = {})

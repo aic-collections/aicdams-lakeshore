@@ -1,4 +1,7 @@
 # frozen_string_literal: true
+# Use this module when we want to ensure that no resource will write any of its own ACLs to Fedora.
+# This is used specifically with non-assets, such as {CitiResource} which use their own set of
+# default permissions and do not need ACLs of their own.
 module Permissions
   module Writable
     extend ActiveSupport::Concern

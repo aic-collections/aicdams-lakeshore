@@ -98,10 +98,17 @@ describe Sufia::Ability do
 
   describe "AIC assets" do
     let(:asset)    { create(:aic_asset) }
-    let(:file_set) { create(:registered_file) }
+    let(:file_set) { create(:file_set) }
     let(:solr_doc) { SolrDocument.new(asset.to_solr) }
     let(:file_doc) { SolrDocument.new(file_set.to_solr) }
     let(:fs_pres)  { FileSetPresenter.new(file_doc, subject) }
+
+    before do
+      asset.ordered_members = [file_set]
+      asset.save
+      file_set.access_control_id = asset.access_control_id
+      file_set.save
+    end
 
     context "with a user from the same department" do
       subject { Ability.new(department_user) }
@@ -147,7 +154,7 @@ describe Sufia::Ability do
 
   describe "public assets" do
     let(:asset)    { create(:public_asset) }
-    let(:file_set) { create(:public_file) }
+    let(:file_set) { create(:file_set) }
     let(:solr_doc) { SolrDocument.new(asset.to_solr) }
     let(:file_doc) { SolrDocument.new(file_set.to_solr) }
     let(:fs_pres)  { FileSetPresenter.new(file_doc, subject) }
@@ -168,6 +175,13 @@ describe Sufia::Ability do
 
     context "with a user from a different department" do
       subject { Ability.new(different_user) }
+
+      before do
+        asset.ordered_members = [file_set]
+        asset.save
+        file_set.access_control_id = asset.access_control_id
+        file_set.save
+      end
 
       it { is_expected.to be_able_to(:create, GenericWork) }
       it { is_expected.to be_able_to(:create, FileSet) }

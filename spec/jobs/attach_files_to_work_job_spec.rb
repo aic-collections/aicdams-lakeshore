@@ -8,7 +8,7 @@ describe AttachFilesToWorkJob do
   let(:intermediate_file) { Sufia::UploadedFile.create(file: file, user: user, use_uri: AICType.IntermediateFileSet) }
   let(:master_file)       { Sufia::UploadedFile.create(file: file, user: user, use_uri: AICType.PreservationMasterFileSet) }
   let(:plain_file)        { Sufia::UploadedFile.create(file: file, user: user) }
-  let(:asset)             { create(:asset) }
+  let(:asset)             { create(:department_asset) }
 
   context "with each of the different use files" do
     let(:types) { asset.file_sets.map(&:type).map { |set| set.map(&:to_s) }.flatten.uniq }
@@ -17,6 +17,7 @@ describe AttachFilesToWorkJob do
       described_class.perform_now(asset, [original_file, intermediate_file, master_file])
       asset.reload
       expect(types).to include(AICType.OriginalFileSet, AICType.IntermediateFileSet, AICType.PreservationMasterFileSet)
+      expect(asset.file_sets.map(&:access_control_id).uniq).to contain_exactly(asset.access_control_id)
     end
   end
 
@@ -26,6 +27,7 @@ describe AttachFilesToWorkJob do
       described_class.perform_now(asset, [plain_file])
       asset.reload
       expect(asset.file_sets.map(&:class)).to contain_exactly(FileSet)
+      expect(asset.file_sets.map(&:access_control_id)).to contain_exactly(asset.access_control_id)
     end
   end
 end
