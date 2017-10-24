@@ -5,6 +5,7 @@ gem 'rails', '4.2.7.1'
 # Hydra Gems
 gem 'sufia', '~> 7.2'
 gem 'flipflop', git: 'https://github.com/jcoyne/flipflop.git', branch: 'hydra'
+gem 'active-fedora', :git => 'https://github.com/RudyOnRails/active_fedora.git', branch: '11-3-stable_and_faraday-0-9-2'
 
 gem 'aspect_ratio', git: 'https://github.com/envato/aspect_ratio', branch: 'master'
 gem 'blacklight_range_limit'
