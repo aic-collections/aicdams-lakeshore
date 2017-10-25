@@ -1,5 +1,5 @@
 // lakeshore/asset_manager
-// Manages adding and removing assets from resources
+// Manages adding and removing assets from resources.
 
 export class AssetManager {
 
@@ -16,8 +16,8 @@ export class AssetManager {
       event.preventDefault()
       $this.data = $(this).data()
       $('table.'+$this.data.attribute).append($this.assetRow)
-      var sel = "." + $this.data.attribute
-      $(sel).select2("val", "")
+      var sel = '.' + $this.data.attribute
+      $(sel).select2('val', '')
     })
 
     $('.am').on('click', '.am-delete', function(event) {

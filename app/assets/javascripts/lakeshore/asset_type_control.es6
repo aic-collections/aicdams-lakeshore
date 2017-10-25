@@ -1,5 +1,8 @@
-// re-use Sufia's UploadedFiles class to monitor uploaded files
-import { UploadedFiles } from 'sufia/save_work/uploaded_files'
+// Controls the availability of the asset type select by locking it when files
+// have already been uploaded to the staging area. This prevents the user from
+// uploading a different asset type if other files are already present.
+
+import { UploadedFiles } from 'lakeshore/uploaded_files'
 import { DeletedFiles } from 'lakeshore/deleted_files'
 
 export class AssetTypeControl {
@@ -17,13 +20,12 @@ export class AssetTypeControl {
   }
 
   disableSelect() {
-    if (this.uploads.hasFiles)
+    if (this.uploads.hasLocalFiles)
       this.element.prop('disabled', true)
   }
 
   enableSelect() {
-    if (this.deletes.lastFile) {
+    if (!this.uploads.hasLocalFiles)
       this.element.removeProp('disabled')
-    }
   }
 }

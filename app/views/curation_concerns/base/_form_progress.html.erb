@@ -1,0 +1,63 @@
+<%# Overrides Sufia to use #lakeshore-form-progress to manage workflow %>
+
+<aside id="lakeshore-form-progress" class="form-progress panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title"><%= t("sufia.works.progress.header") %></h3>
+  </div>
+  <div class="list-group">
+    <div class="list-group-item">
+      <fieldset>
+        <legend class="legend-save-work">Requirements</legend>
+        <ul class="requirements">
+          <%= content_tag :li, id: "required-metadata", class: "incomplete", data: {
+                complete: t("lakeshore.form_progress.metadata_required_complete"),
+                incomplete: t("lakeshore.form_progress.metadata_required")
+              } do
+          %>
+            <a href="#metadata" class="tabfaker" data-toggle="tab">
+              <%= t("lakeshore.form_progress.metadata_required") %>
+            </a>
+          <% end %>
+
+          <%= content_tag :li, id: "required-files", class: "incomplete", data: {
+                complete: t("lakeshore.form_progress.files_required_complete"),
+                incomplete: t("lakeshore.form_progress.files_required")
+              } do
+          %>
+            <a href="#files" class="tabfaker" data-toggle="tab">
+              <%= t("lakeshore.form_progress.files_required") %>
+            </a>
+          <% end %>
+
+          <%= content_tag :li, id: "upload-errors", class: "incomplete", data: {
+                complete: t("lakeshore.form_progress.uploads_required_complete"),
+                incomplete: t("lakeshore.form_progress.uploads_required")
+              } do
+          %>
+            <a href="#files" class="tabfaker" data-toggle="tab">
+              <%= t("lakeshore.form_progress.uploads_required_complete") %>
+            </a>
+          <% end %>
+        </ul>
+      </fieldset>
+    </div>
+
+    <div class="set-access-controls list-group-item">
+      <%= render 'form_visibility_component', f: f %>
+    </div>
+    <% unless current_user.can_make_deposits_for.empty? %>
+        <div class="list-group-item">
+          <%= f.input :on_behalf_of, collection: current_user.can_make_deposits_for.map(&:user_key), prompt: "Yourself" %>
+        </div>
+    <% end %>
+  </div>
+  <div class="panel-footer text-center">
+    <%= t('sufia.passive_consent_to_agreement') %><br>
+    <%= link_to t('sufia.deposit_agreement'), sufia.agreement_path, target: '_blank' %>
+    <br>
+    <%= link_to t(:'helpers.action.cancel'),
+                sufia.dashboard_index_path,
+                class: 'btn btn-default' %>
+    <%= f.submit 'Save', class: 'btn btn-primary', onclick: "confirmation_needed = false;", id: "with_files_submit", name: "save_with_files" %>
+  </div>
+</aside>

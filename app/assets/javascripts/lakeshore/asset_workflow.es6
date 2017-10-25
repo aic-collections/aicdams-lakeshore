@@ -1,6 +1,5 @@
-// lakeshore/asset_workflow
-// Controls the workflow of the batch create form, as well as displaying information
-// about available mime types for the selected asset type.
+// Controls the workflow of the single and batch asset creation forms by enabling
+// tabs in the form and displaying information about available mime types for the selected asset type.
 
 export class AssetWorkflow {
 
@@ -94,7 +93,7 @@ export class AssetWorkflow {
   }
 
   get assetTypeClass() {
-      return this.type.replace(this.aictype_ns, '').toLowerCase()
+    return this.type.replace(this.aictype_ns, '').toLowerCase()
   }
 
 }

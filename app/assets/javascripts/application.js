@@ -29,4 +29,8 @@
 //= require lakeshore/asset_type_control
 //= require lakeshore/autocomplete
 //= require lakeshore/deleted_files
+//= require lakeshore/uploaded_files
+//= require lakeshore/external_files
+//= require lakeshore/checklist_item
 //= require lakeshore/asset_workflow
+//= require lakeshore/form_validator
