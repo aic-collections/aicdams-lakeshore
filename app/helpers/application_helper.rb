@@ -7,7 +7,7 @@ module ApplicationHelper
             "production" => ""
   }.freeze
   def env_title_prefix
-    env_var = Figaro.env.HTML_TITLE_PREFIX_ENV
+    env_var = Figaro.env.LAKESHORE_ENV
     NAMES[env_var] ? NAMES[env_var] : ""
   end
 
