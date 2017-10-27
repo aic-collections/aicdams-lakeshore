@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <link rel="resourcesync" href="<%= sufia.capability_list_url %>"/>
 
-<title><%= content_for?(:page_title) ? yield(:page_title) : default_page_title %></title>
+<title><%= env_title_prefix + (content_for?(:page_title) ? yield(:page_title) : default_page_title) %></title>
 
 <!-- application css -->
 <%= stylesheet_link_tag 'application' %>

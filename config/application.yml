@@ -2,6 +2,7 @@
 #
 development:
   hydra_bin_path: "/usr/local/bin"
+  HTML_TITLE_PREFIX_ENV: "local"
 
 test:
   citi_api_uid: "citi_api_uid"
