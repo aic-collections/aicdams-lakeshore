@@ -23,7 +23,7 @@ describe 'curation_concerns/base/_form.html.erb' do
     end
     it "includes select options for asset type" do
       expect(rendered).to include("<option value=\"#{AICType.StillImage}\">Still Image</option>")
-      expect(rendered).to include("<option value=\"#{AICType.Text}\">Text Document</option>")
+      expect(rendered).to include("<option value=\"#{AICType.Text}\">Text</option>")
       expect(rendered).to include("<option value=\"#{AICType.Dataset}\">Dataset</option>")
       expect(rendered).to include("<option value=\"#{AICType.Archive}\">Archive</option>")
       expect(rendered).to include("<option value=\"#{AICType.Sound}\">Sound</option>")

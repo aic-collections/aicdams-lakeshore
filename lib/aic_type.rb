@@ -159,8 +159,8 @@ class AICType < RDF::StrictVocabulary("http://definitions.artic.edu/ontology/1.0
        comment: "Tag"
   term :Text,
        subClassOf: "aictype:Asset",
-       label: "Text Document",
-       comment: "Text document"
+       label: "Text",
+       comment: "Text"
   term :Transaction,
        subClassOf: "aictype:CitiResource",
        label: "Transaction",
