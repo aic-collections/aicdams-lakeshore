@@ -3,6 +3,7 @@ development:
     - aweadadmin
     - scossuadmin
     - citi
+    - laketest
   api:
     - citi
     - combine
