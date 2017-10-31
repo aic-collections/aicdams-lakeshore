@@ -29,9 +29,7 @@ class AssetIndexer < Sufia::WorkIndexer
   private
 
     def aic_types(types)
-      types << "Still Image" if object.type.include?(AICType.StillImage)
-      types << "Text" if object.type.include?(AICType.Text)
-      types
+      AssetTypeAssignmentService.new(object).current_type.map(&:label) + Array.wrap(types)
     end
 
     def document_types_facet(types = [])
