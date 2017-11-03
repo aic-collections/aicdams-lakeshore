@@ -17,10 +17,10 @@ GIT
 
 GIT
   remote: https://github.com/RudyOnRails/hydra-derivatives.git
-  revision: f999753e7e5cab07a6ad323554b99864a3109ae0
+  revision: 4a692e3d5fb1b92df0f1bab02f844e09435fad07
   branch: use_ssl_fix
   specs:
-    hydra-derivatives (3.3.2)
+    hydra-derivatives (3.3.3)
       active-fedora (>= 11.3.1, < 12)
       active_encode (~> 0.1)
       activesupport (>= 4.0, < 6)
