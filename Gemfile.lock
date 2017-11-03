@@ -16,6 +16,20 @@ GIT
       solrizer (>= 3.4, < 5)
 
 GIT
+  remote: https://github.com/RudyOnRails/hydra-derivatives.git
+  revision: 4a692e3d5fb1b92df0f1bab02f844e09435fad07
+  branch: use_ssl_fix
+  specs:
+    hydra-derivatives (3.3.3)
+      active-fedora (>= 11.3.1, < 12)
+      active_encode (~> 0.1)
+      activesupport (>= 4.0, < 6)
+      addressable (~> 2.5)
+      deprecation
+      mime-types (> 2.0, < 4.0)
+      mini_magick (>= 3.2, < 5)
+
+GIT
   remote: https://github.com/envato/aspect_ratio
   revision: 8096a805468a12ba775359cde04bb675f8a74dc2
   branch: master
@@ -317,14 +331,6 @@ GEM
     hydra-core (10.3.2)
       hydra-access-controls (= 10.3.2)
       railties (>= 4.0.0, < 6)
-    hydra-derivatives (3.3.2)
-      active-fedora (>= 11.3.1, < 12)
-      active_encode (~> 0.1)
-      activesupport (>= 4.0, < 6)
-      addressable (~> 2.5)
-      deprecation
-      mime-types (> 2.0, < 4.0)
-      mini_magick (>= 3.2, < 5)
     hydra-editor (3.1.2)
       active-fedora (>= 9.0.0)
       almond-rails (~> 0.0.3)
@@ -748,6 +754,7 @@ DEPENDENCIES
   fcrepo_wrapper
   figaro
   flipflop!
+  hydra-derivatives!
   iiif_manifest (~> 0.1.2)
   jasmine
   jbuilder (~> 2.6)
@@ -777,4 +784,4 @@ DEPENDENCIES
   xray-rails
 
 BUNDLED WITH
-   1.15.4
+   1.16.0
