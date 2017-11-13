@@ -2,10 +2,10 @@
 require 'rails_helper'
 describe ApplicationHelper do
   describe "#env_title_prefix" do
-    it "returns LOC: when local environment" do
+    it "returns LCL: when local environment" do
       f = stub_const("Figaro::ENV", double)
       allow(f).to receive(:LAKESHORE_ENV) { "local" }
-      expect(helper.env_title_prefix).to eq("LOC:")
+      expect(helper.env_title_prefix).to eq("LCL:")
     end
     it "returns DEV: when develop environment" do
       f = stub_const("Figaro::ENV", double)

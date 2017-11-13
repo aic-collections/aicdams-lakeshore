@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 module ApplicationHelper
-  NAMES = { "local" => "LOC:",
+  NAMES = { "local" => "LCL:",
             "dev" => "DEV:",
             "staging" => "STG:",
             "test" => "TST:",
