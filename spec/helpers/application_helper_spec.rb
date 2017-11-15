@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 require 'rails_helper'
+
 describe ApplicationHelper do
   describe "#env_title_prefix" do
     it "returns LCL: when local environment" do
@@ -31,6 +32,19 @@ describe ApplicationHelper do
       f = stub_const("Figaro::ENV", double)
       allow(f).to receive(:LAKESHORE_ENV) { nil }
       expect(helper.env_title_prefix).to eq("")
+    end
+  end
+
+  describe "#use_uri_options" do
+    subject { helper.use_uri_options }
+
+    context "when creating in batches" do
+      it { is_expected.not_to include([AICType.IntermediateFileSet.label, AICType.IntermediateFileSet]) }
+    end
+
+    context "when creating a single asset" do
+      before { allow(helper).to receive(:controller_name).and_return("generic_works") }
+      it { is_expected.to include([AICType.IntermediateFileSet.label, AICType.IntermediateFileSet]) }
     end
   end
 end

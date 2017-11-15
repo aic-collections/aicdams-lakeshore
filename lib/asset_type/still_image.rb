@@ -6,7 +6,8 @@ module AssetType
        "image/jpeg",
        "image/png",
        "image/tiff",
-       "image/jpf"]
+       "image/jpf",
+       "image/x-adobe-dng"]
     end
   end
 end

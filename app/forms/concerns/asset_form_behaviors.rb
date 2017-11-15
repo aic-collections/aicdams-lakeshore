@@ -43,5 +43,10 @@ module AssetFormBehaviors
         :batch_uid
       ]
     end
+
+    # The default file set type created for each asset
+    def use_uri
+      AICType.IntermediateFileSet
+    end
   end
 end

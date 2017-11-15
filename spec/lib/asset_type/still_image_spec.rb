@@ -10,11 +10,20 @@ describe AssetType::StillImage do
                                         "image/jpeg",
                                         "image/png",
                                         "image/tiff",
-                                        "image/jpf")}
+                                        "image/jpf",
+                                        "image/x-adobe-dng")}
   end
 
   describe "::types" do
     subject { described_class.types }
     its(:first) { is_expected.to be_kind_of(MIME::Type) }
+  end
+
+  describe "#friendly" do
+    subject { MIME::Types[type].first.friendly }
+    context "with DNG mime types" do
+      let(:type) { "image/x-adobe-dng" }
+      it { is_expected.to eq("Adobe Digital Negative Raw Image file (DNG)") }
+    end
   end
 end

@@ -14,6 +14,7 @@ describe "Editing assets" do
   end
 
   it "renders the form with existing values" do
+    click_link("Descriptions")
     expect(selected_document_type).to eq(asset.document_type_uri)
     expect(selected_first_document_sub_type).to eq(asset.first_document_sub_type_uri)
     expect(selected_second_document_sub_type).to eq(asset.second_document_sub_type_uri)
