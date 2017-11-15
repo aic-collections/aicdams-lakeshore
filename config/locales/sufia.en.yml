@@ -140,6 +140,9 @@ en:
         header: "Add New Work"
       edit:
         header: "Edit Work"
+    works:
+      new:
+        header: "Create New Assets"
     Batch Upload Item:
       header: "Add New Asset"
     collection:
