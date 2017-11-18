@@ -23,7 +23,7 @@ module Hydra::Derivatives::Processors
       # Check the image type and label. If we're creating an access file from a pdf,
       # simply copy original to directive url; otherwise, proceed with creating the resized image.
       def determine_whether_to_resize_image
-        if directives.fetch(:label) == :access && load_image_transformer.type =~ /pdf/i
+        if directives.fetch(:label) == :access && directives.fetch(:format) == "pdf"
           output_file = directives.fetch(:url).split('file:')[1]
           begin
             _stdin, _stdout, _stderr = popen3("cp #{source_path} #{output_file}")
@@ -54,6 +54,7 @@ module Hydra::Derivatives::Processors
       def create_image
         xfrm = selected_layers(load_image_transformer)
 
+        xfrm.density(300) if jp2? && pdf?(xfrm)
         yield(xfrm) if block_given?
         xfrm.format(directives.fetch(:format))
         xfrm.quality(quality.to_s) if quality
@@ -73,8 +74,8 @@ module Hydra::Derivatives::Processors
         output_io.rewind
         str = output_file_service.call(output_io, directives)
 
-        if file_should_be_mogrified(directives)
-          execute_mogrify_commands(output_file: directives[:url].split("file:")[1], arguments: add_sharpening(directives))
+        if mogrify?
+          execute_mogrify_commands(output_file: directives[:url].split("file:")[1], arguments: add_sharpening)
         end
         str
       end
@@ -87,14 +88,11 @@ module Hydra::Derivatives::Processors
 
     private
 
-      def file_should_be_mogrified(directives)
-        if (directives[:url].include?("access") && directives[:url].include?("jp2")) || directives[:url].include?("citi")
-          return true
-        end
-        false
+      def mogrify?
+        (directives[:url].include?("access") && directives[:url].include?("jp2")) || directives[:url].include?("citi")
       end
 
-      def add_sharpening(directives)
+      def add_sharpening
         directives[:url].include?("citi") ? "-sharpen 1,.5" : ""
       end
 
@@ -106,10 +104,22 @@ module Hydra::Derivatives::Processors
         directives.fetch(:quality, nil)
       end
 
+      def jp2?
+        directives.fetch(:format, "unknown") == "jp2"
+      end
+
+      def pdf?(image)
+        (image.type =~ /pdf/i) == 0
+      end
+
+      def layers?
+        directives.fetch(:layer, nil).present?
+      end
+
       def selected_layers(image)
-        if image.type =~ /pdf/i
+        if pdf?(image)
           image.layers[directives.fetch(:layer, 0)]
-        elsif directives.fetch(:layer, false)
+        elsif layers?
           image.layers[directives.fetch(:layer)]
         else
           image

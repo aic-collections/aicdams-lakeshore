@@ -2,9 +2,11 @@
 require 'rails_helper'
 
 describe CreateDerivativesJob do
+  let(:parent)   { build(:still_image_asset) }
   let(:file_set) { create(:file_set) }
 
   before do
+    allow(file_set).to receive(:parent).and_return(parent)
     allow(CurationConcerns::WorkingDirectory).to receive(:find_or_retrieve).with("original_file", file_set.id, nil)
   end
 

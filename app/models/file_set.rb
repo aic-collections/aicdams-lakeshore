@@ -6,35 +6,34 @@ class FileSet < ActiveFedora::Base
 
   self.indexer = FileSetIndexer
 
-  def create_derivatives(filename, opts = {})
-    create_asset_derivatives(filename)
-    create_fulltext_derivatives(filename) unless opts.fetch(:no_text, false)
+  def create_derivatives(filename, _opts = {})
+    if parent.type.include?(AICType.StillImage)
+      create_still_image_derivatives(filename)
+    else
+      create_text_derivatives(filename)
+    end
   end
 
   private
 
-    # create additional derivatives:
-    # jp2 file for image assets
-    # pdf for text assets
-    # second thumbnail for CITI
-    def create_asset_derivatives(filename)
+    def create_still_image_derivatives(filename)
+      return unless AssetType::StillImage.all.include?(mime_type)
+      Hydra::Derivatives::ImageDerivatives.create(filename, outputs: image_outputs)
+    end
+
+    def create_text_derivatives(filename)
       case mime_type
-      when *self.class.image_mime_types
-        Hydra::Derivatives::ImageDerivatives.create(filename, outputs: image_outputs)
       when *self.class.pdf_mime_types
         Hydra::Derivatives::PdfDerivatives.create(filename, outputs: pdf_outputs)
       when *self.class.office_document_mime_types
         Derivatives::DocumentDerivatives.create(filename, outputs: [document_output])
       end
-    end
-
-    def create_fulltext_derivatives(filename)
-      return unless (self.class.office_document_mime_types + self.class.pdf_mime_types).include?(mime_type)
       Hydra::Derivatives::FullTextExtract.create(filename, outputs: [{ url: uri, container: "extracted_text" }])
     end
 
     # Returns the correct type class for attributes when loading an object from Solr
     # Catches malformed dates that will not parse into DateTime, see #198
+    # @todo dead method? I don't believe we're loading objects from Solr anymore.
     def adapt_single_attribute_value(value, attribute_name)
       AttributeValueAdapter.call(value, attribute_name) || super
     rescue ArgumentError
