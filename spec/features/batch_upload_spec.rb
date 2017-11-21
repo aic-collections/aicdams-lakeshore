@@ -22,6 +22,12 @@ describe "Batch upload" do
       expect(page).not_to have_selector(".asset-stillimage")
       expect(page).not_to have_selector(".asset-text")
 
+      # Check requirements status
+      expect(page).to have_selector("#required-metadata", text: "Enter required metadata")
+      expect(page).to have_selector("#required-files", text: "Add files")
+      expect(page).to have_selector("#upload-errors", text: "No failed uploads")
+      expect(page).to have_button('Save', disabled: true)
+
       # Choosing the asset type enables the files tab and displays mime types
       select("Still Image", from: "asset_type_select")
       expect(tabs[1][:class]).not_to eq("disabled")
@@ -31,18 +37,42 @@ describe "Batch upload" do
       expect(page).to have_selector("li", text: "Adobe Portable Document Format")
       expect(page).not_to have_selector(".asset-text")
 
-      # Upload a file
+      # Upload the wrong type of file
+      attach_file('files[]', File.join(fixture_path, "text.txt"), visible: false)
+      within("div#fileupload") { sleep 0.1 until page.text.include?("text.txt") }
+
+      # Check requirements status
+      expect(page).to have_selector("#required-metadata", text: "Enter required metadata")
+      expect(page).to have_selector("#required-files", text: "Files requirement complete")
+      expect(page).to have_selector("#upload-errors", text: "Files failed to upload. Please remove them from the queue before saving.")
+      expect(page).to have_button('Save', disabled: true)
+
+      # Delete bad file and upload a correct one
+      click_button("Delete")
+      within("div#fileupload") { sleep 0.1 while page.text.include?("text.txt") }
       attach_file('files[]', File.join(fixture_path, "sun.png"), visible: false)
       within("div#fileupload") do
         sleep 0.1 until page.text.include?("Preferred Title")
         expect(page).to have_selector("input#pref_label_1")
       end
 
+      # Check requirements status
+      expect(page).to have_selector("#required-metadata", text: "Enter required metadata")
+      expect(page).to have_selector("#required-files", text: "Files requirement complete")
+      expect(page).to have_selector("#upload-errors", text: "No failed uploads")
+      expect(page).to have_button('Save', disabled: true)
+
       # Add descriptions
       click_link("Descriptions")
       select("Imaging", from: "batch_upload_item_document_type_uri")
       select("Event Photography", from: "batch_upload_item_first_document_sub_type_uri")
       select("Lecture", from: "batch_upload_item_second_document_sub_type_uri")
+
+      # Check requirements status
+      expect(page).to have_selector("#required-metadata", text: "Metadata requirement complete")
+      expect(page).to have_selector("#required-files", text: "Files requirement complete")
+      expect(page).to have_selector("#upload-errors", text: "No failed uploads")
+      expect(page).to have_button('Save', disabled: false)
 
       # Displaying hints
       within("div.batch_upload_item_language") do
@@ -54,7 +84,6 @@ describe "Batch upload" do
       click_button("Save")
 
       # Viewing My Assets
-
       within("div#documents") do
         expect(page).to have_content("Listing of items you have deposited in LAKE")
         expect(page).to have_link("sun.png")
