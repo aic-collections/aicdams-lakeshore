@@ -23,7 +23,7 @@ module Hydra::Derivatives::Processors
       # Check the image type and label. If we're creating an access file from a pdf,
       # simply copy original to directive url; otherwise, proceed with creating the resized image.
       def determine_whether_to_resize_image
-        if directives.fetch(:label) == :access && directives.fetch(:format) == "pdf"
+        if label == :access && pdf? && format == "pdf"
           output_file = directives.fetch(:url).split('file:')[1]
           begin
             _stdin, _stdout, _stderr = popen3("cp #{source_path} #{output_file}")
@@ -52,9 +52,9 @@ module Hydra::Derivatives::Processors
       end
 
       def create_image
-        xfrm = selected_layers(load_image_transformer)
+        xfrm = selected_layers
 
-        xfrm.density(300) if jp2? && pdf?(xfrm)
+        xfrm.density(300) if format == "jp2" && pdf?
         yield(xfrm) if block_given?
         xfrm.format(directives.fetch(:format))
         xfrm.quality(quality.to_s) if quality
@@ -82,8 +82,8 @@ module Hydra::Derivatives::Processors
 
       # Override this method if you want a different transformer, or need to load the
       # raw image from a different source (e.g. external file)
-      def load_image_transformer
-        MiniMagick::Image.open(source_path)
+      def image
+        @image ||= MiniMagick::Image.open(source_path)
       end
 
     private
@@ -104,11 +104,15 @@ module Hydra::Derivatives::Processors
         directives.fetch(:quality, nil)
       end
 
-      def jp2?
-        directives.fetch(:format, "unknown") == "jp2"
+      def format
+        directives.fetch(:format, nil)
       end
 
-      def pdf?(image)
+      def label
+        directives.fetch(:label, nil)
+      end
+
+      def pdf?
         (image.type =~ /pdf/i) == 0
       end
 
@@ -116,8 +120,8 @@ module Hydra::Derivatives::Processors
         directives.fetch(:layer, nil).present?
       end
 
-      def selected_layers(image)
-        if pdf?(image)
+      def selected_layers
+        if pdf?
           image.layers[directives.fetch(:layer, 0)]
         elsif layers?
           image.layers[directives.fetch(:layer)]

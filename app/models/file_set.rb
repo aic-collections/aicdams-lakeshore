@@ -22,13 +22,17 @@ class FileSet < ActiveFedora::Base
     end
 
     def create_text_derivatives(filename)
+      return unless AssetType::Text.all.include?(mime_type)
       case mime_type
+      when *self.class.image_mime_types
+        Hydra::Derivatives::ImageDerivatives.create(filename, outputs: pdf_outputs)
       when *self.class.pdf_mime_types
         Hydra::Derivatives::PdfDerivatives.create(filename, outputs: pdf_outputs)
+        Hydra::Derivatives::FullTextExtract.create(filename, outputs: [{ url: uri, container: "extracted_text" }])
       when *self.class.office_document_mime_types
         Derivatives::DocumentDerivatives.create(filename, outputs: [document_output])
+        Hydra::Derivatives::FullTextExtract.create(filename, outputs: [{ url: uri, container: "extracted_text" }])
       end
-      Hydra::Derivatives::FullTextExtract.create(filename, outputs: [{ url: uri, container: "extracted_text" }])
     end
 
     # Returns the correct type class for attributes when loading an object from Solr

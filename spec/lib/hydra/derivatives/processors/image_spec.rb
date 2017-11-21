@@ -22,7 +22,7 @@ describe Hydra::Derivatives::Processors::Image do
       end
 
       before do
-        allow(subject).to receive(:load_image_transformer).and_return(mock_image)
+        allow(subject).to receive(:image).and_return(mock_image)
         allow(mock_image).to receive(:type).and_return("tiff")
         allow(MiniMagick::Tool::Convert).to receive(:new).and_yield(mock_tool)
       end
@@ -52,7 +52,7 @@ describe Hydra::Derivatives::Processors::Image do
       end
 
       before do
-        allow(subject).to receive(:load_image_transformer).and_return(mock_image)
+        allow(subject).to receive(:image).and_return(mock_image)
         allow(mock_image).to receive(:type).and_return("pdf")
         allow(mock_layer).to receive(:type).and_return("pdf")
         allow(MiniMagick::Tool::Convert).to receive(:new).and_yield(mock_tool)
@@ -72,6 +72,36 @@ describe Hydra::Derivatives::Processors::Image do
       end
     end
 
+    context "when converting an image to a pdf" do
+      let(:directives) do
+        {
+          label: :access,
+          format: 'pdf',
+          quality: '90',
+          size: '1024x1024',
+          url: "file:#{Rails.root}/tmp/derivatives/r-access.pdf"
+        }
+      end
+
+      before do
+        allow(subject).to receive(:image).and_return(mock_image)
+        allow(mock_image).to receive(:type).and_return("png")
+        allow(MiniMagick::Tool::Convert).to receive(:new).and_yield(mock_tool)
+      end
+
+      it "resizes, formats and flattens the file" do
+        expect(mock_image).not_to receive(:layers)
+        expect(mock_image).to receive(:path).and_return("/path").twice
+        expect(mock_tool).to receive(:<<).with("/path").twice
+        expect(mock_tool).to receive(:flatten)
+        expect(mock_tool).to receive(:resize).with('1024x1024')
+        expect(mock_image).to receive(:format).with("pdf")
+        expect(mock_image).to receive(:quality).with("90")
+        expect(subject).to receive(:write_image).with(mock_image)
+        subject.process
+      end
+    end
+
     context "with a pdf" do
       let(:directives) do
         {
@@ -82,7 +112,7 @@ describe Hydra::Derivatives::Processors::Image do
         }
       end
 
-      before { allow(subject).to receive(:load_image_transformer).and_return(mock_image) }
+      before { allow(subject).to receive(:image).and_return(mock_image) }
 
       it "uses the original and does not resize, format, or flatten" do
         allow(mock_image).to receive(:type).and_return("pdf")
@@ -95,7 +125,7 @@ describe Hydra::Derivatives::Processors::Image do
       end
     end
 
-    context "when mogrify is needed", unless: LakeshoreTesting.continuous_integration? do
+    context "when mogrify is needed" do
       let(:directives) { { label: :access, format: "jp2", size: "3000x3000>", url: "file:#{Rails.root}/tmp/derivatives/s-access.jp2" } }
       let(:file_name) { File.join(fixture_path, "tardis.png") }
 

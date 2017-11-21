@@ -62,7 +62,7 @@ describe FileSet do
       file.create_derivatives(image_file)
     end
 
-    describe "derivatives", skip: LakeshoreTesting.continuous_integration? do
+    describe "derivatives" do
       subject { derivatives }
       before  { file.create_derivatives(image_file) }
       it { is_expected.to contain_exactly(*files) }
@@ -80,7 +80,7 @@ describe FileSet do
       file.create_derivatives(image_file)
     end
 
-    describe "derivatives", skip: LakeshoreTesting.continuous_integration? do
+    describe "derivatives" do
       subject { derivatives }
       before  { file.create_derivatives(image_file) }
       it { is_expected.to contain_exactly(*files) }

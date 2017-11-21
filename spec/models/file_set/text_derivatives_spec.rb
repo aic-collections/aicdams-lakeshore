@@ -53,7 +53,7 @@ describe FileSet do
       file.create_derivatives(pdf_file)
     end
 
-    describe "the derivatives", skip: LakeshoreTesting.continuous_integration? do
+    describe "the derivatives" do
       subject { derivatives }
       before do
         allow(Hydra::Derivatives::FullTextExtract).to receive(:create)
@@ -90,6 +90,53 @@ describe FileSet do
       subject { derivatives }
       before do
         allow(Hydra::Derivatives::FullTextExtract).to receive(:create)
+        file.create_derivatives(document)
+      end
+      it { is_expected.to contain_exactly(end_with("34-access.pdf"), end_with("34-thumbnail.jpeg"), end_with("34-citi.jpg")) }
+    end
+  end
+
+  context "with image files uploaded as text" do
+    let(:document) { File.join(fixture_path, "text.png") }
+
+    let(:outputs) do
+      [
+        {
+          label: :thumbnail,
+          format: 'jpg',
+          size: '200x150>',
+          layer: 0,
+          url: "file:#{Rails.root}/tmp/test-derivatives/12/34-thumbnail.jpeg"
+        },
+        {
+          label: :citi,
+          format: 'jpg',
+          size: '96x96>',
+          layer: 0,
+          quality: "90",
+          url: "file:#{Rails.root}/tmp/test-derivatives/12/34-citi.jpg"
+        },
+        {
+          label: :access,
+          format: 'pdf',
+          quality: '90',
+          size: '1024x1024',
+          url: "file:#{Rails.root}/tmp/test-derivatives/12/34-access.pdf"
+        }
+      ]
+    end
+
+    before { allow(file).to receive(:mime_type).and_return("image/png") }
+
+    it "sends the correct parameters for a text file" do
+      expect(Hydra::Derivatives::ImageDerivatives).to receive(:create).with(document, outputs: outputs)
+      expect(Hydra::Derivatives::FullTextExtract).not_to receive(:create).with(document, outputs: extraction)
+      file.create_derivatives(document)
+    end
+
+    describe "the derivatives" do
+      subject { derivatives }
+      before do
         file.create_derivatives(document)
       end
       it { is_expected.to contain_exactly(end_with("34-access.pdf"), end_with("34-thumbnail.jpeg"), end_with("34-citi.jpg")) }
