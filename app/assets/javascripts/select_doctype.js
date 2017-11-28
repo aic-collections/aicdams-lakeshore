@@ -286,5 +286,9 @@ Blacklight.onLoad(function() {
         }
       }
     }
+  }).always(function() {
+    // Because the values of the select dropdowns are populated after the form is first validated,
+    // we must re-validate the form after they've been loaded.
+    Lakeshore.formValidator()
   });
 });
