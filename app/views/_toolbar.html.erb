@@ -32,7 +32,8 @@
             </li>
           <% end %>
           <li><%= link_to t("sufia.toolbar.works.batch"), sufia.new_batch_upload_path %></li>
-          <li><%= link_to t("sufia.toolbar.works.new"), new_polymorphic_path([main_app, GenericWork]) %></li>
+          <%# Hidden as per #1806 %>
+          <!-- <li><%# link_to t("sufia.toolbar.works.new"), new_polymorphic_path([main_app, GenericWork]) %></li> -->
         </ul>
       </li>
     <% end %>
