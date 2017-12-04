@@ -30,15 +30,15 @@ describe SolrDocument do
   describe "#visibility" do
     subject { described_class.new(asset.to_solr).visibility }
     context "with department assets" do
-      let(:asset) { build(:department_asset) }
+      let(:asset) { build(:department_asset, id: "1234") }
       it { is_expected.to eq("department") }
     end
     context "with registered assets" do
-      let(:asset) { build(:registered_asset) }
+      let(:asset) { build(:registered_asset, id: "1234") }
       it { is_expected.to eq("authenticated") }
     end
     context "by default" do
-      let(:asset) { build(:asset) }
+      let(:asset) { build(:asset, id: "1234") }
       it { is_expected.to eq("department") }
     end
   end
@@ -49,39 +49,21 @@ describe SolrDocument do
   end
 
   describe "#hydra_model" do
-    let(:asset) { build(:department_asset) }
+    let(:asset) { build(:department_asset, id: "1234") }
     subject { described_class.new(asset.to_solr) }
     its(:hydra_model) { is_expected.to eq(GenericWork) }
   end
 
   describe "#type" do
-    let(:asset) { build(:department_asset) }
+    let(:asset) { build(:department_asset, id: "1234") }
     subject { described_class.new(asset.to_solr) }
     its(:type) { is_expected.to include(AICType.Resource) }
   end
 
   describe "#fedora_uri" do
-    let(:good_uri) do
-      URI.join(ActiveFedora.config.credentials[:url],
-               ActiveFedora.config.credentials[:base_path],
-               "id").to_s
-    end
-
-    let(:bad_uri) do
-      URI.join("https://bad.example.com/rest",
-               ActiveFedora.config.credentials[:base_path],
-               "id").to_s
-    end
-
-    context "when the FQDN matches the configured Fedora instance" do
-      subject { described_class.new(Solrizer.solr_name('fedora_uri', :symbol) => good_uri) }
-      its(:fedora_uri) { is_expected.to eq(good_uri) }
-    end
-
-    context "when the FQDN does not match the configured Fedora instance" do
-      subject { described_class.new(Solrizer.solr_name('fedora_uri', :symbol) => bad_uri) }
-      its(:fedora_uri) { is_expected.to eq(good_uri) }
-    end
+    let(:asset) { create(:department_asset) }
+    subject { described_class.new(asset.to_solr) }
+    its(:fedora_uri) { is_expected.to eq(asset.uri) }
   end
 
   it { is_expected.to respond_to(:citi_uid) }
@@ -89,9 +71,13 @@ describe SolrDocument do
   it { is_expected.to respond_to(:id) }
   it { is_expected.to respond_to(:status) }
   it { is_expected.to respond_to(:document_ids) }
+  it { is_expected.to respond_to(:document_ids) }
   it { is_expected.to respond_to(:representation_ids) }
+  it { is_expected.to respond_to(:representation_of_ids) }
   it { is_expected.to respond_to(:preferred_representation_id) }
+  it { is_expected.to respond_to(:preferred_representation_of_ids) }
   it { is_expected.to respond_to(:attachment_ids) }
+  it { is_expected.to respond_to(:attachment_of_ids) }
   it { is_expected.to respond_to(:artist_id) }
   it { is_expected.to respond_to(:current_location_id) }
   it { is_expected.to respond_to(:aic_depositor) }

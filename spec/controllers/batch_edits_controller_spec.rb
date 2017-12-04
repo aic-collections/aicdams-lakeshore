@@ -21,9 +21,15 @@ describe BatchEditsController do
     end
 
     context "when the asset has relationships" do
-      let!(:image_asset) { create(:still_image_asset, user: user, title: ["Hello Title"]) }
+      let!(:work) { create(:work) }
+
+      let!(:image_asset) do
+        create(:still_image_asset, user: user,
+                                   title: ["Hello Title"],
+                                   representation_of_uris: [work.uri])
+      end
+
       before do
-        allow_any_instance_of(InboundRelationships).to receive(:present?).and_return(true)
         post "destroy_collection", destroy_params
       end
 
@@ -43,9 +49,9 @@ describe BatchEditsController do
   describe "#update" do
     include_context "authenticated admin user"
 
-    let(:work1) { create(:department_asset) }
-    let(:work2) { create(:department_asset) }
-    let(:work3) { create(:registered_asset) }
+    let(:asset1) { create(:department_asset) }
+    let(:asset2) { create(:department_asset) }
+    let(:asset3) { create(:registered_asset) }
 
     before { request.env["HTTP_REFERER"] = "where_i_came_from" }
 
@@ -54,7 +60,7 @@ describe BatchEditsController do
         {
           update_type:        "update",
           generic_work:       { visibility: "authenticated" },
-          batch_document_ids: [work1.id, work2.id]
+          batch_document_ids: [asset1.id, asset2.id]
         }
       end
 
@@ -62,8 +68,8 @@ describe BatchEditsController do
         expect(VisibilityCopyJob).to receive(:perform_later).twice
         expect(InheritPermissionsJob).not_to receive(:perform_later)
         put :update, parameters.as_json
-        expect(work1.reload.visibility).to eq("authenticated")
-        expect(work2.reload.visibility).to eq("authenticated")
+        expect(asset1.reload.visibility).to eq("authenticated")
+        expect(asset2.reload.visibility).to eq("authenticated")
       end
     end
 
@@ -72,7 +78,7 @@ describe BatchEditsController do
         {
           update_type:        "update",
           generic_work:       {},
-          batch_document_ids: [work1.id, work3.id]
+          batch_document_ids: [asset1.id, asset3.id]
         }
       end
 
@@ -80,8 +86,8 @@ describe BatchEditsController do
         expect(VisibilityCopyJob).not_to receive(:perform_later)
         expect(InheritPermissionsJob).not_to receive(:perform_later)
         put :update, parameters.as_json
-        expect(work1.reload.visibility).to eq("department")
-        expect(work3.reload.visibility).to eq("authenticated")
+        expect(asset1.reload.visibility).to eq("department")
+        expect(asset3.reload.visibility).to eq("authenticated")
       end
     end
 
@@ -90,7 +96,7 @@ describe BatchEditsController do
         {
           update_type:        "update",
           generic_work:       { visibility: "department" },
-          batch_document_ids: [work1.id, work2.id]
+          batch_document_ids: [asset1.id, asset2.id]
         }
       end
 
@@ -98,8 +104,8 @@ describe BatchEditsController do
         expect(VisibilityCopyJob).not_to receive(:perform_later)
         expect(InheritPermissionsJob).not_to receive(:perform_later)
         put :update, parameters.as_json
-        expect(work1.reload.visibility).to eq("department")
-        expect(work2.reload.visibility).to eq("department")
+        expect(asset1.reload.visibility).to eq("department")
+        expect(asset2.reload.visibility).to eq("department")
       end
     end
 
@@ -109,7 +115,7 @@ describe BatchEditsController do
         {
           update_type:        "update",
           generic_work:       { permissions_attributes: group_permission },
-          batch_document_ids: [work1.id, work2.id]
+          batch_document_ids: [asset1.id, asset2.id]
         }
       end
 
@@ -117,8 +123,8 @@ describe BatchEditsController do
         expect(VisibilityCopyJob).not_to receive(:perform_later)
         expect(InheritPermissionsJob).to receive(:perform_later).twice
         put :update, parameters.as_json
-        expect(work1.reload.edit_groups).to include("newgroop")
-        expect(work2.reload.edit_groups).to include("newgroop")
+        expect(asset1.reload.edit_groups).to include("newgroop")
+        expect(asset2.reload.edit_groups).to include("newgroop")
       end
     end
 
@@ -135,7 +141,7 @@ describe BatchEditsController do
             lease_expiration_date: "2017-07-18",
             visibility_after_lease: "department"
           },
-          batch_document_ids: [work1.id, work2.id]
+          batch_document_ids: [asset1.id, asset2.id]
         }
       end
 
@@ -143,29 +149,10 @@ describe BatchEditsController do
         expect(VisibilityCopyJob).to receive(:perform_later).twice
         expect(InheritPermissionsJob).not_to receive(:perform_later)
         put :update, parameters.as_json
-        expect(work1.reload.visibility).to eq("open")
-        expect(work2.reload.visibility).to eq("open")
-        expect(work1.reload.visibility_during_embargo).to be_nil
-        expect(work2.reload.visibility_during_embargo).to be_nil
-      end
-    end
-
-    context "when assets are in relationships" do
-      let!(:non_asset) { create(:work, representation_uris: [work1.uri, work2.uri]) }
-
-      let(:parameters) do
-        {
-          update_type:        "update",
-          generic_work:       { visibility: "authenticated" },
-          batch_document_ids: [work1.id, work2.id]
-        }
-      end
-
-      it "applies the new setting to all works" do
-        expect(non_asset.representations).to contain_exactly(work1, work2)
-        put :update, parameters.as_json
-        non_asset.reload
-        expect(non_asset.representations).to contain_exactly(work1, work2)
+        expect(asset1.reload.visibility).to eq("open")
+        expect(asset2.reload.visibility).to eq("open")
+        expect(asset1.reload.visibility_during_embargo).to be_nil
+        expect(asset2.reload.visibility_during_embargo).to be_nil
       end
     end
   end
@@ -181,10 +168,10 @@ describe BatchEditsController do
     end
 
     context "with a non-admin user" do
-      let(:work1) { create(:department_asset) }
+      let(:asset1) { create(:department_asset) }
 
       it "redirects to the user's dashboard" do
-        get :edit, batch_document_ids: [work1.id]
+        get :edit, batch_document_ids: [asset1.id]
         expect(flash[:warning]).to eq("Batch edit is only permitted to administrators")
         expect(response).to be_redirect
       end

@@ -2,9 +2,13 @@
 require 'rails_helper'
 
 describe "Relationships of CITI resources" do
-  let(:user)  { create(:user1) }
-  let(:asset) { create(:department_asset) }
-  let(:work)  { create(:work, citi_uid: 'WO-1234', preferred_representation: asset.uri) }
+  let(:user) { create(:user1) }
+  let(:work) { create(:work, citi_uid: 'WO-1234') }
+
+  let!(:asset) do
+    create(:department_asset, preferred_representation_of_uris: [work.uri],
+                              representation_of_uris: [work.uri])
+  end
 
   before do
     sign_in(user)

@@ -17,7 +17,11 @@ class AssetIndexer < Sufia::WorkIndexer
       solr_doc[Solrizer.solr_name("document_types", :facetable)] = document_types_facet
       solr_doc[Solrizer.solr_name("publish_channels", :facetable)] = object.publish_channels.map(&:pref_label)
       solr_doc[Solrizer.solr_name("publish_channels", :symbol)] = object.publish_channels.map(&:pref_label)
-      solr_doc[Solrizer.solr_name("attachments", :symbol)] = object.attachments.map(&:id)
+      solr_doc[Solrizer.solr_name("attachments", :symbol)] = field_builder.has_attachment_ids
+      solr_doc[Solrizer.solr_name("attachment_of", :symbol)] = object.attachment_of.map(&:id)
+      solr_doc[Solrizer.solr_name("representation_of", :symbol)] = object.representation_of.map(&:id)
+      solr_doc[Solrizer.solr_name("preferred_representation_of", :symbol)] = object.preferred_representation_of.map(&:id)
+      solr_doc[Solrizer.solr_name("document_of", :symbol)] = object.document_of.map(&:id)
       solr_doc[Solrizer.solr_name("related_works", :symbol)] = field_builder.related_works
       solr_doc[Solrizer.solr_name("related_work_main_ref_number", :symbol)] = field_builder.main_ref_numbers
       solr_doc[Solrizer.solr_name("rdf_types", :symbol)] = object.type.map(&:to_s)
@@ -48,6 +52,6 @@ class AssetIndexer < Sufia::WorkIndexer
     end
 
     def field_builder
-      @field_builder = AssetSolrFieldBuilder.new(object)
+      @field_builder ||= AssetSolrFieldBuilder.new(object)
     end
 end

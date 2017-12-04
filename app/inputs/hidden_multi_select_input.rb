@@ -72,15 +72,15 @@ class HiddenMultiSelectInput < MultiValueInput
       @resources ||= object.send(options.fetch(:property, attribute_name))
     end
 
-    # @param [SolrDocument, GenericWork] resource
-    # @todo Further optimizations would make this method take only a SolrDocument
-    def render_thumbnail(resource)
-      solr_document = resource.is_a?(SolrDocument) ? resource : SolrDocument.new(resource.to_solr)
-      template.render_thumbnail_tag(solr_document)
+    # @param [SolrDocument] document
+    def render_thumbnail(document)
+      template.render_thumbnail_tag(document)
     end
 
+    # @return [String] value of the hidden input
+    # @note this will either be a uri (the default) or an id depending on :value_type
     def value_for_input(value)
       return value if value.is_a?(String)
-      value.id
+      value.send(options.fetch(:value_type, :fedora_uri))
     end
 end

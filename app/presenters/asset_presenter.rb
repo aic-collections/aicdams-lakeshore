@@ -16,7 +16,9 @@ class AssetPresenter < Sufia::WorkShowPresenter
   end
 
   def self.presenter_terms
-    terms + [:document_types, :public_domain?, :publishable?, :type, :related_image_id]
+    terms + [:document_types, :public_domain?, :publishable?, :type, :related_image_id,
+             :document_of_ids, :representation_of_ids, :preferred_representation_of_ids,
+             :attachment_ids, :attachment_of_ids]
   end
 
   def manifest_url
@@ -26,7 +28,6 @@ class AssetPresenter < Sufia::WorkShowPresenter
   include ResourcePresenterBehaviors
 
   delegate(*presenter_terms, to: :solr_document)
-  delegate :document_ids, :representation_ids, :preferred_representation_ids, to: :relationships
 
   def title
     [pref_label]
@@ -63,7 +64,7 @@ class AssetPresenter < Sufia::WorkShowPresenter
   end
 
   def has_relationships?
-    relationships.ids.present? || attachment_ids.present?
+    representation_of_ids.present? || preferred_representation_of_ids.present? || document_of_ids.present? || attachment_ids.present? || attachment_of_ids.present?
   end
 
   def artist_presenters?
@@ -83,44 +84,38 @@ class AssetPresenter < Sufia::WorkShowPresenter
   end
 
   def document_presenters
-    CurationConcerns::PresenterFactory.build_presenters(document_ids,
+    CurationConcerns::PresenterFactory.build_presenters(document_of_ids,
                                                         CitiResourcePresenter,
                                                         *presenter_factory_arguments)
   end
 
   def representation_presenters
-    CurationConcerns::PresenterFactory.build_presenters(representation_ids,
+    CurationConcerns::PresenterFactory.build_presenters(representation_of_ids,
                                                         CitiResourcePresenter,
                                                         *presenter_factory_arguments)
   end
 
   def preferred_representation_presenters
-    CurationConcerns::PresenterFactory.build_presenters(preferred_representation_ids,
+    CurationConcerns::PresenterFactory.build_presenters(preferred_representation_of_ids,
                                                         CitiResourcePresenter,
                                                         *presenter_factory_arguments)
   end
 
+  # @note for displaying the "Attachment Of" relationship
   def attachment_presenters
-    CurationConcerns::PresenterFactory.build_presenters(solr_document.attachment_ids,
+    CurationConcerns::PresenterFactory.build_presenters(attachment_of_ids,
                                                         AssetPresenter,
                                                         *presenter_factory_arguments)
   end
 
+  # @note for displaying the "Attachments" relationship
   def attaching_presenters
-    CurationConcerns::PresenterFactory.build_presenters(relationships.attachment_ids,
+    CurationConcerns::PresenterFactory.build_presenters(attachment_ids,
                                                         AssetPresenter,
                                                         *presenter_factory_arguments)
   end
 
   private
-
-    def relationships
-      @relationships ||= InboundRelationships.new(id)
-    end
-
-    def attachment_ids
-      relationships.attachment_ids + solr_document.attachment_ids
-    end
 
     def manifest_helper
       @manifest_helper ||= ManifestHelper.new(request.base_url)

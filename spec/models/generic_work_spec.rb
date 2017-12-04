@@ -19,7 +19,7 @@ describe GenericWork do
     end
   end
 
-  describe "intial RDF types" do
+  describe "initial RDF types" do
     subject { described_class.new.type }
     it { is_expected.to include(AICType.Asset, AICType.Resource) }
   end
@@ -32,7 +32,10 @@ describe GenericWork do
     describe "#to_solr" do
       let(:keyword) { create(:list_item) }
 
-      before { subject.keyword = [keyword.uri] }
+      before do
+        allow(subject).to receive(:id).and_return('fake-id')
+        subject.keyword = [keyword.uri]
+      end
 
       it "contains our custom solr fields" do
         expect(subject.to_solr[Solrizer.solr_name("aic_type", :facetable)]).to include("Asset", "Still Image")
@@ -59,6 +62,7 @@ describe GenericWork do
     specify { expect(subject.type).to include(AICType.Asset, AICType.Text) }
 
     describe "#to_solr" do
+      before { allow(subject).to receive(:id).and_return('fake-id') }
       specify { expect(subject.to_solr[Solrizer.solr_name("aic_type", :facetable)]).to include("Asset", "Text") }
     end
 
@@ -81,6 +85,27 @@ describe GenericWork do
         it { is_expected.to respond_to(term) }
       end
     end
+
+    context "defined by uris" do
+      it { is_expected.to respond_to(:keyword_uris=) }
+      it { is_expected.to respond_to(:keyword_uris) }
+      it { is_expected.to respond_to(:digitization_source_uri=) }
+      it { is_expected.to respond_to(:digitization_source_uri) }
+      it { is_expected.to respond_to(:document_type_uri=) }
+      it { is_expected.to respond_to(:first_document_sub_type_uri=) }
+      it { is_expected.to respond_to(:second_document_sub_type_uri=) }
+      it { is_expected.to respond_to(:compositing_uri=) }
+      it { is_expected.to respond_to(:light_type_uri=) }
+      it { is_expected.to respond_to(:view_uris=) }
+      it { is_expected.to respond_to(:document_type_uri) }
+      it { is_expected.to respond_to(:first_document_sub_type_uri) }
+      it { is_expected.to respond_to(:second_document_sub_type_uri) }
+      it { is_expected.to respond_to(:compositing_uri) }
+      it { is_expected.to respond_to(:light_type_uri) }
+      it { is_expected.to respond_to(:view_uris) }
+      it { is_expected.to respond_to(:attachment_of_uris) }
+      it { is_expected.to respond_to(:attachment_of_uris=) }
+    end
   end
 
   describe "cardinality" do
@@ -88,17 +113,6 @@ describe GenericWork do
       it "limits #{term} to a single value" do
         expect(described_class.properties[term.to_s].multiple?).to be false
       end
-    end
-  end
-
-  describe "#asset_has_relationships?" do
-    let!(:work) { create(:still_image_asset, user: user, title: ["Hello Title"]) }
-    context "with relationships" do
-      before { allow_any_instance_of(InboundRelationships).to receive(:present?).and_return(true) }
-      it { is_expected.to be_asset_has_relationships }
-    end
-    context "without relationships" do
-      it { is_expected.not_to be_asset_has_relationships }
     end
   end
 
@@ -130,116 +144,6 @@ describe GenericWork do
     context "without a pref_label" do
       let(:work) { described_class.create(pref_label: "A Label") }
       it { is_expected.to eq("A Label") }
-    end
-  end
-
-  describe "::accepts_uris_for" do
-    let(:work) { build(:asset) }
-    let(:item) { create(:list_item) }
-
-    context "using a multi-valued term" do
-      subject { work }
-
-      context "with a string" do
-        before { work.keyword_uris = [item.uri.to_s] }
-        its(:keyword) { is_expected.to contain_exactly(item) }
-        its(:keyword_uris) { is_expected.to contain_exactly(item.uri.to_s) }
-      end
-
-      context "with a RDF::URI" do
-        before { work.keyword_uris = [item.uri] }
-        its(:keyword) { is_expected.to contain_exactly(item) }
-        its(:keyword_uris) { is_expected.to contain_exactly(item.uri.to_s) }
-      end
-
-      context "with a singular value" do
-        it "raises an ArgumentError" do
-          expect { work.keyword_uris = item.uri }.to raise_error(ArgumentError)
-        end
-      end
-
-      context "with empty strings" do
-        before { work.keyword_uris = [""] }
-        its(:keyword) { is_expected.to be_empty }
-        its(:keyword_uris) { is_expected.to be_empty }
-      end
-
-      context "with empty arrays" do
-        before { work.keyword_uris = [] }
-        its(:keyword) { is_expected.to be_empty }
-        its(:keyword_uris) { is_expected.to be_empty }
-      end
-
-      context "with existing values" do
-        before { work.keyword_uris = [item.uri.to_s] }
-        it "uses a null set to remote them" do
-          expect(subject.keyword).not_to be_empty
-          work.keyword_uris = []
-          expect(subject.keyword).to be_empty
-        end
-      end
-    end
-
-    context "using a single-valued term" do
-      subject { work }
-
-      context "with a string" do
-        before { work.digitization_source_uri = item.uri.to_s }
-        its(:digitization_source) { is_expected.to eq(item) }
-        its(:digitization_source_uri) { is_expected.to eq(item.uri.to_s) }
-      end
-
-      context "with a RDF::URI" do
-        before { work.digitization_source_uri = item.uri }
-        its(:digitization_source) { is_expected.to eq(item) }
-        its(:digitization_source_uri) { is_expected.to eq(item.uri.to_s) }
-      end
-
-      context "with an empty string" do
-        before { work.digitization_source_uri = "" }
-        its(:digitization_source) { is_expected.to be_nil }
-        its(:digitization_source_uri) { is_expected.to be_nil }
-      end
-
-      context "with an existing value" do
-        before { work.digitization_source_uri = item.uri }
-
-        it "uses nil to remove it" do
-          expect { work.digitization_source_uri = nil }.to change { work.digitization_source }.to(nil)
-        end
-
-        it "uses an empty string to remove it" do
-          expect { work.digitization_source_uri = "" }.to change { work.digitization_source }.to(nil)
-        end
-      end
-    end
-
-    context "with remaining terms" do
-      it { is_expected.to respond_to(:document_type_uri=) }
-      it { is_expected.to respond_to(:first_document_sub_type_uri=) }
-      it { is_expected.to respond_to(:second_document_sub_type_uri=) }
-      it { is_expected.to respond_to(:compositing_uri=) }
-      it { is_expected.to respond_to(:light_type_uri=) }
-      it { is_expected.to respond_to(:view_uris=) }
-      it { is_expected.to respond_to(:document_type_uri) }
-      it { is_expected.to respond_to(:first_document_sub_type_uri) }
-      it { is_expected.to respond_to(:second_document_sub_type_uri) }
-      it { is_expected.to respond_to(:compositing_uri) }
-      it { is_expected.to respond_to(:light_type_uri) }
-      it { is_expected.to respond_to(:view_uris) }
-      it { is_expected.to respond_to(:attachment_uris) }
-    end
-  end
-
-  describe "assigning representations" do
-    let(:attachment) { create(:asset) }
-    let(:asset)      { create(:asset, attachments: [attachment.uri]) }
-
-    it "contains the correct kind of representations" do
-      expect(asset.attachments).to contain_exactly(attachment)
-      expect(asset.to_solr[Solrizer.solr_name("representation", :facetable)]).to contain_exactly("Is Attachment")
-      expect(facets_for(Solrizer.solr_name("representation", :facetable), asset.id)).to contain_exactly("Is Attachment", 1)
-      expect(facets_for(Solrizer.solr_name("representation", :facetable), attachment.id)).to contain_exactly("Has Attachment", 1)
     end
   end
 

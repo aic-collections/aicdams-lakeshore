@@ -11,6 +11,7 @@ gem 'hydra-derivatives', :git => 'https://github.com/RudyOnRails/hydra-derivativ
 gem 'aspect_ratio', git: 'https://github.com/envato/aspect_ratio', branch: 'master'
 gem 'blacklight_range_limit'
 gem 'coffee-rails', '~> 4.2'
+gem 'deprecation'
 gem 'devise', '~> 4.2'
 gem 'devise-guests', '~> 0.5'
 gem 'figaro'

@@ -38,15 +38,16 @@ describe AssetPresenter do
   it { is_expected.to delegate_method(:publishable?).to(:solr_document) }
   it { is_expected.to delegate_method(:copyright_representatives).to(:solr_document) }
   it { is_expected.to delegate_method(:related_image_id).to(:solr_document) }
+  it { is_expected.to delegate_method(:document_of_ids).to(:solr_document) }
+  it { is_expected.to delegate_method(:representation_of_ids).to(:solr_document) }
+  it { is_expected.to delegate_method(:preferred_representation_of_ids).to(:solr_document) }
+  it { is_expected.to delegate_method(:attachment_ids).to(:solr_document) }
+  it { is_expected.to delegate_method(:attachment_of_ids).to(:solr_document) }
 
   its(:title) { is_expected.to eq(["Sample Label"]) }
 
   its(:permission_badge_class) { is_expected.to eq(PermissionBadge) }
   its(:file_presenter_class)   { is_expected.to eq(FileSetPresenter) }
-
-  describe "#has_relationships?" do
-    it { is_expected.not_to have_relationships }
-  end
 
   describe "#is_citi_presenter?" do
     it { is_expected.not_to be_citi_presenter }

@@ -3,57 +3,37 @@ module CitiFormBehaviors
   extend ActiveSupport::Concern
 
   included do
-    self.terms += [:document_uris, :representation_uris, :preferred_representation_uri]
-    delegate :document_uris, :representation_uris, :preferred_representation_uri, to: :model
-
-    def self.multiple?(term)
-      return true if [:document_uris, :representation_uris].include? term
-      super
-    end
+    self.terms += [:document_ids, :representation_ids, :preferred_representation_id]
+    delegate :documents, :document_ids, :preferred_representation_id, to: :inbound_asset_reference
 
     def self.build_permitted_params
-      super + [
-        { document_uris: [] },
-        { representation_uris: [] },
-        :preferred_representation_uri
-      ]
+      super + [{ document_ids: [] }, { representation_ids: [] }]
     end
   end
 
-  # @return [Array<SolrDocument>]
-  def documents
-    document_uris.map { |s| SolrDocument.find(URI(s).path.split(/\//).last) }
+  # Insert the preferred representation at the beginning of the array to ensure it is always first
+  def representations
+    inbound_asset_reference.representations.insert(0, inbound_asset_reference.preferred_representation).compact.uniq
   end
 
-  # @return [Array<SolrDocument>]
-  def representations
-    representation_uris.map { |s| SolrDocument.find(URI(s).path.split(/\//).last) }
+  def representation_ids
+    representations.map(&:id).uniq
   end
 
   # @return [SolrDocument]
+  # @note use an empty SolrDocument as a null object pattern when preferred representation is nil
+  # @todo I'm not sure this method needs to be used anymore
   def preferred_representation
-    @preferred_representation = if preferred_representation_uri
-                                  SolrDocument.find(URI(preferred_representation_uri).path.split(/\//).last)
-                                else
-                                  SolrDocument.new({})
-                                end
+    inbound_asset_reference.preferred_representation || SolrDocument.new({})
   end
 
   def preferred_representation_thumbnail
     Sufia::WorkThumbnailPathService.call(preferred_representation)
   end
 
-  # Overrides hydra-editor MultiValueInput#collection
-  # Form needs to respond to hash-style arguments for methods defined using ::accepts_uris_for
-  def [](term)
-    if [:document_uris, :representation_uris].include? term
-      send(term)
-    else
-      super
-    end
-  end
+  private
 
-  def representation_terms
-    [:representation_uris, :document_uris]
-  end
+    def inbound_asset_reference
+      @inbound_asset_reference ||= InboundAssetReference.new(model)
+    end
 end

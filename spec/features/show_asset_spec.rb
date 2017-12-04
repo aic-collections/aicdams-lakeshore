@@ -3,14 +3,20 @@ require 'rails_helper'
 
 describe "Displaying an asset" do
   let(:user)       { create(:user1) }
-  let(:attachment) { create(:asset, pref_label: "Sample Attachment") }
-  let(:asset)      { create(:department_asset, :with_metadata, :with_license_metadata, attachments: [attachment.uri]) }
+  let(:exhibition) { create(:exhibition) }
+  let(:work)       { create(:work) }
+  let(:shipment)   { create(:shipment) }
+
+  let(:asset) do
+    create(:department_asset, :with_metadata, :with_license_metadata,
+           representation_of_uris: [exhibition.uri, work.uri],
+           preferred_representation_of_uris: [exhibition.uri],
+           document_of_uris: [shipment.uri])
+  end
 
   before do
     LakeshoreTesting.restore
-    create(:exhibition, preferred_representation: asset.uri)
-    create(:work, representations: [asset.uri])
-    create(:shipment, documents: [asset.uri])
+    create(:asset, pref_label: "Sample Attachment", attachment_of_uris: [asset.uri])
     sign_in(user)
   end
 
@@ -58,7 +64,7 @@ describe "Displaying an asset" do
     expect(page).to have_selector("h3", text: "Preferred Representation Of")
     expect(page).to have_selector("h3", text: "Representation Of")
     expect(page).to have_selector("h3", text: "Documentation For")
-    expect(page).to have_selector("h3", text: "Attachment Of")
+    expect(page).to have_selector("h3", text: "Attachments")
 
     # User1 gets links to the assets
     expect(page).to have_link("Sample Exhibition")

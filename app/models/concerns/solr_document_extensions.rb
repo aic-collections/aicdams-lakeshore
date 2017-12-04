@@ -27,7 +27,7 @@ module SolrDocumentExtensions
   end
 
   def fedora_uri
-    corrected_uri(Array(self[Solrizer.solr_name('fedora_uri', :symbol)]).first)
+    ActiveFedora::Base.id_to_uri(id)
   end
 
   def aic_depositor
@@ -55,16 +55,36 @@ module SolrDocumentExtensions
     Array(self[Solrizer.solr_name('documents', :symbol)])
   end
 
+  def document_of_ids
+    Array(self[Solrizer.solr_name('document_of', :symbol)])
+  end
+
   def representation_ids
     Array(self[Solrizer.solr_name('representations', :symbol)])
   end
 
+  def representation_of_ids
+    Array(self[Solrizer.solr_name('representation_of', :symbol)])
+  end
+
+  def preferred_representation_ids
+    Array(self[Solrizer.solr_name('preferred_representation', :symbol)])
+  end
+
+  def preferred_representation_of_ids
+    Array(self[Solrizer.solr_name('preferred_representation_of', :symbol)])
+  end
+
   def preferred_representation_id
-    Array(self[Solrizer.solr_name('preferred_representation', :symbol)]).first
+    preferred_representation_ids.first
   end
 
   def attachment_ids
     Array(self[Solrizer.solr_name('attachments', :symbol)])
+  end
+
+  def attachment_of_ids
+    Array(self[Solrizer.solr_name('attachment_of', :symbol)])
   end
 
   def visibility
@@ -110,11 +130,4 @@ module SolrDocumentExtensions
   def related_image_id
     Array(self["hasRelatedImage_ssim"]).first
   end
-
-  private
-
-    def corrected_uri(uri)
-      return uri if URI(uri).hostname == URI(ActiveFedora.config.credentials[:url]).hostname
-      URI.join(ActiveFedora.config.credentials[:url], URI(uri).path).to_s
-    end
 end

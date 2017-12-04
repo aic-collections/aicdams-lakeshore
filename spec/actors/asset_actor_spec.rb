@@ -89,4 +89,33 @@ describe AssetActor do
       its(:copyright_representatives) { is_expected.to be_empty }
     end
   end
+
+  describe "adding attachments" do
+    let(:mock_service) { double(InboundAssetManagementService) }
+
+    before do
+      allow(InboundAssetManagementService).to receive(:new).with(work, user).and_return(mock_service)
+    end
+
+    context "on create" do
+      let(:doc_type) { create(:list_item, pref_label: 'Document Type') }
+      let(:parameters) do
+        { "asset_type" => AICType.StillImage, "document_type_uri" => doc_type.uri, attachment_ids: ["asset"] }
+      end
+
+      it "updates the related asset" do
+        expect(mock_service).to receive(:update).with(:attachments, ["asset"])
+        actor.create(parameters)
+      end
+    end
+
+    context "on update" do
+      let(:work) { create(:asset) }
+
+      it "updates the related asset" do
+        expect(mock_service).to receive(:update).with(:attachments, ["asset"])
+        actor.update(attachment_ids: ["asset"])
+      end
+    end
+  end
 end

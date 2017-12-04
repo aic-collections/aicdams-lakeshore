@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 module AssetMetadata
   extend ActiveSupport::Concern
+  extend Deprecation
 
   included do
     property :capture_device, predicate: AIC.captureDevice, multiple: false do |index|
@@ -55,7 +56,15 @@ module AssetMetadata
 
     property :publish_channels, predicate: AIC.publishChannel, class_name: "PublishChannel"
 
-    property :attachments, predicate: AIC.isAttachmentOf, class_name: "GenericWork"
+    property :attachment_of, predicate: AIC.isAttachmentOf, class_name: "GenericWork"
+    alias_method :attachments, :attachment_of
+    deprecation_deprecate :attachments
+
+    property :document_of, predicate: AIC.isDocumentOf, class_name: "CitiResource"
+
+    property :preferred_representation_of, predicate: AIC.isPreferredRepresentationOf, class_name: "CitiResource"
+
+    property :representation_of, predicate: AIC.isRepresentationOf, class_name: "CitiResource"
 
     property :copyright_representatives, predicate: AIC.copyrightRepresentative, class_name: "Agent" do |index|
       index.as :stored_searchable, using: :pref_label
@@ -74,7 +83,7 @@ module AssetMetadata
     end
 
     accepts_uris_for :keyword, :digitization_source, :document_type, :first_document_sub_type,
-                     :second_document_sub_type, :publish_channels, :attachments, :copyright_representatives,
-                     :licensing_restrictions
+                     :second_document_sub_type, :publish_channels, :attachment_of, :copyright_representatives,
+                     :licensing_restrictions, :document_of, :preferred_representation_of, :representation_of
   end
 end

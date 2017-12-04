@@ -6,6 +6,7 @@ class AssetActor < CurationConcerns::Actors::BaseActor
     AssetTypeAssignmentService.new(curation_concern).assign(asset_type)
     apply_dates(updated: attributes.delete("updated"), created: attributes.delete("created"))
     assign_copyright_representatives(attributes.delete("copyright_representatives"))
+    management_service.update(:attachments, attributes.delete("attachment_ids"))
     super
   end
 
@@ -13,6 +14,8 @@ class AssetActor < CurationConcerns::Actors::BaseActor
     attributes.delete("asset_type")
     apply_dates(updated: attributes.delete("updated"), created: attributes.delete("created"))
     assign_copyright_representatives(attributes.delete("copyright_representatives"))
+    remove_preferred_representation(attributes.fetch("representation_of_uris", []))
+    management_service.update(:attachments, attributes.delete("attachment_ids"))
     super
   end
 
@@ -39,6 +42,15 @@ class AssetActor < CurationConcerns::Actors::BaseActor
     curation_concern.copyright_representative_uris = new_representatives
   end
 
+  # @note If all representations have been removed, then any that were preferred representations must be
+  #       removed as well.
+  def remove_preferred_representation(representation_uris)
+    removed_representations = curation_concern.representation_of_uris - representation_uris
+    return if removed_representations.empty?
+    updated_preferreds = curation_concern.preferred_representation_of_uris.reject! { |p| removed_representations.include?(p) }
+    curation_concern.preferred_representation_of_uris = updated_preferreds
+  end
+
   private
 
     def parse_date(property, value)
@@ -51,5 +63,9 @@ class AssetActor < CurationConcerns::Actors::BaseActor
       reps.map do |id|
         Agent.find(id).uri
       end
+    end
+
+    def management_service
+      @management_service ||= InboundAssetManagementService.new(curation_concern, user)
     end
 end

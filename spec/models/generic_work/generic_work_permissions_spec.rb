@@ -175,6 +175,7 @@ describe GenericWork do
 
   describe "#apply_depositor_metadata" do
     context "with an AIC depositor" do
+      let(:registered_asset) { build(:registered_asset, id: 'fake-id') }
       subject { registered_asset }
       its(:depositor) { is_expected.to eq("user1") }
       its(:aic_depositor) { is_expected.to be_kind_of(AICUser) }

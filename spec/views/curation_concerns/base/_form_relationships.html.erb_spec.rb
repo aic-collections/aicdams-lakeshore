@@ -40,44 +40,44 @@ describe 'curation_concerns/base/_form_relationships.html.erb' do
   end
 
   context "with existing relationships" do
-    let(:work)  { build(:work, id: "1234") }
-    let(:agent) { build(:agent, id: "5678") }
+    let(:work)  { SolrDocument.new(build(:work, id: "1234").to_solr) }
+    let(:agent) { SolrDocument.new(build(:agent, id: "5678").to_solr) }
     before do
       allow_any_instance_of(HiddenMultiSelectInput).to receive(:render_thumbnail).and_return("thumbnail")
-      allow(form).to receive(:documents_for).and_return([work])
-      allow(form).to receive(:representations_for).and_return([agent])
+      allow(form).to receive(:document_of_uris).and_return([work])
+      allow(form).to receive(:representation_of_uris).and_return([agent])
     end
 
     it "renders the form" do
-      expect(page).to have_selector("input#generic_work_documents_for", visible: false)
-      expect(page).to have_selector("input#generic_work_representations_for", visible: false)
-      expect(page.find("input#generic_work_documents_for", visible: false).value).to eq(work.id)
-      expect(page.find("input#generic_work_representations_for", visible: false).value).to eq(agent.id)
+      expect(page).to have_selector("input#generic_work_document_of_uris", visible: false)
+      expect(page).to have_selector("input#generic_work_representation_of_uris", visible: false)
+      expect(page.find("input#generic_work_document_of_uris", visible: false).value).to eq(work.fedora_uri)
+      expect(page.find("input#generic_work_representation_of_uris", visible: false).value).to eq(agent.fedora_uri)
     end
   end
 
   context "without existing attachments" do
     it "displays fields for adding attachments" do
-      expect(page).to have_selector('table.attachment_uris')
-      expect(page).to have_selector('table.attachments_for')
+      expect(page).to have_selector('table.attachment_of_uris')
+      expect(page).to have_selector('table.attachment_ids')
     end
   end
 
   context "with existing attachments" do
-    let(:asset1) { build(:asset, id: '1', pref_label: "First asset", uid: "uid-1") }
-    let(:asset2) { build(:asset, id: '2', pref_label: "Second asset") }
+    let(:asset1) { SolrDocument.new(build(:asset, id: '1', pref_label: "First asset", uid: "uid-1").to_solr) }
+    let(:asset2) { SolrDocument.new(build(:asset, id: '2', pref_label: "Second asset").to_solr) }
 
     before do
       allow_any_instance_of(HiddenMultiSelectInput).to receive(:render_thumbnail).and_return("thumbnail")
-      allow(asset).to receive(:attachments).and_return([asset1, asset2])
-      allow(form).to receive(:attachments_for).and_return([asset1, asset2])
+      allow(form).to receive(:attachment_of_uris).and_return([asset1, asset2])
+      allow(form).to receive(:attachment_ids).and_return([asset1, asset2])
     end
 
     it "displays the existing uris" do
-      expect(page.all("input#generic_work_attachment_uris", visible: false).first.value).to eq(asset1.uri)
-      expect(page.all("input#generic_work_attachment_uris", visible: false).last.value).to eq(asset2.uri)
-      expect(page.all("input#generic_work_attachments_for", visible: false).first.value).to eq(asset1.id)
-      expect(page.all("input#generic_work_attachments_for", visible: false).last.value).to eq(asset2.id)
+      expect(page.all("input#generic_work_attachment_of_uris", visible: false).first.value).to eq(asset1.fedora_uri)
+      expect(page.all("input#generic_work_attachment_of_uris", visible: false).last.value).to eq(asset2.fedora_uri)
+      expect(page.all("input#generic_work_attachment_ids", visible: false).first.value).to eq(asset1.id)
+      expect(page.all("input#generic_work_attachment_ids", visible: false).last.value).to eq(asset2.id)
     end
   end
 end

@@ -11,24 +11,14 @@ class ParameterizedRelationships
     @params = params
   end
 
-  def representations_for
+  def representation_of_uris
     return [] unless valid? && relationship == "representation_for"
     citi_uid.map { |id| load_type(id) }.compact
   end
 
-  def documents_for
+  def document_of_uris
     return [] unless valid? && relationship == "documentation_for"
     citi_uid.map { |id| load_type(id) }.compact
-  end
-
-  # Not currently implemented
-  def attachment_uris
-    []
-  end
-
-  # Not currently implemented
-  def attachments_for
-    []
   end
 
   private

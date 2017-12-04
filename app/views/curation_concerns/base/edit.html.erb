@@ -3,4 +3,8 @@
   <h1><%= t("sufia.#{curation_concern.human_readable_type}.#{action_name}.header") + ": #{curation_concern.pref_label}" %></h1>
 <% end %>
 
-<%= render 'form' %>
+<% if @form.is_a?(CurationConcerns::GenericWorkForm) %>
+  <%= render 'form' %>
+<% else %>
+  <%= render 'citi_form' %>
+<% end %>

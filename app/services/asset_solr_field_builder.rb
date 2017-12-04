@@ -11,41 +11,48 @@ class AssetSolrFieldBuilder
   # Returns a listing of representation facets. If none exist, it returns "No Relationship"
   def representations
     representations = [
-      attachment_facet, attachment_of_facet, documentation_facet,
+      attachment_facet, has_attachment_facet, documentation_facet,
       representation_facet, preferred_representation_facet
     ].compact
     representations.empty? ? "No Relationship" : representations
   end
 
   # @return [String]
-  # This method name is incongruent with the actual facet value and will be corrected in #1682
   def attachment_facet
-    return if asset.attachments.empty?
+    return if asset.attachment_of.empty?
     "Is Attachment"
   end
 
   # @return [String]
-  # This method name is incongruent with the actual facet value and will be corrected in #1682
-  def attachment_of_facet
+  # rubocop:disable Style/PredicateName
+  def has_attachment_facet
     return if relationships.attachments.empty?
     "Has Attachment"
   end
+  # rubocop:enable Style/PredicateName
+
+  # @return [Array<String>]
+  # rubocop:disable Style/PredicateName
+  def has_attachment_ids
+    relationships.attachments.map(&:id)
+  end
+  # rubocop:enable Style/PredicateName
 
   # @return [String]
   def documentation_facet
-    return if relationships.documents.empty?
+    return if asset.document_of.empty?
     "Documentation For"
   end
 
   # @return [String]
   def representation_facet
-    return if relationships.representations.empty?
+    return if asset.representation_of.empty?
     "Is Representation"
   end
 
   # @return [String]
   def preferred_representation_facet
-    return if relationships.preferred_representation.nil?
+    return if asset.preferred_representation_of.empty?
     "Is Preferred Representation"
   end
 
@@ -67,7 +74,7 @@ class AssetSolrFieldBuilder
   private
 
     def relationships
-      @relationships ||= InboundRelationships.new(asset.id)
+      @relationships ||= InboundAssetReference.new(asset.id)
     end
 
     def valid_work?(work)
@@ -78,12 +85,7 @@ class AssetSolrFieldBuilder
     end
 
     def valid_related_works
-      return [] if relationships.representations.empty? && relationships.preferred_representation.nil?
-      all_related_works = relationships.representations + preferreds
+      all_related_works = asset.representation_of.to_a + asset.preferred_representation_of.to_a
       all_related_works.map { |w| w if valid_work?(w) }.compact
-    end
-
-    def preferreds
-      relationships.preferred_representations.count == 1 ? [relationships.preferred_representation] : relationships.preferred_representations
     end
 end

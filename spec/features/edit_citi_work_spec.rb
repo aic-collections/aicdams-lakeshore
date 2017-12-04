@@ -1,10 +1,11 @@
 # frozen_string_literal: true
 require 'rails_helper'
 
-describe "Editing CITI work" do
+describe "Editing CITI works" do
   let(:user)  { create(:user1) }
-  let(:asset) { create(:asset, :with_intermediate_file_set, pref_label: "Representation of work") }
-  let(:pref)  { create(:asset, pref_label: "Assigned preferred representation of work") }
+  let(:work)  { create(:work, :with_sample_metadata) }
+  let(:asset) { create(:asset, :with_intermediate_file_set, pref_label: "Asset related to work") }
+  let(:pref)  { create(:asset, :with_intermediate_file_set, pref_label: "Assigned preferred representation of work") }
 
   let(:notification) do
     stub_request(:post, "https://citiworker/").with(body: hash_including(citi_uid: work.citi_uid))
@@ -13,67 +14,166 @@ describe "Editing CITI work" do
   before do
     notification.to_return(status: 202)
     sign_in_with_named_js(:edit_work, user)
-    visit(edit_polymorphic_path(work))
+  end
+
+  context "when no changes are made" do
+    before do
+      asset.representation_of_uris = [work.uri]
+      asset.document_of_uris = [work.uri]
+      pref.representation_of_uris = [work.uri]
+      pref.preferred_representation_of_uris = [work.uri]
+      asset.save
+      pref.save
+    end
+
+    it "maintains all the existing relationships" do
+      visit(edit_polymorphic_path(work))
+
+      within("table.document_ids") do
+        expect(page).to have_content("Asset related to work")
+      end
+
+      expect(page).to have_selector("h4", text: "Documents")
+      within("table.document_ids") do
+        expect(page).to have_content("Asset related to work")
+      end
+
+      expect(page).to have_selector("h4", text: "Representations")
+      within("table.representation_ids") do
+        within(all("tr")[0]) do
+          expect(page).to have_css(".aic-star-on")
+          expect(page).to have_content("Assigned preferred representation of work")
+        end
+        within(all("tr")[1]) do
+          expect(page).to have_css(".aic-star-off")
+          expect(page).to have_content("Asset related to work")
+        end
+      end
+
+      click_button("Save")
+
+      within(all("table.relationships")[0]) do
+        within(all("tr")[1]) do
+          expect(page).to have_css(".aic-star-on")
+          expect(page).to have_content("Assigned preferred representation of work")
+        end
+        within(all("tr")[2]) do
+          expect(page).to have_css(".aic-star-off")
+          expect(page).to have_content("Asset related to work")
+        end
+      end
+
+      within(all("table.relationships")[1]) do
+        expect(page).to have_content("Asset related to work")
+      end
+
+      asset.reload
+      expect(asset.representation_of_uris).to contain_exactly(work.uri)
+      expect(asset.document_of_uris).to contain_exactly(work.uri)
+      pref.reload
+      expect(pref.representation_of_uris).to contain_exactly(work.uri)
+      expect(pref.preferred_representation_of_uris).to contain_exactly(work.uri)
+      expect(notification).not_to have_been_made
+    end
   end
 
   context "with a representation and no preferred representation" do
-    let(:work) { create(:work, :with_sample_metadata, representations: [asset.uri]) }
-
-    it "the preferred representation uri should be nil" do
-      expect(work.preferred_representation_uri).to be_nil
+    before do
+      asset.representation_of_uris = [work.uri]
+      asset.save
     end
 
-    it "there should be no star icon" do
-      expect(page).not_to have_selector(".aic-star-on")
-    end
+    it "assigns the preferred representation using the first representation and notifies CITI" do
+      visit(edit_polymorphic_path(work))
 
-    it "there should be one star-off icon" do
-      expect(page).to have_selector(".aic-star-off", count: 1)
-    end
+      # Because no pref. rep. is present, no highlighted star is rendered.
+      within("table.representation_ids") do
+        expect(page).to have_content("Asset related to work")
+        expect(all("tr")[0]).to have_css(".aic-star-off")
+      end
 
-    it "the hidden_preferred_representation.value should be an empty string" do
-      expect(hidden_preferred_representation.value).to eq("")
-    end
-
-    it "after clicking save the preferred representation is set to the first representation" do
       click_button("Save")
-      work.reload
-      expect(work.preferred_representation_uri).to eq(asset.uri)
-    end
 
-    it "the work show page includes a preferred 'star' icon" do
-      click_button("Save")
-      expect(page).to have_selector(".aic-star-on", count: 1)
-    end
+      within("table.relationships") do
+        expect(page).to have_content("Asset related to work")
+        expect(all("tr")[1]).to have_css(".aic-star-on")
+      end
 
-    it "a CITI notification is made" do
-      click_button("Save")
+      asset.reload
+      expect(asset.preferred_representation_of_uris).to contain_exactly(work.uri)
       expect(notification).to have_been_made
     end
   end
 
-  context "when removing a pref_rep when other reps exist" do
-    let(:work) do
-      create(:work, :with_sample_metadata,
-             representations: [pref.uri, asset.uri],
-             preferred_representation_uri: pref.uri
-            )
+  context "when changing a preferred representation" do
+    before do
+      asset.representation_of_uris = [work.uri]
+      pref.representation_of_uris = [work.uri]
+      pref.preferred_representation_of_uris = [work.uri]
+      asset.save
+      pref.save
     end
 
-    it "when page loads, pref_rep is pref.uri" do
-      expect(hidden_preferred_representation.value).to eq(pref.uri)
+    it "updates the assets and notifies CITI" do
+      visit(edit_polymorphic_path(work))
+
+      within("table.representation_ids") do
+        within(all("tr")[0]) do
+          expect(page).to have_css(".aic-star-on")
+          expect(page).to have_content("Assigned preferred representation of work")
+        end
+        within(all("tr")[1]) do
+          expect(page).to have_content("Asset related to work")
+          find(".aic-star-off").click
+        end
+      end
+
+      click_button("Save")
+
+      within("table.relationships") do
+        within(all("tr")[1]) do
+          expect(page).to have_css(".aic-star-on")
+          expect(page).to have_content("Asset related to work")
+        end
+        within(all("tr")[2]) do
+          expect(page).to have_css(".aic-star-off")
+          expect(page).to have_content("Assigned preferred representation of work")
+        end
+      end
+
+      asset.reload
+      expect(asset.preferred_representation_of_uris).to contain_exactly(work.uri)
+      pref.reload
+      expect(pref.preferred_representation_of_uris).to be_empty
+      expect(notification).to have_been_made
     end
   end
 
-  context "when loading a work with two reps, one preferred" do
-    let(:work) do
-      create(:work, :with_sample_metadata,
-             representations: [asset.uri, pref.uri],
-             preferred_representation_uri: pref.uri
-            )
+  context "when removing relationships" do
+    before do
+      asset.representation_of_uris = [work.uri]
+      pref.representation_of_uris = [work.uri]
+      pref.preferred_representation_of_uris = [work.uri]
+      asset.save
+      pref.save
     end
-    it "a hidden input is on the page with a URI of the preferred rep" do
-      expect(hidden_preferred_representation.value).to eq(pref.uri)
+
+    it "updates the assets and notifies CITI" do
+      visit(edit_polymorphic_path(work))
+
+      page.all(".am-delete")[0].click while page.all(".am-delete").count == 2
+
+      page.all(".am-delete")[0].click while page.all(".am-delete").count == 1
+
+      click_button("Save")
+
+      asset.reload
+      expect(asset.preferred_representation_of_uris).to be_empty
+      expect(asset.representation_of_uris).to be_empty
+      pref.reload
+      expect(pref.preferred_representation_of_uris).to be_empty
+      expect(pref.representation_of_uris).to be_empty
+      expect(notification).to have_been_made
     end
   end
 end

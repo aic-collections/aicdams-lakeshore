@@ -4,7 +4,7 @@ module CurationConcerns
     include AssetFormBehaviors
     include PropertyPermissions
 
-    delegate :dept_created, :attachment_uris, :attachments, :copyright_representatives, to: :model
+    delegate :dept_created, :copyright_representatives, to: :model
 
     def self.aic_terms
       [
@@ -14,11 +14,6 @@ module CurationConcerns
         :keyword_uris, :publish_channel_uris, :view_notes, :visual_surrogate, :external_resources,
         :copyright_representatives, :public_domain, :licensing_restriction_uris, :caption
       ]
-    end
-
-    def self.multiple?(term)
-      return true if term == :attachment_uris
-      super
     end
 
     self.model_class = ::GenericWork
@@ -49,40 +44,23 @@ module CurationConcerns
     end
 
     # @return [Array<SolrDocument>]
-    # TODO: I don't know if this will work. Forms usually need AF::Base objects
-    def representations_for
-      representing_resource.representations
+    def representation_of_uris
+      model.representation_of_uris.map { |uri| SolrDocument.find(ActiveFedora::Base.uri_to_id(uri)) }
     end
 
     # @return [Array<SolrDocument>]
-    # TODO: I don't know if this will work. Forms usually need AF::Base objects
-    def documents_for
-      representing_resource.documents
+    def document_of_uris
+      model.document_of_uris.map { |uri| SolrDocument.find(ActiveFedora::Base.uri_to_id(uri)) }
     end
 
     # @return [Array<SolrDocument>]
-    # TODO: I don't know if this will work. Forms usually need AF::Base objects
-    def attachments_for
-      representing_resource.assets
+    def attachment_of_uris
+      model.attachment_of_uris.map { |uri| SolrDocument.find(ActiveFedora::Base.uri_to_id(uri)) }
     end
 
-    def preferred_representation_for
-      # TODO: need to add this to the relationships tab
+    # @return [Array<SolrDocument>]
+    def attachment_ids
+      InboundAssetReference.new(model.id).attachments
     end
-
-    # Overrides hydra-editor MultiValueInput#collection
-    def [](term)
-      if [:representations_for, :documents_for, :attachments_for].include? term
-        send(term)
-      else
-        super
-      end
-    end
-
-    private
-
-      def representing_resource
-        @representing_resource ||= InboundRelationships.new(model.id)
-      end
   end
 end

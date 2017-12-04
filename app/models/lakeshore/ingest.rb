@@ -53,6 +53,7 @@ module Lakeshore
     # Returns an array of ids from preferred_representation_for that already have preferred representations defined.
     def represented_resources
       preferred_representation_for.select do |id|
+        # @todo use InboundAssetReference here
         SolrDocument.new(ActiveFedora::SolrService.query("id:#{id}").first).preferred_representation_id.present?
       end
     end

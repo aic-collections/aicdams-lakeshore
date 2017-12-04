@@ -41,8 +41,13 @@ describe CurationConcerns::GenericWorksController do
 
   describe "#destroy" do
     context "with relationships" do
-      let!(:asset2) { create(:asset, user: user, title: ["Title"], pref_label: "Good Title") }
-      before { allow_any_instance_of(InboundRelationships).to receive(:present?).and_return(true) }
+      let!(:non_asset) { create(:non_asset) }
+      let!(:asset2) do
+        create(:asset, user: user,
+                       title: ["Title"],
+                       pref_label: "Good Title",
+                       document_of_uris: [non_asset.uri])
+      end
 
       it "will not delete the resource" do
         expect { delete :destroy, id: asset2 }.not_to change { GenericWork.count }

@@ -71,7 +71,7 @@ Blacklight.onLoad(function () {
 // https://cits.artic.edu/redmine/issues/2338
 $(function() {
 
-    var star = $('table.representation_uris .aic-star-on');
+    var star = $('table.representation_ids .aic-star-on');
     var star_tr = star.closest('tr');
 
     var table = star_tr.parent();
@@ -89,7 +89,7 @@ $(function() {
         parent_table.prepend(current_row);
     }
 
-    $("table.representation_uris").on('click', '.aic-star-off', function(){
+    $("table.representation_ids").on('click', '.aic-star-off', function(){
         var uri_input = $(this).parent().next().next().find("input");
         var new_uri = uri_input.val();
         $('.preferred_representation').attr('value', new_uri);

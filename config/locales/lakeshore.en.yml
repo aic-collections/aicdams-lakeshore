@@ -13,6 +13,24 @@ en:
       errors:
         invalid: "Incorrect asset type. %{name} is not a type of %{type}"
         duplicate: "%{name} is a duplicate of:"
+    edit:
+      representation_of_html: "<p><em>Resources this Asset is a visual representation of (whether as total, detail, or specific angle).</em></p>"
+      documentation_for_html: >
+        <p><em>
+          Resources that this Asset documents (this can be visual documentation as well, such as the image
+          of a conservation process, or a microphotograph, or images of a facility's features).
+        </em> </p>
+      attachment_of_html: >
+        <p><em>
+          Other Assets that this asset is attached to. This can be a report which has this asset as
+          ancillary documentation, for example.
+        </em> </p>
+      has_attachments_html: >
+        <p><em>Other Assets that are attached to this asset, e.g. additional images for a report.</em></p>
+      representations_html:
+        <p><em>Visual representations of this resource.</em></p>
+      documents_html:
+        <p><em>Assets documenting this resource.</em></p>
 
     relationship:
       add_assets: "Add New Assets to this CITI "

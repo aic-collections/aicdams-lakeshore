@@ -74,7 +74,7 @@ export class AssetManager {
         '<td><a href="#" class="btn btn-danger am-delete">- Remove</a></td>' +
         '</td>';
 
-    if (parent_div.indexOf("work_representation_uris") >= 0) {
+    if (parent_div.indexOf("work_representation_ids") >= 0) {
         return representations_html;
     } else {
         return documentations_html;

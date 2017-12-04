@@ -7,71 +7,55 @@ describe Resource do
     it { is_expected.to eql(AICType.Resource) }
   end
 
-  describe "terms" do
-    subject { described_class.new }
-    ResourceTerms.all.each do |term|
-      it { is_expected.to respond_to(term) }
-    end
-  end
+  it { is_expected.to respond_to(:batch_uid) }
+  it { is_expected.to respond_to(:citi_icon) }
+  it { is_expected.to respond_to(:contributors) }
+  it { is_expected.to respond_to(:created) }
+  it { is_expected.to respond_to(:created_by) }
+  it { is_expected.to respond_to(:icon) }
+  it { is_expected.to respond_to(:status) }
+  it { is_expected.to respond_to(:status_uri) }
+  it { is_expected.to respond_to(:updated) }
+  it { is_expected.to respond_to(:language) }
+  it { is_expected.to respond_to(:publisher) }
+  it { is_expected.to respond_to(:rights) }
+  it { is_expected.to respond_to(:rights_statement) }
+  it { is_expected.to respond_to(:rights_holder) }
+  it { is_expected.to respond_to(:alt_label) }
+  it { is_expected.to respond_to(:citi_icon_uri=) }
+  it { is_expected.to respond_to(:created_by_uri=) }
+  it { is_expected.to respond_to(:icon_uri=) }
+  it { is_expected.to respond_to(:contributor_uris=) }
+  it { is_expected.to respond_to(:publisher_uris=) }
+  it { is_expected.to respond_to(:rights_statement_uris=) }
+  it { is_expected.to respond_to(:rights_holder_uris=) }
+  it { is_expected.to respond_to(:citi_icon_uri) }
+  it { is_expected.to respond_to(:created_by_uri) }
+  it { is_expected.to respond_to(:icon_uri) }
+  it { is_expected.to respond_to(:contributor_uris) }
+  it { is_expected.to respond_to(:publisher_uris) }
+  it { is_expected.to respond_to(:rights_statement_uris) }
+  it { is_expected.to respond_to(:rights_holder_uris) }
 
   describe "cardinality" do
-    [:batch_uid, :citi_icon, :created, :created_by, :preferred_representation, :icon, :status, :uid, :updated, :pref_label].each do |term|
+    [:batch_uid, :citi_icon, :created, :created_by, :icon, :status, :uid, :updated, :pref_label].each do |term|
       it "limits #{term} to a single value" do
         expect(described_class.properties[term.to_s].multiple?).to be false
       end
     end
   end
 
-  describe "#created" do
-    context "with a bad date" do
-      let(:bad_resource) { described_class.create(created: "bad date") }
-      subject { ActiveFedora::Base.load_instance_from_solr(bad_resource.id) }
-      it do
-        pending("Test for bad dates in the solr document?")
-        expect(subject.created).to eq("bad date is not a valid date")
-      end
-    end
-  end
+  describe "#status" do
+    before { allow(ListItem).to receive(:active_status).and_return("active") }
 
-  describe "::find_by_label" do
-    let!(:resource) { described_class.create(pref_label: "A Foos List") }
-    subject { described_class.find_by_label(label) }
-    context "with an exact search" do
-      let(:label) { "A Foos List" }
-      its(:pref_label) { is_expected.to eq(label) }
-    end
-    context "with a fuzzy search" do
-      let(:label) { "Foos List" }
-      it { is_expected.to be_nil }
-    end
-  end
-
-  describe "::accepts_uris_for" do
-    subject { described_class.new }
-    context "with setters" do
-      it { is_expected.to respond_to(:citi_icon_uri=) }
-      it { is_expected.to respond_to(:created_by_uri=) }
-      it { is_expected.to respond_to(:preferred_representation_uri=) }
-      it { is_expected.to respond_to(:icon_uri=) }
-      it { is_expected.to respond_to(:contributor_uris=) }
-      it { is_expected.to respond_to(:document_uris=) }
-      it { is_expected.to respond_to(:representation_uris=) }
-      it { is_expected.to respond_to(:publisher_uris=) }
-      it { is_expected.to respond_to(:rights_statement_uris=) }
-      it { is_expected.to respond_to(:rights_holder_uris=) }
+    context "when active" do
+      subject { described_class.new(status: "active") }
+      it { is_expected.to be_active }
     end
 
-    context "with getters" do
-      it { is_expected.to respond_to(:citi_icon_uri) }
-      it { is_expected.to respond_to(:created_by_uri) }
-      it { is_expected.to respond_to(:preferred_representation_uri) }
-      it { is_expected.to respond_to(:icon_uri) }
-      it { is_expected.to respond_to(:contributor_uris) }
-      it { is_expected.to respond_to(:document_uris) }
-      it { is_expected.to respond_to(:representation_uris) }
-      it { is_expected.to respond_to(:publisher_uris) }
-      it { is_expected.to respond_to(:rights_statement_uris) }
-      it { is_expected.to respond_to(:rights_holder_uris) }
+    context "when nil" do
+      subject { described_class.new(status: "inactive") }
+      it { is_expected.not_to be_active }
     end
   end
 end

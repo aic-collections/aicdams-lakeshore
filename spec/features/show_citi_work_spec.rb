@@ -5,16 +5,18 @@ describe "Displaying a CITI work" do
   let(:user)  { create(:user1) }
   let(:agent) { create(:agent, :with_sample_metadata) }
   let(:place) { create(:place, :with_sample_metadata) }
-  let(:asset) { create(:asset, pref_label: "A representation of the work", caption: "Asset caption") }
 
   let(:work) do
     create(:work, :with_sample_metadata,
            artist_uris: [agent.uri],
-           current_location_uris: [place.uri],
-           representations: [asset.uri],
-           preferred_representation: asset.uri
+           current_location_uris: [place.uri]
           )
   end
+
+  let!(:asset) { create(:asset, pref_label: "A representation of the work",
+                                caption: "Asset caption",
+                                representation_of_uris: [work.uri],
+                                preferred_representation_of_uris: [work.uri]) }
 
   before { sign_in(user) }
 

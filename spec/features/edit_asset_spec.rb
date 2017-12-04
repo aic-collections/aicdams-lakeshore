@@ -2,9 +2,17 @@
 require 'rails_helper'
 
 describe "Editing assets" do
-  let!(:asset) { create(:asset, :with_metadata) }
-  let!(:agent) { create(:agent, representation_uris: [asset.uri], preferred_representation_uri: asset.uri) }
-  let!(:work)  { create(:work, representation_uris: [asset.uri]) }
+  let!(:agent) { create(:agent, pref_label: "Related Agent") }
+  let!(:work)  { create(:work, pref_label: "Related Work") }
+  let!(:asset) { create(:asset, :with_metadata,
+                        representation_of_uris: [agent.uri, work.uri],
+                        document_of_uris: [agent.uri],
+                        attachment_of_uris: [parent_attachment.uri]) }
+
+  let(:parent_attachment) { create(:asset, pref_label: "Parent Attachment") }
+
+  let!(:child_attachment) { create(:asset, pref_label: "Child Attachment",
+                                           attachment_of_uris: [asset.uri]) }
 
   let(:user) { create(:user1) }
 
@@ -49,22 +57,22 @@ describe "Editing assets" do
     expect(page).to have_field("URL", with: asset.external_resources.first)
 
     click_link "Relationships"
-    within("table.representations_for") do
+    within("table.representation_of_uris") do
       expect(page).to have_content(agent.pref_label)
       expect(page).to have_content(work.pref_label)
     end
-  end
 
-  xit "selects a new doctype that has no sub or sub-subtypes and persists it" do
-    visit(edit_polymorphic_path(asset))
+    within("table.document_of_uris") do
+      expect(page).to have_content(agent.pref_label)
+      expect(page).not_to have_content(work.pref_label)
+    end
 
-    find('select#generic_work_document_type_uri').select("Development")
-    click_button("Save")
+    within("table.attachment_of_uris") do
+      expect(page).to have_content(parent_attachment.pref_label)
+    end
 
-    visit(polymorphic_path(asset))
-
-    expect(page).to have_content("Development")
-    expect(page).not_to have_content("Imaging > Event Photography > Lecture")
-    expect(page).not_to have_content("Development > Lecture")
+    within("table.attachment_ids") do
+      expect(page).to have_content(child_attachment.pref_label)
+    end
   end
 end

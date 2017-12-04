@@ -13,10 +13,10 @@ export class AutocompleteControl {
         data: function (term, page) {
           var model_select = $(el).find('.autocomplete_model')[1]
           if ( $(model_select).length > 0 ) {
-            return { q: term, model: $(model_select).val() }
+            return { q: term, model: $(model_select).val(), value_type: $(model_select).data('value_type') }
           }
           else {
-            return { q: term }
+            return { q: term, value_type: $(model_select).data('value_type') }
           }
         },
         results: function (data, page) {
@@ -34,6 +34,7 @@ export class AutocompleteControl {
       escapeMarkup: function (m) { return m }
     })
   }
+
   formatAssetResult(asset) {
     var image_tag = asset.thumbnail ? '      <img class="media-object" src="' + asset.thumbnail + '">' : ''
     var main_ref_number_tag = asset.main_ref_number ? '<span class="res_main_ref_no">&nbsp;(' + asset.main_ref_number + ')</span>' : ''

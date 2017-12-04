@@ -7,7 +7,7 @@ class BatchUploadForm < Sufia::Forms::BatchUploadForm
 
   self.terms = CurationConcerns::GenericWorkForm.terms
 
-  delegate :representations_for, :documents_for, :attachment_uris, :attachments_for, to: :parameterized_relationships
+  delegate :representation_of_uris, :document_of_uris, to: :parameterized_relationships
 
   def primary_terms
     CurationConcerns::GenericWorkForm.aic_terms - [:asset_type, :pref_label, :external_resources]
@@ -43,8 +43,11 @@ class BatchUploadForm < Sufia::Forms::BatchUploadForm
     []
   end
 
-  # TODO: delegate this to parameterized_relationships later when we want to add this relationship via the url
-  def preferred_representation_for
+  def attachment_of_uris
+    []
+  end
+
+  def attachment_ids
     []
   end
 
@@ -65,9 +68,7 @@ class BatchUploadForm < Sufia::Forms::BatchUploadForm
 
     # If parameterized_relationships has not been set, return a null pattern object
     def parameterized_relationships
-      @parameterized_relationships || OpenStruct.new(representations_for: [],
-                                                     documents_for: [],
-                                                     attachment_uris: [],
-                                                     attachments_for: [])
+      @parameterized_relationships ||= OpenStruct.new(representation_of_uris: [],
+                                                      document_of_uris: [])
     end
 end

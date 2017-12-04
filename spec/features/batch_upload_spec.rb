@@ -97,7 +97,7 @@ describe "Batch upload" do
     it "displays representations from the parameterized url" do
       visit("/batch_uploads/new?relationship=representation_for&citi_type=Work&citi_uid[]=#{work.citi_uid}")
       click_link("Relationships")
-      within("table.representations_for") do
+      within("table.representation_of_uris") do
         expect(page).to have_selector("td", text: "Sample Work")
       end
     end
@@ -105,7 +105,7 @@ describe "Batch upload" do
     it "displays documents from the parameterized url" do
       visit("/batch_uploads/new?relationship=documentation_for&citi_type=Work&citi_uid[]=#{work.citi_uid}")
       click_link("Relationships")
-      within("table.documents_for") do
+      within("table.document_of_uris") do
         expect(page).to have_selector("td", text: "Sample Work")
       end
     end

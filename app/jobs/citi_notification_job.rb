@@ -24,7 +24,7 @@ class CitiNotificationJob < ActiveJob::Base
     def find_citi_resource(file_set)
       intermediate_file_set = file_set.parent.intermediate_file_set.first
       return unless intermediate_file_set && intermediate_file_set.id == file_set.id
-      InboundRelationships.new(file_set.parent).preferred_representation
+      file_set.parent.preferred_representation_of_uris.first
     end
 
     def notify(notification)

@@ -749,6 +749,7 @@ DEPENDENCIES
   coffee-rails (~> 4.2)
   coveralls
   database_cleaner
+  deprecation
   devise (~> 4.2)
   devise-guests (~> 0.5)
   factory_girl_rails

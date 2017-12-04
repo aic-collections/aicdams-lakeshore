@@ -1,0 +1,21 @@
+<%= simple_form_for [main_app, @form], html: { multipart: true } do |f| %>
+  <div class="base-terms">
+    <div class='autocomplete-components'>
+      <h4>Documents</h4>
+      <%= t('lakeshore.edit.documents_html') %>
+
+      <%= f.input :document_ids, as: :hidden_multi_select, property: :documents, hint: false, label: false,
+          input_html: { class: 'form-control' }, required: false %>
+
+      <h4>Representations</h4>
+      <%= t('lakeshore.edit.representations_html') %>
+
+      <%= f.input :representation_ids, as: :hidden_multi_select_stars, property: :representations,
+          hint: false, label: false, input_html: { class: 'form-control' }, required: false %>
+      </div>
+    </div>
+
+    <%= f.submit 'Save', class: 'btn btn-primary', id: "with_representations_submit",
+    	  name: "save_with_representations" %>
+  </div>
+<% end %>

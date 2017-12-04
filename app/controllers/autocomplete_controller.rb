@@ -26,7 +26,7 @@ class AutocompleteController < ActionController::Base
 
     def format_response(doc)
       {
-        id: (aic_type =~ /Asset/ ? doc.fedora_uri : doc.id),
+        id: doc.send(value_type.to_sym),
         label: doc.pref_label,
         main_ref_number: doc.main_ref_number,
         uid: doc.uid,
@@ -36,5 +36,11 @@ class AutocompleteController < ActionController::Base
 
     def aic_type
       params.fetch(:model, "Asset")
+    end
+
+    def value_type
+      type = params.fetch(:value_type, "id") || "id"
+      raise ArgumentError unless ["id", "fedora_uri"].include?(type)
+      type
     end
 end

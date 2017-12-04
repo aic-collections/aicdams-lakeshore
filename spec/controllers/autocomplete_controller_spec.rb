@@ -3,10 +3,16 @@ require 'rails_helper'
 
 describe AutocompleteController do
   describe "#index" do
-    context "when searching for assets" do
-      let!(:asset) { create(:asset, pref_label: "Autocomplete example") }
+    def asset
+      @asset ||= create(:asset, pref_label: "Autocomplete example")
+    end
 
-      before  { get :index, q: query, format: :json }
+    before(:all) { asset }
+
+    context "when searching for assets" do
+      let(:value_type) { "fedora_uri" }
+
+      before  { get :index, q: query, value_type: value_type, format: :json }
       subject { JSON.parse(response.body).first }
 
       context "with no results" do
@@ -17,17 +23,37 @@ describe AutocompleteController do
 
       context "with a partial label query" do
         let(:query) { "complete" }
-        it { is_expected.to include("label" => "Autocomplete example", "id" => start_with("http")) }
+        it { is_expected.to include("label" => "Autocomplete example", "id" => asset.uri) }
       end
 
       context "with a complete label query" do
         let(:query) { "Autocomplete example" }
-        it { is_expected.to include("label" => "Autocomplete example", "id" => start_with("http")) }
+        it { is_expected.to include("label" => "Autocomplete example", "id" => asset.uri) }
       end
 
       context "with a partial UID query" do
         let(:query) { asset.uid.last(4) }
-        it { is_expected.to include("label" => "Autocomplete example", "id" => start_with("http")) }
+        it { is_expected.to include("label" => "Autocomplete example", "id" => asset.uri) }
+      end
+
+      context "when requesting an id" do
+        let(:query) { "Autocomplete example" }
+        let(:value_type) { "id" }
+        it { is_expected.to include("label" => "Autocomplete example", "id" => asset.id) }
+      end
+
+      context "when value type is nil" do
+        let(:query) { "Autocomplete example" }
+        let(:value_type) { nil }
+        it { is_expected.to include("label" => "Autocomplete example", "id" => asset.id) }
+      end
+    end
+
+    context "with a bogus value type" do
+      it "raises an error" do
+        expect {
+          get :index, q: "Autocomplete example", value_type: "bogus", format: :json
+        }.to raise_error(ArgumentError)
       end
     end
 

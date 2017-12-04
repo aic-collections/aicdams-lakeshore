@@ -8,7 +8,6 @@ describe Sufia::ActorFactory do
 
     it do
       is_expected.to include(
-        AddToCitiResourceActor,
         ReplaceFileActor,
         CreateAssetsActor
       )

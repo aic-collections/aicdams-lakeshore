@@ -10,8 +10,6 @@ describe CurationConcerns::GenericWorkForm do
 
   describe "delegates" do
     it { is_expected.to delegate_method(:dept_created).to(:model) }
-    it { is_expected.to delegate_method(:attachment_uris).to(:model) }
-    it { is_expected.to delegate_method(:attachments).to(:model) }
     it { is_expected.to delegate_method(:copyright_representatives).to(:model) }
   end
 
@@ -58,11 +56,6 @@ describe CurationConcerns::GenericWorkForm do
                                 external_resources: []) }
   end
 
-  describe "::multiple?" do
-    subject { described_class.multiple?(:attachment_uris) }
-    it { is_expected.to be true }
-  end
-
   describe "#uris_for" do
     subject { form.uris_for(:keyword) }
     context "with no items" do
@@ -84,28 +77,6 @@ describe CurationConcerns::GenericWorkForm do
       let(:term) { create(:list_item) }
       before { allow(asset).to receive(:compositing).and_return(term) }
       it { is_expected.to eq(term.uri.to_s) }
-    end
-  end
-
-  context "when the asset has a relationship to a CITI resource" do
-    let!(:asset)    { create(:asset) }
-    let!(:resource) { create(:exhibition, representations: [asset.uri], documents: [asset.uri]) }
-
-    describe "#representations_for" do
-      its(:representations_for) { is_expected.to contain_exactly(kind_of(SolrDocument)) }
-    end
-
-    describe "#documents_for" do
-      its(:documents_for) { is_expected.to contain_exactly(kind_of(SolrDocument)) }
-    end
-  end
-
-  context "when the asset has an attachment" do
-    let!(:asset)    { create(:asset) }
-    let!(:resource) { create(:asset, attachments: [asset.uri]) }
-
-    describe "#attachments_for" do
-      its(:attachments_for) { is_expected.to contain_exactly(kind_of(SolrDocument)) }
     end
   end
 
