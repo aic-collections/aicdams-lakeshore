@@ -17,7 +17,7 @@ class HiddenMultiSelectStarsInput < HiddenMultiSelectInput
           <table class="table-condensed am #{attribute_name}">
             <thead>
               <tr>
-                <th>Preferred</th>
+                <th>Pref.</th>
                 <th>Thumbnail</th>
                 <th>Title</th>
                 <th>Actions</th>
