@@ -158,8 +158,11 @@ p.unauthorized_asset_display.asset_title {
 .fa-star {
   font-size: 1.6em;
   color: yellow;
-  -webkit-text-stroke-width: 2px;
-  -webkit-text-stroke-color: black;
+  text-shadow:
+          -1px -1px 0 #000,
+          1px -1px 0 #000,
+          -1px 1px 0 #000,
+          1px 1px 0 #000;
 }
 
 .fa-star-o {
