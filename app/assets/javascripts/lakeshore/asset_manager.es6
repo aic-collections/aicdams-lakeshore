@@ -23,6 +23,11 @@ export class AssetManager {
 
     $('.am').on('click', '.am-delete', function(event) {
       event.preventDefault()
+      var parent_row = $(this).closest("tr");
+      if ( parent_row.is(':first-child') == true )
+        {
+            $('.preferred_representation').attr('value', '');
+        };
       $this.removeRow(this)
     })
   }

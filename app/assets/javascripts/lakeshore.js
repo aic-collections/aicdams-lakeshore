@@ -83,11 +83,13 @@ $(function() {
     }
 
     $("table.representation_uris").on('click', '.fa-star-o', function(){
-        var $this = $(this)
-        var current_row = $this.closest('tr');
+        var uri_input = $(this).parent().next().next().find("input");
+        var new_uri = uri_input.val();
+        $('.preferred_representation').attr('value', new_uri);
+        var current_row = $(this).closest('tr');
         var parent_table = current_row.parent();
         unstar_all_stars();
-        toggle_clicked_star($this);
+        toggle_clicked_star($(this));
         move_star_to_top(parent_table, current_row);
     });
 });
