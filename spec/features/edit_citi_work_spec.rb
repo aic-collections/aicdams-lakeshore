@@ -24,7 +24,7 @@ describe "Editing CITI work" do
     end
 
     it "there should be no star icon" do
-      expect(page).to_not have_selector(".aic-star-on")
+      expect(page).not_to have_selector(".aic-star-on")
     end
 
     it "there should be one star-off icon" do
