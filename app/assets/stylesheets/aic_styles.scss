@@ -155,18 +155,18 @@ p.unauthorized_asset_display.asset_title {
   font-size: smaller;
 }
 
-.fa-star {
-  font-size: 1.6em;
-  color: yellow;
-  text-shadow:
-          -1px -1px 0 #000,
-          1px -1px 0 #000,
-          -1px 1px 0 #000,
-          1px 1px 0 #000;
+.aic-star-on {
+  background-image: url(/images/star-on.png);
+  height: 32px;
+  width: 32px;
+  background-repeat: no-repeat;
 }
 
-.fa-star-o {
-  font-size: 1.8em;
+.aic-star-off {
+  background-image: url(/images/star-off.png);
+  height: 32px;
+  width: 32px;
+  background-repeat: no-repeat;
 }
 
 table.relationships .label, #documents .label {
