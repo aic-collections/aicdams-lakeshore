@@ -66,9 +66,9 @@ module ApplicationHelper
 
   def star_or_not(rep_uri, pref_rep_uri)
     if rep_uri == pref_rep_uri
-      "fa-star"
+      "aic-star-on"
     else
-      "fa-star-o"
+      "aic-star-off"
     end
   end
 

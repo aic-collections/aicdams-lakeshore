@@ -23,6 +23,14 @@ describe "Editing CITI work" do
       expect(work.preferred_representation_uri).to be_nil
     end
 
+    it "there should be no star icon" do
+      expect(page).to_not have_selector(".aic-star-on")
+    end
+
+    it "there should be one star-off icon" do
+      expect(page).to have_selector(".aic-star-off", count: 1)
+    end
+
     it "the hidden_preferred_representation.value should be an empty string" do
       expect(hidden_preferred_representation.value).to eq("")
     end
@@ -35,7 +43,7 @@ describe "Editing CITI work" do
 
     it "the work show page includes a preferred 'star' icon" do
       click_button("Save")
-      expect(page).to have_selector("i.fa-star")
+      expect(page).to have_selector(".aic-star-on", count: 1)
     end
 
     it "a CITI notification is made" do

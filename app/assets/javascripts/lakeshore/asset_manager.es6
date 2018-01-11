@@ -53,7 +53,7 @@ export class AssetManager {
 
   assetRow(parent_div) {
     var image_tag = this.selectedAssetImage ? '<img src="' + this.selectedAssetImage + '" />' : '';
-    var pref_rep_star = '<i class="fa fa-star-o"></i>';
+    var pref_rep_star = '<div class="aic-star-off"></div>';
 
     var representations_html =
       '<tr>' +
