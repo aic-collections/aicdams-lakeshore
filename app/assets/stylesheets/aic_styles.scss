@@ -155,10 +155,6 @@ p.unauthorized_asset_display.asset_title {
   font-size: smaller;
 }
 
-table.relationships .label {
-  display: inline-block;
-}
-
 .aic-star-on {
   background-image: url(/images/star-on.png);
   height: 32px;
@@ -171,4 +167,8 @@ table.relationships .label {
   height: 32px;
   width: 32px;
   background-repeat: no-repeat;
+}
+
+table.relationships .label, #documents .label {
+  display: inline-block;
 }
