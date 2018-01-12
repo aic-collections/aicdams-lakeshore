@@ -27,9 +27,7 @@ module CitiFormBehaviors
 
   # @return [Array<SolrDocument>]
   def representations
-    rep_uris = representation_uris
-    rep_uris.insert(0, preferred_representation_uri).uniq! if preferred_representation_uri
-    rep_uris.map { |s| SolrDocument.find(URI(s).path.split(/\//).last) }
+    representation_uris.map { |s| SolrDocument.find(URI(s).path.split(/\//).last) }
   end
 
   # @return [SolrDocument]

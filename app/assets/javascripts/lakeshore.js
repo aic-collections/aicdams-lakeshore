@@ -70,6 +70,13 @@ Blacklight.onLoad(function () {
 
 // https://cits.artic.edu/redmine/issues/2338
 $(function() {
+
+    var star = $('table.representation_uris .aic-star-on');
+    var star_tr = star.closest('tr');
+
+    var table = star_tr.parent();
+    table.prepend(star_tr);
+
     function unstar_all_stars() {
         $('.aic-star-on').toggleClass('aic-star-off aic-star-on');
     }
