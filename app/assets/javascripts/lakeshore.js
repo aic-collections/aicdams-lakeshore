@@ -70,24 +70,33 @@ Blacklight.onLoad(function () {
 
 // https://cits.artic.edu/redmine/issues/2338
 $(function() {
+
+    var star = $('table.representation_uris .aic-star-on');
+    var star_tr = star.closest('tr');
+
+    var table = star_tr.parent();
+    table.prepend(star_tr);
+
     function unstar_all_stars() {
-        $('.fa-star').toggleClass('fa-star-o fa-star');
+        $('.aic-star-on').toggleClass('aic-star-off aic-star-on');
     }
 
     function toggle_clicked_star(clicked_nonstar) {
-        clicked_nonstar.toggleClass('fa-star-o fa-star');
+        clicked_nonstar.toggleClass('aic-star-off aic-star-on');
     }
 
     function move_star_to_top(parent_table, current_row) {
         parent_table.prepend(current_row);
     }
 
-    $("table.representation_uris").on('click', '.fa-star-o', function(){
-        var $this = $(this)
-        var current_row = $this.closest('tr');
+    $("table.representation_uris").on('click', '.aic-star-off', function(){
+        var uri_input = $(this).parent().next().next().find("input");
+        var new_uri = uri_input.val();
+        $('.preferred_representation').attr('value', new_uri);
+        var current_row = $(this).closest('tr');
         var parent_table = current_row.parent();
         unstar_all_stars();
-        toggle_clicked_star($this);
+        toggle_clicked_star($(this));
         move_star_to_top(parent_table, current_row);
     });
 });

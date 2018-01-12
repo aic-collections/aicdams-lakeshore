@@ -139,7 +139,7 @@ div.home_share_work {
     display: none;
 }
 
-table.relationships img {
+table.relationships img, table.representation_uris img {
 	max-height: 150px;
 }
 
@@ -155,17 +155,20 @@ p.unauthorized_asset_display.asset_title {
   font-size: smaller;
 }
 
-.fa-star {
-  font-size: 1.6em;
-  color: yellow;
-  -webkit-text-stroke-width: 2px;
-  -webkit-text-stroke-color: black;
+.aic-star-on {
+  background-image: url(/images/star-on.png);
+  height: 32px;
+  width: 32px;
+  background-repeat: no-repeat;
 }
 
-.fa-star-o {
-  font-size: 1.8em;
+.aic-star-off {
+  background-image: url(/images/star-off.png);
+  height: 32px;
+  width: 32px;
+  background-repeat: no-repeat;
 }
 
-table.relationships .label {
+table.relationships .label, #documents .label {
   display: inline-block;
 }

@@ -23,6 +23,11 @@ export class AssetManager {
 
     $('.am').on('click', '.am-delete', function(event) {
       event.preventDefault()
+      var parent_row = $(this).closest("tr");
+      if ( parent_row.is(':first-child') == true )
+        {
+            $('.preferred_representation').attr('value', '');
+        };
       $this.removeRow(this)
     })
   }
@@ -48,7 +53,7 @@ export class AssetManager {
 
   assetRow(parent_div) {
     var image_tag = this.selectedAssetImage ? '<img src="' + this.selectedAssetImage + '" />' : '';
-    var pref_rep_star = '<i class="fa fa-star-o"></i>';
+    var pref_rep_star = '<div class="aic-star-off"></div>';
 
     var representations_html =
       '<tr>' +
