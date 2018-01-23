@@ -1,4 +1,4 @@
-* link to REDMINE
+# REDMINE URL:
 
 ### TODO
 - [ ] we should do this high level stuff, or figure out these high level things
