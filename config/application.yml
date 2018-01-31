@@ -4,7 +4,7 @@ development:
   hydra_bin_path: "/usr/local/bin"
   LAKESHORE_ENV: "local"
   LAKESHORE_DOMAIN: "localhost:3000"
-  USER_NOTIFICATION_FREQ: "300"
+  user_notification_freq: "300"
 
 test:
   citi_api_uid: "citi_api_uid"
@@ -13,7 +13,7 @@ test:
   citi_api_ssl_verify: "false"
   hydra_bin_path: "/usr/local/bin"
   LAKESHORE_DOMAIN: "localhost:3000"
-  USER_NOTIFICATION_FREQ: "30"
+  user_notification_freq: "30"
 
 production:
 
@@ -35,4 +35,4 @@ production:
   # is self-signed or is some another signing authority that is not in the system's certificate chain.
   # Note: verification will only be skipped if the value is set to "false". All other values evaluate to "true".
   citi_api_ssl_verify: "false"
-  USER_NOTIFICATION_FREQ: "30"
+  user_notification_freq: "30"

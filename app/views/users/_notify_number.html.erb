@@ -1,3 +1,3 @@
-<span class="notify_number label label-default" data-update-poll-url="<%= sufia.user_notify_path %>" data-update-poll-interval="<%= ENV["USER_NOTIFICATION_FREQ"] %>">
+<span class="notify_number label label-default" data-update-poll-url="<%= sufia.user_notify_path %>" data-update-poll-interval="<%= Figaro.env.user_notification_freq %>">
   <span class="count">0</span> <span class="sr-only">unread notifications</span>
 </span>
