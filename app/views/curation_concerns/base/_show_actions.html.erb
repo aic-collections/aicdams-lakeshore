@@ -7,6 +7,6 @@
       <%= link_to "Delete", [main_app, presenter], class: 'btn btn-danger', data: { confirm: "Delete this #{presenter.human_readable_type}?" }, method: :delete if presenter.deleteable? %>
   <% end %>
   <% if presenter.imaging_uid.present? %>
-    <a href="https://phoenix.artic.edu/order/create/batch/<%= presenter.imaging_uid.first %>" class='btn btn-default'>Create Lab Work</a>
+    <a href="<%= Figaro.env.phoenix_host %>/order/create/batch/<%= presenter.imaging_uid.first %>" class='btn btn-default'>Create Lab Work</a>
   <% end %>
 </div>
