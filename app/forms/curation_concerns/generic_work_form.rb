@@ -4,16 +4,23 @@ module CurationConcerns
     include AssetFormBehaviors
     include PropertyPermissions
 
-    delegate :dept_created, :attachment_uris, :attachments, :copyright_representatives, to: :model
+    delegate :dept_created, :attachment_uris, :attachments, :copyright_representatives, :imaging_uid_placeholder, to: :model
 
-    def self.aic_terms
-      [
-        :asset_type, :document_type_uri, :caption, :first_document_sub_type_uri, :second_document_sub_type_uri,
+    attr_writer :action_name, :current_ability
+
+    def self.aic_terms(action_name: nil, current_ability: nil)
+      terms = [
+        :asset_type, :document_type_uri, :imaging_uid_placeholder, :caption, :first_document_sub_type_uri, :second_document_sub_type_uri,
         :pref_label, :alt_label, :description, :language, :publisher, :capture_device,
         :status_uri, :digitization_source_uri, :compositing_uri, :light_type_uri, :view_uris,
         :keyword_uris, :publish_channel_uris, :view_notes, :visual_surrogate, :external_resources,
         :copyright_representatives, :public_domain, :licensing_restriction_uris
       ]
+      if action_name == "new" || !current_ability&.admin?
+        terms - [:imaging_uid_placeholder]
+      else
+        terms
+      end
     end
 
     def self.multiple?(term)
@@ -28,7 +35,7 @@ module CurationConcerns
     self.required_fields = [:asset_type, :document_type_uri]
 
     def primary_terms
-      self.class.aic_terms - [:asset_type, :external_resources]
+      self.class.aic_terms(action_name: @action_name, current_ability: @current_ability) - [:asset_type, :external_resources]
     end
 
     def secondary_terms
