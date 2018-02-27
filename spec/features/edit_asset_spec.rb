@@ -31,6 +31,9 @@ describe "Editing assets" do
     expect(page).to have_field("Visual Surrogate", with: asset.visual_surrogate)
     expect(page).to have_field("Caption", with: asset.caption)
 
+    # non-admin can't see imaging_uid field
+    expect(page).not_to have_field("Imaging UID", with: asset.imaging_uid.first)
+
     expect(page).not_to have_content('string multi_value optional form-control generic_work_alt_label form-control multi-text-field')
 
     # Displaying hints

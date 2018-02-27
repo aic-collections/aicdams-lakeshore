@@ -54,4 +54,10 @@ class CurationConcerns::GenericWorksController < ApplicationController
       return true if curation_concern.visibility_changed?
       @saved_permissions != curation_concern.permissions.map(&:to_hash)
     end
+
+    def build_form
+      @form = form_class.new(curation_concern, current_ability)
+      @form.current_ability = current_ability
+      @form.action_name = action_name
+    end
 end
