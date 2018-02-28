@@ -16,8 +16,13 @@ module CurationConcerns
         :keyword_uris, :publish_channel_uris, :view_notes, :visual_surrogate, :external_resources,
         :copyright_representatives, :public_domain, :licensing_restriction_uris
       ]
-      if action_name == "new" || !current_ability&.admin?
-        terms - [:imaging_uid_placeholder]
+
+      if current_ability
+        if action_name == "new" || !current_ability.admin?
+          terms - [:imaging_uid_placeholder]
+        else
+          terms
+        end
       else
         terms
       end
