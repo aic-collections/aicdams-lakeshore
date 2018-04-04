@@ -5,7 +5,7 @@ module Lakeshore
 
     attr_reader :ingestor, :submitted_asset_type, :document_type_uri, :original_file,
                 :intermediate_file, :presevation_master_file, :legacy_file, :additional_files, :params,
-                :preferred_representation_for, :force_preferred_representation
+                :preferred_representation_for
 
     validates :ingestor, :asset_type, :document_type_uri, :intermediate_file, presence: true
 
@@ -57,11 +57,6 @@ module Lakeshore
       end
     end
 
-    def force_preferred_representation?
-      return true if force_preferred_representation == "true" || force_preferred_representation == 1
-      false
-    end
-
     private
 
       def register_terms(metadata)
@@ -69,7 +64,6 @@ module Lakeshore
         @document_type_uri = metadata.fetch(:document_type_uri, nil)
         @preferred_representation_for = metadata.fetch(:preferred_representation_for, [])
         @ingestor = find_or_create_user(metadata.fetch(:depositor, nil))
-        @force_preferred_representation = metadata.fetch(:force_preferred_representation, false)
       end
 
       def find_or_create_user(key)
@@ -125,7 +119,6 @@ module Lakeshore
       end
 
       def additional_uploads
-        return [] unless additional_files
         additional_files.values.map do |file|
           Sufia::UploadedFile.create(file: file, user: ingestor)
         end

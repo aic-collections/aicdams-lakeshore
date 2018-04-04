@@ -18,7 +18,6 @@ class DuplicateUploadVerificationService
 
   # @return [Array<FileSet>]
   def duplicate_file_sets
-    return [] if file.nil?
     FileSet.where(digest_ssim: fedora_shasum)
   end
 
