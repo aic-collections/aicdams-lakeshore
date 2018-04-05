@@ -13,6 +13,7 @@ describe ReplaceFileActor do
       let(:attributes) { ActionController::Parameters.new(uploaded_files: ["1"], permissions_attributes: [], asset_type: nil) }
 
       before do
+        ActiveJob::Base.queue_adapter = :test
         Sufia::UploadedFile.create(id: "1", file: file, user: user, use_uri: AICType.IntermediateFileSet)
       end
 
