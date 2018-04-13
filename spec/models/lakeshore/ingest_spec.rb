@@ -18,10 +18,12 @@ describe Lakeshore::Ingest do
         }
       end
       it { is_expected.to be_valid }
-      it { is_expected.to be_check_duplicates }
+      it "#check_duplicates_turned_off? is false" do
+        expect(subject.check_duplicates_turned_off?).to be(false)
+      end
     end
 
-    context "when not checking for duplicates" do
+    context "duplicate_check is set to 'true'" do
       let(:params) do
         {
           asset_type: "StillImage",
@@ -30,7 +32,9 @@ describe Lakeshore::Ingest do
           duplicate_check: "false"
         }
       end
-      it { is_expected.not_to be_check_duplicates }
+      it "#check_duplicates_turned_off? is true" do
+        expect(subject.check_duplicates_turned_off?).to be(true)
+      end
     end
   end
 
@@ -203,6 +207,30 @@ describe Lakeshore::Ingest do
       end
 
       its(:represented_resources) { is_expected.to be_empty }
+    end
+  end
+
+  describe "#force_preferred_representation?" do
+    subject { ingest.force_preferred_representation? }
+
+    context "by default" do
+      let(:params) { {} }
+      it { is_expected.to be(false) }
+    end
+
+    context "when set to false" do
+      let(:params) { { force_preferred_representation: "false" } }
+      it { is_expected.to be(false) }
+    end
+
+    context "when set to true" do
+      let(:params) { { force_preferred_representation: "true" } }
+      it { is_expected.to be(true) }
+    end
+
+    context "when set to anything" do
+      let(:params) { { force_preferred_representation: "asdf" } }
+      it { is_expected.to be(false) }
     end
   end
 end
