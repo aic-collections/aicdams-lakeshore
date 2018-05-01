@@ -4,7 +4,9 @@ module AssetRelationshipHelper
   def publish_channels_to_badges(publish_channels)
     html = []
 
-    publish_channels.each do |publish_channel|
+    interpretive_resources = ["Multimedia", "Educational Resources", "Teacher Resources"]
+
+    (publish_channels - interpretive_resources).each do |publish_channel|
       html << content_tag(:span, publish_channel, title: publish_channel, class: "label label-primary")
     end
     html.join.html_safe
