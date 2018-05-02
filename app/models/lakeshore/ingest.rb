@@ -5,7 +5,7 @@ module Lakeshore
 
     attr_reader :ingestor, :submitted_asset_type, :document_type_uri, :original_file,
                 :intermediate_file, :presevation_master_file, :legacy_file, :additional_files, :params,
-                :preferred_representation_for
+                :preferred_representation_for, :force_preferred_representation
 
     validates :ingestor, :asset_type, :document_type_uri, :intermediate_file, presence: true
 
@@ -43,10 +43,10 @@ module Lakeshore
       ingestor.present?
     end
 
-    # @return [Boolean]
-    # Only returns false if the parameter is explicitly set to "false"
-    def check_duplicates?
-      params.fetch(:duplicate_check, nil) == "false" ? false : true
+    # @return [true, false]
+    # Only returns true if the parameter is explicitly set to "false"
+    def check_duplicates_turned_off?
+      params.fetch(:duplicate_check, nil) == "false"
     end
 
     # @return [Array<String>]
@@ -55,6 +55,12 @@ module Lakeshore
       preferred_representation_for.select do |id|
         SolrDocument.new(ActiveFedora::SolrService.query("id:#{id}").first).preferred_representation_id.present?
       end
+    end
+
+    # @return [true, false]
+    # Only returns true if the parameter is explicitly set to "true"
+    def force_preferred_representation?
+      params.fetch(:force_preferred_representation, nil) == "true"
     end
 
     private
@@ -119,6 +125,7 @@ module Lakeshore
       end
 
       def additional_uploads
+        return [] unless additional_files
         additional_files.values.map do |file|
           Sufia::UploadedFile.create(file: file, user: ingestor)
         end
