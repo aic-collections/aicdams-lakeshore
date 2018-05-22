@@ -5,13 +5,16 @@ describe Lakeshore::IngestController, custom_description: "Lakeshore::IngestCont
   let(:apiuser) { create(:apiuser) }
   let(:user)    { create(:user1) }
 
-  let(:image_asset) do
+  # bang this so it is not memoized and gets invoked even after tmp dir is wiped via LakeshoreTesting
+  # https://cits.artic.edu/issues/2943
+  let!(:image_asset) do
     ActionDispatch::Http::UploadedFile.new(filename:     "sun.png",
                                            content_type: "image/png",
                                            tempfile:     File.new(File.join(fixture_path, "sun.png")))
   end
 
   before do
+    LakeshoreTesting.reset_uploads
     sign_in_basic(apiuser)
   end
 
@@ -20,6 +23,7 @@ describe Lakeshore::IngestController, custom_description: "Lakeshore::IngestCont
   end
 
   context "when uploading a file" do
+    before { LakeshoreTesting.restore }
     it "successfully adds the fileset to the work" do
       expect(Lakeshore::AttachFilesToWorkJob).to receive(:perform_later)
       post :create, asset_type: "StillImage", content: { intermediate: image_asset }, metadata: metadata
@@ -40,6 +44,8 @@ describe Lakeshore::IngestController, custom_description: "Lakeshore::IngestCont
       }
     end
     let(:asset) { GenericWork.where(uid: "SI-99").first }
+
+    before { LakeshoreTesting.restore }
 
     it "successfully creates the the work" do
       expect(Lakeshore::AttachFilesToWorkJob).to receive(:perform_later)
@@ -152,8 +158,9 @@ describe Lakeshore::IngestController, custom_description: "Lakeshore::IngestCont
       }
     end
 
+    before { LakeshoreTesting.restore }
+
     it "updates the non_asset with the preferred representation" do
-      LakeshoreTesting.restore(reset_tmp_files: false)
       expect(Lakeshore::AttachFilesToWorkJob).to receive(:perform_later)
       expect(non_asset.preferred_representation_uri).to be_nil
       post :create, asset_type: "StillImage", content: { intermediate: image_asset }, metadata: metadata
@@ -197,6 +204,8 @@ describe Lakeshore::IngestController, custom_description: "Lakeshore::IngestCont
         "preferred_representation_for" => [non_asset.id]
       }
     end
+
+    before { LakeshoreTesting.restore }
 
     it "updates the non_asset with the new preferred representation" do
       expect(Lakeshore::AttachFilesToWorkJob).to receive(:perform_later)
