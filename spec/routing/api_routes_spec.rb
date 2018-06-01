@@ -37,10 +37,10 @@ describe Rails.application.routes do
     describe "file_set" do
       describe "PATCH" do
         it "is routable" do
-          expect(patch: "/api/file_sets/1234").to route_to(controller: "lakeshore/file_sets",
-                                                           action: "update",
-                                                           format: :json,
-                                                           id: "1234")
+          expect(put: "/api/file_sets/1234").to route_to(controller: "lakeshore/file_sets",
+                                                         action: "update",
+                                                         format: :json,
+                                                         id: "1234")
         end
       end
     end
