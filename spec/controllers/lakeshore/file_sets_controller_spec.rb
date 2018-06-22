@@ -25,14 +25,20 @@ describe Lakeshore::FileSetsController do
         end
       end
 
-      fcontext "and valid despositor is passed in" do
+      context "but is not an AICUser and depositor is not an AICUser" do
+        let(:file_set_params) { { files: [file] } }
+        let(:params)          { { file_set: file_set_params, id: file_set1.id, depositor: "derp" } }
+        it "returns a 400 respone code with an error message" do
+          expect(response).to have_http_status(400)
+          expect(response.body).to include("AICUser 'derp' not found, please review the depositor.\n")
+        end
+      end
+
+      context "and valid despositor is passed in" do
         let(:file_set_params) { { files: [file] } }
         let(:params)          { { file_set: file_set_params, id: file_set1.id, depositor: aic_user1.nick } }
-        it "returns a 302 response code" do
-          # ActiveJob::Base.queue_adapter = :test
-          allow(CharacterizationService).to receive(:run)
-          expect(response).to have_http_status(302)
-          # ActiveJob::Base.queue_adapter = :inline
+        it "does not return a 400" do
+          expect(response).not_to have_http_status(400)
         end
       end
     end
