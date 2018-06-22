@@ -5,6 +5,12 @@ describe Lakeshore::Ingest do
   let(:user)              { create(:user1) }
   let(:controller_params) { ActionController::Parameters.new(params) }
   let(:ingest)            { described_class.new(controller_params) }
+  let(:file)              { File.open(File.join(fixture_path, "sun.png")) }
+  let(:file0)             { File.open(File.join(fixture_path, "tardis.png")) }
+  let(:file1)             { File.open(File.join(fixture_path, "tardis2.png")) }
+  let(:file2)             { File.open(File.join(fixture_path, "text.png")) }
+
+  before { LakeshoreTesting.restore }
 
   describe "#valid?" do
     subject { ingest }
@@ -13,7 +19,7 @@ describe Lakeshore::Ingest do
       let(:params) do
         {
           asset_type: "StillImage",
-          content: { intermediate: "file_set" },
+          content: { intermediate: file },
           metadata: { document_type_uri: "doc_type", depositor: user.email }
         }
       end
@@ -66,53 +72,18 @@ describe Lakeshore::Ingest do
     end
   end
 
-  describe "#files" do
-    let(:params) do
-      {
-        asset_type: "StillImage",
-        content: content,
-        metadata: { document_type_uri: "doc_type", depositor: user.email }
-      }
-    end
-
-    subject do
-      described_class.new(controller_params).files.map do |id|
-        Sufia::UploadedFile.find(id).use_uri
-      end
-    end
-
-    context "with only an intermediate file" do
-      let(:content) { { intermediate: "intermediate file_set" } }
-      it { is_expected.to contain_exactly(AICType.IntermediateFileSet) }
-    end
-
-    context "with original, intermediate, legacy, and preservation files" do
-      let(:content) do
-        { original: "original file_set", pres_master: "preservation master file_set", intermediate: "intermediate file_set", legacy: "legacy file_set" }
-      end
-      it { is_expected.to contain_exactly(AICType.OriginalFileSet,
-                                          AICType.IntermediateFileSet,
-                                          AICType.PreservationMasterFileSet,
-                                          AICType.LegacyFileSet) }
-    end
-
-    context "with assorted other files" do
-      let(:content) do
-        { "intermediate" => "intermediate file_set", "0" => "oddball 0", "1" => "oddball 1", "other" => "other" }
-      end
-
-      it { is_expected.to contain_exactly(AICType.IntermediateFileSet, nil, nil, nil) }
-    end
-  end
-
   describe "#attributes_for_actor" do
     subject { ingest.attributes_for_actor }
+
+    let(:mock_service) { double("MockService", duplicates: [], duplicate_file_sets: []) }
+
+    before { allow(DuplicateUploadVerificationService).to receive(:new).and_return(mock_service) }
 
     context "without additional sharing permissions" do
       let(:params) do
         {
           asset_type: "StillImage",
-          content: { intermediate: "file_set" },
+          content: { intermediate: file },
           metadata: { document_type_uri: "doc_type", depositor: user.email }
         }
       end
@@ -128,7 +99,7 @@ describe Lakeshore::Ingest do
       let(:params) do
         {
           asset_type: "StillImage",
-          content: { intermediate: "file_set" },
+          content: { intermediate: file },
           metadata: { document_type_uri: "doc_type", depositor: user.email },
           sharing: '[{ "type" : "group", "name" : "112", "access" : "read" }, {"type" : "person", "name" : "jdoe99", "access" : "edit"}]'
         }
@@ -149,7 +120,7 @@ describe Lakeshore::Ingest do
       let(:params) do
         {
           asset_type: "StillImage",
-          content: { intermediate: "file_set" },
+          content: { intermediate: file },
           metadata: { document_type_uri: "doc_type", depositor: user.email },
           sharing: '[{ "type" : "group", "name" : "112", "access" : "read" }, {"type" : "person", "name" : "' + user.email + '", "access" : "edit"}]'
         }

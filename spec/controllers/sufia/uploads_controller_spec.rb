@@ -6,7 +6,9 @@ describe Sufia::UploadsController do
   include_context "authenticated saml user"
 
   let(:duplicates) { [] }
-  before { allow(controller).to receive(:duplicate_upload).and_return(duplicates) }
+  before do
+    LakeshoreTesting.restore
+  end
 
   describe "uploading a single asset" do
     before { post :create, files: [file], generic_work: work_attributes, format: 'json' }
@@ -21,12 +23,10 @@ describe Sufia::UploadsController do
       end
 
       context "when the file is a duplicate" do
-        let(:parent)         { create(:asset) }
-        let(:duplicate_file) { create(:file_set) }
-        let(:duplicates)     { [duplicate_file] }
-
         before do
-          parent.members << duplicate_file
+          allow_any_instance_of(Sufia::UploadedFile).to receive(:save).and_return(false)
+          allow_any_instance_of(Sufia::UploadedFile).to receive_message_chain(:errors, :messages).and_return(checksum: ["sun.png is a duplicate"])
+          post :create, files: [file], generic_work: work_attributes, format: 'json'
         end
 
         it "reports the error" do
@@ -54,11 +54,12 @@ describe Sufia::UploadsController do
 
     context "with a valid still image" do
       let(:file) { fixture_file_upload('sun.png', 'image/png') }
-      let(:work_attributes) { { "asset_type" => AICType.StillImage.to_s, "use_uri" => AICType.IntermediateFileSet.to_s } }
+      let(:work_attributes) { { "asset_type" => AICType.StillImage.to_s, "use_uri" => AICType.IntermediateFileSet.to_s, "uploaded_batch_id" => "999" } }
 
       it "successfully uploads the file" do
         expect(response).to be_success
         expect(assigns(:upload)).to be_kind_of Sufia::UploadedFile
+        expect(assigns(:upload).uploaded_batch_id).to eq 999
         expect(assigns(:upload)).to be_persisted
       end
     end

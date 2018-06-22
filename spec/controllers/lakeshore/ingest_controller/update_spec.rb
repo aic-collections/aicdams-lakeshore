@@ -5,21 +5,25 @@ describe Lakeshore::IngestController, custom_description: "Lakeshore::IngestCont
   let(:apiuser) { create(:apiuser) }
   let(:user)    { create(:user1) }
 
-  let(:image_asset) do
+  # bang this so it is not memoized and gets invoked even after tmp dir is wiped via LakeshoreTesting
+  # https://cits.artic.edu/issues/2943
+  let!(:image_asset) do
     ActionDispatch::Http::UploadedFile.new(filename:     "sun.png",
                                            content_type: "image/png",
                                            tempfile:     File.new(File.join(fixture_path, "sun.png")))
   end
 
-  let(:replacement_asset) do
+  # bang this so it is not memoized and gets invoked even after tmp dir is wiped via LakeshoreTesting
+  # https://cits.artic.edu/issues/2943
+  let!(:replacement_asset) do
     ActionDispatch::Http::UploadedFile.new(filename:     "tardis.png",
                                            content_type: "image/png",
                                            tempfile:     File.new(File.join(fixture_path, "tardis.png")))
   end
 
   before do
-    LakeshoreTesting.reset_uploads
     sign_in_basic(apiuser)
+    LakeshoreTesting.restore
   end
 
   describe "replacing files" do
@@ -28,7 +32,6 @@ describe Lakeshore::IngestController, custom_description: "Lakeshore::IngestCont
     before do
       LakeshoreTesting.restore
       allow(Lakeshore::CreateAllDerivatives).to receive(:perform_later)
-      allow(controller).to receive(:duplicate_upload).and_return([])
     end
 
     context "with an intermediate file" do
@@ -149,10 +152,11 @@ describe Lakeshore::IngestController, custom_description: "Lakeshore::IngestCont
     let(:parent)   { build(:work, pref_label: "work pref_label") }
 
     before do
+      allow_any_instance_of(ChecksumValidator).to receive(:duplicate_file_sets).and_return([file_set])
       allow(Lakeshore::CreateAllDerivatives).to receive(:perform_later)
-      allow(controller).to receive(:duplicate_upload).and_return([file_set])
       allow(file_set).to receive(:parent).and_return(parent)
-      post :update, id: asset.id, content: { intermediate: replacement_asset }, metadata: metadata, duplicate_check: duplicate_check_param
+      post :update, id: asset.id, content: { intermediate: replacement_asset },
+                    metadata: metadata, duplicate_check: duplicate_check_param
       asset.reload
     end
 
