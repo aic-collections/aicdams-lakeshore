@@ -16,7 +16,7 @@ module Permissions::WithAICDepositor
       if result
         self.aic_depositor = result.uri
       else
-        raise AICUserNotFound, "AICUser resource #{depositor} not found, contact LAKE_support@artic.edu\n"
+        raise AICUserNotFound, "AICUser '#{depositor}' not found, contact collections_support@artic.edu\n"
       end
     end
 
