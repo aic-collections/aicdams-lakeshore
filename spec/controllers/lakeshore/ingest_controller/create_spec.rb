@@ -25,6 +25,7 @@ describe Lakeshore::IngestController, custom_description: "Lakeshore::IngestCont
       expect(Lakeshore::AttachFilesToWorkJob).to receive(:perform_later)
       post :create, asset_type: "StillImage", content: { intermediate: image_asset }, metadata: metadata
       expect(response).to be_accepted
+      expect(Sufia::UploadedFile.all.first.status).to eq("begun_ingestion")
     end
   end
 
@@ -59,6 +60,16 @@ describe Lakeshore::IngestController, custom_description: "Lakeshore::IngestCont
     subject { response }
     it { is_expected.to be_bad_request }
     its(:body) { is_expected.to eq("[\"Ingestor can't be blank\",\"Document type uri can't be blank\",\"Intermediate file can't be blank\"]") }
+  end
+
+  context 'with an unsupported file set type' do
+    it "returns an error" do
+      post :create, asset_type: "StillImage",
+                    content: { intermediate: image_asset, bogus: image_asset },
+                    metadata: metadata
+      expect(response).to be_bad_request
+      expect(response.body).to eq("[\"Registry Files Request contains invalid file types: bogus\"]")
+    end
   end
 
   describe "asset type validation" do
@@ -160,6 +171,7 @@ describe Lakeshore::IngestController, custom_description: "Lakeshore::IngestCont
     end
 
     it "returns an error leaving the original relationship unchanged" do
+      pending("until we reimplement file_set api in https://cits.artic.edu/issues/2963")
       expect(Lakeshore::AttachFilesToWorkJob).not_to receive(:perform_later)
       post :update, id: asset.id, metadata: metadata
       expect(response.status).to eq(409)
