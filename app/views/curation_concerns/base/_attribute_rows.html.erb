@@ -9,7 +9,8 @@
 <%= presenter.attribute_to_html(:capture_device) %>
 <%= presenter.attribute_to_html(:citi_uid) %>
 <%= presenter.attribute_to_html(:compositing) %>
-<%= presenter.attribute_to_html(:create_date) %>
+<%= presenter.attribute_to_html(:create_date, label: "Deposit date") %>
+<%= presenter.attribute_to_html(:created, render_as: :date, label: t('simple_form.labels.asset.created')) %>
 <%= presenter.attribute_to_html(:creator_display) %>
 <%= presenter.attribute_to_html(:credit_line, render_as: :multiline) %>
 <%= presenter.attribute_to_html(:copyright_representatives) %>

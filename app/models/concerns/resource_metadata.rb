@@ -12,10 +12,7 @@ module ResourceMetadata
 
     property :contributors, predicate: ::RDF::Vocab::DC.contributor, class_name: "Agent"
 
-    property :created, predicate: AIC.created, multiple: false do |index|
-      index.type :date
-      index.as :stored_sortable
-    end
+    property :created, predicate: AIC.created, multiple: false
 
     property :created_by, predicate: AIC.createdBy, multiple: false, class_name: "AICUser"
 

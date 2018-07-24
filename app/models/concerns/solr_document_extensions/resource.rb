@@ -14,6 +14,10 @@ module SolrDocumentExtensions::Resource
     Array(self[Solrizer.solr_name('batch_uid', :stored_searchable)]).first
   end
 
+  def created
+    Array(self['created_dtsi']).first
+  end
+
   def uid
     Array(self[Solrizer.solr_name('uid', :symbol)]).first
   end

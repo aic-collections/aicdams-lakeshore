@@ -26,6 +26,7 @@ class AssetIndexer < Sufia::WorkIndexer
       solr_doc[Solrizer.solr_name("original_ids", :symbol)] = original_file_set.map(&:id)
       solr_doc[Solrizer.solr_name("preservation_ids", :symbol)] = preservation_file_set.map(&:id)
       solr_doc[Solrizer.solr_name("legacy_ids", :symbol)] = legacy_file_set.map(&:id)
+      solr_doc["created_dtsi"] = coerce_into_date(object.created)
       solr_doc["public_domain_bsi"] = object.public_domain
       solr_doc["publishable_bsi"] = object.publishable
     end
@@ -54,6 +55,11 @@ class AssetIndexer < Sufia::WorkIndexer
 
     def field_builder
       @field_builder = AssetSolrFieldBuilder.new(object)
+    end
+
+    def coerce_into_date(value)
+      return if value.nil?
+      DateTime.parse(value).strftime("%FT%TZ")
     end
 
     # @note Ideally, we could just call {object.members}; however, this is causing some very odd behavior.

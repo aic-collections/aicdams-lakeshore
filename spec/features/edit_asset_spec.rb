@@ -30,6 +30,7 @@ describe "Editing assets" do
     expect(page).to have_field("View Notes", with: asset.view_notes.first)
     expect(page).to have_field("Visual Surrogate", with: asset.visual_surrogate)
     expect(page).to have_field("Caption", with: asset.caption)
+    expect(page).to have_field("File Creation Date", with: asset.created)
 
     # non-admin can't see imaging_uid field
     expect(page).not_to have_field("Imaging UID", with: asset.imaging_uid.first)

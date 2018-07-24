@@ -8,7 +8,7 @@ class AssetPresenter < Sufia::WorkShowPresenter
     [
       :uid, :legacy_uid, :status, :dept_created, :aic_depositor, :updated,
       :description, :batch_uid, :language, :publisher, :pref_label, :alt_label, :rights_holder,
-      :keyword, :created_by, :compositing, :light_type, :view, :capture_device, :digitization_source,
+      :keyword, :created_by, :created, :compositing, :light_type, :view, :capture_device, :digitization_source,
       :imaging_uid, :transcript, :modified_date, :create_date, :publish_channels, :view_notes,
       :visual_surrogate, :external_resources, :licensing_restrictions, :copyright_representatives,
       :caption
