@@ -41,6 +41,8 @@ module Lakeshore
 
     config.to_prepare do
       Sufia::UploadedFile.include UploadedFile
+      Riiif::ImagesController.prepend PrependedControllers::WithStrippedDownFileSetId
+      Riiif::HTTPFileResolver.prepend PrependedFileResolvers::WithTimeStamp
     end
   end
 
