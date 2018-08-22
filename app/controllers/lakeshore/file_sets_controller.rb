@@ -43,7 +43,7 @@ module Lakeshore
 
       def uri_for_role
         { intermediate: AICType.IntermediateFileSet,
-          preservation_master: AICType.PreservationMasterFileSet,
+          preservation: AICType.PreservationMasterFileSet,
           original: AICType.OriginalFileSet,
           legacy: AICType.LegacyFileSet }
       end
