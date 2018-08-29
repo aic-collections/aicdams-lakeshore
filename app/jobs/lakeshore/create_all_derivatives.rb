@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 # Combines CharacterizeJob and CreateDerivativeJob from CurationConcerns into one job for the Lakeshore API.
-class Lakeshore::CreateAllDerivatives < ActiveJob::Base
+class Lakeshore::CreateAllDerivatives < MasterDerivativesJob
   queue_as :api
 
   # @param [FileSet] file_set

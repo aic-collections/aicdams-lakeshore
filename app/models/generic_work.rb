@@ -19,6 +19,7 @@ class GenericWork < Resource
   before_create :status_is_active, :public_is_false
   after_create :give_on_behalf_of_dept_write_permission, if: :on_behalf_of?
   validate :id_matches_uid_checksum, on: :update
+  before_destroy :toast_sufia_uploaded_file
 
   def on_behalf_of?
     on_behalf_of.present?
@@ -115,5 +116,14 @@ class GenericWork < Resource
     # tells whether a GenericWork asset is a preferred representation
     def preferred_representation?
       InboundRelationships.new(self).preferred_representation.present?
+    end
+
+    # delete all Sufia::UploadedFile db rows (and binaries) for each of the asset's file_sets, so that when an asset
+    # is deleted the status of the S::UF does not remain "begun_ingestion" which prevents users from re-uploading deleted
+    # assets
+    def toast_sufia_uploaded_file
+      file_sets.each do |fs|
+        Sufia::UploadedFile.where(file_set_uri: fs.uri.to_s).destroy_all
+      end
     end
 end
