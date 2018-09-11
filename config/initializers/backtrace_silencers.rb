@@ -6,3 +6,6 @@
 
 # You can also remove all the silencers if you're trying to debug a problem that might stem from framework code.
 # Rails.backtrace_cleaner.remove_silencers!
+
+# Try to get a better stacktrace in staging for https://cits.artic.edu/issues/3118
+Rails.backtrace_cleaner.remove_silencers! if Figaro.env.LAKESHORE_ENV == "staging"
