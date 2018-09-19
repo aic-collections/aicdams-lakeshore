@@ -76,4 +76,24 @@ describe "Editing CITI work" do
       expect(hidden_preferred_representation.value).to eq(pref.uri)
     end
   end
+
+  context "when removing the only representation that is not preferred" do
+    let(:work) { create(:work, :with_sample_metadata, representations: [asset.uri]) }
+
+    it "after clicking REMOVE the representation is not on show page" do
+      click_link("- Remove")
+      click_button("Save")
+      expect(page).to have_selector("table.relationships tr", count: 1)
+    end
+  end
+
+  context "when removing the only representation that is also preferred" do
+    let(:work) { create(:work, :with_sample_metadata, representations: [asset.uri], preferred_representation_uri: asset.uri) }
+
+    it "after clicking REMOVE the representation is not on show page" do
+      click_link("- Remove")
+      click_button("Save")
+      expect(page).to have_selector("table.relationships tr", count: 1)
+    end
+  end
 end
