@@ -83,7 +83,7 @@ describe "Editing CITI work" do
     it "after clicking REMOVE the representation is not on show page" do
       click_link("- Remove")
       click_button("Save")
-      expect(page).to have_selector("table.relationships tr", count: 1)
+      expect(page).to have_no_content('Representation of work')
     end
   end
 
@@ -93,7 +93,7 @@ describe "Editing CITI work" do
     it "after clicking REMOVE the representation is not on show page" do
       click_link("- Remove")
       click_button("Save")
-      expect(page).to have_selector("table.relationships tr", count: 1)
+      expect(page).to have_no_content('Representation of work')
     end
   end
 end
