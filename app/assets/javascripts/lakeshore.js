@@ -100,3 +100,66 @@ $(function() {
         move_star_to_top(parent_table, current_row);
     });
 });
+
+$(function() {
+    $('#deleteAsset').on('hidden.bs.modal', function () {
+        $('.single-asset-delete').removeClass('single-asset-delete');
+    })
+
+    var check_not_needed = false;
+    $('.check-if-preferred').on("click", function(e) {
+        // get original anchor, so we can trigger a click again after we set the bypass flag
+        var originalAtag = $(this);
+
+        // add a class to the element to signify the active asset trying to be deleted
+        originalAtag.addClass("single-asset-delete");
+
+        // if this function has already run, just return
+        if (check_not_needed) {
+            return; // let the event bubble away
+        }
+
+        // stop normal activity
+        e.preventDefault();
+        e.stopPropagation();
+
+        // get id of asset involved
+        var assetId = $(this).data("asset-id");
+
+        // make a call to the server and see if the asset is a preferred of any CR's
+        $.getJSON( "/assets/" + assetId + "/relationships/", function(results) {
+            var numberOfResults = results.length;
+
+            if (numberOfResults > 0) {
+
+                // get tbody element
+                var tbodyRef = document.getElementById('deleteAsset').getElementsByTagName('tbody')[0];
+
+                // reset rows of tbody
+                tbodyRef.innerHTML = "";
+
+                results.forEach(function(element) {
+
+                    // Insert a row in the table at the last row
+                    var newRow = tbodyRef.insertRow(tbodyRef.rows.length);
+
+                    // Insert a cell in the row at index 0
+                    var newCell = newRow.insertCell(0);
+
+                    // Append an anchor to the cell
+                    var newAnchor = document.createElement("a");
+                    newAnchor.setAttribute('href', element.edit_path);
+                    newAnchor.setAttribute('target', '_blank');
+                    newAnchor.innerHTML = element.pref_label_tesim;
+                    newCell.appendChild(newAnchor);
+                });
+
+                $("#deleteAsset").modal();
+
+            } else {
+                check_not_needed = true; // set bypass flag if we already got this far
+                originalAtag.trigger('click');
+            }
+        });
+    });
+});

@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 class HiddenMultiSelectInput < MultiValueInput
+  include AssetRelationshipHelper
+  include Rails.application.routes.url_helpers
   def input_type
     'hidden_multi_select'
   end
@@ -15,11 +17,23 @@ class HiddenMultiSelectInput < MultiValueInput
         <input type="hidden" class="autocomplete bigdrop #{attribute_name}" data-placeholder="#{placeholder}" data-endpoint="#{endpoint}" data-minchars="#{minchars}"
            id="#{input_html_options[:id]}">
         <a href="#" class="am-add btn btn-success"
+           data-input-class="hidden_multi_select"
            data-attribute="#{attribute_name}"
            data-model="#{object.model.class.to_s.downcase}"
            data-name="#{input_html_options[:name]}">+ Add</a>
-        <table class="table-condensed am #{attribute_name}">
-          #{yield}
+        <table class="table table-striped am #{attribute_name}">
+          <thead>
+            <tr>
+              <th>Thumbnail</th>
+              <th>Title</th>
+              <th>Visibility & Publishing</th>
+              <th>UID</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            #{yield}
+          </tbody>
         </table>
       HTML
     end
@@ -37,9 +51,14 @@ class HiddenMultiSelectInput < MultiValueInput
       <<-HTML
         <td>#{render_thumbnail(resources[index])}</td>
         <td>
-          #{resources[index].pref_label}
+          #{template.link_to(resources[index].pref_label, curation_concerns_generic_work_path(resources[index].id), target: '_blank')}
           #{yield}
         </td>
+        <td>#{template.render_visibility_link resources[index]} #{publish_channels_to_badges(resources[index].publish_channels)}</td>
+        <td>
+          #{template.link_to(resources[index].uid, curation_concerns_generic_work_path(resources[index].id), target: '_blank')}
+        </td>
+
         <td><a href="#" class="btn btn-danger am-delete">- Remove</a></td>
       HTML
     end
@@ -76,7 +95,7 @@ class HiddenMultiSelectInput < MultiValueInput
     # @todo Further optimizations would make this method take only a SolrDocument
     def render_thumbnail(resource)
       solr_document = resource.is_a?(SolrDocument) ? resource : SolrDocument.new(resource.to_solr)
-      template.render_thumbnail_tag(solr_document)
+      template.render_thumbnail_tag(solr_document, {}, target: '_blank')
     end
 
     def value_for_input(value)

@@ -11,6 +11,11 @@ Rails.application.routes.draw do
     concerns :searchable
   end
 
+  resource :related_assets, only: [:index], as: 'related_assets', path: '/related_assets', controller: 'related_assets' do
+    concerns :searchable
+    get "search", to: "related_assets#search", as: "form"
+  end
+
   Hydra::BatchEdit.add_routes(self)
   mount CurationConcerns::Engine, at: '/'
   resources :welcome, only: 'index'
@@ -27,6 +32,8 @@ Rails.application.routes.draw do
   namespace :curation_concerns, path: :concern do
     resources :agents, :exhibitions, :places, :shipments, :transactions, :works, :generic_works, only: [:index]
   end
+
+  get "assets/:id/relationships/", to: "curation_concerns/generic_works#relationships"
 
   curation_concerns_embargo_management
   concern :exportable, Blacklight::Routes::Exportable.new
@@ -73,6 +80,11 @@ Rails.application.routes.draw do
     post "ingest/:asset_type", to: "ingest#create",  defaults: { format: :json }
     get "derivatives/:id/:file", to: "derivatives#show"
     put "assets/:asset_uuid/file_sets/:file_set_role", to: "file_sets#create_or_update", defaults: { format: :json }
+  end
+
+  # Lakeshore public API
+  namespace :lakeshore, path: "pub_api" do
+    get "assets/:asset_uuid/thumbnail", to: "thumbnails#show"
   end
 
   get "/login_confirm", to: "dummy#login_confirm"
