@@ -22,7 +22,7 @@
         <td><%= image_tag(rel.solr_document['thumbnail_path_ss']) %></td>
         <td>
           <% if rel.viewable? %>
-            <%= link_to rel.to_s, polymorphic_path([main_app, rel]), target: '_blank' %>
+            <%= link_to rel.to_s, polymorphic_path([main_app, rel]) %>
           <% else %>
             <%= rel.to_s %>
           <% end %>
@@ -33,7 +33,7 @@
         </td>
         <td>
           <% if rel.viewable? %>
-            <%= link_to rel.uid, polymorphic_path([main_app, rel]), target: '_blank' %>
+            <%= link_to rel.uid, polymorphic_path([main_app, rel]) %>
           <% else %>
             <%= rel.uid %>
           <% end %>
