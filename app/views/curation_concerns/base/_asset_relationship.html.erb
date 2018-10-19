@@ -7,9 +7,11 @@
         <th>Pref.</th>
       <% end %>
       <th>Thumbnail</th>
+      <th>Document Type</th>
       <th>Title</th>
       <th>Visibility & Publishing</th>
       <th>UID</th>
+      <th>Non-Object Caption</th>
     </tr>
     <% presenters.each do |rel| %>
       <tr>
@@ -20,6 +22,7 @@
           </td>
         <% end %>
         <td><%= image_tag(rel.solr_document['thumbnail_path_ss']) %></td>
+        <td><%= rel.document_types %></td>
         <td>
           <% if rel.viewable? %>
             <%= link_to rel.to_s, polymorphic_path([main_app, rel]) %>
@@ -38,6 +41,7 @@
             <%= rel.uid %>
           <% end %>
         </td>
+        <td><%= rel.caption %></td>
       </tr>
     <% end %>
   </tbody>
