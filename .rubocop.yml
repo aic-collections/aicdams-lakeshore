@@ -1,5 +1,7 @@
 require: rubocop-rspec
 
+inherit_from: .rubocop_todo.yml
+
 AllCops:
   TargetRubyVersion: 2.3
   DisplayCopNames: true
@@ -23,30 +25,6 @@ Metrics/AbcSize:
 
 Metrics/MethodLength:
   Enabled: false
-
-Metrics/ModuleLength:
-  Exclude:
-    - app/controllers/concerns/curation_concerns/file_sets_controller_behavior.rb
-
-Metrics/ClassLength:
-  Exclude:
-    - 'lib/aic.rb'
-    - 'lib/aic_type.rb'
-    - 'lib/aic_doc_type.rb'
-    - 'app/controllers/catalog_controller.rb'
-    - 'app/presenters/asset_presenter.rb'
-
-Metrics/CyclomaticComplexity:
-  Exclude:
-    - app/services/file_set_replacement_service.rb
-    - app/models/concerns/permissions/lakeshore_visibility.rb
-    - app/controllers/concerns/curation_concerns/file_sets_controller_behavior.rb
-
-Metrics/PerceivedComplexity:
-  Exclude:
-    - app/services/file_set_replacement_service.rb
-    - app/models/concerns/permissions/lakeshore_visibility.rb
-    - app/controllers/concerns/curation_concerns/file_sets_controller_behavior.rb
 
 Style/BlockDelimiters:
   Exclude:
@@ -95,18 +73,6 @@ Style/SingleLineBlockParams:
 
 Style/SignalException:
   Enabled: false
-
-Style/PredicateName:
-  Exclude:
-    - 'app/presenters/asset_presenter.rb'
-    - 'app/presenters/concerns/citi_presenter_behaviors.rb'
-    - 'app/models/parameterized_relationships.rb'
-    - 'app/forms/curation_concerns/generic_work_form.rb'
-    - 'app/models/concerns/solr_document_extensions.rb'
-
-Style/FileName:
-  Exclude:
-    - 'config/initializers/active_fedora-noid.rb'
 
 Rails:
   Enabled: true
