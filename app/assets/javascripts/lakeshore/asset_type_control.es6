@@ -19,7 +19,12 @@ export class AssetTypeControl {
     this.deletes = new DeletedFiles(this.form, () => this.enableSelect())
   }
 
+  // Disables the dropdown for selecting the asset type as well as forces any completed
+  // uploads to fade in.
+  // See: https://github.com/samvera/hyrax/issues/1238
   disableSelect() {
+    $('.template-download').addClass('in')
+    $('.template-upload').addClass('in')
     if (this.uploads.hasLocalFiles)
       this.element.prop('disabled', true)
   }
