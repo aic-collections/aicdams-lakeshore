@@ -26,5 +26,8 @@ describe "Visting the home page", type: :feature do
       expect(page).to have_link("Transactions")
       expect(page).to have_link("Agents")
     end
+    within("#masthead") do
+      expect(page).to have_link("Logout", href: /idp-dn/)
+    end
   end
 end
