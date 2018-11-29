@@ -6,6 +6,7 @@ development:
   LAKESHORE_DOMAIN: "localhost:3000"
   user_notification_freq: "300"
   phoenix_host: "https://phoenix-test.artic.edu"
+  idp_dn: "idp-dn"
 
 test:
   citi_api_uid: "citi_api_uid"
@@ -17,6 +18,7 @@ test:
   LAKESHORE_DOMAIN: "localhost:3000"
   user_notification_freq: "30"
   phoenix_host: "https://phoenix-test.artic.edu"
+  idp_dn: "idp-dn"
 
 production:
 
