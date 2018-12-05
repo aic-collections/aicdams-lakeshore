@@ -15,6 +15,7 @@ en:
         duplicate: "%{name} is a duplicate of:"
         begun_ingestion: "%{name} has already begun ingestion."
         already_in_batch: "%{name} is already in this batch."
+        exceeded_batch: "%{name} exceeds the limit for this batch."
 
     relationship:
       add_assets: "Add New Assets to this CITI "
