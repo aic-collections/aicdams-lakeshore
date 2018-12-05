@@ -20,9 +20,9 @@
         <li class="divider"></li>
         <li>
           <%= link_to 'Logout',
-                      "https://#{request.base_url}/Shibboleth.sso/Logout?return=" \
+                      "#{request.base_url}/Shibboleth.sso/Logout?return=" \
                         "https://#{ENV["idp_dn"]}/saml2/idp/SingleLogoutService.php" \
-                        "%3FReturnTo%3Dhttps%3A%2F%2F#{request.base_url}" %>
+                        "%3FReturnTo%3D#{request.base_url}" %>
         </li>
       </ul>
     </li><!-- /.btn-group -->
