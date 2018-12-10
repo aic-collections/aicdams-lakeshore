@@ -10,6 +10,7 @@ module UploadedFile
     before_validation :calculate_checksum
 
     validates :checksum, presence: true, checksum: true, on: :create
+    validate :batch_limit, on: :create
 
     scope :begun_ingestion, -> { where(status: "begun_ingestion") }
 
@@ -32,5 +33,13 @@ module UploadedFile
 
     def set_status
       self.status = "new"
+    end
+
+    def batch_limit
+      return if uploaded_batch_id.nil?
+      limit = ENV.fetch("maximum_batch_upload", 30).to_i
+      current_batch = UploadedBatch.find(uploaded_batch_id)
+      return if current_batch.uploaded_files.count < limit
+      errors.add(:checksum, error: I18n.t('lakeshore.upload.errors.exceeded_batch', name: file.filename))
     end
 end

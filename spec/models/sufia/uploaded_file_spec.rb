@@ -11,8 +11,9 @@ describe Sufia::UploadedFile do
   end
   let(:user) { create(:user1) }
   let(:use) { "http://file.use.uri" }
+  let(:uploaded_batch_id) { UploadedBatch.create.id }
 
-  subject { described_class.new(file: file, user: user, use_uri: use) }
+  subject { described_class.new(file: file, user: user, use_uri: use, uploaded_batch_id: uploaded_batch_id) }
 
   before { LakeshoreTesting.restore }
 
@@ -29,10 +30,11 @@ describe Sufia::UploadedFile do
     end
 
     context "when a duplicate exists" do
-      before { described_class.create(file: file, user: user, use_uri: use) }
+      before { described_class.create(file: file, user: user, use_uri: use, uploaded_batch_id: uploaded_batch_id) }
 
       it "checksum is not valid" do
         expect(subject).not_to be_valid
+        expect(subject.errors.messages[:checksum]).to contain_exactly(error: "sun.png is already in this batch.")
       end
     end
   end
@@ -43,6 +45,17 @@ describe Sufia::UploadedFile do
     it "the checksum is invalid" do
       expect(subject).not_to be_valid
       expect(subject.errors.messages[:checksum]).to eq([error: "sun.png has already begun ingestion."])
+    end
+  end
+
+  context "when the file is in too large a batch" do
+    before { ENV["maximum_batch_upload"] = "0" }
+
+    after  { ENV["maximum_batch_upload"] = "30" }
+
+    it "is invalid" do
+      expect(subject).not_to be_valid
+      expect(subject.errors.messages[:checksum]).to contain_exactly(error: "sun.png exceeds the limit for this batch.")
     end
   end
 end

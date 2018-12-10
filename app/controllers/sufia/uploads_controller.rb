@@ -10,7 +10,7 @@ module Sufia
       if @upload.save
         render status: :ok
       else
-        render json: { files: [@upload.errors.messages[:checksum].first] }
+        render json: { files: @upload.errors.messages[:checksum] }
       end
     end
 

@@ -6,6 +6,8 @@ development:
   LAKESHORE_DOMAIN: "localhost:3000"
   user_notification_freq: "300"
   phoenix_host: "https://phoenix-test.artic.edu"
+  idp_dn: "idp-dn"
+  maximum_batch_upload: "30"
 
 test:
   citi_api_uid: "citi_api_uid"
@@ -17,6 +19,8 @@ test:
   LAKESHORE_DOMAIN: "localhost:3000"
   user_notification_freq: "30"
   phoenix_host: "https://phoenix-test.artic.edu"
+  idp_dn: "idp-dn"
+  maximum_batch_upload: "30"
 
 production:
 
@@ -39,3 +43,4 @@ production:
   # Note: verification will only be skipped if the value is set to "false". All other values evaluate to "true".
   citi_api_ssl_verify: "false"
   user_notification_freq: "30"
+  maximum_batch_upload: "30"
