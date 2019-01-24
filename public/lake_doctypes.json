@@ -273,16 +273,34 @@
                     "value" : "http://definitions.artic.edu/doctypes/RegistrationDocument",
                     "subtypes" : [
                         {
-                            "label" : "Exhibition Receipt",
-                            "value" : "http://definitions.artic.edu/doctypes/ExhibitionReceipt"
-                        },
-                        {
-                            "label" : "Incoming Receipt",
-                            "value" : "http://definitions.artic.edu/doctypes/IncomingReceipt"
-                        },
-                        {
-                            "label" : "Outgoing Receipt",
-                            "value" : "http://definitions.artic.edu/doctypes/OutgoingReceipt"
+                            "label" : "Receipts",
+                            "value" : "http://definitions.artic.edu/doctypes/Receipts",
+                            "subtypes" : [
+                                {
+                                    "label" : "Exhibition Receipt",
+                                    "value" : "http://definitions.artic.edu/doctypes/ExhibitionReceipt"
+                                },
+                                {
+                                    "label" : "Incoming Receipt",
+                                    "value" : "http://definitions.artic.edu/doctypes/IncomingReceipt"
+                                },
+                                {
+                                    "label" : "Outgoing Receipt",
+                                    "value" : "http://definitions.artic.edu/doctypes/OutgoingReceipt"
+                                },
+                                {
+                                    "label" : "Acknowledgment of Receipt",
+                                    "value" : "http://definitions.artic.edu/doctypes/AcknowledgmentReceipt"
+                                },
+                                {
+                                    "label" : "Acknowledgment of Return",
+                                    "value" : "http://definitions.artic.edu/doctypes/AcknowledgmentReturn"
+                                },
+                                {
+                                    "label" : "Confirmation of Release and Receipt",
+                                    "value" : "http://definitions.artic.edu/doctypes/ConfirmationReleaseReceipt"
+                                }
+                            ]
                         },
                         {
                             "label" : "Shipping (out and in)",
@@ -365,6 +383,18 @@
                         {
                             "label" : "Audit",
                             "value" : "http://definitions.artic.edu/doctypes/RegistrationAudit"
+                        },
+                        {
+                            "label" : "General Incoming Agreement",
+                            "value" : "http://definitions.artic.edu/doctypes/GeneralIncomingAgreement"
+                        },
+                        {
+                            "label" : "Incoming Agreement for Purchase Consideration",
+                            "value" : "http://definitions.artic.edu/doctypes/IncomingAgreementPurchaseConsideration"
+                        },
+                        {
+                            "label" : "Third Party Release",
+                            "value" : "http://definitions.artic.edu/doctypes/ThirdPartyRelease"
                         }
                     ]
                 },
