@@ -167,12 +167,24 @@ class AICDocType < RDF::StrictVocabulary("http://definitions.artic.edu/doctypes/
        label: "General"
   term :ExhibitionReceipt,
        label: "Exhibition Receipt",
-       "skos:broader": "aicdoctype:RegistrationDocument"
+       "skos:broader": "aicdoctype:Receipts"
   term :IncomingReceipt,
        label: "Incoming Receipt",
-       "skos:broader": "aicdoctype:RegistrationDocument"
+       "skos:broader": "aicdoctype:Receipts"
   term :OutgoingReceipt,
        label: "Outgoing Receipt",
+       "skos:broader": "aicdoctype:Receipts"
+  term :AcknowledgmentReceipt,
+       label: "Acknowledgment of Receipt",
+       "skos:broader": "aicdoctype:Receipts"
+  term :AcknowledgmentReturn,
+       label: "Acknowledgment of Return",
+       "skos:broader": "aicdoctype:Receipts"
+  term :ConfirmationReleaseReceipt,
+       label: "Confirmation of Release and Receipt",
+       "skos:broader": "aicdoctype:Receipts"
+  term :Receipts,
+       label: "Receipts",
        "skos:broader": "aicdoctype:RegistrationDocument"
   term :BillLading,
        label: "Bill of Lading",
@@ -230,6 +242,15 @@ class AICDocType < RDF::StrictVocabulary("http://definitions.artic.edu/doctypes/
        "skos:broader": "aicdoctype:RegistrationDocument"
   term :RegistrationAudit,
        label: "Audit",
+       "skos:broader": "aicdoctype:RegistrationDocument"
+  term :GeneralIncomingAgreement,
+       label: "General Incoming Agreement",
+       "skos:broader": "aicdoctype:RegistrationDocument"
+  term :IncomingAgreementPurchaseConsideration,
+       label: "Incoming Agreement for Purchase Consideration",
+       "skos:broader": "aicdoctype:RegistrationDocument"
+  term :ThirdPartyRelease,
+       label: "Third Party Release",
        "skos:broader": "aicdoctype:RegistrationDocument"
   term :RegistrationDocument,
        label: "Registration Document"
