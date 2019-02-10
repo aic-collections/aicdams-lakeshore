@@ -18,7 +18,7 @@ class UpdatePermissionsScript
   def run
     assets.each do |asset|
       if asset.id.present? && needs_permission_change?(asset)
-        AddEditGroupPermissionJob.perform_later(uid: asset.id, group: group)
+        AddEditGroupPermissionJob.perform_later(id: asset.id, group: group)
       end
     end
   end
