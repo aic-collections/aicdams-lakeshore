@@ -4,9 +4,9 @@ class AddEditGroupPermissionJob < ActiveJob::Base
 
   class Error < StandardError; end
 
-  def perform(uid:, group:)
+  def perform(id:, group:)
     raise Error, "Department id #{group} does not exist" unless Department.find_by_citi_uid(group)
-    asset = GenericWork.find(service.hash(uid))
+    asset = GenericWork.find(id)
     edit_groups = asset.edit_groups
     return if edit_groups.include?(group)
     new_groups = edit_groups + [group]
@@ -14,10 +14,4 @@ class AddEditGroupPermissionJob < ActiveJob::Base
     asset.save
     asset.file_sets.map(&:update_index)
   end
-
-  private
-
-    def service
-      @service ||= UidMinter.new
-    end
 end
