@@ -22,3 +22,4 @@ coverage
 
 .rspec-local
 /playground/*
+report.csv
